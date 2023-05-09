@@ -38,7 +38,9 @@ export default function Home() {
           priority
         />
       </div>
-
+      <div>
+        This is a text!
+      </div>
       <div className="mb-32 grid text-center lg:mb-0 lg:grid-cols-4 lg:text-left">
         <a
           href="https://beta.nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
