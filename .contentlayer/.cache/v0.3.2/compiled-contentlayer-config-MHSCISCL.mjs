@@ -27,11 +27,11 @@ var computedFields = {
       datePublished: doc.publishedAt,
       dateModified: doc.publishedAt,
       description: doc.summary,
-      image: doc.image ? `https://leerob.io${doc.image}` : `https://leerob.io/api/og?title=${doc.title}`,
-      url: `https://leerob.io/blog/${doc._raw.flattenedPath}`,
+      image: doc.image ? `https://einargudni.com${doc.image}` : `https://einargudni.com/api/og?title=${doc.title}`,
+      url: `https://einargudni.com/blog/${doc._raw.flattenedPath}`,
       author: {
         "@type": "Person",
-        name: "Lee Robinson"
+        name: "Einar Gudni"
       }
     })
   }
@@ -98,4 +98,4 @@ export {
   Blog,
   contentlayer_config_default as default
 };
-//# sourceMappingURL=compiled-contentlayer-config-GBDRDSCR.mjs.map
+//# sourceMappingURL=compiled-contentlayer-config-MHSCISCL.mjs.map

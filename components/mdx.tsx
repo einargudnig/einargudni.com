@@ -99,19 +99,19 @@ const components = {
 
 interface MdxProps {
   code: string;
-  tweets: Record<string, any>;
+  // tweets: Record<string, any>;
 }
 
-export function Mdx({ code, tweets }: MdxProps) {
+export function Mdx({ code }: MdxProps) {
   const Component = useMDXComponent(code);
-  const StaticTweet = ({ id }) => {
-    const tweet = tweets.find((tweet) => tweet.id === id);
-    return <Tweet {...tweet} />;
-  };
+  // const StaticTweet = ({ id }) => {
+  //   const tweet = tweets.find((tweet) => tweet.id === id);
+  //   return <Tweet {...tweet} />;
+  // };
 
   return (
     <article className="prose prose-quoteless prose-neutral dark:prose-invert">
-      <Component components={{ ...components, StaticTweet }} />
+      <Component components={{ ...components }} />
     </article>
   );
 }
