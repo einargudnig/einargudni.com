@@ -13,6 +13,7 @@ export async function generateStaticParams() {
 }
 
 export async function generateMetadata({
+  // @ts-ignore
   params,
 }): Promise<Metadata | undefined> {
   const post = allBlogs.find((post) => post.slug === params.slug);
@@ -54,7 +55,7 @@ export async function generateMetadata({
     },
   };
 }
-
+// @ts-ignore
 export default async function Blog({ params }) {
   const post = allBlogs.find((post) => post.slug === params.slug);
 
