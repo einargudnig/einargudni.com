@@ -1,7 +1,7 @@
 import 'server-only';
 
 import { Octokit } from '@octokit/rest';
-import { queryBuilder } from 'lib/planetscale';
+import { queryBuilder } from './planetscale';
 import { cache } from 'react';
 
 export const getBlogViews = cache(async () => {
@@ -23,7 +23,7 @@ export const getStarCount = cache(async () => {
   });
 
   const req = await octokit.request('GET /repos/{owner}/{repo}', {
-    owner: 'leerob',
+    owner: 'einargudnig',
     repo: 'leerob.io',
   });
 
