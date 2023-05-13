@@ -37,6 +37,7 @@ export default async function handler(
     }
   } catch (e) {
     console.log(e);
+    // @ts-ignore
     return res.status(500).json({ message: e.message });
   }
 }

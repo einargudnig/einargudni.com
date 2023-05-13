@@ -14,6 +14,7 @@ export default async function handler(
     return res.status(200).json(data);
   } catch (e) {
     console.log(e);
+    // @ts-ignore
     return res.status(500).json({ message: e.message });
   }
 }
