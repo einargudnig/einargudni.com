@@ -36,7 +36,7 @@ export default function ViewCounter({
     if (trackView) {
       registerView();
     }
-  }, [slug]);
+  }, [slug, trackView]);
 
   return (
     <p className="font-mono text-sm text-neutral-500 tracking-tighter">

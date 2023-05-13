@@ -12,9 +12,9 @@ export const about = () => {
 export const bio = () => {
   return (
     <>
-      I'm a Next.js contributor and help lead our open-source communities. I'm
+      I&apos;m a Next.js contributor and help lead our open-source communities. I&apos;m
       passionate about frontend development and have created courses on React,
-      Next.js, and web development. I'm an advisor and investor in early stage
+      Next.js, and web development. I&apos;m an advisor and investor in early stage
       startups.
     </>
   );
