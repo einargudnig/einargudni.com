@@ -13,7 +13,7 @@ export const revalidate = 60;
 
 export default async function Home() {
   let starCount, views, tweetCount;
-
+  // This is the / route
   // try {
   //   [starCount, views, tweetCount] = await Promise.all([
   //     // getStarCount(),
