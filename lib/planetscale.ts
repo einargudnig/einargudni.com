@@ -7,8 +7,14 @@ interface ViewsTable {
   count: number;
 }
 
+interface Location {
+  city: string;
+  region: string;
+}
+
 interface Database {
   views: ViewsTable;
+  location: Location;
 }
 
 export const queryBuilder = new Kysely<Database>({
