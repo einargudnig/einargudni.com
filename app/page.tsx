@@ -8,6 +8,7 @@ import {
   ViewsIcon,
 } from '../components/icons';
 import NowPlaying from '@/components/spotify';
+import TopPost from '@/components/top-post';
 import { name, about, bio, avatar } from '../lib/info';
 
 export const revalidate = 60;
@@ -68,9 +69,14 @@ export default async function Home() {
             <ArrowIcon />
             <p className="h-7">follow me on twitter</p>
           </a>
-          <NowPlaying />
         </li>
       </ul>
+      <div className='grid grid-cols-2 gap-4'>
+        <NowPlaying />
+        <TopPost />
+        {/* <FollowTwitter /> */}
+        {/* <Location /> */}  
+      </div>
     </section>
   )
 }

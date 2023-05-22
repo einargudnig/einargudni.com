@@ -6,6 +6,7 @@ import {
   TwitterIcon,
 } from '../../components/icons'
 import Experience from '../../components/experience'
+import Link from "next/link";
 
 
 export const metadata: Metadata = {
@@ -67,6 +68,11 @@ export default function AboutPage() {
           I graduated as a computer scientist from the University of Iceland in the summer of 2020.
           I live in Reykjavík. I work as a software developer at Maul. 
         </p>
+        <div className="flex flex-col gap-2 md:flex-row md:gap-2 mb-6">
+          <Link href="/now" className="flex w-full border border-neutral-200 dark:border-neutral-800 rounded-lg p-4 no-underline items-center text-neutral-800 dark:text-neutral-200 hover:dark:bg-neutral-900 hover:bg-neutral-100 transition-all justify-between">now</Link>
+          <Link href="/uses" className="flex w-full border border-neutral-200 dark:border-neutral-800 rounded-lg p-4 no-underline items-center text-neutral-800 dark:text-neutral-200 hover:dark:bg-neutral-900 hover:bg-neutral-100 transition-all justify-between">uses</Link>
+          <Link href="/hobbies" className="flex w-full border border-neutral-200 dark:border-neutral-800 rounded-lg p-4 no-underline items-center text-neutral-800 dark:text-neutral-200 hover:dark:bg-neutral-900 hover:bg-neutral-100 transition-all justify-between">hobbies</Link>
+        </div>
         <hr />
         <p>
           I&apos;m passionate in many different areas. I train Crossfit, I love to eat and cook good food.
