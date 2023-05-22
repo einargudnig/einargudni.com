@@ -1,16 +1,34 @@
+import { NextApiRequest, NextApiResponse } from 'next';
 import { getNowPlaying } from '@/lib/spotify'
 
 interface Song {
+  is_playing: boolean
+  item: {
+    name: string
+    artists: {
+      name: string
+    }[]
+    album: {
+      name: string
+      images: {
+        url: string
+      }[]
+    }
+    external_urls: {
+      spotify: string
+    }
+  }
+}
+
+
+export default async function handler(_: NextApiRequest, res: NextApiResponse<{
   album: string
   albumImageUrl: string
   artist: string
   isPlaying: boolean
   songUrl: string
   title: string
-}
-
-
-export default async function handler(_, res) {
+}>) {
   const response = await getNowPlaying()
 
   // Here we handle the request from the API
@@ -25,12 +43,12 @@ export default async function handler(_, res) {
     return res.status(200).json({ isPlaying: false })
   }
 
-  const isPlaying = song.is_playing
-  const title = song.item.name
-  const artist = song.item.artists.map((_artist) => _artist.name).join(', ')
-  const album = song.item.album.name
-  const albumImageUrl = song.item.album.images[0].url
-  const songUrl = song.item.external_urls.spotify
+  const isPlaying: boolean = song.is_playing
+  const title: string = song.item.name
+  const artist: string = song.item.artists.map((_artist: { name: string }) => _artist.name).join(', ')
+  const album: string = song.item.album.name
+  const albumImageUrl: string = song.item.album.images[0].url
+  const songUrl: string = song.item.external_urls.spotify
 
   res.setHeader('Cache-Control', 'public, s-maxage=60, stale-while-revalidate=30')
 

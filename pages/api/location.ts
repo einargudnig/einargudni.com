@@ -11,7 +11,7 @@ export default function handler(
 ) {
   if (req.method === 'POST') {
     const { city, region } = req.body;
-    // You can now use the latitude and longitude in your Next.js app or perform any necessary processing
+    // You can now use the city and region in your Next.js app or perform any necessary processing
     const locationData: LocationData = { city, region };
 
     res.status(200).json(locationData);
