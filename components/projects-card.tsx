@@ -17,7 +17,7 @@ interface CardProps {
 export default function ProjectsCard({ title, description, imgSrc, href, github, tech1, tech2, tech3 }: CardProps) {
   return (
     <div className="p-4 md:w-1/2 md" style={{ maxWidth: '544px' }}>
-      <div className="h-full overflow-hidden border-2 border-neutral-500 rounded-md border-opacity-60 dark:border-neutral-400">
+      <div className="h-full overflow-hidden border border-neutral-500 rounded-md border-opacity-60 dark:border-neutral-400">
         <div className="p-6">
           <div className="flex flex-row justify-between items-center">
             <div className="my-2 hover:dark:text-neutral-900">

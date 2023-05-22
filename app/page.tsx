@@ -7,14 +7,19 @@ import {
   TwitterIcon,
   ViewsIcon,
 } from '../components/icons';
-import NowPlaying from '@/components/spotify';
-import TopPost from '@/components/top-post';
 import { name, about, bio, avatar } from '../lib/info';
+import NowPlaying from '@/components/index-grid/spotify';
+import TopPost from '@/components/index-grid/top-post';
+import FollowTwitter from '@/components/index-grid/twitter';
+import NowButton from '@/components/index-grid/now';
+import UsesButton from '@/components/index-grid/uses';
+import HobbiesButton from '@/components/index-grid/hobbies';
+
 
 export const revalidate = 60;
 
 export default async function Home() {
-  let starCount, views, tweetCount;
+  let starCount, views
   // This is the / route
   try {
     [starCount, views] = await Promise.all([
@@ -58,24 +63,18 @@ export default async function Home() {
       {/* <p className="my-5 max-w-[600px] text-neutral-800 dark:text-neutral-200">
         {bio()}
       </p> */}
-      <ul className="flex flex-col md:flex-row mt-8 space-x-0 md:space-x-4 space-y-2 md:space-y-0 font-sm text-neutral-500 dark:text-neutral-400">
-        <li>
-          <a
-            className="flex items-center hover:text-neutral-700 dark:hover:text-neutral-200 transition-all"
-            rel="noopener noreferrer"
-            target="_blank"
-            href="https://twitter.com/einargudni"
-          >
-            <ArrowIcon />
-            <p className="h-7">follow me on twitter</p>
-          </a>
-        </li>
-      </ul>
+      <hr />
       <div className='grid grid-cols-2 gap-4'>
         <NowPlaying />
         <TopPost />
-        {/* <FollowTwitter /> */}
+        <FollowTwitter />
+        <NowButton />
+        <UsesButton />
+        <HobbiesButton />
         {/* <Location /> */}  
+        {/* <CommandBar /> */}
+        {/* Last Book */}
+        {/* Calories  */}
       </div>
     </section>
   )
