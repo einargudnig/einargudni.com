@@ -8,12 +8,12 @@ import {
   ViewsIcon,
 } from '../components/icons';
 import { name, about, bio, avatar } from '../lib/info';
-import NowPlaying from '@/components/index-grid/spotify';
-import TopPost from '@/components/index-grid/top-post';
-import FollowTwitter from '@/components/index-grid/twitter';
-import NowButton from '@/components/index-grid/now';
-import UsesButton from '@/components/index-grid/uses';
-import HobbiesButton from '@/components/index-grid/hobbies';
+import NowPlaying from '@/components/indexgrid/spotify';
+import TopPost from '@/components/indexgrid/top-post';
+import FollowTwitter from '@/components/indexgrid/twitter';
+import NowButton from '@/components/indexgrid/now';
+import UsesButton from '@/components/indexgrid/uses';
+import HobbiesButton from '@/components/indexgrid/hobbies';
 
 
 export const revalidate = 60;
