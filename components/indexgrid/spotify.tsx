@@ -1,11 +1,30 @@
 "use client"
 
 import useSWR from 'swr'
-import fetcher from '../../lib/fetcher'
+// import fetcher from '../../lib/fetcher'
+import _fetch from 'isomorphic-fetch'
+
 import Image from 'next/image'
 
+interface NowPlayingData {
+  albumImageUrl: string;
+  isPlaying: boolean;
+  songUrl: string | null;
+  title: string | null;
+  artist: string | null;
+}
+
+const fetcher = async (url: string) => {
+  const res = await _fetch(url)
+  if (!res.ok) {
+    throw Error('Not Found')
+  }
+  return res.json()
+}
+
 export default function NowPlaying() {
-  const { data } = useSWR('/api/now-playing', fetcher)
+  //@ts-ignore
+  const { data } = useSWR<NowPlayingData>('/api/now-playing', { fetcher })
   // console.log('DATA', data)
 
   return (
@@ -20,7 +39,7 @@ export default function NowPlaying() {
       </div>
 
       <div>
-          <Image src={data?.albumImageUrl} alt="album image" width={'80'} height={'80'}/>
+          <Image src={data!.albumImageUrl} alt="album image" width={'80'} height={'80'}/>
       </div>
       <div className='flex flex-col space-x-0 sm:space-x-2 w-full mt-4'>
       
