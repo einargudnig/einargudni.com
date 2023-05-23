@@ -39,7 +39,7 @@ export default function NowPlaying() {
       </div>
 
       <div>
-          <Image src={data!.albumImageUrl} alt="album image" width={'80'} height={'80'}/>
+          <Image src={data?.albumImageUrl} alt="album image" width={'80'} height={'80'}/>
       </div>
       <div className='flex flex-col space-x-0 sm:space-x-2 w-full mt-4'>
       
