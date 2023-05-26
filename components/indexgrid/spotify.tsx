@@ -28,7 +28,7 @@ export default function NowPlaying() {
   // console.log('DATA', data)
 
   return (
-    <div className="flex-col sm:flex-row mb-8 space-x-0 sm:space-x-2 w-full mt-4 border border-gray-200 rounded-md">
+    <div className="h-48 flex-col sm:flex-row mb-8 space-x-0 sm:space-x-2 w-full border border-gray-200 rounded-md">
       <div>
         <svg className="h-5 w-5 ml-auto mt-1" viewBox="0 0 168 168">
         <path

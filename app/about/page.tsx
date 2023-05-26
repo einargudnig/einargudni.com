@@ -75,8 +75,8 @@ export default function AboutPage() {
         </div>
         <hr />
         <p>
-          I&apos;m passionate in many different areas. I train Crossfit, I love to eat and cook good food.
-          I love to zip a good cup of coffee or a glass of good wine.
+          I&apos;m passionate in many different areas. I train Crossfit, and I like to eat and cook food.
+          I love to zip on a good cup of coffee or a glass of good wine.
           My plan is to be over 100 years old, so I try to play long-term games.
         </p>
         <p>

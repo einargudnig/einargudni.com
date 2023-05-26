@@ -64,7 +64,7 @@ export default async function Home() {
         {bio()}
       </p> */}
       <hr />
-      <div className='grid grid-cols-2 gap-4'>
+      <div className='grid grid-cols-1 gap-4 md:grid-cols-2 mt-4'>
         <NowPlaying />
         <TopPost />
         <FollowTwitter />

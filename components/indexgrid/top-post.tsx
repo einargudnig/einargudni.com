@@ -8,7 +8,7 @@ export default function TopPost() {
   // console.log('TOP POST', slug, count)
 
   return (
-    <div className='border border-gray-200 rounded-md'>
+    <div className='border border-gray-200 rounded-md h-48'>
     <Link href={`/blog/${slug}`} className="flex items-center">
       <ViewsIcon />
       {`${count?.toLocaleString()} views on top post`}
