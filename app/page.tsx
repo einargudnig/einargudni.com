@@ -48,7 +48,7 @@ export default async function Home() {
           <a
             rel="noopener noreferrer"
             target="_blank"
-            href="https://github.com/leerob"
+            href="https://github.com/einargudnig"
             className="flex items-center gap-2"
           >
             <GitHubIcon />
