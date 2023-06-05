@@ -18,7 +18,7 @@ export const getMostViewedPost = cache(async () => {
   const data = await queryBuilder
     .selectFrom('views')
     .select(['slug', 'count'])
-    .orderBy('count', 'DESC')
+    .orderBy('count', 'desc')
     .limit(1)
     .execute();
   

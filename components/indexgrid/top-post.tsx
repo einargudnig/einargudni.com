@@ -3,9 +3,9 @@ import { getMostViewedPost } from '@/lib/metrics';
 import Link from 'next/link';
 import { ViewsIcon } from '../icons';
 
-export default function TopPost() {
-  const { slug, count } = getMostViewedPost();
-  // console.log('TOP POST', slug, count)
+export default async function TopPost() {
+  const { slug, count } = await getMostViewedPost();
+  console.log('TOP POST', slug, count)
 
   return (
     <div className='border border-gray-200 rounded-md h-48'>

@@ -66,10 +66,10 @@ export default async function Home() {
       <hr />
       <div className='grid grid-cols-1 gap-4 md:grid-cols-2 mt-4'>
         <NowPlaying />
+        <UsesButton />
         <TopPost />
         <FollowTwitter />
         <NowButton />
-        <UsesButton />
         <HobbiesButton />
         {/* <Location /> */}  
         {/* <CommandBar /> */}
