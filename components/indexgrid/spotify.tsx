@@ -26,7 +26,7 @@ export default function NowPlaying() {
   const { data } = useSWR<NowPlayingData>('/api/now-playing', { fetcher })
 
   return (
-    <div className="h-90 p-4 rounded-md shadow-md max-w-md mx-auto border border-gray-100">
+    <div className="h-90 p-4 rounded-md shadow-md max-w-md mx-auto border border-gray-200">
       <div className="relative h-38 w-full mb-4">
         <Image src={data?.albumImageUrl} className="rounded-lg grayscale" alt="album cover" width={350} height={100}/>
       </div>

@@ -2,9 +2,8 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { getBlogViews, getStarCount } from '../lib/metrics';
 import {
-  ArrowIcon,
+
   GitHubIcon,
-  TwitterIcon,
   ViewsIcon,
 } from '../components/icons';
 import { name, about, bio, avatar } from '../lib/info';
