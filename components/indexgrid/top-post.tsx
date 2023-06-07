@@ -11,7 +11,7 @@ export default async function TopPost() {
 		<div className="border border-gray-200 rounded-md h-48">
 			<div className="flex justify-center items-center">
 				<Link href={`/blog/${slug}`} className="flex items-center">
-					<div className="flex flex-col">
+					<div className="flex flex-col mx-auto text-center">
 						{slug}
 						<div className="flex flex-row">
 							<ViewsIcon />
