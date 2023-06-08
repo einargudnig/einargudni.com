@@ -1,5 +1,5 @@
 import { Metadata } from 'next';
-import { GitHubIcon, YoutubeIcon, ArrowIcon, TwitterIcon } from '../../components/icons';
+import { GitHubIcon, ArrowIcon, TwitterIcon, InstagramIcon } from '../../components/icons';
 import Experience from '../../components/experience';
 import Link from 'next/link';
 
@@ -77,17 +77,17 @@ export default function AboutPage() {
 				<div className="font-medium text-2xl justify-center text-neutral-600 dark:text-neutral-100 text-center">
 					&#126;&#126;&#126;
 				</div>
-				<p>
+				<p className="dark:text-neutral-200 text-neutral-800">
 					I&apos;m passionate in many different areas. I train Crossfit, and I like to eat
 					and cook food. I love to zip on a good cup of coffee or a glass of good wine. My
 					plan is to be over 100 years old, so I try to play long-term games.
 				</p>
-				<p>
+				<p className="dark:text-neutral-200 text-neutral-800">
 					I&apos;m very dedicated to learn new things and to truly believe that you should
 					never stop learning. I enjoy creating different things, whether that be
 					websites, application or anything in between.
 				</p>
-				<p className="mb-8">
+				<p className="mb-8 dark:text-neutral-200 text-neutral-800">
 					At my first full-time job as a developer I feel like I&apos;ve been very lucky
 					to experience a broad and diverse part of projects and tasks. I get to deal with
 					everything from user feedback, design and to backend tests and improving parts
@@ -121,12 +121,12 @@ export default function AboutPage() {
 					<a
 						rel="noopener noreferrer"
 						target="_blank"
-						href="https://www.youtube.com/@leerob"
+						href="https://www.instagram.com/einargudni"
 						className="flex w-full border border-neutral-200 dark:border-neutral-800 rounded-lg p-4 no-underline items-center text-neutral-800 dark:text-neutral-200 hover:dark:bg-neutral-900 hover:bg-neutral-100 transition-all justify-between"
 					>
 						<div className="flex items-center">
-							<YoutubeIcon />
-							<div className="ml-3">YouTube</div>
+							<InstagramIcon />
+							<div className="ml-3">Instagram</div>
 						</div>
 						<ArrowIcon />
 					</a>

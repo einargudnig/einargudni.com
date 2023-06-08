@@ -12,9 +12,7 @@ var computedFields = {
   tweetIds: {
     type: "array",
     resolve: (doc) => {
-      const tweetMatches = doc.body.raw.match(
-        /<StaticTweet\sid="[0-9]+"\s\/>/g
-      );
+      const tweetMatches = doc.body.raw.match(/<StaticTweet\sid="[0-9]+"\s\/>/g);
       return tweetMatches?.map((tweet) => tweet.match(/[0-9]+/g)[0]) || [];
     }
   },
@@ -38,7 +36,7 @@ var computedFields = {
 };
 var Blog = defineDocumentType(() => ({
   name: "Blog",
-  filePathPattern: `**/*.mdx`,
+  filePathPattern: "**/*.mdx",
   contentType: "mdx",
   fields: {
     title: {
@@ -98,4 +96,4 @@ export {
   Blog,
   contentlayer_config_default as default
 };
-//# sourceMappingURL=compiled-contentlayer-config-MHSCISCL.mjs.map
+//# sourceMappingURL=compiled-contentlayer-config-J7OETKBA.mjs.map

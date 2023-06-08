@@ -24,46 +24,46 @@ export default function Experience({
 	return (
 		<div className="my-3">
 			<div className="flex flex-row text-xl">
-				<span className="text-neutral-500 dark:text-neutral-400">{title}</span>{' '}
-				<span className="text-neutral-500 dark:text-neutral-400">&nbsp;@&nbsp;</span>{' '}
-				<span className="text-neutral-700 dark:text-neutral-100">
+				<span className="text-neutral-800 dark:text-neutral-300">{title}</span>{' '}
+				<span className="text-neutral-800 dark:text-neutral-400">&nbsp;@&nbsp;</span>{' '}
+				<span className="text-neutral-800 dark:text-neutral-100 hover:dark:text-neutral-300">
 					<Link href={url} className="no-underline">
 						{company}
 					</Link>
 				</span>
 			</div>
 			<div>
-				<div className="p-1 font-mono text-gray-500 dark:text-gray-500 text-sm">
+				<div className="p-1 font-mono text-neutral-800 dark:text-neutral-200 text-sm">
 					{location}
 				</div>
-				<div className="p-1 font-mono text-gray-400 dark:text-gray-600 text-sm">
+				<div className="p-1 font-mono text-neutral-800 dark:text-neutral-400 text-sm">
 					{range}
 				</div>
 				<div className="p-2">
 					<div className="flex flex-row ">
-						<div className="text-neutral-600 dark:text-neutral-100 mr-2 text-lg">
+						<div className="text-neutral-800 dark:text-neutral-500 mr-2 text-lg">
 							{' '}
 							&#8227;
 						</div>
-						<div className="text-gray-500 dark:text-gray-400">{text1}</div>
+						<div className="text-neutral-800 dark:text-neutral-200">{text1}</div>
 					</div>
 					<div className="flex flex-row">
-						<div className="text-neutral-600 dark:text-neutral-100 mr-2 text-lg">
+						<div className="text-neutral-800 dark:text-neutral-500 mr-2 text-lg">
 							{' '}
 							&#8227;
 						</div>
-						<div className="text-gray-500 dark:text-gray-400">{text2}</div>
+						<div className="text-neutral-800 dark:text-neutral-200">{text2}</div>
 					</div>
 					<div className="flex flex-row items-top">
-						<div className="text-neutral-600 dark:text-neutral-100 mr-2 text-lg">
+						<div className="text-neutral-800 dark:text-neutral-500 mr-2 text-lg">
 							{' '}
 							&#8227;
 						</div>
-						<div className="text-gray-500 dark:text-gray-400">{text3}</div>
+						<div className="text-neutral-800 dark:text-neutral-200">{text3}</div>
 					</div>
 				</div>
 			</div>
-			<div className="font-medium text-2xl justify-center text-neutral-600 dark:text-neutral-100 text-center">
+			<div className="font-medium text-2xl justify-center text-neutral-800 dark:text-neutral-100 text-center">
 				&#126;&#126;&#126;
 			</div>
 		</div>
