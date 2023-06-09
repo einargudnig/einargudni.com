@@ -46,10 +46,10 @@ export default function AboutPage() {
 	return (
 		<section>
 			<h1 className="font-bold text-3xl font-serif">About Me</h1>
-			<p className="my-5 text-neutral-800 dark:text-neutral-200">
+			<p className="my-5 text-neutral-200">
 				Hey, I&apos;m Einar Gudni. Most folks know me as Einar.
 			</p>
-			<div className="prose prose-neutral dark:prose-invert text-neutral-800 dark:text-neutral-200">
+			<div className="prose prose-neutral dark:prose-invert text-neutral-200">
 				<p>
 					I graduated as a computer scientist from the University of Iceland in the summer
 					of 2020. I live in Reykjavík. I work as a software developer at Maul.
@@ -57,37 +57,37 @@ export default function AboutPage() {
 				<div className="flex flex-col gap-2 md:flex-row md:gap-2 mb-6">
 					<Link
 						href="/now"
-						className="flex w-full border border-neutral-200 dark:border-neutral-800 rounded-lg p-4 no-underline items-center text-neutral-800 dark:text-neutral-200 hover:dark:bg-neutral-900 hover:bg-neutral-100 transition-all justify-between"
+						className="flex w-full border border-neutral-800 rounded-lg p-4 no-underline items-center :text-neutral-200 hover:bg-neutral-900  transition-all justify-between"
 					>
 						now
 					</Link>
 					<Link
 						href="/uses"
-						className="flex w-full border border-neutral-200 dark:border-neutral-800 rounded-lg p-4 no-underline items-center text-neutral-800 dark:text-neutral-200 hover:dark:bg-neutral-900 hover:bg-neutral-100 transition-all justify-between"
+						className="flex w-full border border-neutral-800 rounded-lg p-4 no-underline items-center :text-neutral-200 hover:bg-neutral-900  transition-all justify-between"
 					>
 						uses
 					</Link>
 					<Link
 						href="/hobbies"
-						className="flex w-full border border-neutral-200 dark:border-neutral-800 rounded-lg p-4 no-underline items-center text-neutral-800 dark:text-neutral-200 hover:dark:bg-neutral-900 hover:bg-neutral-100 transition-all justify-between"
+						className="flex w-full border border-neutral-800 rounded-lg p-4 no-underline items-center :text-neutral-200 hover:bg-neutral-900  transition-all justify-between"
 					>
 						hobbies
 					</Link>
 				</div>
-				<div className="font-medium text-2xl justify-center text-neutral-600 dark:text-neutral-100 text-center">
+				<div className="font-medium text-2xl justify-center text-neutral-100 text-center">
 					&#126;&#126;&#126;
 				</div>
-				<p className="dark:text-neutral-200 text-neutral-800">
+				<p className="text-neutral-200">
 					I&apos;m passionate in many different areas. I train Crossfit, and I like to eat
 					and cook food. I love to zip on a good cup of coffee or a glass of good wine. My
 					plan is to be over 100 years old, so I try to play long-term games.
 				</p>
-				<p className="dark:text-neutral-200 text-neutral-800">
+				<p className="text-neutral-200">
 					I&apos;m very dedicated to learn new things and to truly believe that you should
 					never stop learning. I enjoy creating different things, whether that be
 					websites, application or anything in between.
 				</p>
-				<p className="mb-8 dark:text-neutral-200 text-neutral-800">
+				<p className="mb-8 text-neutral-200">
 					At my first full-time job as a developer I feel like I&apos;ve been very lucky
 					to experience a broad and diverse part of projects and tasks. I get to deal with
 					everything from user feedback, design and to backend tests and improving parts
@@ -98,7 +98,7 @@ export default function AboutPage() {
 						rel="noopener noreferrer"
 						target="_blank"
 						href="https://twitter.com/einargudni"
-						className="flex w-full border border-neutral-200 dark:border-neutral-800 rounded-lg p-4 no-underline items-center text-neutral-800 dark:text-neutral-200 hover:dark:bg-neutral-900 hover:bg-neutral-100 transition-all justify-between"
+						className="flex w-full border border-neutral-800 rounded-lg p-4 no-underline items-center :text-neutral-200 hover:bg-neutral-900  transition-all justify-between"
 					>
 						<div className="flex items-center">
 							<TwitterIcon />
@@ -110,7 +110,7 @@ export default function AboutPage() {
 						rel="noopener noreferrer"
 						target="_blank"
 						href="https://github.com/einargudnig"
-						className="flex w-full border border-neutral-200 dark:border-neutral-800 rounded-lg p-4 no-underline items-center text-neutral-800 dark:text-neutral-200 hover:dark:bg-neutral-900 hover:bg-neutral-100 transition-all justify-between"
+						className="flex w-full border border-neutral-800 rounded-lg p-4 no-underline items-center :text-neutral-200 hover:bg-neutral-900  transition-all justify-between"
 					>
 						<div className="flex items-center">
 							<GitHubIcon />
@@ -122,7 +122,7 @@ export default function AboutPage() {
 						rel="noopener noreferrer"
 						target="_blank"
 						href="https://www.instagram.com/einargudni"
-						className="flex w-full border border-neutral-200 dark:border-neutral-800 rounded-lg p-4 no-underline items-center text-neutral-800 dark:text-neutral-200 hover:dark:bg-neutral-900 hover:bg-neutral-100 transition-all justify-between"
+						className="flex w-full border border-neutral-800 rounded-lg p-4 no-underline items-center :text-neutral-200 hover:bg-neutral-900  transition-all justify-between"
 					>
 						<div className="flex items-center">
 							<InstagramIcon />
@@ -131,7 +131,7 @@ export default function AboutPage() {
 						<ArrowIcon />
 					</a>
 				</div>
-				<div className="font-medium text-2xl justify-center text-neutral-600 dark:text-neutral-100 text-center">
+				<div className="font-medium text-2xl justify-center text-neutral-100 text-center">
 					&#126;&#126;&#126;
 				</div>
 				<h1 className="font-bold text-3xl font-serif mt-4">Experience</h1>

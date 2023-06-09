@@ -23,7 +23,7 @@ export default async function Home() {
 	return (
 		<section>
 			<h1 className="font-bold text-3xl font-serif">{name}</h1>
-			<p className="my-5 max-w-[460px] text-neutral-800 dark:text-neutral-200">{about()}</p>
+			<p className="my-5 max-w-[460px] text-neutral-200">{about()}</p>
 			<div className="flex items-start md:items-center my-8 flex-col md:flex-row">
 				<Image
 					alt={name}
@@ -33,7 +33,7 @@ export default async function Home() {
 					width={100}
 					priority
 				/>
-				<div className="mt-8 md:mt-0 ml-0 md:ml-6 space-y-2 text-neutral-500 dark:text-neutral-400">
+				<div className="mt-8 md:mt-0 ml-0 md:ml-6 space-y-2 text-neutral-400">
 					<a
 						rel="noopener noreferrer"
 						target="_blank"
