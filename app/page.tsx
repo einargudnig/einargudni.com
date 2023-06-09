@@ -49,7 +49,7 @@ export default async function Home() {
 					</Link>
 				</div>
 			</div>
-			{/* <p className="my-5 max-w-[600px] text-neutral-800 dark:text-neutral-200">
+			{/* <p className="my-5 max-w-[600px]ext-neutral-200">
         {bio()}
       </p> */}
 			<hr />
