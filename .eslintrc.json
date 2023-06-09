@@ -91,7 +91,7 @@
 		"no-with": 2,
 		"no-use-before-define": "off",
 		"comma-spacing": 2,
-		"consistent-return": 2,
+		// "consistent-return": 2,
 		"curly": [2, "all"],
 		"dot-notation": [
 			2,

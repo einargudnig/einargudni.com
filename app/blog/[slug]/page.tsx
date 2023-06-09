@@ -12,19 +12,14 @@ export async function generateStaticParams() {
 	}));
 }
 
-export async function generateMetadata({
-	// @ts-ignore
-	params
-}): Promise<Metadata | undefined> {
-	const post = allBlogs.find((post) => post.slug === params.slug);
+export async function generateMetadata({ params }): Promise<Metadata | undefined> {
+	const post = allBlogs.find((p) => p.slug === params.slug);
 	if (!post) {
 		return;
 	}
 
 	const { title, publishedAt: publishedTime, summary: description, image, slug } = post;
-	const ogImage = image
-		? `https://einargudni.com${image}`
-		: `https://einargudni/api/og?title=${title}`;
+	const ogImage = image ? `https://leerob.io${image}` : `https://leerob.io/api/og?title=${title}`;
 
 	return {
 		title,
@@ -34,7 +29,7 @@ export async function generateMetadata({
 			description,
 			type: 'article',
 			publishedTime,
-			url: `https://einargudni.com/blog/${slug}`,
+			url: `https://leerob.io/blog/${slug}`,
 			images: [
 				{
 					url: ogImage
@@ -49,9 +44,9 @@ export async function generateMetadata({
 		}
 	};
 }
-// @ts-ignore
+
 export default async function Blog({ params }) {
-	const post = allBlogs.find((post) => post.slug === params.slug);
+	const post = allBlogs.find((p) => p.slug === params.slug);
 
 	if (!post) {
 		notFound();
@@ -73,6 +68,7 @@ export default async function Blog({ params }) {
 				<ViewCounter slug={post.slug} trackView />
 			</div>
 			<Mdx code={post.body.code} />
+			{/* <Mdx code={post.body.code} tweets={tweets} /> */}
 		</section>
 	);
 }
