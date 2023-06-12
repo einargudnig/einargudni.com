@@ -1,8 +1,9 @@
 'use client';
 
 import useSWR from 'swr';
-import fetcher from '@/lib/fetcher';
 import Image from 'next/image';
+import fetcher from '@/lib/fetcher';
+import { Song } from '@/lib/types';
 
 interface NowPlayingData {
 	albumImageUrl: string;
@@ -14,7 +15,7 @@ interface NowPlayingData {
 
 export default function NowPlaying() {
 	//@ts-ignore
-	const { data } = useSWR<NowPlayingData>('/api/now-playing', { fetcher });
+	const { data }: Song = useSWR<NowPlayingData>('/api/now-playing', { fetcher });
 
 	return (
 		<div className="h-90 p-4 rounded-md shadow-md max-w-md mx-auto border border-gray-200">

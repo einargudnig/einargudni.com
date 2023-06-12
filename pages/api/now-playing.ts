@@ -1,25 +1,6 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import { currentlyPlayingSong } from '@/lib/spotify';
 
-interface Song {
-	is_playing: boolean;
-	item: {
-		name: string;
-		artists: {
-			name: string;
-		}[];
-		album: {
-			name: string;
-			images: {
-				url: string;
-			}[];
-		};
-		external_urls: {
-			spotify: string;
-		};
-	};
-}
-
 export default async function handler(_: NextApiRequest, res: NextApiResponse) {
 	const response = await currentlyPlayingSong();
 
