@@ -1,5 +1,5 @@
 import { NextApiRequest, NextApiResponse } from 'next';
-import { getNowPlaying } from '@/lib/spotify';
+import { currentlyPlayingSong } from '@/lib/spotify';
 
 interface Song {
 	is_playing: boolean;
@@ -20,25 +20,15 @@ interface Song {
 	};
 }
 
-export default async function handler(
-	_: NextApiRequest,
-	res: NextApiResponse<{
-		album: string;
-		albumImageUrl: string;
-		artist: string;
-		isPlaying: boolean;
-		songUrl: string;
-		title: string;
-	}>
-) {
-	const response = await getNowPlaying();
+export default async function handler(_: NextApiRequest, res: NextApiResponse) {
+	const response = await currentlyPlayingSong();
 
 	// Here we handle the request from the API
 	if (response.status === 204 || response.status > 400) {
 		return res.status(200).json({ isPlaying: false });
 	}
 
-	const song: Song = await response.json();
+	const song = await response.json();
 	// console.log('song', song)
 
 	if (song.item === null) {
