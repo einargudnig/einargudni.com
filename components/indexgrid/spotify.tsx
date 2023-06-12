@@ -1,8 +1,7 @@
 'use client';
 
 import useSWR from 'swr';
-import _fetch from 'isomorphic-fetch';
-
+import fetcher from '@/lib/fetcher';
 import Image from 'next/image';
 
 interface NowPlayingData {
@@ -12,14 +11,6 @@ interface NowPlayingData {
 	title: string | null;
 	artist: string | null;
 }
-
-const fetcher = async (url: string) => {
-	const res = await _fetch(url);
-	if (!res.ok) {
-		throw Error('Not Found');
-	}
-	return res.json();
-};
 
 export default function NowPlaying() {
 	//@ts-ignore
