@@ -8,7 +8,7 @@ type PostView = {
 	count: string;
 };
 
-async function fetcher<JSON = any>(input: RequestInfo, init?: RequestInit): Promise<JSON> {
+async function fetcher<JSON>(input: RequestInfo, init?: RequestInit): Promise<JSON> {
 	// @ts-ignore
 	const res = await fetch(input, init);
 	return res.json();
@@ -17,7 +17,7 @@ async function fetcher<JSON = any>(input: RequestInfo, init?: RequestInit): Prom
 export default function ViewCounter({ slug, trackView }: { slug: string; trackView: boolean }) {
 	const { data } = useSWR<PostView[]>('/api/views', fetcher);
 	const viewsForSlug = data && data.find((view) => view.slug === slug);
-	const views = new Number(viewsForSlug?.count || 0);
+	const views = Number(viewsForSlug?.count || 0);
 
 	useEffect(() => {
 		const registerView = () =>
