@@ -56,7 +56,7 @@ export default async function Home() {
 			<div className="grid grid-cols-1 gap-4 md:grid-cols-2 mt-4">
 				<NowPlaying />
 				<UsesButton />
-				<TopPost />
+				{/* <TopPost /> */}
 				<FollowTwitter />
 				<NowButton />
 				<HobbiesButton />
