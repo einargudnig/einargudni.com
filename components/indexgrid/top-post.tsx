@@ -12,6 +12,7 @@ export default function TopPost() {
 	const [isLoading, setIsLoading] = useState(true);
 	const [post, setPost] = useState<PostState>({ slug: '', count: 0 });
 
+	// eslint-disable-next-line
 	async function fetchMostViewedPost() {
 		try {
 			const { slug, count } = await getMostViewedPost();

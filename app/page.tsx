@@ -4,7 +4,7 @@ import { getBlogViews, getStarCount } from '../lib/metrics';
 import { GitHubIcon, ViewsIcon } from '../components/icons';
 import { name, about, avatar } from '../lib/info';
 import NowPlaying from '@/components/indexgrid/spotify';
-import TopPost from '@/components/indexgrid/top-post';
+// import TopPost from '@/components/indexgrid/top-post';
 import FollowTwitter from '@/components/indexgrid/twitter';
 import NowButton from '@/components/indexgrid/now';
 import UsesButton from '@/components/indexgrid/uses';
