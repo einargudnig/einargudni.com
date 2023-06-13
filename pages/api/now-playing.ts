@@ -1,6 +1,25 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import { currentlyPlayingSong } from '@/lib/spotify';
 
+type Song = {
+	item: {
+		album: {
+			images: {
+				url: string;
+			}[];
+			name: string;
+		};
+		artists: {
+			name: string;
+		}[];
+		external_urls: {
+			spotify: string;
+		};
+		name: string;
+	};
+	is_playing: boolean;
+};
+
 export default async function handler(_: NextApiRequest, res: NextApiResponse) {
 	const response = await currentlyPlayingSong();
 
@@ -9,7 +28,7 @@ export default async function handler(_: NextApiRequest, res: NextApiResponse) {
 		return res.status(200).json({ isPlaying: false });
 	}
 
-	const song = await response.json();
+	const song: Song = await response.json();
 	// console.log('song', song)
 
 	if (song.item === null) {

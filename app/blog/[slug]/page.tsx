@@ -11,7 +11,7 @@ export async function generateStaticParams() {
 		slug: post.slug
 	}));
 }
-
+// @ts-ignore
 export async function generateMetadata({ params }): Promise<Metadata | undefined> {
 	const post = allBlogs.find((p) => p.slug === params.slug);
 	if (!post) {
@@ -44,7 +44,7 @@ export async function generateMetadata({ params }): Promise<Metadata | undefined
 		}
 	};
 }
-
+// @ts-ignore
 export default async function Blog({ params }) {
 	const post = allBlogs.find((p) => p.slug === params.slug);
 

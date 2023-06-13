@@ -37,6 +37,7 @@ function Callout(props) {
 	);
 }
 
+// @ts-ignore
 function ProsCard({ title, pros }) {
 	return (
 		<div className="border border-emerald-200 dark:border-emerald-900 bg-neutral-50 dark:bg-neutral-900 rounded-xl p-6 my-4 w-full">
@@ -66,6 +67,7 @@ function ProsCard({ title, pros }) {
 	);
 }
 
+// @ts-ignore
 function ConsCard({ title, cons }) {
 	return (
 		<div className="border border-red-200 dark:border-red-900 bg-neutral-50 dark:bg-neutral-900 rounded-xl p-6 my-6 w-full">

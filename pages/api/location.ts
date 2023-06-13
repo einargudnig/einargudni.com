@@ -13,6 +13,7 @@ export default function handler(req: NextApiRequest, res: NextApiResponse<Locati
 
 		res.status(200).json(locationData);
 	} else {
+		// @ts-ignore
 		res.status(405).json({ message: 'Method Not Allowed' });
 	}
 }
