@@ -2,6 +2,5 @@
 
 import obsidianV2Mdx from './obsidian-v2.mdx.json' assert { type: 'json' }
 import oktoberfest22Mdx from './oktoberfest22.mdx.json' assert { type: 'json' }
-import testingMdx from './testing.mdx.json' assert { type: 'json' }
 
-export const allBlogs = [obsidianV2Mdx, oktoberfest22Mdx, testingMdx]
+export const allBlogs = [obsidianV2Mdx, oktoberfest22Mdx]
