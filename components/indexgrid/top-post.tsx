@@ -56,7 +56,7 @@ export default function TopPost() {
 export function getServerComponentProps() {
 	return {
 		props: {},
-		async onLoad({ update }) {
+		async onLoad({ update }: { update: (data: { slug: string; count: number }) => void }) {
 			const { slug, count } = await getMostViewedPost();
 			update({ slug, count });
 		}

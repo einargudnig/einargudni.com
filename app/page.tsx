@@ -57,7 +57,7 @@ export default async function Home() {
 				<NowPlaying />
 				<UsesButton />
 				{/* <TopPost /> */}
-				<FollowTwitter />
+				{/* <FollowTwitter /> */}
 				<NowButton />
 				<HobbiesButton />
 				{/* <Location /> */}
