@@ -20,7 +20,7 @@ export default function NowPlaying() {
 
 	return (
 		<div className="h-90 p-4 rounded-md shadow-md max-w-md mx-auto border border-gray-200">
-			{data?.isPlaying ? isPlaying({ data }) : isNotPlaying()}
+			{!data?.isPlaying ? isPlaying({ data }) : isNotPlaying()}
 		</div>
 	);
 }
@@ -28,13 +28,13 @@ export default function NowPlaying() {
 const isNotPlaying = () => {
 	return (
 		<>
-			<div className="relative h-38 w-full mb-4">
-				<Skeleton className="h-32 mb-4 bg-neutral-600" />
+			<div className="relative h-38 mb-4">
+				<Skeleton className="h-[100px] w-[325px] mb-4 bg-neutral-600 opacity-60" />
 			</div>
 
 			<div className="flex flex-col">
-				<div className="flex flex-row justify-between">
-					<Skeleton className="bg-neutral-400 h-4 w-24 mb-2" />
+				<div className="flex flex-row justify-between items-center">
+					<Skeleton className="bg-neutral-400 h-4 w-48 mb-2" />
 					<svg className="h-5 w-5 ml-auto mt-1" viewBox="0 0 168 168">
 						<path
 							fill="#1ED760"
@@ -42,8 +42,8 @@ const isNotPlaying = () => {
 						/>
 					</svg>
 				</div>
-				<div className="flex flex-row justify-between">
-					<Skeleton className="h-4 w-12 mr-3 bg-neutral-600" />
+				<div className="flex flex-row justify-between items-center">
+					<Skeleton className="h-3 w-24 mr-3 bg-neutral-600" />
 					<p className="text-neutral-400 text-sm">Not playing</p>
 				</div>
 			</div>
@@ -64,7 +64,7 @@ const isPlaying = ({ data }: { data: NowPlayingData }) => {
 				/>
 			</div>
 			<div className="flex flex-col">
-				<div className="flex flex-row justify-between">
+				<div className="flex flex-row justify-between items-center">
 					<h2 className="text-gray-100 text-sm font-semibold mb-2">{data?.title}</h2>
 					<svg className="h-5 w-5 ml-auto mt-1" viewBox="0 0 168 168">
 						<path
@@ -73,7 +73,7 @@ const isPlaying = ({ data }: { data: NowPlayingData }) => {
 						/>
 					</svg>
 				</div>
-				<div className="flex flex-row justify-between">
+				<div className="flex flex-row justify-between items-center">
 					<p className="text-gray-400 text-sm">{data?.artist}</p>
 					<p className="text-gray-400 text-sm">Now playing</p>
 				</div>
