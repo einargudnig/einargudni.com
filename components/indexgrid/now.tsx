@@ -5,7 +5,7 @@ import { GlobeIcon } from '../icons';
 export default function NowButton() {
 	return (
 		<div className="h-90 p-4 border border-gray-200 rounded-md shadow-md max-w-md mx-auto">
-			<Link href={'/uses'} className="flex items-center justify-center">
+			<Link href={'/now'} className="flex items-center justify-center">
 				<div>
 					<Image
 						src="/images/now.png"

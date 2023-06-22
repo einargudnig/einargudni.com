@@ -29,7 +29,7 @@ const isNotPlaying = () => {
 	return (
 		<>
 			<div className="relative h-38 mb-4">
-				<Skeleton className="h-[100px] w-[325px] mb-4 bg-neutral-600 opacity-60" />
+				<Skeleton className="h-[320px] w-[325px] mb-4 bg-neutral-600 opacity-60" />
 			</div>
 
 			<div className="flex flex-col">
