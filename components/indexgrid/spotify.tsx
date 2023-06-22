@@ -20,7 +20,7 @@ export default function NowPlaying() {
 
 	return (
 		<div className="h-90 p-4 rounded-md shadow-md max-w-md mx-auto border border-gray-200">
-			{!data?.isPlaying ? isPlaying({ data }) : isNotPlaying()}
+			{data?.isPlaying ? isPlaying({ data }) : isNotPlaying()}
 		</div>
 	);
 }
