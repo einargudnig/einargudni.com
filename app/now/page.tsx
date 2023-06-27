@@ -9,13 +9,13 @@ export default function NowPage() {
 	return (
 		<section className="prose prose-quoteless prose-invert">
 			<h1 className="font-bold text-3xl font-serif mb-5">Now</h1>
-			Work Maul GigOver Reading Watching Playing Health Travel Last updated: 2021-10-10
+			Reading Watching Playing Health Travel Last updated: 2021-10-10
 			<p>Follow your curiosity!</p>
 			<div>
 				<h2 className="font-bold text-2xl font-serif mb-5">Work</h2>
 				<p>
 					I&apos;m currently working as a software engineer at{' '}
-					<a href="https://www.fool.com/">Maul</a>. We are a close knit team that aim to
+					<a href="https://www.maul.is/">Maul</a>. We are a close knit team that aim to
 					change the lunchtime at your work!
 				</p>
 				<p>
@@ -33,7 +33,14 @@ export default function NowPage() {
 					Copenhagen.
 				</p>
 				<h2 className="font-bold text-2xl font-serif mb-5">Freelancing</h2>
-				<p></p>
+				<p>
+					I&apos;m always open to new opportunities, if you have a project that you think
+					I could help you with, please don&apos;t hesitate to contact me.
+				</p>
+				<p>
+					One of my freelancing projects is frontend deceloper at{' '}
+					<a href="https://www.gigover.com/">GigOver</a>.
+				</p>
 			</div>
 		</section>
 	);
