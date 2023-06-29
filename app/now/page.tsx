@@ -1,4 +1,5 @@
 import { Metadata } from 'next';
+import Link from 'next/link';
 
 export const metadata: Metadata = {
 	title: 'Now',
@@ -54,8 +55,10 @@ export default function NowPage() {
 				<h2 className="font-bold text-2xl font-serif mb-5">Work</h2>
 				<p>
 					I&apos;m currently working as a software engineer at{' '}
-					<a href="https://www.maul.is/">Maul</a>. We are a close knit team that aim to
-					change the lunchtime at your work!
+					<Link href="https://www.maul.is/" target="_blank">
+						Maul
+					</Link>
+					. We are a close knit team that aim to change the lunchtime at your work!
 				</p>
 				<p>
 					We create a menu for you and your co-workers, this menu is built around
@@ -68,8 +71,11 @@ export default function NowPage() {
 					multiple restaurants each day.
 				</p>
 				<p>
-					We recently launched Tiffin which will try to refresh the launch culture in
-					Copenhagen.
+					We recently launched{' '}
+					<Link href="https://www.tiffin.dk/" target="_blank">
+						Tiffin
+					</Link>{' '}
+					which will try to refresh the launch culture in Copenhagen.
 				</p>
 				<h2 className="font-bold text-2xl font-serif mb-5">Freelancing</h2>
 				<p>
@@ -78,9 +84,11 @@ export default function NowPage() {
 				</p>
 				<p>
 					One of my freelancing projects is a frontend developer at{' '}
-					<a href="https://www.gigover.com/">GigOver</a>. I help them build a software
-					used in construction. My current project revolves around building a procurement
-					and offer system.
+					<Link href="https://www.gigover.com/" target="_blank">
+						GigOver
+					</Link>
+					. I help them build a software used in construction. My current project revolves
+					around building a procurement and offer system.
 				</p>
 				<h2 className="font-bold text-2xl font-serif mb-5">Side projects</h2>
 				<p>
@@ -100,7 +108,11 @@ export default function NowPage() {
 				<p>My plan is to live to be at least 100 years old and be healthy</p>
 				<p>
 					I try to get enough sleep, eat well and train. I&apos;ve been following the
-					Strength program from Mayhem for some time.
+					Strength program from{' '}
+					<Link href="https://www.mayhemathletes.com/competitor/" target="_blank">
+						Crossfit Mayhem
+					</Link>{' '}
+					for some time.
 				</p>
 			</div>
 		</section>
