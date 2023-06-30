@@ -4,7 +4,6 @@ publishedAt: 2022-10-01
 summary: I made a drink counter and a bingo for a friends trip to Oktoberfest
 ---
 
-
 # What?
 
 This is a project that has no purpose other than being for fun. A small little nextjs website connected to a database. For a group of friends going to Oktoberfest in Munich. This website lets us count our drinks, and count how many bratwursts we eat as long as including a 4x4 bingo card.
@@ -12,20 +11,15 @@ This is a project that has no purpose other than being for fun. A small little n
 However, I got the idea to build it late so I had to see what I could find to help me make this work in a short time. Below you can see some of the things I found that helped me make this ready in a shorter time.
 
 <Image
-  alt={`oktoberfest logo`}
-  src={`/images/oktoberfest/oktoberfestFrame.png`}
-  width={2084 / 2}
-  height={802 / 2}
+	alt={`oktoberfest logo`}
+	src={`/images/oktoberfest/oktoberfestFrame.png`}
+	width={2084 / 2}
+	height={802 / 2}
 />
 
 # Stack
 
-<Image 
-  alt={`stack`} 
-  src={`/images/oktoberfest/stack.png`} 
-  width={2084 / 2}
-  height={802 / 2} 
-/>
+<Image alt={`stack`} src={`/images/oktoberfest/stack.png`} width={2084 / 2} height={802 / 2} />
 
 ## NextJs + TailwindCSS
 
@@ -44,9 +38,9 @@ I heard about Supabase on fireship's youtube channel a couple of months ago and 
 It was super easy to set up a database and start to play around with it.
 Here are some examples I used to get more comfortable using supabase:
 
-- https://supabase.com/docs/guides/with-nextjs
-- https://supabase.com/docs/guides/with-nextjs
-- https://supabase.com/docs/guides/database/connecting-to-postgres
+-   https://supabase.com/docs/guides/with-nextjs
+-   https://supabase.com/docs/guides/with-nextjs
+-   https://supabase.com/docs/guides/database/connecting-to-postgres
 
 I made two tables, one for drinks and another one for miscellaneous things. This made is easier to play around, I also duplicated the react-supabase hooks and connected them to the two different tables.
 
@@ -63,36 +57,36 @@ I used the `useInsert` and the `useRealtime` hooks.
 It was surprising how little code I used to make this work with the database. For both table, I used around 20 lines of code
 
 ```tsx
-import { useInsert, useRealTime } from 'react-supabase'
+import { useInsert, useRealTime } from 'react-supabase';
 
-const TABLE_NAME = 'drinks'
+const TABLE_NAME = 'drinks';
 
 export function useDrinkClicks() {
-  const [{ data, error }] = useRealtime(TABLE_NAME, {
-    select: {
-      columns: 'id, type',
-    },
-  })
+	const [{ data, error }] = useRealtime(TABLE_NAME, {
+		select: {
+			columns: 'id, type'
+		}
+	});
 
-  if (error) {
-    console.error(error)
-  }
+	if (error) {
+		console.error(error);
+	}
 
-  return data
+	return data;
 }
 
 export function useInsertDrinksClicks() {
-  // eslint-disable-next-line no-unused-vars
-  const [_data, execute] = useInsert(TABLE_NAME)
+	// eslint-disable-next-line no-unused-vars
+	const [_data, execute] = useInsert(TABLE_NAME);
 
-  return execute
+	return execute;
 }
 ```
 
-- The `useRealtime` hook does return an array of everything in the database selected by these two columns.
-  I could’ve filtered out types of buttons there (`type: beer`) and only returned that to the counter. But Since
+-   The `useRealtime` hook does return an array of everything in the database selected by these two columns.
+    I could’ve filtered out types of buttons there (`type: beer`) and only returned that to the counter. But Since
 
-- The `useInsertDrinksClicks` hook does simply insert the type to the table we mention above.
+-   The `useInsertDrinksClicks` hook does simply insert the type to the table we mention above.
 
 By using those two simple hooks I could in a rather easy way return an array of everything in the table and again add to the same table.
 
@@ -111,23 +105,23 @@ The first thing to do is to make the buttons and set the type of them and the la
 
 ```tsx
 const drinkButtons = [
-  {
-    type: 'beer',
-    label: '🍻',
-  },
-  {
-    type: 'wine',
-    label: '🍾',
-  },
-  {
-    type: 'cocktail',
-    label: '🍹',
-  },
-  {
-    type: 'shot',
-    label: '🥃',
-  },
-]
+	{
+		type: 'beer',
+		label: '🍻'
+	},
+	{
+		type: 'wine',
+		label: '🍾'
+	},
+	{
+		type: 'cocktail',
+		label: '🍹'
+	},
+	{
+		type: 'shot',
+		label: '🥃'
+	}
+];
 ```
 
 The logic for the buttons is way more simpler than I though it would be when I started.
@@ -179,12 +173,7 @@ The logic is simply displaying the length for the array of a certain type in the
 We then use the onClick handler to use the `clickedButton(button.type)` to insert the new value into our database.
 What the `clickedButton` does is only using the `useInsertDrinkClicks` to insert a uuid and a type to the bottom of our table.
 
-<Image 
-  alt={`counter`} 
-  src={`/images/oktoberfest/counter.png`} 
-  width={2084 / 2}
-  height={802 / 2}
-/>
+<Image alt={`counter`} src={`/images/oktoberfest/counter.png`} width={2084 / 2} height={802 / 2} />
 
 # Bingo
 
@@ -200,10 +189,10 @@ On the day before we went to the venue, I remembered that I had not made any att
 We also added extra buttons where you could randomize your tiles again when you win. Before this did automatically happen on refresh, but that’s exactly **not** how we wanted it to be.
 
 <Image
-  alt={`smaller bingo`}
-  src={`/images/oktoberfest/smallerbingo.png`}
-  width={2084 / 2}
-  height={802 / 2}
+	alt={`smaller bingo`}
+	src={`/images/oktoberfest/smallerbingo.png`}
+	width={2084 / 2}
+	height={802 / 2}
 />
 
 ## Third iteration
@@ -213,10 +202,10 @@ This was done between days on oktoberfest itself. We wanted to add more tiles to
 I forgot yo update the logic so a user could have bingo for every four diagonal in a row, when in fact a user shouldn’t be able to get a diagonal bingo when the card is 4x6. It was not a major issue 🤷
 
 <Image
-  alt={`bigger bingo`}
-  src={`/images/oktoberfest/biggerbingo.png`}
-  width={2084 / 2}
-  height={802 / 2}
+	alt={`bigger bingo`}
+	src={`/images/oktoberfest/biggerbingo.png`}
+	width={2084 / 2}
+	height={802 / 2}
 />
 
 # Extra touches
@@ -231,11 +220,11 @@ There is more info on this useSound hook in its [github repo](https://github.com
 
 I found this cool [npm package](https://www.npmjs.com/package/react-canvas-confetti) that displayed confetti when a button is pressed. I added it to my project and made so that when a user wins bingo his screen gets confetti fireworks
 
-<Image 
-  alt={`confetti`} 
-  src={`/static/images/blog/oktoberfest/confetti.png`} 
-  width={2084 / 2}
-  height={802 / 2}
+<Image
+	alt={`confetti`}
+	src={`/static/images/blog/oktoberfest/confetti.png`}
+	width={2084 / 2}
+	height={802 / 2}
 />
 
 ## What next?
