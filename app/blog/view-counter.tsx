@@ -16,8 +16,8 @@ async function fetcher<JSON>(input: RequestInfo, init?: RequestInit): Promise<JS
 
 export default function ViewCounter({ slug, trackView }: { slug: string; trackView: boolean }) {
 	const { data } = useSWR<PostView[]>('/api/views', fetcher);
-	const viewsForSlug = data && data.find((view) => view.slug === slug);
-	const views = Number(viewsForSlug?.count || 0);
+	const viewsForSlug = Array.isArray(data) && data.find((view) => view.slug === slug);
+	const views = viewsForSlug ? Number(viewsForSlug.count) : 0;
 
 	useEffect(() => {
 		const registerView = () =>
