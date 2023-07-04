@@ -22,6 +22,13 @@ export const getMostViewedPost = cache(async () => {
 	return data[0];
 });
 
+// return the count of users using each type
+export const getUsesCount = cache(async () => {
+	const data = await queryBuilder.selectFrom('uses').select(['type', 'count']).execute();
+
+	return data;
+});
+
 export const getStarCount = cache(async () => {
 	const octokit = new Octokit({
 		auth: process.env.GITHUB_TOKEN

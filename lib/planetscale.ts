@@ -11,9 +11,15 @@ interface Location {
 	region: string;
 }
 
+interface Uses {
+	type: string;
+	count: number;
+}
+
 interface Database {
 	views: ViewsTable;
 	location: Location;
+	uses: Uses;
 }
 
 export const queryBuilder = new Kysely<Database>({
