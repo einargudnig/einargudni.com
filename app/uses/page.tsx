@@ -1,12 +1,4 @@
 import { Metadata } from 'next';
-import {
-	Card,
-	CardContent,
-	CardDescription,
-	CardFooter,
-	CardHeader,
-	CardTitle
-} from '@/components/ui/card';
 
 export const metadata: Metadata = {
 	title: 'Uses',
@@ -21,20 +13,18 @@ export default function UsesPage() {
 				<p>I have an idea how to make this page more fun, you just wait!</p>
 
 				<h2 className="mt-4 font-bold text-2xl font-serif mb-5">Hardware</h2>
-				<div>
-					<Card>
-						<CardHeader>
-							<CardTitle>Card Title</CardTitle>
-							<CardDescription>Card Description</CardDescription>
-						</CardHeader>
-						<CardContent>
-							<p>Card Content</p>
-						</CardContent>
-						<CardFooter>
-							<p>Card Footer</p>
-						</CardFooter>
-					</Card>
-				</div>
+				<ul className="mb-4">
+					<li>Macbook Pro M1 max 2022</li>
+					<li>iPhone 14 Pro</li>
+					<li>Nuphy Halo 65</li>
+					<li>Keychron K4</li>
+					<li>Keychron K3</li>
+					<li>Logitech MX Master 3</li>
+					<li>Sony WH1000</li>
+					<li>24&quot; Asus Montior</li>
+					<li>Garmin Venu</li>
+					<li></li>
+				</ul>
 				<h2 className="font-bold text-2xl font-serif mb-5">Software</h2>
 				<ul>
 					<li>Obsidian</li>

@@ -54,7 +54,7 @@ export default function AboutPage() {
 					I graduated as a computer scientist from the University of Iceland in the summer
 					of 2020. I live in Reykjavík. I work as a software developer at Maul.
 				</p>
-				<div className="flex flex-col gap-2 md:flex-row md:gap-2 mb-6">
+				<div className="flex flex-col gap-2 md:flex-row md:gap-2 mb-6 mt-4">
 					<Link
 						href="/now"
 						className="flex w-full border border-neutral-800 rounded-lg p-4 no-underline items-center :text-neutral-200 hover:bg-neutral-900  transition-all justify-between"
