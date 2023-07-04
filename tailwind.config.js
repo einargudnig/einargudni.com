@@ -1,9 +1,11 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
+	darkMode: ['class'],
 	content: [
 		'./pages/**/*.{ts,tsx}',
 		'./components/**/*.{ts,tsx}',
 		'./app/**/*.{ts,tsx}',
+		'./src/**/*.{ts,tsx}',
 		'./content/**/*.mdx'
 	],
 	theme: {
@@ -15,23 +17,12 @@ module.exports = {
 			}
 		},
 		extend: {
-			fontFamily: {
-				serif: ['var(--font-kaisei)']
-			},
-			typography: {
-				quoteless: {
-					css: {
-						'blockquote p:first-of-type::before': { content: 'none' },
-						'blockquote p:first-of-type::after': { content: 'none' }
-					}
-				}
-			},
 			colors: {
 				border: 'hsl(var(--border))',
 				input: 'hsl(var(--input))',
 				ring: 'hsl(var(--ring))',
 				background: 'var(--background)', //! hsl(var(--background)) This gives me a different color than the one in the layout.tsx?????
-				foreground: 'var(--foreground)', //! hsl(var(--foreground)) This gives me a different color than the one in the layout.tsx?????
+				foreground: 'var(--foreground)', //! hsl(var(--background)) This gives me a different color than the one in the layout.tsx?????
 				primary: {
 					DEFAULT: 'hsl(var(--primary))',
 					foreground: 'hsl(var(--primary-foreground))'
@@ -82,8 +73,5 @@ module.exports = {
 			}
 		}
 	},
-	future: {
-		hoverOnlyWhenSupported: true
-	},
-	plugins: [require('tailwindcss-animate'), require('@tailwindcss/typography')]
+	plugins: [require('tailwindcss-animate')]
 };
