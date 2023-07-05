@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { queryBuilder } from '@/lib/planetscale';
 
 interface Type {
