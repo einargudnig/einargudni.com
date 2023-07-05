@@ -4,6 +4,7 @@ import clsx from 'clsx';
 import { usePathname } from 'next/navigation';
 import Link from 'next/link';
 import { LayoutGroup, motion } from 'framer-motion';
+// import { ThemeToggle } from './theme-toggle';
 
 const navItems = {
 	'/': { name: 'home' },
@@ -64,6 +65,9 @@ export default function Sidebar() {
 						</div>
 					</nav>
 				</LayoutGroup>
+				{/* <div>
+					<ThemeToggle />
+				</div> */}
 			</div>
 		</aside>
 	);

@@ -11,23 +11,16 @@ export const getBlogViews = cache(async () => {
 });
 
 // Return the blog post with most views
-export const getMostViewedPost = cache(async () => {
-	const data = await queryBuilder
-		.selectFrom('views')
-		.select(['slug', 'count'])
-		.orderBy('count', 'desc')
-		.limit(1)
-		.execute();
+// export const getMostViewedPost = cache(async () => {
+// 	const data = await queryBuilder
+// 		.selectFrom('views')
+// 		.select(['slug', 'count'])
+// 		.orderBy('count', 'desc')
+// 		.limit(1)
+// 		.execute();
 
-	return data[0];
-});
-
-// return the count of users using each type
-export const getUsesCount = cache(async () => {
-	const data = await queryBuilder.selectFrom('uses').select(['type', 'count']).execute();
-
-	return data;
-});
+// 	return data[0];
+// });
 
 export const getStarCount = cache(async () => {
 	const octokit = new Octokit({

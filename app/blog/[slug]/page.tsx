@@ -19,7 +19,9 @@ export async function generateMetadata({ params }): Promise<Metadata | undefined
 	}
 
 	const { title, publishedAt: publishedTime, summary: description, image, slug } = post;
-	const ogImage = image ? `https://leerob.io${image}` : `https://leerob.io/api/og?title=${title}`;
+	const ogImage = image
+		? `https://einargudni.com${image}`
+		: `https://einargudni.com/api/og?title=${title}`;
 
 	return {
 		title,
@@ -29,7 +31,7 @@ export async function generateMetadata({ params }): Promise<Metadata | undefined
 			description,
 			type: 'article',
 			publishedTime,
-			url: `https://leerob.io/blog/${slug}`,
+			url: `https://einargudni.com/blog/${slug}`,
 			images: [
 				{
 					url: ogImage
