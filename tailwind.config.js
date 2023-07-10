@@ -5,7 +5,6 @@ module.exports = {
 		'./pages/**/*.{ts,tsx}',
 		'./components/**/*.{ts,tsx}',
 		'./app/**/*.{ts,tsx}',
-		'./src/**/*.{ts,tsx}',
 		'./content/**/*.mdx'
 	],
 	theme: {
@@ -17,6 +16,17 @@ module.exports = {
 			}
 		},
 		extend: {
+			fontFamily: {
+				serif: ['var(--font-kaisei)']
+			},
+			typography: {
+				quoteless: {
+					css: {
+						'blockquote p:first-of-type::before': { content: 'none' },
+						'blockquote p:first-of-type::after': { content: 'none' }
+					}
+				}
+			},
 			colors: {
 				border: 'hsl(var(--border))',
 				input: 'hsl(var(--input))',
@@ -73,5 +83,8 @@ module.exports = {
 			}
 		}
 	},
-	plugins: [require('tailwindcss-animate')]
+	future: {
+		hoverOnlyWhenSupported: true
+	},
+	plugins: [require('tailwindcss-animate'), require('@tailwindcss/typography')]
 };
