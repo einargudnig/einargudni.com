@@ -1,11 +1,12 @@
 import { Metadata } from 'next';
 import Image from 'next/image';
 import Link from 'next/link';
-// import UsesButton from '@/components/uses-button';
+import UsesButton from '@/components/uses-button';
+// import UsesCounter from './uses-counter';
 
 export const metadata: Metadata = {
 	title: 'Uses',
-	description: 'The tools I use'
+	description: 'Hardware and software I use on a daily bases.'
 };
 
 export const revalidate = 60;
@@ -52,7 +53,7 @@ export default async function UsesPage() {
 										/>
 									</div>
 								</div>
-
+								{/* <UsesCounter type={'macbook'} trackView={false} /> */}
 								{/* <UsesButton type="macbook" /> */}
 							</div>
 						</div>

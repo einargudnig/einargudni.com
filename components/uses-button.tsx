@@ -34,14 +34,15 @@ export default function UsesButton({ type }: Type) {
 				.execute();
 
 			// Increment the count by 1
+			setCount(data[0].count);
 			const newCount = data[0].count + 1;
 
 			// Update the count in the uses table
-			// await queryBuilder
-			// 	.update('uses')
-			// 	.set({ count: newCount })
-			// 	.where('type', '=', type)
-			// 	.execute();
+			await queryBuilder
+				.updateTable('uses')
+				.set({ count: newCount })
+				.where('type', '=', type)
+				.execute();
 
 			// Update the count in the component state
 			setCount(newCount);
