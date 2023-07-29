@@ -1,10 +1,12 @@
 'use client';
 
 import useSWR from 'swr';
+import { MouseEvent } from 'react';
 import Image from 'next/image';
 import fetcher from '@/lib/fetcher';
 import { Song } from '@/lib/types';
 import { Skeleton } from '../ui/skeleton';
+import { motion, useMotionValue, useMotionTemplate } from 'framer-motion';
 
 interface NowPlayingData {
 	albumImageUrl: string;
@@ -17,9 +19,34 @@ interface NowPlayingData {
 export default function NowPlaying() {
 	//@ts-ignore
 	const { data }: Song = useSWR<NowPlayingData>('/api/now-playing', { fetcher });
+	const mouseX = useMotionValue(0);
+	const mouseY = useMotionValue(0);
+
+	function handleMouseMove({ currentTarget, clientX, clientY }: MouseEvent) {
+		// @ts-ignore
+		const rect = (currentTarget as HTMLElement).getBoundingClientRect();
+
+		mouseX.set(clientX - rect.left);
+		mouseY.set(clientY - rect.top);
+	}
 
 	return (
-		<div className="h-90 p-4 rounded-md shadow-md max-w-md mx-auto border border-gray-200">
+		<div
+			className="group relative h-90 p-4 rounded-md shadow-md max-w-md mx-auto border border-gray-200"
+			onMouseMove={handleMouseMove}
+		>
+			<motion.div
+				className="pointer-events-none absolute -inset-px rounded-xl opacity-0 transition duration-300 group-hover:opacity-100"
+				style={{
+					background: useMotionTemplate`
+            radial-gradient(
+              650px circle at ${mouseX}px ${mouseY}px,
+              rgba(90, 119, 131, 0.15),
+              transparent 80%
+            )
+          `
+				}}
+			/>
 			{data?.isPlaying ? isPlaying({ data }) : isNotPlaying()}
 		</div>
 	);
