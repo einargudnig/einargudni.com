@@ -11,44 +11,44 @@ export default function NowPage() {
 		<section className="prose prose-quoteless prose-invert">
 			<h1 className="font-bold text-3xl font-serif mb-5">Follow your curiosity!</h1>
 			<p>
-				<strong>Last updated:</strong> 2023-06-28
+				<strong>Last updated:</strong> 2023-07-24
 			</p>
 			<div className="grid grid-cols-2 gap-4">
 				<div className="flex space-x-2 border border-neutral-100 p-2 rounded-md justify-center items-center">
 					<p>
 						<strong>Location:</strong>
 					</p>
-					<p>Reykjavik, Iceland</p>
+					<p>Detroit, MI USA</p>
 				</div>
 				<div className="flex space-x-2 border border-neutral-100 p-2 rounded-md justify-center items-center">
 					<p>
 						<strong>Weather:</strong>
 					</p>
-					<p>9°C, Cloudy</p>
+					<p>29°C, Partly cloudy</p>
 				</div>
-				<div className="flex space-x-2 border border-neutral-100 p-2 rounded-md items-center">
+				<div className="flex space-x-2 border border-neutral-100 p-2 rounded-md justify-center items-center">
 					<p>
 						<strong>Reading:</strong>
 					</p>
-					<p>What&apos;s our problem - Tim Urban</p>
+					<p>Open - Andre Agassi</p>
 				</div>
 				<div className="flex space-x-2 border border-neutral-100 p-2 rounded-md justify-center items-center">
 					<p>
 						<strong>Podcast:</strong>
 					</p>
-					<p>Nick Bare Podcast</p>
+					<p>Modern Wisdom</p>
 				</div>
 				<div className="flex space-x-2 border border-neutral-100 p-2 rounded-md justify-center items-center">
 					<p>
 						<strong>Drinking:</strong>
 					</p>
-					<p>Pre-workout</p>
+					<p>Water</p>
 				</div>
 				<div className="flex space-x-2 border border-neutral-100 p-2 rounded-md justify-center items-center">
 					<p>
 						<strong>Eating:</strong>
 					</p>
-					<p>Banana</p>
+					<p>Nothing</p>
 				</div>
 			</div>
 			<div>
@@ -101,7 +101,7 @@ export default function NowPage() {
 					planned.
 				</p>
 				<p>
-					I&apos;m ot going to wait until it is finished, I&apos;m going to let follow
+					I&apos;m not going to wait until it is finished, I&apos;m going to let follow
 					along when I build new features.
 				</p>
 				<h2 className="font-bold text-2xl font-serif mb-5">Health</h2>

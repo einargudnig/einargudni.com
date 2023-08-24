@@ -36,6 +36,12 @@ const HomePage = () => {
 			<div className="py-5">
 				<LifeWeeks weeksPassed={weeksPassed()} />
 			</div>
+
+			<div className="mt-3">
+				<p className="text-neutral-400 font-light text-sm font-serif">
+					{weeksPassed()}/5200{' '}
+				</p>
+			</div>
 		</div>
 	);
 };

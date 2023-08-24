@@ -10,7 +10,8 @@ const navItems = {
 	'/': { name: 'home' },
 	'/about': { name: 'about' },
 	'/blog': { name: 'blog' },
-	'/projects': { name: 'projects' }
+	'/projects': { name: 'projects' },
+	'/weeks': { name: 'weeks' }
 };
 
 export default function Sidebar() {
