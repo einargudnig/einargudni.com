@@ -16,6 +16,10 @@ module.exports = {
 			}
 		},
 		extend: {
+			gridTemplateColumns: {
+				27: 'repeat(27, minmax(0, 1fr))',
+				52: 'repeat(52, minmax(0, 1fr))'
+			},
 			fontFamily: {
 				serif: ['var(--font-kaisei)']
 			},
