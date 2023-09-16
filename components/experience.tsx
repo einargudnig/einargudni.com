@@ -36,15 +36,15 @@ export default function Experience({
 				<div className="p-1 font-mono text-neutral-200 text-sm">{location}</div>
 				<div className="p-1 font-mono text-neutral-400 text-sm">{range}</div>
 				<div className="p-2">
-					<div className="flex flex-row ">
+					<div className="flex flex-row items-center">
 						<div className="text-neutral-500 mr-2 text-lg"> &#8227;</div>
 						<div className="text-neutral-200">{text1}</div>
 					</div>
-					<div className="flex flex-row">
+					<div className="flex flex-row items-center">
 						<div className="text-neutral-500 mr-2 text-lg"> &#8227;</div>
 						<div className="text-neutral-200">{text2}</div>
 					</div>
-					<div className="flex flex-row items-top">
+					<div className="flex flex-row items-center">
 						<div className="text-neutral-500 mr-2 text-lg"> &#8227;</div>
 						<div className="text-neutral-200">{text3}</div>
 					</div>

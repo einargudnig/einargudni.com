@@ -8,7 +8,8 @@ import NowPlaying from '@/components/indexgrid/spotify';
 // import FollowTwitter from '@/components/indexgrid/twitter';
 import NowButton from '@/components/indexgrid/now';
 import UsesButton from '@/components/indexgrid/uses';
-import HobbiesButton from '@/components/indexgrid/hobbies';
+import CouriosityButton from '@/components/indexgrid/couriosity';
+// import HobbiesButton from '@/components/indexgrid/hobbies';
 
 export const revalidate = 60;
 
@@ -59,7 +60,8 @@ export default async function Home() {
 				{/* <TopPost /> */}
 				{/* <FollowTwitter /> */}
 				<NowButton />
-				<HobbiesButton />
+				<CouriosityButton />
+				{/* <HobbiesButton /> */}
 				{/* <Location /> */}
 				{/* <CommandBar /> */}
 				{/* Last Book */}
