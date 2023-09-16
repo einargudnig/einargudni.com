@@ -50,6 +50,20 @@ export default function Couriosity() {
 				</div>
 				<div className="text-neutral-400">&nbsp;-&nbsp;16. sept 2023</div>
 			</div>
+
+			<div className="flex mt-2 items-center">
+				<div className="text-neutral-500 mr-2 text-lg"> &#8227;</div>
+				<div className="text-neutral-200 hover:text-neutral-500">
+					<a
+						href="https://vercel.com/docs/functions/edge-functions/og-image-generation"
+						target="_blank"
+						rel="noopener noreferrer"
+					>
+						Vercel og image generation
+					</a>
+				</div>
+				<div className="text-neutral-400">&nbsp;-&nbsp;16. sept 2023</div>
+			</div>
 		</section>
 	);
 }

@@ -23,7 +23,7 @@ export const metadata: Metadata = {
 		siteName: 'Einar Gudni',
 		images: [
 			{
-				url: 'https://einargudni.com/images/og-image.png',
+				url: 'https://einargudni.com/og-bg.png',
 				alt: 'Einar Gudni'
 			}
 		],
