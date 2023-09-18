@@ -1,21 +1,20 @@
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {
-	title: 'Couriosity',
-	description: 'I am courious about a lot of things'
+	title: 'Curiosity',
+	description: 'I am curious about a lot of things'
 };
 
-export default function Couriosity() {
+export default function Curiosity() {
 	return (
 		<section>
-			<h1 className="font-bold text-3xl font-serif mb-5">Couriosity</h1>
+			<h1 className="font-bold text-3xl font-serif mb-5">Curiosity</h1>
 			<div className="prose prose-neutral dark:prose-invert text-neutral-200">
 				<p>
-					This will be me couriosity diary. I will add things here that I find
-					interesting.
+					This will be me curiosity diary. I will add things here that I find interesting.
 				</p>
 				<p>
-					I&apos;m going to make list of everything that I find courious along side the
+					I&apos;m going to make list of everything that I find curious along side the
 					date I add it to the list, so buckle up for this ride 🎢
 				</p>
 			</div>

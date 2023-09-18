@@ -6,7 +6,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { HobbiesIcon } from '../icons';
 
-export default function CouriosityButton() {
+export default function CuriosityButton() {
 	const mouseX = useMotionValue(0);
 	const mouseY = useMotionValue(0);
 
@@ -34,18 +34,18 @@ export default function CouriosityButton() {
           `
 				}}
 			/>
-			<Link href={'/couriosity'} className="flex items-center justify-center">
+			<Link href={'/curiosity'} className="flex items-center justify-center">
 				<div>
 					<Image
-						src="/images/couriosity.png"
-						alt="couriosity"
+						src="/images/curiosity.png"
+						alt="curiosity"
 						className="rounded-lg grayscale"
 						width={350}
 						height={100}
 					/>
 					<div className="flex flex-row mx-auto mt-6">
 						<HobbiesIcon />
-						<p className="ml-2">couriosity</p>
+						<p className="ml-2">curiosity</p>
 					</div>
 				</div>
 			</Link>
