@@ -11,32 +11,33 @@ export default function NowPage() {
 		<section className="prose prose-quoteless prose-invert">
 			<h1 className="font-bold text-3xl font-serif mb-5">Follow your curiosity!</h1>
 			<p>
-				<strong>Last updated:</strong> 2023-07-24
+				<strong>Last updated:</strong> 2023-10-05
 			</p>
 			<div className="grid grid-cols-2 gap-4">
 				<div className="flex space-x-2 border border-neutral-100 p-2 rounded-md justify-center items-center">
 					<p>
 						<strong>Location:</strong>
 					</p>
-					<p>Detroit, MI USA</p>
+					<p>Reykjavik, Iceland</p>
 				</div>
 				<div className="flex space-x-2 border border-neutral-100 p-2 rounded-md justify-center items-center">
 					<p>
 						<strong>Weather:</strong>
 					</p>
-					<p>29°C, Partly cloudy</p>
+					<p>6°C, Cloudy</p>
 				</div>
-				<div className="flex space-x-2 border border-neutral-100 p-2 rounded-md justify-center items-center">
+				<div className="flex flex-col border border-neutral-100 p-2 rounded-md items-center">
 					<p>
 						<strong>Reading:</strong>
 					</p>
-					<p>Open - Andre Agassi</p>
+					<p>Thinking in Systems</p>
+					<p>Donatella Meadows</p>
 				</div>
 				<div className="flex space-x-2 border border-neutral-100 p-2 rounded-md justify-center items-center">
 					<p>
 						<strong>Podcast:</strong>
 					</p>
-					<p>Modern Wisdom</p>
+					<p>Founders</p>
 				</div>
 				<div className="flex space-x-2 border border-neutral-100 p-2 rounded-md justify-center items-center">
 					<p>
