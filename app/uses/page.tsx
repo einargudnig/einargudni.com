@@ -1,8 +1,7 @@
 import { Metadata } from 'next';
 import Image from 'next/image';
 import Link from 'next/link';
-// import UsesButton from '@/components/uses-button';
-// import UsesCounter from './uses-counter';
+import UsesCounter from './uses-counter';
 
 export const metadata: Metadata = {
 	title: 'Uses',
@@ -18,7 +17,12 @@ export default async function UsesPage() {
 			<div>
 				<p>
 					Some of the images are made with midjourney 🤠 so some of them might be slightly
-					off
+					off.
+				</p>
+				<br />
+				<p className="text-neutral-400">
+					Please let me know if you are using the same gear as I am by pushing the button
+					underneath the image.
 				</p>
 
 				<h2 className="mt-4 font-bold text-2xl font-serif mb-5">Hardware</h2>
@@ -43,7 +47,7 @@ export default async function UsesPage() {
 											machine.
 										</p>
 									</div>
-									<div className="mx-1">
+									<div className="mx-1 p-1">
 										<Image
 											src="/images/uses/macbook.png"
 											alt="Macbook pro 2022"
@@ -53,8 +57,12 @@ export default async function UsesPage() {
 										/>
 									</div>
 								</div>
-								{/* <UsesCounter type={'macbook'} trackView={false} /> */}
-								{/* <UsesButton type="macbook" /> */}
+								<div className="flex justify-between mt-2 items-center">
+									<p className="text-xs text-neutral-400">
+										Let me know if you use this by pressing the button!
+									</p>
+									<UsesCounter type={'macbook'} trackView={false} />
+								</div>
 							</div>
 						</div>
 					</div>
@@ -75,7 +83,7 @@ export default async function UsesPage() {
 											amazing. I&apos;m not regretting getting this keyboard.
 										</p>
 									</div>
-									<div className="mx-1">
+									<div className="mx-1 p-1">
 										<Image
 											src="/images/uses/nuphy.jpeg"
 											alt="Macbook pro 2022"
@@ -85,8 +93,12 @@ export default async function UsesPage() {
 										/>
 									</div>
 								</div>
-
-								{/* <UsesButton type="nuphy" /> */}
+								<div className="flex justify-between mt-2 items-center">
+									<p className="text-xs text-neutral-400">
+										Let me know if you use this by pressing the button!
+									</p>
+									<UsesCounter type={'nuphy'} trackView={false} />
+								</div>
 							</div>
 						</div>
 					</div>
@@ -108,7 +120,7 @@ export default async function UsesPage() {
 											battery life.
 										</p>
 									</div>
-									<div className="mx-1">
+									<div className="mx-1 p-1">
 										<Image
 											src="/images/uses/mxmaster.jpeg"
 											alt="Macbook pro 2022"
@@ -118,8 +130,12 @@ export default async function UsesPage() {
 										/>
 									</div>
 								</div>
-
-								{/* <UsesButton type="mxmaster" /> */}
+								<div className="flex justify-between mt-2 items-center">
+									<p className="text-xs text-neutral-400">
+										Let me know if you use this by pressing the button!
+									</p>
+									<UsesCounter type={'mxmaster'} trackView={false} />
+								</div>
 							</div>
 						</div>
 					</div>
@@ -133,15 +149,15 @@ export default async function UsesPage() {
 								<div className="flex flex-row justify-between items-center">
 									<div className="flex flex-col">
 										<h2 className="text-2xl font-bold leading-8 tracking-tight mb-3 text-neutral-100">
-											Sony WH-1000XM4
+											Sony WH-1000XM3
 										</h2>
 										<p className="prose max-w-none mb-3 text-neutral-300">
-											Bough these after my first year in University. Still
+											Bought these after my first year in University. Still
 											work great. Use them at work and plan on to use them
 											until they stop working
 										</p>
 									</div>
-									<div className="mx-1">
+									<div className="mx-1 p-1">
 										<Image
 											src="/images/uses/sony.jpeg"
 											alt="Macbook pro 2022"
@@ -151,8 +167,12 @@ export default async function UsesPage() {
 										/>
 									</div>
 								</div>
-
-								{/* <UsesButton type="sony" /> */}
+								<div className="flex justify-between mt-2 items-center">
+									<p className="text-xs text-neutral-400">
+										Let me know if you use this by pressing the button!
+									</p>
+									<UsesCounter type={'sony'} trackView={false} />
+								</div>
 							</div>
 						</div>
 					</div>
@@ -176,7 +196,7 @@ export default async function UsesPage() {
 											every day.
 										</p>
 									</div>
-									<div className="mx-1">
+									<div className="mx-1 p-1">
 										<Image
 											src="/images/uses/airpods.jpeg"
 											alt="Macbook pro 2022"
@@ -186,8 +206,12 @@ export default async function UsesPage() {
 										/>
 									</div>
 								</div>
-
-								{/* <UsesButton type="airpods" /> */}
+								<div className="flex justify-between mt-2 items-center">
+									<p className="text-xs text-neutral-400">
+										Let me know if you use this by pressing the button!
+									</p>
+									<UsesCounter type={'airpods'} trackView={false} />
+								</div>
 							</div>
 						</div>
 					</div>
@@ -209,7 +233,7 @@ export default async function UsesPage() {
 											switches
 										</p>
 									</div>
-									<div className="mx-1">
+									<div className="mx-1 p-1">
 										<Image
 											src="/images/uses/keychronk4.jpeg"
 											alt="Macbook pro 2022"
@@ -219,8 +243,12 @@ export default async function UsesPage() {
 										/>
 									</div>
 								</div>
-
-								{/* <UsesButton type="keychronk4" /> */}
+								<div className="flex justify-between mt-2 items-center">
+									<p className="text-xs text-neutral-400">
+										Let me know if you use this by pressing the button!
+									</p>
+									<UsesCounter type={'keychronk4'} trackView={false} />
+								</div>
 							</div>
 						</div>
 					</div>
@@ -242,7 +270,7 @@ export default async function UsesPage() {
 											continue to use it. Low-profile Gateron brown switches
 										</p>
 									</div>
-									<div className="mx-1">
+									<div className="mx-1 p-1">
 										<Image
 											src="/images/uses/keychronk3.jpeg"
 											alt="Macbook pro 2022"
@@ -252,8 +280,12 @@ export default async function UsesPage() {
 										/>
 									</div>
 								</div>
-
-								{/* <UsesButton type="keychronk3" /> */}
+								<div className="flex justify-between mt-2 items-center">
+									<p className="text-xs text-neutral-400">
+										Let me know if you use this by pressing the button!
+									</p>
+									<UsesCounter type={'keychronk3'} trackView={false} />
+								</div>
 							</div>
 						</div>
 					</div>
@@ -276,7 +308,7 @@ export default async function UsesPage() {
 											only 64gb of RAM. Which is way to little for me.
 										</p>
 									</div>
-									<div className="mx-1">
+									<div className="mx-1 p-1">
 										<Image
 											src="/images/uses/iphone.jpeg"
 											alt="Macbook pro 2022"
@@ -286,8 +318,12 @@ export default async function UsesPage() {
 										/>
 									</div>
 								</div>
-
-								{/* <UsesButton type="iphone" /> */}
+								<div className="flex justify-between mt-2 items-center">
+									<p className="text-xs text-neutral-400">
+										Let me know if you use this by pressing the button!
+									</p>
+									<UsesCounter type={'iphone'} trackView={false} />
+								</div>
 							</div>
 						</div>
 					</div>
@@ -309,7 +345,7 @@ export default async function UsesPage() {
 											of my health data and it has a great battery life.
 										</p>
 									</div>
-									<div className="mx-1">
+									<div className="mx-1 p-1">
 										<Image
 											src="/images/uses/garmin.jpeg"
 											alt="Macbook pro 2022"
@@ -320,7 +356,12 @@ export default async function UsesPage() {
 									</div>
 								</div>
 
-								{/* <UsesButton type="garmin" /> */}
+								<div className="flex justify-between mt-2 items-center">
+									<p className="text-xs text-neutral-400">
+										Let me know if you use this by pressing the button!
+									</p>
+									<UsesCounter type={'garmin'} trackView={false} />
+								</div>
 							</div>
 						</div>
 					</div>
@@ -343,7 +384,7 @@ export default async function UsesPage() {
 											I&apos;ll at least not impulse buy it.
 										</p>
 									</div>
-									<div className="mx-1">
+									<div className="mx-1 p-1">
 										<Image
 											src="/images/uses/asus.jpeg"
 											alt="Macbook pro 2022"
@@ -353,8 +394,12 @@ export default async function UsesPage() {
 										/>
 									</div>
 								</div>
-
-								{/* <UsesButton type="asus" /> */}
+								<div className="flex justify-between mt-2 items-center">
+									<p className="text-xs text-neutral-400">
+										Let me know if you use this by pressing the button!
+									</p>
+									<UsesCounter type={'asus'} trackView={false} />
+								</div>
 							</div>
 						</div>
 					</div>
@@ -376,7 +421,7 @@ export default async function UsesPage() {
 											think they are, but the airpods pro are just so good.
 										</p>
 									</div>
-									<div className="mx-1">
+									<div className="mx-1 p-1">
 										<Image
 											src="/images/uses/nothing.jpeg"
 											alt="Macbook pro 2022"
@@ -386,8 +431,12 @@ export default async function UsesPage() {
 										/>
 									</div>
 								</div>
-
-								{/* <UsesButton type="nothing" /> */}
+								<div className="flex justify-between mt-2 items-center">
+									<p className="text-xs text-neutral-400">
+										Let me know if you use this by pressing the button!
+									</p>
+									<UsesCounter type={'nothing'} trackView={false} />
+								</div>
 							</div>
 						</div>
 					</div>
@@ -410,7 +459,7 @@ export default async function UsesPage() {
 										it a lot. It has become my thinking buddy.
 									</p>
 								</div>
-								<div className="mx-1">
+								<div className="mx-1 p-1">
 									<Image
 										src="/images/uses/obsidian.jpeg"
 										alt="Obsidian"
@@ -420,8 +469,48 @@ export default async function UsesPage() {
 									/>
 								</div>
 							</div>
+							<div className="flex justify-between mt-2 items-center">
+								<p className="text-xs text-neutral-400">
+									Let me know if you use this by pressing the button!
+								</p>
+								<UsesCounter type={'obsidian'} trackView={false} />
+							</div>
+						</div>
+					</div>
+				</div>
+				<div className="font-medium text-2xl justify-center text-neutral-100 text-center">
+					&#126;&#126;&#126;
+				</div>
 
-							{/* <UsesButton type="obsidian" /> */}
+				<div className="w-full">
+					<div className="h-full overflow-hidden border rounded-md border-opacity-60 border-neutral-400">
+						<div className="p-6">
+							<div className="flex flex-row justify-between items-center">
+								<div className="flex flex-col">
+									<h2 className="text-2xl font-bold leading-8 tracking-tight mb-3 text-neutral-100">
+										Raycast
+									</h2>
+									<p className="prose max-w-none mb-3 text-neutral-300">
+										The more and more I use raycast I discover that I can
+										replace so many apps with it. I love it!
+									</p>
+								</div>
+								<div className="mx-1 p-1">
+									<Image
+										src="/images/uses/raycast.png"
+										alt="raycast"
+										width={150}
+										height={150}
+										className="rounded-md"
+									/>
+								</div>
+							</div>
+							<div className="flex justify-between mt-2 items-center">
+								<p className="text-xs text-neutral-400">
+									Let me know if you use this by pressing the button!
+								</p>
+								<UsesCounter type={'raycast'} trackView={false} />
+							</div>
 						</div>
 					</div>
 				</div>
@@ -440,10 +529,10 @@ export default async function UsesPage() {
 									<p className="prose max-w-none mb-3 text-neutral-300">
 										I used to use Obsidian as a task manager, but I felt I was
 										stuffing my vault with a lot of noise. Things 3 is also
-										great at being a task manager
+										great at being a task manager. I use it every day.
 									</p>
 								</div>
-								<div className="mx-1">
+								<div className="mx-1 p-1">
 									<Image
 										src="/images/uses/things.jpeg"
 										alt="things 3"
@@ -453,8 +542,12 @@ export default async function UsesPage() {
 									/>
 								</div>
 							</div>
-
-							{/* <UsesButton type="things" /> */}
+							<div className="flex justify-between mt-2 items-center">
+								<p className="text-xs text-neutral-400">
+									Let me know if you use this by pressing the button!
+								</p>
+								<UsesCounter type={'things'} trackView={false} />
+							</div>
 						</div>
 					</div>
 				</div>
@@ -476,18 +569,22 @@ export default async function UsesPage() {
 										alone makes Arc worth it for me.
 									</p>
 								</div>
-								<div className="mx-1">
+								<div className="mx-1 p-1">
 									<Image
 										src="/images/uses/arc.png"
 										alt="Arc"
 										width={200}
-										height={200}
+										height={250}
 										className="rounded-md"
 									/>
 								</div>
 							</div>
-
-							{/* <UsesButton type="arc" /> */}
+							<div className="flex justify-between mt-2 items-center">
+								<p className="text-xs text-neutral-400">
+									Let me know if you use this by pressing the button!
+								</p>
+								<UsesCounter type={'arc'} trackView={false} />
+							</div>
 						</div>
 					</div>
 				</div>
@@ -508,7 +605,7 @@ export default async function UsesPage() {
 										works well. I don&apos;t need much more than that.
 									</p>
 								</div>
-								<div className="mx-1">
+								<div className="mx-1 p-1">
 									<Image
 										src="/images/uses/cron.png"
 										alt="Cron"
@@ -518,8 +615,12 @@ export default async function UsesPage() {
 									/>
 								</div>
 							</div>
-
-							{/* <UsesButton type="cron" /> */}
+							<div className="flex justify-between mt-2 items-center">
+								<p className="text-xs text-neutral-400">
+									Let me know if you use this by pressing the button!
+								</p>
+								<UsesCounter type={'cron'} trackView={false} />
+							</div>
 						</div>
 					</div>
 				</div>
@@ -541,7 +642,7 @@ export default async function UsesPage() {
 										Code anytime soon.
 									</p>
 								</div>
-								<div className="mx-1">
+								<div className="mx-1 p-1">
 									<Image
 										src="/images/uses/vscode.png"
 										alt="VS Code"
@@ -551,8 +652,12 @@ export default async function UsesPage() {
 									/>
 								</div>
 							</div>
-
-							{/* <UsesButton type="vscode" /> */}
+							<div className="flex justify-between mt-2 items-center">
+								<p className="text-xs text-neutral-400">
+									Let me know if you use this by pressing the button!
+								</p>
+								<UsesCounter type={'vscode'} trackView={false} />
+							</div>
 						</div>
 					</div>
 				</div>
@@ -574,7 +679,7 @@ export default async function UsesPage() {
 										manager
 									</p>
 								</div>
-								<div className="mx-1">
+								<div className="mx-1 p-1">
 									<Image
 										src="/images/uses/1password.jpeg"
 										alt="1password"
@@ -584,8 +689,12 @@ export default async function UsesPage() {
 									/>
 								</div>
 							</div>
-
-							{/* <UsesButton type="1password" /> */}
+							<div className="flex justify-between mt-2 items-center">
+								<p className="text-xs text-neutral-400">
+									Let me know if you use this by pressing the button!
+								</p>
+								<UsesCounter type={'1password'} trackView={false} />
+							</div>
 						</div>
 					</div>
 				</div>
@@ -607,18 +716,22 @@ export default async function UsesPage() {
 										just a terminal.
 									</p>
 								</div>
-								<div className="mx-1">
+								<div className="mx-1 p-1">
 									<Image
 										src="/images/uses/warp.jpeg"
 										alt="Warp"
-										width={200}
-										height={200}
+										width={150}
+										height={150}
 										className="rounded-md"
 									/>
 								</div>
 							</div>
-
-							{/* <UsesButton type="warp" /> */}
+							<div className="flex justify-between mt-2 items-center">
+								<p className="text-xs text-neutral-400">
+									Let me know if you use this by pressing the button!
+								</p>
+								<UsesCounter type={'warp'} trackView={false} />
+							</div>
 						</div>
 					</div>
 				</div>
@@ -641,7 +754,7 @@ export default async function UsesPage() {
 										workflow.
 									</p>
 								</div>
-								<div className="mx-1">
+								<div className="mx-1 p-1">
 									<Image
 										src="/images/uses/spark.jpeg"
 										alt="Spark"
@@ -651,8 +764,12 @@ export default async function UsesPage() {
 									/>
 								</div>
 							</div>
-
-							{/* <UsesButton type="spark" /> */}
+							<div className="flex justify-between mt-2 items-center">
+								<p className="text-xs text-neutral-400">
+									Let me know if you use this by pressing the button!
+								</p>
+								<UsesCounter type={'spark'} trackView={false} />
+							</div>
 						</div>
 					</div>
 				</div>
@@ -669,22 +786,25 @@ export default async function UsesPage() {
 										Postman
 									</h2>
 									<p className="prose max-w-none mb-3 text-neutral-300">
-										Use this at my daily job, Postman always does the job and
-										works well.
+										Use this at my daily job, Postman always delivers.
 									</p>
 								</div>
-								<div className="mx-1">
+								<div className="mx-1 p-1">
 									<Image
 										src="/images/uses/postman.png"
 										alt="Postman"
-										width={200}
-										height={200}
+										width={100}
+										height={100}
 										className="rounded-md"
 									/>
 								</div>
 							</div>
-
-							{/* <UsesButton type="postman" /> */}
+							<div className="flex justify-between mt-2 items-center">
+								<p className="text-xs text-neutral-400">
+									Let me know if you use this by pressing the button!
+								</p>
+								<UsesCounter type={'postman'} trackView={false} />
+							</div>
 						</div>
 					</div>
 				</div>
@@ -705,18 +825,22 @@ export default async function UsesPage() {
 										freelancing jobs, so I tried Insomnia.
 									</p>
 								</div>
-								<div className="mx-1">
+								<div className="mx-1 p-1">
 									<Image
 										src="/images/uses/insomnia.png"
 										alt="Insomnia"
-										width={200}
-										height={200}
+										width={100}
+										height={100}
 										className="rounded-md"
 									/>
 								</div>
 							</div>
-
-							{/* <UsesButton type="insomnia" /> */}
+							<div className="flex justify-between mt-2 items-center">
+								<p className="text-xs text-neutral-400">
+									Let me know if you use this by pressing the button!
+								</p>
+								<UsesCounter type={'insomnia'} trackView={false} />
+							</div>
 						</div>
 					</div>
 				</div>
@@ -737,18 +861,22 @@ export default async function UsesPage() {
 										updates for my freelance job.
 									</p>
 								</div>
-								<div className="mx-1">
+								<div className="mx-1 p-1">
 									<Image
 										src="/images/uses/intellji.jpeg"
 										alt="IntelliJ"
-										width={200}
+										width={150}
 										height={200}
 										className="rounded-md"
 									/>
 								</div>
 							</div>
-
-							{/* <UsesButton type="intellij" /> */}
+							<div className="flex justify-between mt-2 items-center">
+								<p className="text-xs text-neutral-400">
+									Let me know if you use this by pressing the button!
+								</p>
+								<UsesCounter type={'intellij'} trackView={false} />
+							</div>
 						</div>
 					</div>
 				</div>

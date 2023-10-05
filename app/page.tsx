@@ -2,7 +2,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { getBlogViews, getStarCount } from '@/lib/metrics';
 import { GitHubIcon, ViewsIcon } from '../components/icons';
-import { name, about, avatar } from '@/lib/info';
+import { name, about, avatar, bio } from '@/lib/info';
 import NowPlaying from '@/components/indexgrid/spotify';
 // import TopPost from '@/components/indexgrid/top-post';
 // import FollowTwitter from '@/components/indexgrid/twitter';
@@ -50,9 +50,7 @@ export default async function Home() {
 					</Link>
 				</div>
 			</div>
-			{/* <p className="my-5 max-w-[600px]ext-neutral-200">
-        {bio()}
-      </p> */}
+			<p className="my-5 max-w-[600px]ext-neutral-200">{bio()}</p>
 			<hr />
 			<div className="grid grid-cols-1 gap-4 md:grid-cols-2 mt-4">
 				<NowPlaying />
