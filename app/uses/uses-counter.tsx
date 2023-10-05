@@ -2,7 +2,6 @@
 
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { Button } from '@/components/ui/button';
-// import { Skeleton } from '@/components/ui/skeleton';
 
 type UsesView = {
 	type: string;
@@ -55,12 +54,7 @@ export default function UsesCounter({ type }: { type: string }) {
 	return (
 		<div className="flex flex-row-reverse justify-between items-center">
 			<div className="font-mono text-md text-neutral-500 tracking-tighter">
-				{isLoading
-					? // <Skeleton className="bg-neutral-100 w-16" />
-					  'Loading..'
-					: data
-					? `${views.toLocaleString()} uses`
-					: ' ​'}
+				{isLoading ? 'Loading..' : data ? `${views.toLocaleString()} uses` : ' ​'}
 			</div>
 			<Button className="mx-3" variant="secondary" onClick={handleClick}>
 				I use this!

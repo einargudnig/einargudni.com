@@ -5,5 +5,6 @@ import reactAlicante1Mdx from './react-alicante1.mdx.json' assert { type: 'json'
 import reactAlicante2Mdx from './react-alicante2.mdx.json' assert { type: 'json' }
 import seedsMdx from './seeds.mdx.json' assert { type: 'json' }
 import systemMdx from './system.mdx.json' assert { type: 'json' }
+import usesMdx from './uses.mdx.json' assert { type: 'json' }
 
-export const allBlogs = [oktoberfestMdx, reactAlicante1Mdx, reactAlicante2Mdx, seedsMdx, systemMdx]
+export const allBlogs = [oktoberfestMdx, reactAlicante1Mdx, reactAlicante2Mdx, seedsMdx, systemMdx, usesMdx]

@@ -5,7 +5,7 @@ import localFont from 'next/font/local';
 import { Sidebar } from '../components/sidebar';
 import { ThemeProvider } from '@/components/theme-provider';
 import { Analytics } from '@vercel/analytics/react';
-import { ReactQueryProvider } from './reactqueryprovider';
+import { ReactQueryProvider } from './react-query-provider';
 
 const kaisei = localFont({
 	src: '../public/fonts/kaisei-tokumin-latin-700-normal.woff2',
