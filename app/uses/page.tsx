@@ -61,7 +61,7 @@ export default async function UsesPage() {
 									<p className="text-xs text-neutral-400">
 										Let me know if you use this by pressing the button!
 									</p>
-									<UsesCounter type={'macbook'} trackView={false} />
+									<UsesCounter type={'macbook'} />
 								</div>
 							</div>
 						</div>
@@ -97,7 +97,7 @@ export default async function UsesPage() {
 									<p className="text-xs text-neutral-400">
 										Let me know if you use this by pressing the button!
 									</p>
-									<UsesCounter type={'nuphy'} trackView={false} />
+									<UsesCounter type={'nuphy'} />
 								</div>
 							</div>
 						</div>
@@ -134,7 +134,7 @@ export default async function UsesPage() {
 									<p className="text-xs text-neutral-400">
 										Let me know if you use this by pressing the button!
 									</p>
-									<UsesCounter type={'mxmaster'} trackView={false} />
+									<UsesCounter type={'mxmaster'} />
 								</div>
 							</div>
 						</div>
@@ -171,7 +171,7 @@ export default async function UsesPage() {
 									<p className="text-xs text-neutral-400">
 										Let me know if you use this by pressing the button!
 									</p>
-									<UsesCounter type={'sony'} trackView={false} />
+									<UsesCounter type={'sony'} />
 								</div>
 							</div>
 						</div>
@@ -210,7 +210,7 @@ export default async function UsesPage() {
 									<p className="text-xs text-neutral-400">
 										Let me know if you use this by pressing the button!
 									</p>
-									<UsesCounter type={'airpods'} trackView={false} />
+									<UsesCounter type={'airpods'} />
 								</div>
 							</div>
 						</div>
@@ -247,7 +247,7 @@ export default async function UsesPage() {
 									<p className="text-xs text-neutral-400">
 										Let me know if you use this by pressing the button!
 									</p>
-									<UsesCounter type={'keychronk4'} trackView={false} />
+									<UsesCounter type={'keychronk4'} />
 								</div>
 							</div>
 						</div>
@@ -284,7 +284,7 @@ export default async function UsesPage() {
 									<p className="text-xs text-neutral-400">
 										Let me know if you use this by pressing the button!
 									</p>
-									<UsesCounter type={'keychronk3'} trackView={false} />
+									<UsesCounter type={'keychronk3'} />
 								</div>
 							</div>
 						</div>
@@ -322,7 +322,7 @@ export default async function UsesPage() {
 									<p className="text-xs text-neutral-400">
 										Let me know if you use this by pressing the button!
 									</p>
-									<UsesCounter type={'iphone'} trackView={false} />
+									<UsesCounter type={'iphone'} />
 								</div>
 							</div>
 						</div>
@@ -360,7 +360,7 @@ export default async function UsesPage() {
 									<p className="text-xs text-neutral-400">
 										Let me know if you use this by pressing the button!
 									</p>
-									<UsesCounter type={'garmin'} trackView={false} />
+									<UsesCounter type={'garmin'} />
 								</div>
 							</div>
 						</div>
@@ -398,7 +398,7 @@ export default async function UsesPage() {
 									<p className="text-xs text-neutral-400">
 										Let me know if you use this by pressing the button!
 									</p>
-									<UsesCounter type={'asus'} trackView={false} />
+									<UsesCounter type={'asus'} />
 								</div>
 							</div>
 						</div>
@@ -435,7 +435,7 @@ export default async function UsesPage() {
 									<p className="text-xs text-neutral-400">
 										Let me know if you use this by pressing the button!
 									</p>
-									<UsesCounter type={'nothing'} trackView={false} />
+									<UsesCounter type={'nothing'} />
 								</div>
 							</div>
 						</div>
@@ -473,7 +473,7 @@ export default async function UsesPage() {
 								<p className="text-xs text-neutral-400">
 									Let me know if you use this by pressing the button!
 								</p>
-								<UsesCounter type={'obsidian'} trackView={false} />
+								<UsesCounter type={'obsidian'} />
 							</div>
 						</div>
 					</div>
@@ -509,7 +509,7 @@ export default async function UsesPage() {
 								<p className="text-xs text-neutral-400">
 									Let me know if you use this by pressing the button!
 								</p>
-								<UsesCounter type={'raycast'} trackView={false} />
+								<UsesCounter type={'raycast'} />
 							</div>
 						</div>
 					</div>
@@ -546,7 +546,7 @@ export default async function UsesPage() {
 								<p className="text-xs text-neutral-400">
 									Let me know if you use this by pressing the button!
 								</p>
-								<UsesCounter type={'things'} trackView={false} />
+								<UsesCounter type={'things'} />
 							</div>
 						</div>
 					</div>
@@ -583,7 +583,7 @@ export default async function UsesPage() {
 								<p className="text-xs text-neutral-400">
 									Let me know if you use this by pressing the button!
 								</p>
-								<UsesCounter type={'arc'} trackView={false} />
+								<UsesCounter type={'arc'} />
 							</div>
 						</div>
 					</div>
@@ -619,7 +619,7 @@ export default async function UsesPage() {
 								<p className="text-xs text-neutral-400">
 									Let me know if you use this by pressing the button!
 								</p>
-								<UsesCounter type={'cron'} trackView={false} />
+								<UsesCounter type={'cron'} />
 							</div>
 						</div>
 					</div>
@@ -656,7 +656,7 @@ export default async function UsesPage() {
 								<p className="text-xs text-neutral-400">
 									Let me know if you use this by pressing the button!
 								</p>
-								<UsesCounter type={'vscode'} trackView={false} />
+								<UsesCounter type={'vscode'} />
 							</div>
 						</div>
 					</div>
@@ -693,7 +693,7 @@ export default async function UsesPage() {
 								<p className="text-xs text-neutral-400">
 									Let me know if you use this by pressing the button!
 								</p>
-								<UsesCounter type={'1password'} trackView={false} />
+								<UsesCounter type={'1password'} />
 							</div>
 						</div>
 					</div>
@@ -730,7 +730,7 @@ export default async function UsesPage() {
 								<p className="text-xs text-neutral-400">
 									Let me know if you use this by pressing the button!
 								</p>
-								<UsesCounter type={'warp'} trackView={false} />
+								<UsesCounter type={'warp'} />
 							</div>
 						</div>
 					</div>
@@ -768,7 +768,7 @@ export default async function UsesPage() {
 								<p className="text-xs text-neutral-400">
 									Let me know if you use this by pressing the button!
 								</p>
-								<UsesCounter type={'spark'} trackView={false} />
+								<UsesCounter type={'spark'} />
 							</div>
 						</div>
 					</div>
@@ -803,7 +803,7 @@ export default async function UsesPage() {
 								<p className="text-xs text-neutral-400">
 									Let me know if you use this by pressing the button!
 								</p>
-								<UsesCounter type={'postman'} trackView={false} />
+								<UsesCounter type={'postman'} />
 							</div>
 						</div>
 					</div>
@@ -839,7 +839,7 @@ export default async function UsesPage() {
 								<p className="text-xs text-neutral-400">
 									Let me know if you use this by pressing the button!
 								</p>
-								<UsesCounter type={'insomnia'} trackView={false} />
+								<UsesCounter type={'insomnia'} />
 							</div>
 						</div>
 					</div>
@@ -875,7 +875,7 @@ export default async function UsesPage() {
 								<p className="text-xs text-neutral-400">
 									Let me know if you use this by pressing the button!
 								</p>
-								<UsesCounter type={'intellij'} trackView={false} />
+								<UsesCounter type={'intellij'} />
 							</div>
 						</div>
 					</div>
