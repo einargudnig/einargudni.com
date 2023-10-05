@@ -2,6 +2,7 @@
 
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { Button } from '@/components/ui/button';
+import { Skeleton } from '@/components/ui/skeleton';
 
 type UsesView = {
 	type: string;
@@ -25,7 +26,7 @@ export default function UsesCounter({ type }: { type: string }) {
 	// ensure the query key is an array
 	const queryKey = ['uses'];
 
-	const { data } = useQuery<UsesView[]>(queryKey, fetchUses);
+	const { data, isLoading } = useQuery<UsesView[]>(queryKey, fetchUses);
 	const viewsForSlug = Array.isArray(data) && data.find((view) => view.type === type);
 	const views = viewsForSlug ? Number(viewsForSlug.count) : 0;
 
@@ -53,9 +54,14 @@ export default function UsesCounter({ type }: { type: string }) {
 
 	return (
 		<div className="flex flex-row-reverse justify-between items-center">
-			<p className="font-mono text-md text-neutral-500 tracking-tighter">
-				{data ? `${views.toLocaleString()} uses` : ' ​'}
-			</p>
+			<div className="font-mono text-md text-neutral-500 tracking-tighter">
+				{isLoading
+					? // <Skeleton className="bg-neutral-100 w-16" />
+					  'Loading..'
+					: data
+					? `${views.toLocaleString()} uses`
+					: ' ​'}
+			</div>
 			<Button className="mx-3" variant="secondary" onClick={handleClick}>
 				I use this!
 			</Button>
