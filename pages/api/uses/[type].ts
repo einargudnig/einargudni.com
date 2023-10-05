@@ -9,8 +9,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 		}
 
 		const data = await queryBuilder
-			.selectFrom('views')
-			.where('slug', '=', type)
+			.selectFrom('uses')
+			.where('type', '=', type)
 			.select(['count'])
 			.execute();
 
@@ -32,8 +32,12 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 			return res.status(200).json({ total: count });
 		}
 	} catch (e) {
-		console.log(e);
-		// @ts-ignore
-		return res.status(500).json({ message: e.message });
+		if (e instanceof Error) {
+			console.error('Error occured:', e.message, e.stack);
+			return res.status(500).json({ message: e.message });
+		} else {
+			console.error('Error occured:', e);
+			return res.status(500).json({ message: 'An error occured.' });
+		}
 	}
 }

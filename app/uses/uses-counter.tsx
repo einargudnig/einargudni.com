@@ -1,41 +1,54 @@
 'use client';
 
-import { useEffect } from 'react';
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { Button } from '@/components/ui/button';
-import useSWR from 'swr';
 
 type UsesView = {
 	type: string;
 	count: string;
 };
 
-async function fetcher<JSON>(input: RequestInfo, init?: RequestInit): Promise<JSON> {
-	// @ts-ignore
-	const res = await fetch(input, init);
+async function fetchUses(): Promise<UsesView[]> {
+	const res = await fetch('/api/uses');
 	return res.json();
 }
 
-export default function UsesCounter({ type, trackView }: { type: string; trackView: boolean }) {
-	const { data } = useSWR<UsesView[]>('/api/uses', fetcher);
+async function incrementView(type: string) {
+	await fetch(`/api/uses/${type}`, {
+		method: 'POST'
+	});
+}
+
+export default function UsesCounter({ type }: { type: string }) {
+	const queryClient = useQueryClient();
+
+	// ensure the query key is an array
+	const queryKey = ['uses'];
+
+	const { data } = useQuery<UsesView[]>(queryKey, fetchUses);
 	const viewsForSlug = Array.isArray(data) && data.find((view) => view.type === type);
 	const views = viewsForSlug ? Number(viewsForSlug.count) : 0;
 
-	useEffect(() => {
-		const registerView = () =>
-			fetch(`/api/uses/${type}`, {
-				method: 'POST'
+	const mutation = useMutation(() => incrementView(type), {
+		onMutate: () => {
+			// Optimistic update: update the count locally
+			queryClient.setQueryData(queryKey, (oldData: UsesView[] | undefined) => {
+				return oldData?.map((item) => {
+					if (item.type === type) {
+						return { ...item, count: (Number(item.count) + 1).toString() };
+					}
+					return item;
+				});
 			});
-
-		if (trackView) {
-			registerView();
+		},
+		onSuccess: () => {
+			// Revalidate the data after the mutation
+			queryClient.invalidateQueries(queryKey);
 		}
-	}, [type, trackView]);
+	});
 
 	const handleClick = () => {
-		console.log(type);
-		fetch(`/api/uses/${type}`, {
-			method: 'POST'
-		});
+		mutation.mutate();
 	};
 
 	return (
