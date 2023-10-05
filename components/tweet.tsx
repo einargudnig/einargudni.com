@@ -1,43 +1,31 @@
-import { Suspense } from 'react';
-import { Tweet, getTweet } from 'react-tweet/api';
-import { EmbeddedTweet, TweetNotFound, TweetSkeleton, type TweetProps } from 'react-tweet';
-import './tweet.css';
+// import { useState, useEffect } from 'react';
+// import { getTweet } from 'react-tweet/api';
+// import { EmbeddedTweet, TweetNotFound, TweetProps } from 'react-tweet';
+// import './tweet.css';
 
-const TweetContent = async ({ id, components, onError }: TweetProps) => {
-	let error;
-	const tweet = id
-		? await getTweet(id).catch((err) => {
-				if (onError) {
-					error = onError(err);
-				} else {
-					console.error(err);
-					error = err;
-				}
-		  })
-		: undefined;
+// interface Props {
+// 	id: string;
+// 	components?: TweetProps['components'];
+// }
 
-	if (!tweet) {
-		const NotFound = components?.TweetNotFound || TweetNotFound;
-		return <NotFound error={error} />;
-	}
+// const TweetComponent = ({ id, components }: Props) => {
+// 	const [tweetContent, setTweetContent] = useState<JSX.Element | null>(null);
 
-	return <EmbeddedTweet tweet={tweet} components={components} />;
-};
+// 	useEffect(() => {
+// 		const fetchTweetContent = async () => {
+// 			try {
+// 				const tweet = await getTweet(id);
+// 				setTweetContent(<EmbeddedTweet tweet={tweet} components={components} />);
+// 			} catch (error) {
+// 				const NotFound = components?.TweetNotFound || TweetNotFound;
+// 				setTweetContent(<NotFound error={error} />);
+// 			}
+// 		};
+//
+// 		fetchTweetContent();
+// 	}, [id, components]);
 
-export const ReactTweet = (props: TweetProps) => (
-	// I don't want a loading state though... I want to prerender
-	// but I do want an ErrorBoundary
-	// <Suspense fallback={<TweetSkeleton />}>
-	<TweetContent {...props} />
-	// </Suspense>
-);
+// 	return <div className="tweet my-6">{tweetContent}</div>;
+// };
 
-export async function TweetComponent({ id }: { id: string }) {
-	return (
-		<div className="tweet my-6">
-			<div className={'flex justify-center'}>
-				<ReactTweet id={id} />
-			</div>
-		</div>
-	);
-}
+// export default TweetComponent;

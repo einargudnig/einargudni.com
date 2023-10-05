@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import { useMDXComponent } from 'next-contentlayer/hooks';
-import { TweetComponent } from './tweet';
+// import { TweetComponent } from './tweet';
 
 // @ts-ignore
 const CustomLink = (props) => {
@@ -98,8 +98,8 @@ const components = {
 	a: CustomLink,
 	Callout,
 	ProsCard,
-	ConsCard,
-	StaticTweet: TweetComponent
+	ConsCard
+	// StaticTweet: TweetComponent
 };
 
 interface MdxProps {
