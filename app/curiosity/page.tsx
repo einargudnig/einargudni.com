@@ -87,6 +87,20 @@ export default function Curiosity() {
 				</div>
 				<div className="text-neutral-400">&nbsp;-&nbsp;05. oct 2023</div>
 			</div>
+
+			<div className="flex mt-2 items-center">
+				<div className="text-neutral-500 mr-2 text-lg"> &#8227;</div>
+				<div className="text-neutral-200 hover:text-neutral-500">
+					<a
+						href="https://prateeksurana.me/blog/nextjs-13-vs-remix-an-in-depth-case-study/?ck_subscriber_id=1444196266"
+						target="_blank"
+						rel="noopener noreferrer"
+					>
+						Next.js vs Remix
+					</a>
+				</div>
+				<div className="text-neutral-400">&nbsp;-&nbsp;06. oct 2023</div>
+			</div>
 		</section>
 	);
 }
