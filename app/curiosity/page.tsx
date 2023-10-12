@@ -26,6 +26,34 @@ export default function Curiosity() {
 				<div className="text-neutral-500 mr-2 text-lg"> &#8227;</div>
 				<div className="text-neutral-200 hover:text-neutral-500">
 					<a
+						href="https://zackoverflow.dev/writing/write-your-own-zod?ck_subscriber_id=1697728828"
+						target="_blank"
+						rel="noopener noreferrer"
+					>
+						Write your own Zod
+					</a>
+				</div>
+				<div className="text-neutral-400">&nbsp;-&nbsp;12. oct 2023</div>
+			</div>
+
+			<div className="flex mt-2 items-center">
+				<div className="text-neutral-500 mr-2 text-lg"> &#8227;</div>
+				<div className="text-neutral-200 hover:text-neutral-500">
+					<a
+						href="https://evilmartians.com/chronicles/5-best-practices-for-preventing-chaos-in-tailwind-css?ck_subscriber_id=1444196266"
+						target="_blank"
+						rel="noopener noreferrer"
+					>
+						Best practices to avoid chaos in Tailwind CSS
+					</a>
+				</div>
+				<div className="text-neutral-400">&nbsp;-&nbsp;12. oct 2023</div>
+			</div>
+
+			<div className="flex mt-2 items-center">
+				<div className="text-neutral-500 mr-2 text-lg"> &#8227;</div>
+				<div className="text-neutral-200 hover:text-neutral-500">
+					<a
 						href="https://stephango.com/flexoki"
 						target="_blank"
 						rel="noopener noreferrer"
