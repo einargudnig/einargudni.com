@@ -26,6 +26,34 @@ export default function Curiosity() {
 				<div className="text-neutral-500 mr-2 text-lg"> &#8227;</div>
 				<div className="text-neutral-200 hover:text-neutral-500">
 					<a
+						href="https://wasp-lang.dev/blog/2023/10/12/on-importance-of-naming-in-programming?ck_subscriber_id=1444196266"
+						target="_blank"
+						rel="noopener noreferrer"
+					>
+						Importance of naming in programming
+					</a>
+				</div>
+				<div className="text-neutral-400">&nbsp;-&nbsp;17. oct 2023</div>
+			</div>
+
+			<div className="flex mt-2 items-center">
+				<div className="text-neutral-500 mr-2 text-lg"> &#8227;</div>
+				<div className="text-neutral-200 hover:text-neutral-500">
+					<a
+						href="https://vercel.com/blog/how-we-optimized-package-imports-in-next-js?ck_subscriber_id=1444196266"
+						target="_blank"
+						rel="noopener noreferrer"
+					>
+						Optimizing package imports in Next.js
+					</a>
+				</div>
+				<div className="text-neutral-400">&nbsp;-&nbsp;17. oct 2023</div>
+			</div>
+
+			<div className="flex mt-2 items-center">
+				<div className="text-neutral-500 mr-2 text-lg"> &#8227;</div>
+				<div className="text-neutral-200 hover:text-neutral-500">
+					<a
 						href="https://zackoverflow.dev/writing/write-your-own-zod?ck_subscriber_id=1697728828"
 						target="_blank"
 						rel="noopener noreferrer"
