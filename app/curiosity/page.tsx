@@ -26,6 +26,34 @@ export default function Curiosity() {
 				<div className="text-neutral-500 mr-2 text-lg"> &#8227;</div>
 				<div className="text-neutral-200 hover:text-neutral-500">
 					<a
+						href="https://www.youtube.com/watch?v=pfU0QORkRpY"
+						target="_blank"
+						rel="noopener noreferrer"
+					>
+						FKJ Live session 🍃
+					</a>
+				</div>
+				<div className="text-neutral-400">&nbsp;-&nbsp;24. oct 2023</div>
+			</div>
+
+			<div className="flex mt-2 items-center">
+				<div className="text-neutral-500 mr-2 text-lg"> &#8227;</div>
+				<div className="text-neutral-200 hover:text-neutral-500">
+					<a
+						href="https://laconicwit.com/a-love-letter-to-the-remix-loader/?ck_subscriber_id=1866529479"
+						target="_blank"
+						rel="noopener noreferrer"
+					>
+						A love letter to Remix loader
+					</a>
+				</div>
+				<div className="text-neutral-400">&nbsp;-&nbsp;19. oct 2023</div>
+			</div>
+
+			<div className="flex mt-2 items-center">
+				<div className="text-neutral-500 mr-2 text-lg"> &#8227;</div>
+				<div className="text-neutral-200 hover:text-neutral-500">
+					<a
 						href="https://wasp-lang.dev/blog/2023/10/12/on-importance-of-naming-in-programming?ck_subscriber_id=1444196266"
 						target="_blank"
 						rel="noopener noreferrer"
@@ -148,9 +176,9 @@ export default function Curiosity() {
 				<div className="text-neutral-500 mr-2 text-lg"> &#8227;</div>
 				<div className="text-neutral-200 hover:text-neutral-500">
 					<a
-						href="https://bun.sh/blog/bun-v1.0#why-bun-exists"
 						target="_blank"
 						rel="noopener noreferrer"
+						href="https://bun.sh/blog/bun-v1.0#why-bun-exists"
 					>
 						Why Bun exists
 					</a>

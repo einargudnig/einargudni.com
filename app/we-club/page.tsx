@@ -6,7 +6,7 @@ import { Button } from '@/components/ui/button';
 const foundingMembers = [
 	{ id: 1, name: 'Einar Guðni', aka: '', image: avatar }, // I should add the image of the boys to the image folder..
 	{ id: 2, name: 'Garðar', aka: '', image: avatar },
-	{ id: 3, name: 'Davíð Hugus', aka: '', image: avatar },
+	{ id: 3, name: 'Davíð Hugus', aka: 'Pudus', image: avatar },
 	{ id: 4, name: 'Daníel', aka: '', image: avatar },
 	{ id: 5, name: 'Eyjó', aka: '', image: avatar },
 	{ id: 6, name: 'Bjarni leifs', aka: '', image: avatar }
@@ -17,8 +17,8 @@ const We = () => {
 		<div>
 			<div>
 				<h2 className="font-bold text-3xl font-serif mb-5">Wine Enthusiastics - club</h2>
-				The Wine Enthusiastic club was founded by 6 in Crossfit Reykjavik in September of
-				2023. The aim of this game is simple, meet and taste (drink) wine.
+				The Wine Enthusiastic club was founded by 6 guys in Crossfit Reykjavik in September
+				of 2023. The aim of this game is simple, meet and taste (drink) wine.
 				<div className="font-medium text-2xl justify-center text-neutral-100 text-center">
 					&#126;&#126;&#126;
 				</div>
