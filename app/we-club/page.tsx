@@ -2,14 +2,19 @@ import Image from 'next/image';
 import { avatar } from '@/lib/info';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
+import hugus from '@/public/images/we-club/hugus.jpg';
+import bjarni from '@/public/images/we-club/bjarni.jpg';
+import danni from '@/public/images/we-club/danni.jpg';
+import eyjo from '@/public/images/we-club/eyjo.jpg';
+import gardar from '@/public/images/we-club/gardar.jpg';
 
 const foundingMembers = [
 	{ id: 1, name: 'Einar Guðni', aka: '', image: avatar }, // I should add the image of the boys to the image folder..
-	{ id: 2, name: 'Garðar', aka: '', image: avatar },
-	{ id: 3, name: 'Davíð Hugus', aka: 'Pudus', image: avatar },
-	{ id: 4, name: 'Daníel', aka: '', image: avatar },
-	{ id: 5, name: 'Eyjó', aka: '', image: avatar },
-	{ id: 6, name: 'Bjarni leifs', aka: '', image: avatar }
+	{ id: 2, name: 'Garðar', aka: '', image: gardar },
+	{ id: 3, name: 'Davíð Hugus', aka: 'Pudus', image: hugus },
+	{ id: 4, name: 'Daníel', aka: '', image: danni },
+	{ id: 5, name: 'Eyjó', aka: '', image: eyjo },
+	{ id: 6, name: 'Bjarni leifs', aka: '', image: bjarni }
 ];
 
 const We = () => {
