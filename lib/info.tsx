@@ -18,7 +18,7 @@ export const bio = () => {
 			<br />
 			Like many of you have almost infinite amount of ideas I would like to add to this home.
 			I will slowly try new ideas here. Some might be weird and removed later, some might
-			stick around. This is just a little laboratory for me to play around.
+			stick around. This is just my little lab 🧪🔬.
 		</>
 	);
 };
