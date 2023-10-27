@@ -16,10 +16,24 @@ interface Uses {
 	count: number;
 }
 
+interface WineUsers {
+	name: string;
+}
+
+// interface Wines {
+// 	wine_id: number;
+// 	name: string;
+// 	year: number;
+// 	country: string;
+// 	grapes: string;
+// }
+
 interface Database {
 	views: ViewsTable;
 	location: Location;
 	uses: Uses;
+	wineusers: WineUsers;
+	// wines: Wines;
 }
 
 export const queryBuilder = new Kysely<Database>({

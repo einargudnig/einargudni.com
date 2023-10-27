@@ -7,6 +7,7 @@ import bjarni from '@/public/images/we-club/bjarni.jpg';
 import danni from '@/public/images/we-club/danni.jpg';
 import eyjo from '@/public/images/we-club/eyjo.jpg';
 import gardar from '@/public/images/we-club/gardar.jpg';
+import WineUsers from './rating/wine-users';
 
 const foundingMembers = [
 	{ id: 1, name: 'Einar Guðni', aka: '', image: avatar }, // I should add the image of the boys to the image folder..
@@ -98,7 +99,9 @@ const We = () => {
 							</Button>
 						</div>
 					</div>
-					<div>use planetScale</div>
+					<div>
+						<WineUsers />
+					</div>
 				</div>
 			</div>
 		</div>

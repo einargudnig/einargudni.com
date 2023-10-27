@@ -10,9 +10,9 @@ import {
 const Rating = () => {
 	return (
 		<div>
-			<h2 className="font-bold text-3xl font-serif mb-5">Wine Enthusiastics - rating</h2>
+			<h2 className="font-bold text-3xl font-serif mb-2">Wine Enthusiastics - rating</h2>
 			<div className="mt-4">
-				<h3 className="font-bold text-xl font-serif mb-5">Imperial - 2015 @David</h3>
+				<h3 className="font-bold text-xl font-serif mb-2">Imperial - 2015 @David</h3>
 				<Table>
 					<TableHeader>
 						<TableRow>
@@ -46,7 +46,7 @@ const Rating = () => {
 			</div>
 
 			<div className="mt-4">
-				<h3 className="font-bold text-xl font-serif mb-5">1000 stories - 2021 @Einar</h3>
+				<h3 className="font-bold text-xl font-serif mb-2">1000 stories - 2021 @Einar</h3>
 				<Table>
 					<TableHeader>
 						<TableRow>
@@ -80,7 +80,7 @@ const Rating = () => {
 			</div>
 
 			<div className="mt-4">
-				<h3 className="font-bold text-xl font-serif mb-5">Montecillo - 2019 @Danni</h3>
+				<h3 className="font-bold text-xl font-serif mb-2">Montecillo - 2019 @Danni</h3>
 				<Table>
 					<TableHeader>
 						<TableRow>
@@ -114,7 +114,7 @@ const Rating = () => {
 			</div>
 
 			<div className="mt-4">
-				<h3 className="font-bold text-xl font-serif mb-5">Girlan - 2021 @Eyjo</h3>
+				<h3 className="font-bold text-xl font-serif mb-2">Girlan - 2021 @Eyjo</h3>
 				<Table>
 					<TableHeader>
 						<TableRow>
@@ -148,7 +148,7 @@ const Rating = () => {
 			</div>
 
 			<div>
-				<h3 className="font-bold text-xl font-serif mb-5">
+				<h3 className="font-bold text-xl font-serif mb-2">
 					Triviento Malbec - 2020 @Gardar
 				</h3>
 				<Table>
@@ -184,7 +184,7 @@ const Rating = () => {
 			</div>
 
 			<div>
-				<h3 className="font-bold text-xl font-serif mb-5">
+				<h3 className="font-bold text-xl font-serif mb-2">
 					Cum Laude - 2020 @Gardar -&gt; Extra wine
 				</h3>
 				<Table>
@@ -213,7 +213,7 @@ const Rating = () => {
 						</TableRow>
 						<TableRow>
 							<TableCell className="font-medium">Danni</TableCell>
-							<TableCell className="text-right">DNF</TableCell>
+							<TableCell className="text-right">DNF 🫡</TableCell>
 						</TableRow>
 					</TableBody>
 				</Table>
