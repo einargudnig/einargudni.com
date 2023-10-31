@@ -90,12 +90,15 @@ const We = () => {
 				<div className="mt-5">
 					<h4 className="font-bold text-xl font-serif">Ratings</h4>
 					<div className="my-5">
-						<div className="flex justify-between w-48">
+						<div className="flex justify-between w-72">
 							<Button variant="outline">
 								<Link href="we-club/rating">Ratings</Link>
 							</Button>
 							<Button variant="outline" disabled>
 								<Link href="we-club/rating">Best of</Link>
+							</Button>
+							<Button variant="outline">
+								<Link href="we-club/history">History</Link>
 							</Button>
 						</div>
 					</div>
