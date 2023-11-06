@@ -9,6 +9,16 @@ export const metadata: Metadata = {
 //! Should I put this in the database?
 const projectsData = [
 	{
+		title: 'Personal Website 5.0',
+		description: 'Current version. Next.js 13, App router, server components, planetscale',
+		imgSrc: '',
+		href: 'https://einargudni.com',
+		github: 'https://github.com/einargudnig/einargudni.com-next13',
+		tech1: 'Next.js',
+		tech2: 'Tailwind CSS',
+		tech3: 'mdx'
+	},
+	{
 		title: 'Okteberfest22',
 		description:
 			'Website for the 2022 Oktoberfest in Munich, Germany. Counter and a bingo card uilt with TypeScript.',
@@ -24,7 +34,7 @@ const projectsData = [
 		description:
 			'Current version. Improved the blog a lot, rebuilt with tailwind and a lot of extra features.',
 		imgSrc: '',
-		href: 'https://einargudni.com',
+		href: '',
 		github: 'https://github.com/einargudnig/einargudni.com',
 		tech1: 'Next.js',
 		tech2: 'Tailwind CSS',

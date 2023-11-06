@@ -62,7 +62,8 @@ export default async function Home() {
 				{/* <HobbiesButton /> */}
 				{/* <Location /> */}
 				{/* <CommandBar /> */}
-				{/* Last Book */}
+				{/* Latex book */}
+				{/* Wallpapers */}
 				{/* Calories  */}
 			</div>
 		</section>

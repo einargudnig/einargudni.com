@@ -40,7 +40,7 @@ export default function ProjectsCard({
 							</div>
 							<div className="mx-1">
 								{github ? (
-									<Link href={href}>
+									<Link href={github}>
 										<GitHubIconOutline />
 									</Link>
 								) : null}
