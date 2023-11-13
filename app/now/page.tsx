@@ -11,20 +11,20 @@ export default function NowPage() {
 		<section className="prose prose-quoteless prose-invert">
 			<h1 className="font-bold text-3xl font-serif mb-5">Follow your curiosity!</h1>
 			<p>
-				<strong>Last updated:</strong> 2023-10-05
+				<strong>Last updated:</strong> 2023-11-13
 			</p>
 			<div className="grid grid-cols-2 gap-4">
 				<div className="flex space-x-2 border border-neutral-100 p-2 rounded-md justify-center items-center">
 					<p>
 						<strong>Location:</strong>
 					</p>
-					<p>Reykjavik, Iceland</p>
+					<p>Copenhagen, Denmark</p>
 				</div>
 				<div className="flex space-x-2 border border-neutral-100 p-2 rounded-md justify-center items-center">
 					<p>
 						<strong>Weather:</strong>
 					</p>
-					<p>6°C, Cloudy</p>
+					<p>8°C, Cloudy</p>
 				</div>
 				<div className="flex flex-col border border-neutral-100 p-2 rounded-md items-center">
 					<p>
@@ -37,13 +37,13 @@ export default function NowPage() {
 					<p>
 						<strong>Podcast:</strong>
 					</p>
-					<p>Founders</p>
+					<p>How I write</p>
 				</div>
 				<div className="flex space-x-2 border border-neutral-100 p-2 rounded-md justify-center items-center">
 					<p>
 						<strong>Drinking:</strong>
 					</p>
-					<p>Water</p>
+					<p>Coffee</p>
 				</div>
 				<div className="flex space-x-2 border border-neutral-100 p-2 rounded-md justify-center items-center">
 					<p>
@@ -78,6 +78,10 @@ export default function NowPage() {
 					</Link>{' '}
 					which will try to refresh the launch culture in Copenhagen.
 				</p>
+				<p>
+					I am located in Copenhagen for the next 2 weeks to help the team here. If your
+					team is in need of upgraded frokost, let me know 😼
+				</p>
 				<h2 className="font-bold text-2xl font-serif mb-5">Freelancing</h2>
 				<p>
 					I&apos;m always open to new opportunities, if you have a project that you think
@@ -96,15 +100,7 @@ export default function NowPage() {
 					I always have something that I want to build. My main problem is to find the
 					time to do it.
 				</p>
-				<p>
-					Now my focus is on getting this new version of my homepage ready and make it
-					public. It is by no means ready and it will be fun to show you what I have
-					planned.
-				</p>
-				<p>
-					I&apos;m not going to wait until it is finished, I&apos;m going to let follow
-					along when I build new features.
-				</p>
+				<p>I have some fun ideas I want experiment with, so stay tuned on my page.</p>
 				<h2 className="font-bold text-2xl font-serif mb-5">Health</h2>
 				<p>My plan is to live to be at least 100 years old and be healthy</p>
 				<p>
