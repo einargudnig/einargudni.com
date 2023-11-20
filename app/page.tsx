@@ -3,13 +3,13 @@ import Image from 'next/image';
 import { getBlogViews, getStarCount } from '@/lib/metrics';
 import { GitHubIcon, ViewsIcon } from '../components/icons';
 import { name, about, avatar, bio } from '@/lib/info';
-// import NowPlaying from '@/components/indexgrid/spotify';
+import NowPlaying from '@/components/indexgrid/spotify';
 import TopPost from '@/components/indexgrid/top-post';
 // import FollowTwitter from '@/components/indexgrid/twitter';
-// import NowButton from '@/components/indexgrid/now';
-// import UsesButton from '@/components/indexgrid/uses';
-// import CuriosityButton from '@/components/indexgrid/curiosity';
-// import HobbiesButton from '@/components/indexgrid/hobbies';
+import NowButton from '@/components/indexgrid/now';
+import UsesButton from '@/components/indexgrid/uses';
+import CuriosityButton from '@/components/indexgrid/curiosity';
+import HobbiesButton from '@/components/indexgrid/hobbies';
 
 export const revalidate = 60;
 
@@ -52,30 +52,31 @@ export default async function Home() {
 			</div>
 			<p className="my-5 max-w-[600px]ext-neutral-200">{bio()}</p>
 			<hr />
-			<div className="grid grid-cols-1 gap-4 md:grid-cols-4 md:grid-rows-5 mt-4">
-				{/* <div className="border border-1 border-neutral-200 col-span-2">Newest blog</div> */}
-				<div className="border border-1 border-neutral-200 col-span-2">Location</div>
+			{/* <div className="grid grid-cols-1 gap-4 md:grid-cols-4 md:grid-rows-5 mt-4"> */}
+			{/* <div className="border border-1 border-neutral-200 col-span-2">Newest blog</div> */}
+			{/* <div className="border border-1 border-neutral-200 col-span-2">Location</div>
 				<div className="border border-1 border-neutral-200 col-span-2 row-span-2">
 					Wallpapers
 				</div>
 				<div className="border border-1 border-neutral-200 col-span-2">Now playing</div>
-				{/* <div className="border border-1 border-neutral-200 col-start-3 col-span-2">
+				<div className="border border-1 border-neutral-200 col-start-3 col-span-2">
 					Command bar
-				</div> */}
+				</div>
 				<div className="border border-1 border-neutral-200 col-span-4">Uses Software</div>
 				<div className="border border-1 border-neutral-200 col-span-2">
 					<TopPost />
 				</div>
 				<div className="border border-1 border-neutral-200">Now</div>
-				<div className="border border-1 border-neutral-200">Weeks</div>
-
-				{/* <NowPlaying />
-				<UsesButton /> */}
+				<div className="border border-1 border-neutral-200">Weeks</div> */}
+			{/* </div> */}
+			<div className="grid grid-cols-1 gap-4 md:grid-cols-2 mt-4">
+				<NowPlaying />
+				<UsesButton />
 				{/* <TopPost /> */}
 				{/* <FollowTwitter /> */}
-				{/* <NowButton />
-				<CuriosityButton /> */}
-				{/* <HobbiesButton /> */}
+				{/* {/* <NowButton /> */}
+				<CuriosityButton />
+				<HobbiesButton />
 				{/* <Location /> */}
 				{/* <CommandBar /> */}
 				{/* Latex book */}
