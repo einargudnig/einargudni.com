@@ -10,18 +10,6 @@ export const getBlogViews = cache(async () => {
 	return data.reduce((acc, curr) => acc + Number(curr.count), 0);
 });
 
-// Return the blog post with most views
-export const getMostViewedPost = cache(async () => {
-	const data = await queryBuilder
-		.selectFrom('views')
-		.select(['slug', 'count'])
-		.orderBy('count', 'desc')
-		.limit(1)
-		.execute();
-
-	return data[0];
-});
-
 export const getStarCount = cache(async () => {
 	const octokit = new Octokit({
 		auth: process.env.GITHUB_TOKEN
