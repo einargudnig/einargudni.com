@@ -1,7 +1,6 @@
 'use client';
 
 import { KBarProvider, KBarPortal, KBarPositioner, KBarAnimator, KBarSearch } from 'kbar';
-import { router } from 'next/client';
 
 export function KBarProviderComponent({ children }: { children: React.ReactNode }) {
 	const actions = [
@@ -10,8 +9,8 @@ export function KBarProviderComponent({ children }: { children: React.ReactNode 
 			name: 'Home',
 			shortcut: ['g', 'h'],
 			keywords: 'go-home',
-			section: 'Go To',
-			perform: () => router.push('/')
+			section: 'Go To'
+			// perform: () => router.push('/')
 			// icon: <i className="ri-home-5-line" style={iconStyle} />
 		},
 		{
@@ -19,8 +18,8 @@ export function KBarProviderComponent({ children }: { children: React.ReactNode 
 			name: 'About',
 			shortcut: ['g', 'a'],
 			keywords: 'go-about',
-			section: 'Go To',
-			perform: () => router.push('/about')
+			section: 'Go To'
+			// perform: () => router.push('/about')
 			// icon: <i className="ri-user-line" style={iconStyle} />
 		},
 		{
@@ -28,8 +27,8 @@ export function KBarProviderComponent({ children }: { children: React.ReactNode 
 			name: 'Blog',
 			shortcut: ['g', 'b'],
 			keywords: 'go-blog',
-			section: 'Go To',
-			perform: () => router.push('/blog')
+			section: 'Go To'
+			// perform: () => router.push('/blog')
 			// icon: <i className="ri-ball-pen-line" style={iconStyle} />
 		}
 	];
