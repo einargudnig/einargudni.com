@@ -4,6 +4,14 @@ const { withContentlayer } = require('next-contentlayer');
 const nextConfig = {
 	images: {
 		domains: ['images.unsplash.com', 'i.scdn.co']
+	},
+	experimental: {
+		turbo: {
+			rules: {
+				// Option-less format
+				'*.mdx': ['@mdx-js/loader']
+			}
+		}
 	}
 };
 
