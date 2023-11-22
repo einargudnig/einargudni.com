@@ -7,6 +7,7 @@ import NowPlaying from '@/components/indexgrid/spotify';
 // import TopPost from '@/components/indexgrid/top-post';
 // import FollowTwitter from '@/components/indexgrid/twitter';
 // import NowButton from '@/components/indexgrid/now';
+// import Location from '@/components/indexgrid/location';
 import UsesButton from '@/components/indexgrid/uses';
 import CuriosityButton from '@/components/indexgrid/curiosity';
 import HobbiesButton from '@/components/indexgrid/hobbies';
