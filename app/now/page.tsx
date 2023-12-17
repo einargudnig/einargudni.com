@@ -11,39 +11,39 @@ export default function NowPage() {
 		<section className="prose prose-quoteless prose-invert">
 			<h1 className="font-bold text-3xl font-serif mb-5">Follow your curiosity!</h1>
 			<p>
-				<strong>Last updated:</strong> 2023-11-13
+				<strong>Last updated:</strong> 2023-12-17
 			</p>
 			<div className="grid grid-cols-2 gap-4">
 				<div className="flex space-x-2 border border-neutral-100 p-2 rounded-md justify-center items-center">
 					<p>
 						<strong>Location:</strong>
 					</p>
-					<p>Copenhagen, Denmark</p>
+					<p>Reykjavik, Iceland</p>
 				</div>
 				<div className="flex space-x-2 border border-neutral-100 p-2 rounded-md justify-center items-center">
 					<p>
 						<strong>Weather:</strong>
 					</p>
-					<p>8°C, Cloudy</p>
+					<p>2°C, Snowy Rain</p>
 				</div>
 				<div className="flex flex-col border border-neutral-100 p-2 rounded-md items-center">
 					<p>
 						<strong>Reading:</strong>
 					</p>
-					<p>Thinking in Systems</p>
-					<p>Donatella Meadows</p>
+					<p>Clear Thinking</p>
+					<p>Shane Parrish</p>
 				</div>
 				<div className="flex space-x-2 border border-neutral-100 p-2 rounded-md justify-center items-center">
 					<p>
 						<strong>Podcast:</strong>
 					</p>
-					<p>How I write</p>
+					<p>Founders</p>
 				</div>
 				<div className="flex space-x-2 border border-neutral-100 p-2 rounded-md justify-center items-center">
 					<p>
 						<strong>Drinking:</strong>
 					</p>
-					<p>Coffee</p>
+					<p>Water</p>
 				</div>
 				<div className="flex space-x-2 border border-neutral-100 p-2 rounded-md justify-center items-center">
 					<p>
@@ -78,10 +78,7 @@ export default function NowPage() {
 					</Link>{' '}
 					which will try to refresh the launch culture in Copenhagen.
 				</p>
-				<p>
-					I am located in Copenhagen for the next 2 weeks to help the team here. If your
-					team is in need of upgraded frokost, let me know 😼
-				</p>
+				<p>Currently we are shipping out detailed allergens feature for our courses</p>
 				<h2 className="font-bold text-2xl font-serif mb-5">Freelancing</h2>
 				<p>
 					I&apos;m always open to new opportunities, if you have a project that you think
@@ -93,7 +90,7 @@ export default function NowPage() {
 						GigOver
 					</Link>
 					. I help them build a software used in construction. My current project revolves
-					around building a procurement and offer system.
+					around property management features into the system.
 				</p>
 				<h2 className="font-bold text-2xl font-serif mb-5">Side projects</h2>
 				<p>
