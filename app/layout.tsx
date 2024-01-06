@@ -4,6 +4,8 @@ import { Metadata } from 'next';
 import localFont from 'next/font/local';
 import { ThemeProvider } from '@/components/theme-provider';
 import { Analytics } from '@vercel/analytics/react';
+import { ThemeToggle } from '@/components/theme-toggle';
+import { Navbar } from '@/components/navbar';
 
 const kaisei = localFont({
 	src: '../public/fonts/kaisei-tokumin-latin-700-normal.woff2',
@@ -34,7 +36,12 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 	return (
 		<html lang="en" className={clsx(kaisei.variable)}>
 			<ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-				{children}
+				<body className="antialiased mb-10 mx-4 mt-8 lg:mx-auto">
+					<main className="container relative mx-auto scroll-my-12 overflow-auto print:p-12">
+						<Navbar />
+						{children}
+					</main>
+				</body>
 			</ThemeProvider>
 			<Analytics />
 		</html>
