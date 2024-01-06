@@ -7,9 +7,10 @@ export const RESUME_DATA = {
 	initials: 'EGG',
 	location: 'Reykjavik, Iceland, CET',
 	locationLink: 'https://www.google.com/maps/place/Reykjavík',
-	about: 'Full Stack Engineer focused on building products with extra attention to details',
+	about: 'Coder, Crossfitter, Coffee and wine enthusiast, Curoious, Late bloomer, Nerd',
 	summary:
-		'As a Full Stack Engineer, I have successfully taken multiple products from 0 to 1. I lead teams effectively, ensuring an environment where people can do their best work. Currently, I work mostly with TypeScript, React, Node.js, and GraphQL. I have over 8 years of experience in working remotely with companies all around the world.',
+		'This is my home on the internet 👋🏼. I want it to be simple, but I want to use it as my playground. I like to follow my curiosity so this will be a organised mess!',
+	// 'I am trying my best to improve a little bit every day. I am super courious and love to be a little nerd. I think there are so many things to being a good engineer other than just code. A well designed product is a product that is easy to use',
 	// avatarUrl: 'https://avatars.githubusercontent.com/u/1017620?v=4',
 	avatarUrl: 'https://avatars.githubusercontent.com/u/17381009?v=4',
 	personalWebsiteUrl: 'https://einargudni.com',
@@ -46,186 +47,93 @@ export const RESUME_DATA = {
 		{
 			company: 'Maul',
 			link: 'https://maul.is',
-			badges: ['Remote'],
-			title: 'Senior Full Stack Developer',
+			badges: [],
+			title: 'Full Stack Developer',
 			logo: '',
 			start: '2020',
 			end: 'Present',
 			description:
-				'Implemented new features, led squad, worked on improving the way developers ship the code, started migration from Emotion to Tailwind CSS and more. Technologies: React, TypeScript, GraphQL'
+				'Helped building and growing from delivering 2500 courses weekly to 8000. Build a lot of new features and helped implement various systems. Technologies: React, Tailwind, AWS'
 		},
 		{
 			company: 'Tiffin',
-			link: 'https://clevertech.biz',
+			link: 'https://tiffin.dk',
 			badges: ['Remote'],
-			title: 'Lead Android Developer → Full Stack Developer',
+			title: 'Full Stack Developer',
 			logo: '',
 			start: '2022',
 			end: 'Present',
 			description:
-				'Created Android mobile apps and led teams for companies like Vision Media, DKMS, or AAA. Built live streaming application for Evercast from scratch. Technologies: Android, Kotlin, React, TypeScript, GraphQL'
+				'Helped take the product from 0 to 1. Built the first version of the product, implemented new features, and more.'
 		},
 		{
 			company: 'Gigover',
 			link: 'https://bsgroup.eu/',
-			badges: [],
-			title: 'Android Developer → Lead Android Developer',
+			badges: ['Free Lance'],
+			title: 'Front end Developer',
 			logo: '',
-			start: '2012',
-			end: '2015',
+			start: '2022',
+			end: 'Present',
 			description:
-				'Built an Android team, created Android apps for biggest Polish companies like LOT, Polskie Radio, Agora, PolskaPress'
-		},
-		{
-			company: '',
-			link: 'https://www.nokia.com',
-			badges: [],
-			title: 'C/C++ Developer',
-			logo: '',
-			start: '2010',
-			end: '2012',
-			description: 'Creating and testing software for LTE base stations'
+				'Continued development of the Gigover platform. Built new features like a procurement system and property management. Technologies: React, TypeScript, GraphQL'
 		}
 	],
 	skills: [
 		'JavaScript',
 		'TypeScript',
 		'React/Next.js/Remix',
+		'Tailwind',
+		'Chakra-Ui',
 		'Node.js',
-		'GraphQL',
-		'Relay',
-		'WebRTC'
+		'AWS'
 	],
 	projects: [
 		{
-			title: 'Consultly',
-			techStack: ['Side Project', 'TypeScript', 'Next.js', 'Vite', 'GraphQL', 'WebRTC'],
-			description: 'A platform to build and grow your online business',
+			title: 'Oktoberfest 22',
+			techStack: ['Side Project', 'TypeScript', 'Next.js', 'TailwindCSS'],
+			description: 'A small web app to count drinks during Oktoberfest 2022',
 			logo: '',
 			link: {
-				label: 'consultly.com',
-				href: 'https://consultly.com/'
+				label: 'oktoberfest22.vercel.app',
+				href: 'https://oktoberfest22.vercel.app/'
 			}
 		},
 		{
-			title: 'Monito',
-			techStack: ['Side Project', 'TypeScript', 'Next.js', 'Browser Extension'],
-			description: 'Browser extension that records everything happening in a web application',
-			logo: '',
-			link: {
-				label: 'monito.dev',
-				href: 'https://monito.dev/'
-			}
+			title: 'learning.einargudni',
+			techStack: ['Side Project', 'TypeScript', 'Remix', 'Prisma', 'In progress'],
+			description: 'My learning journal. Built with Remix and Prisma',
+			logo: ''
+			// link: {
+			// 	label: 'learning.einargudni.com',
+			// 	href: 'https://learning.einargudni.com/'
+			// }
 		},
 		{
-			title: 'Jarocki.me',
+			title: 'einargudni.com',
 			techStack: ['Side Project', 'Next.js', 'MDX'],
-			description: 'My personal website and blog. Built with Next.js and Notion API',
+			description: 'My personal website and blog. Built with Next.js',
 			logo: '',
 			link: {
 				label: 'github.com',
-				href: 'https://jarocki.me/'
+				href: 'https://einargudni.com/'
 			}
 		},
 		{
-			title: 'Minimal',
-			techStack: ['Side Project', 'Next.js', 'Puppeteer'],
-			description: 'Minimalist calendars, habit trackers and planners generator',
-			logo: '',
-			link: {
-				label: 'useminimal.com',
-				href: 'https://useminimal.com/'
-			}
-		},
-		{
-			title: 'Barepapers',
-			techStack: ['Side Project', 'Next.js', 'Puppeteer'],
-			description: 'Generates beautiful wallpapers using random shapes and gradients',
-			logo: '',
-			link: {
-				label: 'barepapers.com',
-				href: 'https://barepapers.com/'
-			}
-		},
-		{
-			title: 'Year progress',
-			techStack: ['Side Project', 'TypeScript', 'Next.js'],
-			description: 'Tracks current year progress and displays a countdown',
-			logo: '',
-			link: {
-				label: 'getyearprogress.com',
-				href: 'https://getyearprogress.com/'
-			}
-		},
-		{
-			title: 'Parabol',
-			techStack: ['Full Stack Developer', 'TypeScript', 'React', 'Node.js', 'GraphQL'],
-			description:
-				'The Agile meeting co-pilot that delivers better meetings with less effort',
-			logo: '',
-			link: {
-				label: 'github.com',
-				href: 'https://parabol.co/'
-			}
-		},
-		{
-			title: 'Evercast',
-			techStack: ['Lead Frontend Developer', 'TypeScript', 'React', 'Node.js', 'GraphQL'],
-			description:
-				'Creative collaboration platform that combines video conferencing and HD media streaming',
-			logo: '',
-			link: {
-				label: 'evercast.us',
-				href: 'https://www.evercast.us/'
-			}
-		},
-		{
-			title: 'Mobile Vikings',
-			techStack: ['Lead Android Developer', 'Android', 'Kotlin'],
-			description: 'Android application for leading virtual mobile operator in Poland',
-			logo: '',
-			link: {
-				label: 'mobilevikings.pl',
-				href: 'https://mobilevikings.pl/'
-			}
-		},
-		{
-			title: 'Howdy',
-			techStack: ['Lead Android Developer', 'Android', 'Kotlin'],
-			description: 'Howdy is a place for you to join communities you care about',
-			logo: '',
-			link: {
-				label: 'play.google.com',
-				href: 'https://howdy.co/'
-			}
-		},
-		{
-			title: 'Tastycloud',
-			techStack: ['Lead Android Developer', 'Android', 'Kotlin'],
-			description:
-				'Android application for managing and displaying restaurant menus in kiosk mode',
-			logo: '',
-			link: {
-				label: 'tastycloud.fr',
-				href: 'https://www.tastycloud.fr/'
-			}
-		},
-		{
-			title: 'Ambit',
-			techStack: ['Lead Android Developer', 'Android', 'Kotlin'],
-			description: 'Android application that helps with sharing your contact details',
+			title: 'Course grader',
+			techStack: ['Side Project', 'React', 'Firebase', 'Material-UI'],
+			description: 'A simple web app to grade courses in University of Iceland',
 			logo: ''
 		},
 		{
-			title: 'Bim',
-			techStack: ['Lead Android Developer', 'Android', 'Kotlin'],
-			description: 'Android application that helps with booking a table in a restaurants',
+			title: 'Reboot hack',
+			techStack: ['Volunteer', 'React', 'PostgreSQL', 'Bootstrap'],
+			description: 'Registration site for Reboot hack, a student driven hackathon in Iceland',
 			logo: ''
 		},
 		{
-			title: 'Canal Digital GO',
-			techStack: ['Lead Android Developer', 'Android', 'Kotlin'],
-			description: 'Video streaming mobile application for Canal Digital subscribers',
+			title: 'Grade checker',
+			techStack: ['Side Project', 'Ptyhon'],
+			description: 'Sends you an email when your grade is published',
 			logo: ''
 		}
 	]
