@@ -4,8 +4,9 @@ import { Metadata } from 'next';
 import localFont from 'next/font/local';
 import { ThemeProvider } from '@/components/theme-provider';
 import { Analytics } from '@vercel/analytics/react';
-import { ThemeToggle } from '@/components/theme-toggle';
 import { Navbar } from '@/components/navbar';
+import { GeistSans } from 'geist/font/sans';
+import { GeistMono } from 'geist/font/mono';
 
 const kaisei = localFont({
 	src: '../public/fonts/kaisei-tokumin-latin-700-normal.woff2',
@@ -34,6 +35,7 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
 	return (
+		// <html lang="en" className={GeistSans.className}>
 		<html lang="en" className={clsx(kaisei.variable)}>
 			<ThemeProvider attribute="class" defaultTheme="system" enableSystem>
 				<body className="antialiased mb-10 mx-4 mt-8 lg:mx-auto">
