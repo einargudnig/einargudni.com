@@ -10,7 +10,7 @@ export const metadata: Metadata = {
 
 export default async function BlogPage() {
 	return (
-		<section>
+		<section className='container relative mx-auto scroll-my-12 overflow-auto w-full max-w-2xl space-y-8 print:space-y-6'>
 			<h1 className="font-bold text-3xl font-serif mb-5">Blog</h1>
 			{allBlogs
 				.sort((a, b) => {
@@ -31,6 +31,7 @@ export default async function BlogPage() {
 						</div>
 					</Link>
 				))}
-		</section>
+			</section>
+			
 	);
 }

@@ -1,15 +1,13 @@
 import Link from 'next/link';
+import { NowPlaying } from './now-playing';
 import { ThemeToggle } from './theme-toggle';
 
 const navItems = {
 	'/': {
 		name: 'home'
 	},
-	'/work': {
-		name: 'work'
-	},
 	'/blog': {
-		name: 'blog'
+		name: 'writing'
 	}
 };
 
@@ -34,7 +32,11 @@ export function Navbar() {
 								})}
 							</div>
 							<div className="justify-end">
-								<ThemeToggle />
+								<div className='flex items-center'>
+									<NowPlaying />
+									<div className="w-2"/>
+									<ThemeToggle />
+								</div>
 							</div>
 						</div>
 					</nav>
