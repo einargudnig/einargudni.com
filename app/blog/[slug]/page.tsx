@@ -57,7 +57,7 @@ export default async function Blog({ params }) {
 	// const tweets = await getTweets(post.tweetIds);
 
 	return (
-		<section className='mx-auto w-full max-w-2xl space-y-8 print:space-y-6'>
+		<section className="mx-auto w-full max-w-2xl space-y-8 print:space-y-6">
 			<script type="application/ld+json">{JSON.stringify(post.structuredData)}</script>
 			<h1 className="font-bold text-3xl font-serif max-w-[650px]">
 				<Balancer>{post.title}</Balancer>
