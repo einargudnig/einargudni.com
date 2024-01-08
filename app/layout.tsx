@@ -7,8 +7,8 @@ import { Analytics } from '@vercel/analytics/react';
 import { Navbar } from '@/components/navbar';
 import { CommandMenu } from '@/components/command-menu';
 import { RESUME_DATA } from '@/data/resume-data';
-import { GeistSans } from 'geist/font/sans';
-import { GeistMono } from 'geist/font/mono';
+// import { GeistSans } from 'geist/font/sans';
+// import { GeistMono } from 'geist/font/mono';
 
 const kaisei = localFont({
 	src: '../public/fonts/kaisei-tokumin-latin-700-normal.woff2',
