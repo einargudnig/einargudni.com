@@ -26,7 +26,7 @@ export const CommandMenu = ({ links }: Props) => {
 			// @ts-ignore
 			if (e.key === 'k' && (e.metaKey || e.ctrlKey)) {
 				e.preventDefault();
-				// disable-eslint-next-line
+				// eslint-disable-next-line
 				setOpen((open) => !open);
 			}
 		};
