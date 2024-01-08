@@ -32,12 +32,12 @@ export function Navbar() {
 										);
 									})}
 								</div>
-								<Link
+								{/* <Link
 									href="learn.einargudni.com"
 									className="transition-all hover:text-neutral-800 dark:hover:text-neutral-200 flex align-middle relative py-1 px-2"
 								>
 									curiosity
-								</Link>
+								</Link> */}
 							</div>
 							<div className="justify-end">
 								<div className="flex items-center">
