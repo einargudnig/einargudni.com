@@ -62,9 +62,9 @@ export default function Page() {
 									</a>
 								</Button>
 							))}
-							<Button size="contact" variant="outline">
+							{/* <Button size="contact" variant="outline">
 								Contact
-							</Button>
+							</Button> */}
 						</div>
 						<div className="hidden flex-col gap-x-1 font-mono text-sm text-muted-foreground print:flex">
 							{RESUME_DATA.contact.email ? (
