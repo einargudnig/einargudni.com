@@ -3,7 +3,7 @@ import Link from 'next/link';
 
 export default async function MyBooks() {
 	return (
-		<div>
+		<section className="mx-auto w-full max-w-2xl space-y-8 print:space-y-6">
 			<h1 className="font-bold text-3xl font-serif mb-5">Latex</h1>
 			<p>My homework efficency improved a lot when I discovered LaTex</p>
 			<p>It&apos;s a great tool to use for any kind of scientific or technical homework.</p>
@@ -43,6 +43,6 @@ export default async function MyBooks() {
 					</div>
 				</li>
 			</ul>
-		</div>
+		</section>
 	);
 }

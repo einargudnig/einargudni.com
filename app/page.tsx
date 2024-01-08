@@ -1,7 +1,6 @@
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Card, CardHeader, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { CommandMenu } from '@/components/command-menu';
 import { Metadata } from 'next';
 import { Section } from '@/components/ui/section';
 import { GlobeIcon, MailIcon, PhoneIcon } from 'lucide-react';
@@ -43,13 +42,13 @@ export default function Page() {
 									</a>
 								</Button>
 							) : null}
-							{RESUME_DATA.contact.tel ? (
+							{/* {RESUME_DATA.contact.tel ? (
 								<Button className="h-8 w-8" variant="outline" size="icon" asChild>
 									<a href={`tel:${RESUME_DATA.contact.tel}`}>
 										<PhoneIcon className="h-4 w-4" />
 									</a>
 								</Button>
-							) : null}
+							) : null} */}
 							{RESUME_DATA.contact.social.map((social) => (
 								<Button
 									key={social.name}
@@ -63,6 +62,9 @@ export default function Page() {
 									</a>
 								</Button>
 							))}
+							<Button size="contact" variant="outline">
+								Contact
+							</Button>
 						</div>
 						<div className="hidden flex-col gap-x-1 font-mono text-sm text-muted-foreground print:flex">
 							{RESUME_DATA.contact.email ? (
@@ -70,11 +72,11 @@ export default function Page() {
 									<span className="underline">{RESUME_DATA.contact.email}</span>
 								</a>
 							) : null}
-							{RESUME_DATA.contact.tel ? (
+							{/* {RESUME_DATA.contact.tel ? (
 								<a href={`tel:${RESUME_DATA.contact.tel}`}>
 									<span className="underline">{RESUME_DATA.contact.tel}</span>
 								</a>
-							) : null}
+							) : null} */}
 						</div>
 					</div>
 
@@ -173,27 +175,6 @@ export default function Page() {
 					</div>
 				</Section>
 			</section>
-
-			<CommandMenu
-				links={[
-					{
-						url: '/blog',
-						title: 'writing'
-					},
-					{
-						url: RESUME_DATA.contact.email,
-						title: 'curiosity'
-					},
-					{
-						url: RESUME_DATA.contact.tel,
-						title: 'Phone'
-					},
-					...RESUME_DATA.contact.social.map((socialMediaLink) => ({
-						url: socialMediaLink.url,
-						title: socialMediaLink.name
-					}))
-				]}
-			/>
 		</>
 	);
 }

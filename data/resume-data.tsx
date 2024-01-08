@@ -1,26 +1,26 @@
-import { GitHubIcon } from '@/components/icons/GitHubIcon';
+import { GitHubIconOutline } from '@/components/icons';
 import { LinkedInIcon } from '@/components/icons/LinkedInIcon';
 import { XIcon } from '@/components/icons/XIcon';
+import { InstagramIcon } from '@/components/icons';
 
 export const RESUME_DATA = {
 	name: 'Einar Gudni Gudjonsson',
 	initials: 'EGG',
 	location: 'Reykjavik, Iceland, CET',
 	locationLink: 'https://www.google.com/maps/place/Reykjavík',
-	about: 'Coder, Crossfitter, Coffee and wine enthusiast, Curoious, Late bloomer & Nerd',
+	about: 'Curoious, Coder, Crossfitter, Coffee and wine hobbyist, Late bloomer & Nerd',
 	summary:
-		'This is my home on the internet 👋🏼. I want it to be simple, but I want to use it as my playground. I like to follow my curiosity so this will be a organised mess!',
+		'Hello 👋🏼. This is my home on the internet 🏡. I want it to be simple, but I want to use it as my playground. I like to follow my curiosity so this will be a organised mess!',
 	// 'I am trying my best to improve a little bit every day. I am super courious and love to be a little nerd. I think there are so many things to being a good engineer other than just code. A well designed product is a product that is easy to use',
 	avatarUrl: 'https://avatars.githubusercontent.com/u/17381009?v=4',
 	personalWebsiteUrl: 'https://einargudni.com',
 	contact: {
 		email: 'einargudni"ggmail.com',
-		tel: '+3548474601',
 		social: [
 			{
 				name: 'GitHub',
 				url: 'https://github.com/einargudnig',
-				icon: GitHubIcon
+				icon: GitHubIconOutline
 			},
 			{
 				name: 'LinkedIn',
@@ -31,6 +31,11 @@ export const RESUME_DATA = {
 				name: 'X',
 				url: 'https://x.com/einargudni',
 				icon: XIcon
+			},
+			{
+				name: 'Instagram',
+				url: 'https://x.com/einargudni',
+				icon: InstagramIcon
 			}
 		]
 	},
@@ -66,15 +71,15 @@ export const RESUME_DATA = {
 				'Helped take the product from 0 to 1. Built the first version of the product, implemented new features, and more.'
 		},
 		{
-			company: 'Gigover',
-			link: 'https://bsgroup.eu/',
-			badges: ['Free Lance'],
+			company: 'Contractor',
+			link: 'https://einargudni.com',
+			badges: ['Free Lance', 'Remote'],
 			title: 'Front end Developer',
 			logo: '',
 			start: '2022',
 			end: 'Present',
 			description:
-				'Continued development of the Gigover platform. Built new features like a procurement system and property management. Technologies: React, TypeScript, GraphQL'
+				'I am always open for exiting projects. Reach out if you need help, consulting, or someone to try out the thing you are building.'
 		}
 	],
 	skills: [
@@ -98,13 +103,13 @@ export const RESUME_DATA = {
 			}
 		},
 		{
-			title: 'learning.einargudni',
+			title: 'curiosity.einargudni',
 			techStack: ['Side Project', 'TypeScript', 'Remix', 'Prisma', 'In progress'],
 			description: 'My learning journal. Built with Remix and Prisma',
 			logo: ''
 			// link: {
-			// 	label: 'learning.einargudni.com',
-			// 	href: 'https://learning.einargudni.com/'
+			// 	label: 'curiosity.einargudni.com',
+			// 	href: 'https://curiosity.einargudni.com/'
 			// }
 		},
 		{
@@ -115,6 +120,16 @@ export const RESUME_DATA = {
 			link: {
 				label: 'github.com',
 				href: 'https://einargudni.com/'
+			}
+		},
+		{
+			title: 'Gigover',
+			techStack: ['Free lance', 'TypeScript', 'React', 'Chakra-Ui'],
+			description: 'Software to be used for construction work',
+			logo: '',
+			link: {
+				label: 'oktoberfest22.vercel.app',
+				href: 'https://oktoberfest22.vercel.app/'
 			}
 		},
 		{
@@ -131,7 +146,7 @@ export const RESUME_DATA = {
 		},
 		{
 			title: 'Grade checker',
-			techStack: ['Side Project', 'Ptyhon'],
+			techStack: ['Side Project', 'Python'],
 			description: 'Sends you an email when your grade is published',
 			logo: ''
 		}

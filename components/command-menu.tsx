@@ -1,7 +1,7 @@
 'use client';
 
 import * as React from 'react';
-
+import Link from 'next/link';
 import {
 	CommandDialog,
 	CommandEmpty,
@@ -13,11 +13,14 @@ import {
 } from '@/components/ui/command';
 
 interface Props {
-	links: { url: string; title: string }[];
+	links: { url: string; title: string; type: string }[];
 }
 
 export const CommandMenu = ({ links }: Props) => {
 	const [open, setOpen] = React.useState(false);
+
+	const socialsLinks = links.filter((link) => link.type === 'social');
+	const internalLinks = links.filter((link) => link.type === 'internal');
 
 	React.useEffect(() => {
 		const down = (e: KeyboardEvent) => {
@@ -48,13 +51,13 @@ export const CommandMenu = ({ links }: Props) => {
 				<CommandList>
 					<CommandEmpty>No results found.</CommandEmpty>
 					<CommandGroup heading="Links">
-						{links.map(({ url, title }) => (
+						{internalLinks.map(({ url, title }) => (
 							<CommandItem
 								key={url}
 								onSelect={() => {
 									setOpen(false);
 									// @ts-ignore
-									window.open(url, '_blank');
+									window.open(url);
 								}}
 							>
 								<span>{title}</span>
@@ -62,7 +65,22 @@ export const CommandMenu = ({ links }: Props) => {
 						))}
 					</CommandGroup>
 					<CommandSeparator />
-						<CommandGroup heading="Actions">
+					<CommandGroup heading="Socials">
+						{socialsLinks.map(({ url, title }) => (
+							<CommandItem
+								key={url}
+								onSelect={() => {
+									setOpen(false);
+									// @ts-ignore
+									window.open(url);
+								}}
+							>
+								<span>{title}</span>
+							</CommandItem>
+						))}
+					</CommandGroup>
+					{/* <CommandSeparator />
+					<CommandGroup heading="Actions">
 						<CommandItem
 							onSelect={() => {
 								setOpen(false);
@@ -72,8 +90,7 @@ export const CommandMenu = ({ links }: Props) => {
 						>
 							<span>Print</span>
 						</CommandItem>
-					</CommandGroup>
-					<CommandSeparator />
+					</CommandGroup> */}
 				</CommandList>
 			</CommandDialog>
 		</>

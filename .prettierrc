@@ -6,27 +6,5 @@
 	"bracketSpacing": true,
 	"semi": true,
 	"useTabs": true,
-	"jsxBracketSameLine": false,
-	"plugins": [
-		"prettier-plugin-packagejson",
-		"prettier-plugin-curly",
-		"ianvs/prettier-plugin-sort-imports"
-	],
-	"importOrder": [
-		"^react$",
-		"",
-		"<BUILTIN_MODULES>",
-		"",
-		"<TYPES>",
-		"<TYPES>^[.]",
-		"",
-		"<THIRD_PARY_MODULES>",
-		"",
-		"^(@/)(/.*)$",
-		"",
-		"^[.]",
-		"",
-		"^(?!.*[.]css$)[./].*$",
-		".css$"
-	]
+	"jsxBracketSameLine": false
 }
