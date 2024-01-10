@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import { NowPlaying } from './now-playing';
 import { ThemeToggle } from './theme-toggle';
+import { MobileNav } from './mobile-nav';
 
 const navItems = {
 	'/': {
@@ -19,7 +20,7 @@ export function Navbar() {
 					<nav className="px-0 pb-0 fade scroll-pr-6" id="nav">
 						<div className="flex justify-between items-center">
 							<div className="flex flex-row">
-								<div className="flex flex-row space-x-0 pr-1">
+								<div className="md:flex flex-row space-x-0 pr-1 hidden">
 									{Object.entries(navItems).map(([path, { name }]) => {
 										return (
 											<Link
@@ -38,6 +39,10 @@ export function Navbar() {
 								>
 									curiosity
 								</Link> */}
+								{/* Mobile Navbar */}
+								<div className="md:hidden">
+									<MobileNav />
+								</div>
 							</div>
 							<div className="justify-end">
 								<div className="flex items-center">
