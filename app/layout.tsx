@@ -35,10 +35,9 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
 	return (
 		<html lang="en" className={GeistSans.className}>
-			{/* <html lang="en" className={clsx(kaisei.variable)}> */}
 			<ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-				<body className="antialiased mb-10 mx-4 mt-8 lg:mx-auto">
-					<main className="container relative mx-auto overflow-auto print:p-12">
+				<body className="antialiased mb-10 lg:mx-auto">
+					<main className="container relative mx-auto mt-8 overflow-auto print:p-12">
 						<Navbar />
 						{children}
 						<CommandMenu
