@@ -11,7 +11,7 @@ const HomePage = () => {
 	};
 
 	return (
-		<div>
+		<section className="mx-auto w-full max-w-2xl space-y-8 print:space-y-6">
 			<div>
 				<h2 className="font-bold text-3xl font-serif">5200 weeks</h2>
 				<p className="mt-3">
@@ -42,7 +42,7 @@ const HomePage = () => {
 					{weeksPassed()}/5200{' '}
 				</p>
 			</div>
-		</div>
+		</section>
 	);
 };
 
