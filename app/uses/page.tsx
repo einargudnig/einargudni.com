@@ -13,13 +13,13 @@ export default function UsesPage() {
 				<h3 id="computer-office">Computer / Office 💻</h3>
 				<ul>
 					<li>14&quot; Macbook Pro M1 max(2021)</li>
-					<li>27&quot; Asus</li>
+					<li>27&quot; Asus monitor</li>
 					<li>Logitech MX Master 3 Mouse</li>
 					<li>Apple Magic Trackpad</li>
 					<li>Nuphy Halo 65</li>
 					<li>Keychron K3</li>
-					<li>Ikea desk</li>
-					<li>Ikea chair</li>
+					<li>Ikea Bekant desk</li>
+					<li>Ikea Styrspel chair</li>
 				</ul>
 				<h3 id="coding">Coding 🧑🏼‍💻</h3>
 				<ul>
@@ -44,6 +44,7 @@ export default function UsesPage() {
 					<li>Raycast</li>
 					<li>Things</li>
 					<li>Obsidian</li>
+					<li>Arc browser</li>
 					<li>1Password</li>
 					<li>Spotify</li>
 					<li>Spark</li>
@@ -56,8 +57,8 @@ export default function UsesPage() {
 					<li>Apple Airpods Pro</li>
 					<li>Apple iPhone 14 pro</li>
 					<li>Garmin Venu</li>
-					<li>Lacie USB-C External HDD</li>
 					<li>Kindle</li>
+					<li>Sony wh-1000xm3</li>
 				</ul>
 				<h3 id="other-tech">Coffee ☕</h3>
 				<ul>

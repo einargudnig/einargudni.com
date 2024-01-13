@@ -35,8 +35,8 @@ module.exports = {
 				border: 'hsl(var(--border))',
 				input: 'hsl(var(--input))',
 				ring: 'hsl(var(--ring))',
-				background: 'var(--background)', //! hsl(var(--background)) This gives me a different color than the one in the layout.tsx?????
-				foreground: 'var(--foreground)', //! hsl(var(--background)) This gives me a different color than the one in the layout.tsx?????
+				background: 'var(--background)',
+				foreground: 'var(--foreground)',
 				primary: {
 					DEFAULT: 'hsl(var(--primary))',
 					foreground: 'hsl(var(--primary-foreground))'
