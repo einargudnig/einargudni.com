@@ -4,8 +4,8 @@ import { XIcon } from '@/components/icons/XIcon';
 import { InstagramIcon } from '@/components/icons';
 
 export const RESUME_DATA = {
-	name: 'Einar Gudni Gudjonsson',
-	initials: 'EGG',
+	name: 'Einar Gudni',
+	initials: 'EG',
 	location: 'Reykjavik, Iceland, CET',
 	locationLink: 'https://www.google.com/maps/place/Reykjavík',
 	about: 'Curoious, Coder, Crossfitter, Coffee and wine hobbyist, Late bloomer & Nerd',
