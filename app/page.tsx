@@ -21,7 +21,7 @@ export default function Page() {
 					<div className="flex-1 space-y-1.5">
 						{/* <h1 className="md:text-2xl font-bold">{RESUME_DATA.name}</h1> */}
 						<h1 className="text-2xl font-bold">Einar Gudni</h1>
-						<p className="max-w-md text-pretty font-mono text-sm text-foreground dark:text-muted-foreground">
+						<p className="max-w-md text-pretty font-mono text-sm text-foreground">
 							{RESUME_DATA.about}
 						</p>
 						<p className="max-w-md items-center text-pretty font-mono text-xs text-muted-foreground">
@@ -35,7 +35,7 @@ export default function Page() {
 								{RESUME_DATA.location}
 							</a>
 						</p>
-						<div className="flex gap-x-1 pt-1 font-mono text-sm text-muted-foreground print:hidden">
+						<div className="flex gap-x-1 pt-1 font-mono text-sm text-foreground print:hidden">
 							{RESUME_DATA.contact.email ? (
 								<Button className="h-8 w-8" variant="outline" size="icon" asChild>
 									<a href={`mailto:${RESUME_DATA.contact.email}`}>
@@ -88,7 +88,7 @@ export default function Page() {
 				</div>
 				<Section>
 					<h2 className="text-xl font-bold">About</h2>
-					<p className="text-pretty font-mono text-sm text-foreground dark:text-muted-foreground">
+					<p className="text-pretty font-mono text-sm text-foreground">
 						{RESUME_DATA.summary}
 					</p>
 				</Section>
