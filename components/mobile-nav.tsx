@@ -3,7 +3,6 @@
 import * as React from 'react';
 
 import { cn } from '@/lib/utils';
-// import { Icons } from '@/components/icons';
 import {
 	NavigationMenu,
 	NavigationMenuContent,
@@ -20,7 +19,7 @@ export function MobileNav() {
 				<NavigationMenuItem>
 					<NavigationMenuTrigger>navigation</NavigationMenuTrigger>
 					<NavigationMenuContent>
-						<ul className=" gap-3 p-4 md:w-[400px] lg:w-[500px]">
+						<ul className=" gap-3 p-2 md:w-[400px] lg:w-[500px]">
 							<ListItem href="/" title="home" />
 							<ListItem href="/blog" title="writing" />
 							<ListItem href="/uses" title="uses" />

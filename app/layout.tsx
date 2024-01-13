@@ -7,13 +7,6 @@ import { CommandMenu } from '@/components/command-menu';
 import { RESUME_DATA } from '@/data/resume-data';
 import { GeistSans } from 'geist/font/sans';
 
-// const kaisei = localFont({
-// 	src: '../public/fonts/kaisei-tokumin-latin-700-normal.woff2',
-// 	weight: '700',
-// 	variable: '--font-kaisei',
-// 	display: 'swap'
-// });
-
 export const metadata: Metadata = {
 	title: 'Einar Gudni',
 	description: 'Curious developer, crossfitter, and coffee lover.',
