@@ -19,7 +19,8 @@ export default function Page() {
 			<section className="mx-auto w-full max-w-2xl space-y-8 print:space-y-6">
 				<div className="flex items-center justify-between">
 					<div className="flex-1 space-y-1.5">
-						<h1 className="text-2xl font-bold">{RESUME_DATA.name}</h1>
+						{/* <h1 className="md:text-2xl font-bold">{RESUME_DATA.name}</h1> */}
+						<h1 className="text-2xl font-bold">Einar Gudni</h1>
 						<p className="max-w-md text-pretty font-mono text-sm text-muted-foreground">
 							{RESUME_DATA.about}
 						</p>
@@ -62,9 +63,9 @@ export default function Page() {
 									</a>
 								</Button>
 							))}
-							<Button size="contact" variant="outline">
+							{/* <Button size="contact" variant="outline">
 								Contact
-							</Button>
+							</Button> */}
 						</div>
 						<div className="hidden flex-col gap-x-1 font-mono text-sm text-muted-foreground print:flex">
 							{RESUME_DATA.contact.email ? (
@@ -80,7 +81,7 @@ export default function Page() {
 						</div>
 					</div>
 
-					<Avatar className="h-28 w-28">
+					<Avatar className="h-20 w-20 md:h-28 md:w-28">
 						<AvatarImage alt={RESUME_DATA.name} src={RESUME_DATA.avatarUrl} />
 						<AvatarFallback>{RESUME_DATA.initials}</AvatarFallback>
 					</Avatar>

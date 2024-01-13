@@ -34,7 +34,7 @@ export const RESUME_DATA = {
 			},
 			{
 				name: 'Instagram',
-				url: 'https://x.com/einargudni',
+				url: 'https://www.instagram.com/einargudni/',
 				icon: InstagramIcon
 			}
 		]
