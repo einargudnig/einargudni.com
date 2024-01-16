@@ -1,5 +1,5 @@
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { Card, CardHeader, CardContent } from '@/components/ui/card';
+import { Card, CardHeader, CardContent, CardFooter } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Metadata } from 'next';
 import { Section } from '@/components/ui/section';
@@ -125,6 +125,19 @@ export default function Page() {
 								<CardContent className="mt-2 text-xs">
 									{work.description}
 								</CardContent>
+								<CardFooter>
+									<div className="mt-2 flex flex-wrap gap-1">
+										{work.stack.map((tag) => (
+											<Badge
+												className="p-1 text-[10px]"
+												variant="outline"
+												key={tag}
+											>
+												{tag}
+											</Badge>
+										))}
+									</div>
+								</CardFooter>
 							</Card>
 						);
 					})}

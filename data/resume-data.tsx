@@ -56,8 +56,11 @@ export const RESUME_DATA = {
 			logo: '',
 			start: '2020',
 			end: 'Present',
-			description:
-				'Helped building and growing from delivering 2500 courses weekly to 8000. Build a lot of new features and helped implement various systems. Technologies: React, Tailwind, AWS'
+			description: `Helped building and growing from delivering 2500 courses weekly to 8000. Built a lot of new features and helped improve current features.
+				 Improved our internal tools, took part in rewriting our router, more.
+				 Helped with architecture and design of data models and systems.
+				`,
+			stack: ['React', 'Tailwind', 'AWS']
 		},
 		{
 			company: 'Tiffin',
@@ -67,8 +70,10 @@ export const RESUME_DATA = {
 			logo: '',
 			start: '2022',
 			end: 'Present',
-			description:
-				'Helped take the product from 0 to 1. Built the first version of the product, implemented new features, and more.'
+			description: `Helped take the product from 0 to 1. Built the first version of the product, implemented new features, and more.
+				 Spent time in Copenhagen to help with integration of system, solve ad-hoc problems and more.
+				`,
+			stack: ['React', 'Tailwind', 'AWS']
 		},
 		{
 			company: 'Contractor',
@@ -79,7 +84,16 @@ export const RESUME_DATA = {
 			start: '2022',
 			end: 'Present',
 			description:
-				'I am always open for exiting projects. Reach out if you need help, consulting, or someone to try out the thing you are building.'
+				'I am always open for exiting projects. Reach out if you need help, consulting, or someone to try out the thing you are building.',
+			stack: [
+				'JavaScript',
+				'TypeScript',
+				'React/Next.js/Remix',
+				'Tailwind',
+				'Chakra-Ui',
+				'Node.js',
+				'AWS'
+			]
 		}
 	],
 	skills: [
