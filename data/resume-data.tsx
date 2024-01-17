@@ -120,11 +120,11 @@ export const RESUME_DATA = {
 			title: 'curiosity.einargudni',
 			techStack: ['Side Project', 'TypeScript', 'Remix', 'Prisma', 'In progress'],
 			description: 'My learning journal. Built with Remix and Prisma',
-			logo: ''
-			// link: {
-			// 	label: 'curiosity.einargudni.com',
-			// 	href: 'https://curiosity.einargudni.com/'
-			// }
+			logo: '',
+			link: {
+				label: 'curiosity.einargudni.com',
+				href: 'https://remix-workbook.fly.dev/'
+			}
 		},
 		{
 			title: 'einargudni.com',

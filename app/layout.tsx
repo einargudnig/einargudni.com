@@ -41,6 +41,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 									type: 'internal'
 								},
 								{
+									url: 'https://remix-workbook.fly.dev/',
+									title: 'learnings',
+									type: 'internal'
+								},
+								{
 									url: '/uses',
 									title: 'uses',
 									type: 'internal'
