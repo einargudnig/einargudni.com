@@ -10,18 +10,19 @@ export default function UsesPage() {
 	return (
 		<section className="mx-auto w-full max-w-2xl space-y-8 print:space-y-6">
 			<div className="prose prose-neutral dark:prose-invert">
-				<h3 id="computer-office">Computer / Office 💻</h3>
+				<h3 id="computer-office">What's on my desk</h3>
 				<ul>
-					<li>14&quot; Macbook Pro M1 max(2021)</li>
+					<li>Ikea Bekant desk</li>
+					<li>14&quot; Macbook Pro M1 Max 64GB 1TB</li>
+					<li>Nuphy Halo 65</li>
 					<li>27&quot; Asus monitor</li>
 					<li>Logitech MX Master 3 Mouse</li>
 					<li>Apple Magic Trackpad</li>
-					<li>Nuphy Halo 65</li>
 					<li>Keychron K3</li>
-					<li>Ikea Bekant desk</li>
 					<li>Ikea Styrspel chair</li>
+					<li>Twleve South Curve flex</li>
 				</ul>
-				<h3 id="coding">Coding 🧑🏼‍💻</h3>
+				<h3 id="coding">Development</h3>
 				<ul>
 					<li>
 						Editor: VSCode (
@@ -41,16 +42,31 @@ export default function UsesPage() {
 				</ul>
 				<h3 id="software">Software 💽</h3>
 				<ul>
-					<li>Raycast</li>
-					<li>Things</li>
-					<li>Obsidian</li>
-					<li>Arc browser</li>
-					<li>1Password</li>
-					<li>Spotify</li>
-					<li>Spark</li>
-					<li>Cron</li>
-					<li>CleanShot X</li>
-					<li>Grammarly</li>
+					<li>
+						Launcher: <i>Raycast</i>
+					</li>
+					<li>
+						To-do: <i>Things</i>
+					</li>
+					<li>
+						Notes: <i>Obsidian</i>
+					</li>
+					<li>
+						Browser: Arc <i>browser</i>
+					</li>
+					<li>
+						Password Management: <i>1Password</i>
+					</li>
+					<li>Music: Spotify</li>
+					<li>
+						Email: <i>Spark</i>
+					</li>
+					<li>
+						Calendar: <i>Cron</i>
+					</li>
+					<li>
+						Screenshots: CleanShot <i>X</i>
+					</li>
 				</ul>
 				<h3 id="other-tech">Other Tech</h3>
 				<ul>
