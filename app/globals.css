@@ -16,6 +16,7 @@
 		--flexoki-tx-3: 49 7% 70%;
 
 		--flexoki-re: 3 62% 42%;
+		--flexoki-cy: 175, 57%, 33%;
 	}
 
 	.dark {
@@ -31,6 +32,7 @@
 		--flexoki-tx-3: 45 2% 33%;
 
 		--flexoki-re: 5 61% 54%;
+		--flexoki-cy: 175, 57%, 33%;
 	}
 
 	:root {
@@ -54,6 +56,7 @@
 		--input: var(--flexoki-ui-2);
 		--ring: var(--flexoki-ui-3);
 		--radius: 0.5rem;
+		--cyan: var(--flexoki-cy);
 	}
 }
 

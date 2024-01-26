@@ -10,7 +10,9 @@ export default function UsesPage() {
 	return (
 		<section className="mx-auto w-full max-w-2xl space-y-8 print:space-y-6">
 			<div className="prose prose-neutral dark:prose-invert">
-				<h3 id="computer-office">What's on my desk</h3>
+				<h3 id="computer-office" className="text-cyan">
+					What's on my desk
+				</h3>
 				<ul>
 					<li>Ikea Bekant desk</li>
 					<li>14&quot; Macbook Pro M1 Max 64GB 1TB</li>
