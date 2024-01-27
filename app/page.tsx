@@ -7,6 +7,7 @@ import { GlobeIcon, MailIcon } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { RESUME_DATA } from '@/data/resume-data';
 import { ProjectCard } from '@/components/project-card';
+import { EmailSignUp } from '@/components/email-signup';
 
 export const metadata: Metadata = {
 	title: `${RESUME_DATA.name} | ${RESUME_DATA.about}`,
@@ -90,6 +91,19 @@ export default function Page() {
 					<p className="text-pretty font-mono text-sm text-foreground">
 						{RESUME_DATA.summary}
 					</p>
+				</Section>
+				<Section>
+					{/* I should add like a animated border thingy -> It should be subtle, but will still be a neat addition */}
+					<Card>
+						<div className="p-3">
+							<h2 className="text-xl font-bold">Triple Three</h2>
+							<p className="text-pretty font-mono text-sm text-foreground mb-4">
+								Sign up to my get updates from learnings page. I will send updates
+								once a month with three things from each category
+							</p>
+							<EmailSignUp />
+						</div>
+					</Card>
 				</Section>
 				<Section>
 					<h2 className="text-xl font-bold">Work Experience</h2>
