@@ -7,6 +7,7 @@ import { GlobeIcon, MailIcon } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { RESUME_DATA } from '@/data/resume-data';
 import { ProjectCard } from '@/components/project-card';
+import { EmailSignUp } from '@/components/email-signup';
 
 export const metadata: Metadata = {
 	title: `${RESUME_DATA.name} | ${RESUME_DATA.about}`,
@@ -91,6 +92,22 @@ export default function Page() {
 						{RESUME_DATA.summary}
 					</p>
 				</Section>
+				<Section>
+					<Card>
+						<div className="p-3">
+							<h2 className="text-xl font-bold">Triple Three</h2>
+							{/* <p className="text-pretty font-mono text-sm text-foreground mb-4">
+								Sign up to my get updates from learnings page. I will send updates
+								once a month with three things from each category
+							</p>
+							<EmailSignUp /> */}
+							<p className="text-pretty font-mono text-sm text-foreground my-4">
+								🚧 Under constructions.. 🚧
+							</p>
+						</div>
+					</Card>
+				</Section>
+
 				<Section>
 					<h2 className="text-xl font-bold">Work Experience</h2>
 					{RESUME_DATA.work.map((work) => {
