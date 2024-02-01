@@ -93,18 +93,21 @@ export default function Page() {
 					</p>
 				</Section>
 				<Section>
-					{/* I should add like a animated border thingy -> It should be subtle, but will still be a neat addition */}
 					<Card>
 						<div className="p-3">
 							<h2 className="text-xl font-bold">Triple Three</h2>
-							<p className="text-pretty font-mono text-sm text-foreground mb-4">
+							{/* <p className="text-pretty font-mono text-sm text-foreground mb-4">
 								Sign up to my get updates from learnings page. I will send updates
 								once a month with three things from each category
 							</p>
-							<EmailSignUp />
+							<EmailSignUp /> */}
+							<p className="text-pretty font-mono text-sm text-foreground my-4">
+								🚧 Under constructions.. 🚧
+							</p>
 						</div>
 					</Card>
 				</Section>
+
 				<Section>
 					<h2 className="text-xl font-bold">Work Experience</h2>
 					{RESUME_DATA.work.map((work) => {

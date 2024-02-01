@@ -68,3 +68,21 @@
 		@apply bg-background text-foreground;
 	}
 }
+
+/* This is for the animated border! */
+.glow {
+	animation: move 5s linear infinite;
+	offset-path: rect(0% auto 100% auto);
+	/* background: radial-gradient(#fff, #f1f5f9, transparent); */
+	background: radial-gradient(rgb(58, 169, 159), transparent);
+}
+
+@keyframes move {
+	0% {
+		offset-distance: 0%;
+	}
+
+	100% {
+		offset-distance: 100%;
+	}
+}
