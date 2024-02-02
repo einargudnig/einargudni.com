@@ -11,7 +11,7 @@ export default function UsesPage() {
 		<section className="mx-auto w-full max-w-2xl space-y-8 print:space-y-6">
 			<div className="prose prose-neutral dark:prose-invert">
 				<h3 id="computer-office" className="text-cyan">
-					What's on my desk
+					What&apos;s on my desk
 				</h3>
 				<ul>
 					<li>Ikea Bekant desk</li>
