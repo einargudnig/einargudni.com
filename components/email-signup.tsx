@@ -20,7 +20,8 @@ export function EmailSignUp() {
 	} = useForm<NewsletterForm>();
 
 	async function onSubmit(formData: NewsletterForm) {
-		await fetch('/api/send', {
+		console.log('FORMDATA', formData);
+		await fetch('/api/newsletter-signup', {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json'
@@ -37,9 +38,6 @@ export function EmailSignUp() {
 
 		reset();
 	}
-
-	// use it to clear the inputs after submission
-	// const ref = useRef();
 
 	return (
 		<form

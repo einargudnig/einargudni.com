@@ -56,7 +56,7 @@
 		--input: var(--flexoki-ui-2);
 		--ring: var(--flexoki-ui-3);
 		--radius: 0.5rem;
-		--cyan: var(--flexoki-cy);
+		--cyan-flexoki: var(--flexoki-cy);
 	}
 }
 

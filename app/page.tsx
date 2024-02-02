@@ -7,7 +7,7 @@ import { GlobeIcon, MailIcon } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { RESUME_DATA } from '@/data/resume-data';
 import { ProjectCard } from '@/components/project-card';
-// import { EmailSignUp } from '@/components/email-signup';
+import { EmailSignUp } from '@/components/email-signup';
 
 export const metadata: Metadata = {
 	title: `${RESUME_DATA.name} | ${RESUME_DATA.about}`,
@@ -96,14 +96,16 @@ export default function Page() {
 					<Card>
 						<div className="p-3">
 							<h2 className="text-xl font-bold">Triple Three</h2>
-							{/* <p className="text-pretty font-mono text-sm text-foreground mb-4">
-								Sign up to my get updates from learnings page. I will send updates
-								once a month with three things from each category
-							</p>
-							<EmailSignUp /> */}
-							<p className="text-pretty font-mono text-sm text-foreground my-4">
-								🚧 Under constructions.. 🚧
-							</p>
+							<div className="text-pretty font-mono text-sm text-foreground mb-4">
+								<p>
+									Subscribe to{' '}
+									<span className="underline text-cyan-300">triple three</span>{' '}
+									and never miss a beat! Receive monthly updates packed with three
+									fascinating facts, tips, or trends from each category. Let's
+									embark on a knowledge-filled journey together!
+								</p>
+							</div>
+							<EmailSignUp />
 						</div>
 					</Card>
 				</Section>
