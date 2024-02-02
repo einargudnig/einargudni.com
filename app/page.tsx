@@ -98,11 +98,12 @@ export default function Page() {
 							<h2 className="text-xl font-bold">Triple Three</h2>
 							<div className="text-pretty font-mono text-sm text-foreground mb-4">
 								<p>
-									Subscribe to{' '}
-									<span className="underline text-cyan-300">triple three</span>{' '}
-									and never miss a beat! Receive monthly updates packed with three
-									fascinating facts, tips, or trends from each category. Let's
-									embark on a knowledge-filled journey together!
+									Subscribe to&nbsp;
+									<span className="underline text-cyan-300">triple three</span>
+									&nbsp; and never miss a beat! Receive monthly updates packed
+									with three fascinating facts, tips, or trends from each
+									category. Let&apos;s embark on a knowledge-filled journey
+									together!
 								</p>
 							</div>
 							<EmailSignUp />

@@ -34,7 +34,7 @@ export default function UsesPage() {
 						)
 					</li>
 					<li>
-						Theme:{' '}
+						Theme:&nbsp;
 						<Link href="https://marketplace.visualstudio.com/items?itemName=RaillyHugo.one-hunter">
 							One Hunter Flexoki Dark
 						</Link>
