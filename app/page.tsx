@@ -7,7 +7,7 @@ import { GlobeIcon, MailIcon } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { RESUME_DATA } from '@/data/resume-data';
 import { ProjectCard } from '@/components/project-card';
-import { EmailSignUp } from '@/components/email-signup';
+// import { EmailSignUp } from '@/components/email-signup';
 
 export const metadata: Metadata = {
 	title: `${RESUME_DATA.name} | ${RESUME_DATA.about}`,
