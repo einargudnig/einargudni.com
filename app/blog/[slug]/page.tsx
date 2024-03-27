@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { Mdx } from '../../../components/mdx';
 import { allBlogs } from 'contentlayer/generated';
+import { createClient } from '@/utils/supabase/server';
 // import { getTweets } from 'lib/twitter';
 import Balancer from 'react-wrap-balancer';
 import ViewCounter from '../view-counter';
@@ -48,7 +49,17 @@ export async function generateMetadata({ params }): Promise<Metadata | undefined
 }
 // @ts-ignore
 export default async function Blog({ params }) {
+	const supabase = createClient();
+
+	// reading from database, show the total view count for blog post
+	let { data: writing } = await supabase.from('writing').select('title, views');
 	const post = allBlogs.find((p) => p.slug === params.slug);
+
+	// write to the database, add one to views when blog post is read
+	// const { data, error } = await supabase
+	// 	.from('writing')
+	// 	.insert([{ views: '' }])
+	// 	.select();
 
 	if (!post) {
 		notFound();
@@ -67,7 +78,7 @@ export default async function Blog({ params }) {
 					{post.publishedAt}
 				</div>
 				<div className="h-[0.2em] bg-neutral-800 mx-2" />
-				<ViewCounter title={post.title} trackView />
+				<ViewCounter title={post.title} writing={writing!} trackView />
 			</div>
 			<Mdx code={post.body.code} />
 			{/* <Mdx code={post.body.code} tweets={tweets} /> */}

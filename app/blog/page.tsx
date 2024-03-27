@@ -34,7 +34,7 @@ export default async function BlogPage() {
 					>
 						<div className="w-full flex flex-col">
 							<p>{post.title}</p>
-							<ViewCounter title={post.title} trackView={false} writing={writing} />
+							<ViewCounter title={post.title} trackView={false} writing={writing!} />
 						</div>
 					</Link>
 				))}
