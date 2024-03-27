@@ -67,7 +67,7 @@ export default async function Blog({ params }) {
 					{post.publishedAt}
 				</div>
 				<div className="h-[0.2em] bg-neutral-800 mx-2" />
-				<ViewCounter slug={post.slug} trackView />
+				<ViewCounter title={post.title} trackView />
 			</div>
 			<Mdx code={post.body.code} />
 			{/* <Mdx code={post.body.code} tweets={tweets} /> */}

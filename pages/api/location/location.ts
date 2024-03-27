@@ -1,4 +1,4 @@
-import { queryBuilder } from '@/lib/planetscale';
+import { queryBuilder } from '@/utils/planetscale';
 import { NextApiRequest, NextApiResponse } from 'next';
 
 type LocationData = {

@@ -1,5 +1,5 @@
 import { NextApiRequest, NextApiResponse } from 'next';
-import { currentlyPlayingSong } from '@/lib/spotify';
+import { currentlyPlayingSong } from '@/utils/spotify';
 
 type Song = {
 	item: {

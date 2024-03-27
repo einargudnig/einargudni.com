@@ -1,4 +1,5 @@
 import { Metadata } from 'next';
+import { createClient } from '@/utils/supabase/server';
 import { allBlogs } from 'contentlayer/generated';
 import Link from 'next/link';
 import ViewCounter from './view-counter';
@@ -9,7 +10,12 @@ export const metadata: Metadata = {
 };
 
 export default async function BlogPage() {
-	console.log('allBlogs', allBlogs);
+	// console.log('allBlogs', allBlogs);
+
+	const supabase = createClient();
+
+	let { data: writing } = await supabase.from('writing').select('title, views');
+	console.log('WRITING', writing);
 	return (
 		<section className="mx-auto w-full max-w-2xl space-y-8 print:space-y-6">
 			<h1 className="font-bold text-3xl font-serif mb-5">Blog</h1>
@@ -28,7 +34,7 @@ export default async function BlogPage() {
 					>
 						<div className="w-full flex flex-col">
 							<p>{post.title}</p>
-							<ViewCounter slug={post.slug} trackView={false} />
+							<ViewCounter title={post.title} trackView={false} writing={writing} />
 						</div>
 					</Link>
 				))}
