@@ -19,7 +19,7 @@ interface NowPlayingData {
 export const NowPlaying = () => {
 	//@ts-ignore
 	const { data }: Song = useSWR<NowPlayingData>('/api/spotify/me/current', { fetcher });
-	console.log({ data });
+	// console.log({ data });
 
 	return (
 		<div>

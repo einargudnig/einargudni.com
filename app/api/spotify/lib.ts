@@ -104,7 +104,6 @@ export const currentlyPlayingSong = async (initialRequest: NextRequest) => {
 	const f = 'currentlyPlayingSong';
 	// Obtain an access token
 	const { access_token } = await getAccessToken();
-	console.log({ access_token });
 
 	const request = new NextRequest(NOW_PLAYING_ENDPOINT, {
 		headers: {
