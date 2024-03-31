@@ -35,7 +35,7 @@ export async function GET(request: NextRequest) {
 		});
 	}
 
-	const isPlaying: boolean = false;
+	const isPlaying = false;
 	const title: string = track?.name ?? 'No song playing';
 	const artist: string = (track?.artists ?? ['No artist'])
 		.map((_artist: { name: string }) => _artist.name)
