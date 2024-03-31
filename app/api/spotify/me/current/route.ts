@@ -5,6 +5,7 @@ import { revalidatePath } from 'next/cache';
 
 export async function GET(request: NextRequest) {
 	const f = 'current.GET';
+	console.log({ f });
 	const url = request.url;
 	const response = await currentlyPlayingSong(request);
 

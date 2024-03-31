@@ -5,6 +5,7 @@ import { NextRequest, NextResponse } from 'next/server';
 
 export async function GET(request: NextRequest) {
 	const f = 'recent.GET';
+	console.log({ f });
 	const url = request.url;
 
 	const response = await lastPlayedSong(request);

@@ -2,9 +2,8 @@ import querystring from 'querystring';
 import { IArtistsAPIResponse, ITracksAPIResponse } from './interface';
 import { SpotifyAccessToken } from './types';
 import { NextRequest, NextResponse } from 'next/server';
-import { revalidatePath } from 'next/cache';
 
-// We access our values with enviroment variables,
+// We access our values with environment variables,
 // we don't want to share these values in our code
 const client_id = process.env.SPOTIFY_CLIENT_ID;
 const client_secret = process.env.SPOTIFY_CLIENT_SECRET;
@@ -102,6 +101,7 @@ export const topArtists = async (): Promise<IArtistsAPIResponse[]> => {
  */
 export const currentlyPlayingSong = async (initialRequest: NextRequest) => {
 	const f = 'currentlyPlayingSong';
+	console.log({ f });
 	// Obtain an access token
 	const { access_token } = await getAccessToken();
 
@@ -126,6 +126,7 @@ export const currentlyPlayingSong = async (initialRequest: NextRequest) => {
 
 export const lastPlayedSong = async (initialRequest: NextRequest) => {
 	const f = 'lastPlayedSong';
+	console.log({ f });
 	// Obtain an access token
 	const { access_token } = await getAccessToken();
 
