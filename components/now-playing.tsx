@@ -18,7 +18,8 @@ interface NowPlayingData {
 
 export const NowPlaying = () => {
 	//@ts-ignore
-	const { data }: Song = useSWR<NowPlayingData>('/api/now-playing', { fetcher });
+	const { data }: Song = useSWR<NowPlayingData>('/api/spotify/me/current', { fetcher });
+	console.log({ data });
 
 	return (
 		<div>
@@ -61,3 +62,25 @@ export const NowPlaying = () => {
 		</div>
 	);
 };
+
+// export function SpotifyBadge() {
+// 	const fetcher = (...args: Parameters<typeof fetch>) => fetch(...args).then((res) => res.json());
+
+// 	const { data: recentlyPlayedData, isLoading: recentlyPlayedDataIsLoading } = useSWR(
+// 		'/api/spotify/me/current',
+// 		fetcher,
+// 		{
+// 			refreshInterval: 10000
+// 		}
+// 	);
+
+// 	if (recentlyPlayedDataIsLoading) {
+// 		return <SpotifyCardLoading />;
+// 	}
+
+// 	if (!recentlyPlayedDataIsLoading && recentlyPlayedData?.data) {
+// 		return <SpotifyCardLoaded {...(recentlyPlayedData.data as any)} current={false} />;
+// 	}
+
+// 	return null;
+// }

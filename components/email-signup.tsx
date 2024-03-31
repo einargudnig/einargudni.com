@@ -20,7 +20,7 @@ export function EmailSignUp() {
 	} = useForm<NewsletterForm>();
 
 	async function onSubmit(formData: NewsletterForm) {
-		console.log('FORMDATA', formData);
+		// console.log('FORMDATA', formData);
 		await fetch('/api/newsletter-signup', {
 			method: 'POST',
 			headers: {

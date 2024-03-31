@@ -11,7 +11,7 @@ interface RequestPayload {
 export async function POST(request: NextRequest) {
 	const { name, email } = (await request.json()) as RequestPayload;
 
-	console.log('REQUEST', request);
+	// console.log('REQUEST', request);
 
 	try {
 		const data = await resend.contacts.create({
