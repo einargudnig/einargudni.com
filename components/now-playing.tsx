@@ -3,8 +3,7 @@
 import useSWR from 'swr';
 import Link from 'next/link';
 import fetcher from '@/utils/fetcher';
-import { Song } from '@/utils/types';
-// import { Skeleton } from '../ui/skeleton';
+import { Song } from '@/app/api/spotify/types';
 import { Badge } from '@/components/ui/badge';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
 
