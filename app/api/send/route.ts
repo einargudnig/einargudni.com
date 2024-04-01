@@ -8,9 +8,9 @@ export async function POST() {
 	try {
 		const data = await resend.emails.send({
 			from: 'Einar Gudni <triple-three@einargudni.com>',
-			to: ['delivered@resend.dev'],
+			to: ['delivered@resend.dev'], //audience??
 			subject: 'Triple-three #01',
-			react: NotionMagicLinkEmail
+			react: NotionMagicLinkEmail()
 		});
 
 		return Response.json(data);
