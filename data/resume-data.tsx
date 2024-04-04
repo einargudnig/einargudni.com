@@ -8,7 +8,7 @@ export const RESUME_DATA = {
 	initials: 'EG',
 	location: 'Reykjavik, Iceland, CET',
 	locationLink: 'https://www.google.com/maps/place/Reykjavík',
-	about: 'Curoious, Coder, Crossfitter, Coffee and wine hobbyist, Late bloomer & Nerd',
+	about: 'Curious, Coder, Crossfitter, Coffee and wine hobbyist, Late bloomer & Nerd',
 	summary:
 		'Hello 👋🏼. This is my home on the internet 🏡. I want it to be simple, but I want to use it as my playground. I like to follow my curiosity so this will be a organised mess!',
 	// 'I am trying my best to improve a little bit every day. I am super courious and love to be a little nerd. I think there are so many things to being a good engineer other than just code. A well designed product is a product that is easy to use',

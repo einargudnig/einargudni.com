@@ -9,10 +9,10 @@ export async function GET() {
 }
 
 const feed = new RSS({
-	title: 'Your Website',
-	description: 'A cool website that everyone should check out!',
+	title: 'Einar Gudni',
+	description: 'Curious, Coder, Crossfitter, Coffee and wine hobbyist, Late bloomer & Nerd',
 	site_url: 'https://www.einargudni.com/',
-	feed_url: `https://www.einargudni.com/feed.xml`,
+	feed_url: 'https://www.einargudni.com/feed.xml',
 	copyright: `${new Date().getFullYear()} Your Website`,
 	language: 'en',
 	pubDate: new Date()
