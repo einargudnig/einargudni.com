@@ -22,6 +22,11 @@ export const metadata: Metadata = {
 			}
 		],
 		type: 'website'
+	},
+	alternates: {
+		types: {
+			'application/rss+xml': 'https://www.einargudni.com/feed.xml'
+		}
 	}
 };
 
