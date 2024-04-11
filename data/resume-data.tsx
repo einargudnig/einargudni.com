@@ -15,7 +15,7 @@ export const RESUME_DATA = {
 	avatarUrl: 'https://avatars.githubusercontent.com/u/17381009?v=4',
 	personalWebsiteUrl: 'https://einargudni.com',
 	contact: {
-		email: 'einargudni"ggmail.com',
+		email: 'einargudnig@gmail.com',
 		social: [
 			{
 				name: 'GitHub',
@@ -117,7 +117,7 @@ export const RESUME_DATA = {
 			}
 		},
 		{
-			title: 'curiosity.einargudni',
+			title: 'curiosity.einargudni.com',
 			techStack: ['Side Project', 'TypeScript', 'Remix', 'Prisma', 'In progress'],
 			description: 'My learning journal. Built with Remix and Prisma',
 			logo: '',
@@ -143,7 +143,7 @@ export const RESUME_DATA = {
 			logo: '',
 			link: {
 				label: 'oktoberfest22.vercel.app',
-				href: 'https://oktoberfest22.vercel.app/'
+				href: 'https://gigover.com/'
 			}
 		},
 		{
