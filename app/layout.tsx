@@ -1,4 +1,5 @@
 import './globals.css';
+import { BGGrid } from '@/components/bg-grid';
 import { Metadata } from 'next';
 import { ThemeProvider } from '@/components/theme-provider';
 import { Analytics } from '@vercel/analytics/react';
@@ -34,51 +35,53 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 	return (
 		<html lang="en" className={GeistSans.className}>
 			<ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-				<body className="antialiased mb-10 lg:mx-auto">
-					<main className="container relative mx-auto mt-8 overflow-auto print:p-12">
-						<Navbar />
-						{children}
-						<CommandMenu
-							links={[
-								{
-									url: '/blog',
-									title: 'writing',
-									type: 'internal'
-								},
-								{
-									url: 'https://remix-workbook.fly.dev/',
-									title: 'learnings',
-									type: 'internal'
-								},
-								{
-									url: '/uses',
-									title: 'uses',
-									type: 'internal'
-								},
-								{
-									url: '/weeks',
-									title: 'weeks',
-									type: 'internal'
-								},
-								{
-									url: '/latex',
-									title: 'latex book',
-									type: 'internal'
-								},
-								{
-									url: RESUME_DATA.contact.email,
-									title: 'email',
-									type: 'contact'
-								},
-								...RESUME_DATA.contact.social.map((socialMediaLink) => ({
-									url: socialMediaLink.url,
-									title: socialMediaLink.name,
-									type: 'social'
-								}))
-							]}
-						/>
-					</main>
-				</body>
+				<BGGrid>
+					<body className="antialiased mb-10 lg:mx-auto">
+						<main className="container relative mx-auto mt-8 overflow-auto print:p-12">
+							<Navbar />
+							{children}
+							<CommandMenu
+								links={[
+									{
+										url: '/blog',
+										title: 'writing',
+										type: 'internal'
+									},
+									{
+										url: 'https://remix-workbook.fly.dev/',
+										title: 'learnings',
+										type: 'internal'
+									},
+									{
+										url: '/uses',
+										title: 'uses',
+										type: 'internal'
+									},
+									{
+										url: '/weeks',
+										title: 'weeks',
+										type: 'internal'
+									},
+									{
+										url: '/latex',
+										title: 'latex book',
+										type: 'internal'
+									},
+									{
+										url: RESUME_DATA.contact.email,
+										title: 'email',
+										type: 'contact'
+									},
+									...RESUME_DATA.contact.social.map((socialMediaLink) => ({
+										url: socialMediaLink.url,
+										title: socialMediaLink.name,
+										type: 'social'
+									}))
+								]}
+							/>
+						</main>
+					</body>
+				</BGGrid>
 			</ThemeProvider>
 			<Analytics />
 		</html>
