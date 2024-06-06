@@ -1,6 +1,7 @@
 import { Metadata } from 'next';
 import { allBlogs } from 'contentlayer/generated';
 import Link from 'next/link';
+import { Badge } from '@/components/ui/badge';
 
 export const metadata: Metadata = {
 	title: 'Blog',
@@ -8,7 +9,7 @@ export const metadata: Metadata = {
 };
 
 export default async function BlogPage() {
-	// console.log('allBlogs', allBlogs);
+	console.log('allBlogs', allBlogs);
 
 	return (
 		<section className="mx-auto w-full max-w-2xl space-y-8 print:space-y-6">
@@ -27,7 +28,10 @@ export default async function BlogPage() {
 						href={`/blog/${post.slug}`}
 					>
 						<div className="w-full flex flex-row justify-between items-center">
-							<p>{post.title}</p>
+							<div>
+								<p>{post.title}</p>
+								{/* <Badge>{post.}</Badge> */}
+							</div>
 							<p className="font-mono text-sm text-neutral-500 tracking-tighter">
 								{post.publishedAt}
 							</p>

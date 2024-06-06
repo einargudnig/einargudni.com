@@ -25,6 +25,14 @@ const computedFields = {
 			headline: doc.title,
 			datePublished: doc.publishedAt,
 			dateModified: doc.publishedAt,
+			tags: {
+				'@type': 'ItemList',
+				itemListElement: doc.tags.map((tag, index) => ({
+					'@type': 'ListItem',
+					position: index + 1,
+					item: tag
+				}))
+			},
 			description: doc.summary,
 			image: doc.image
 				? `https://einargudni.com${doc.image}`
@@ -50,6 +58,12 @@ export const Blog = defineDocumentType(() => ({
 		publishedAt: {
 			type: 'string',
 			required: true
+		},
+		tags: {
+			type: 'array',
+			of: {
+				type: 'string'
+			}
 		},
 		summary: {
 			type: 'string',

@@ -17,7 +17,7 @@ export async function generateMetadata({ params }): Promise<Metadata | undefined
 		return;
 	}
 
-	const { title, publishedAt: publishedTime, summary: description, image, slug } = post;
+	const { title, publishedAt: publishedTime, summary: description, tags, image, slug } = post;
 	const ogImage = image
 		? `https://einargudni.com${image}`
 		: `https://einargudni.com/api/og?title=${title}`;
@@ -25,6 +25,7 @@ export async function generateMetadata({ params }): Promise<Metadata | undefined
 	return {
 		title,
 		description,
+		tags,
 		openGraph: {
 			title,
 			description,
