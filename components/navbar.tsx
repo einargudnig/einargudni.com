@@ -7,7 +7,7 @@ const navItems = {
 	'/': {
 		name: 'home'
 	},
-	'/blog': {
+	'https://writings-iyjmu7z32-einargudnis-projects.vercel.app/': {
 		name: 'writing'
 	}
 };

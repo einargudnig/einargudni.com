@@ -1,18 +1,10 @@
-const { withContentlayer } = require('next-contentlayer');
+const withMDX = require('@next/mdx')();
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-	images: {
-		domains: ['images.unsplash.com', 'i.scdn.co']
-	},
-	experimental: {
-		turbo: {
-			rules: {
-				// Option-less format
-				'*.mdx': ['@mdx-js/loader']
-			}
-		}
-	}
+	// Configure `pageExtensions` to include MDX files
+	pageExtensions: ['js', 'jsx', 'mdx', 'ts', 'tsx']
+	// Optionally, add any other Next.js config below
 };
 
-module.exports = withContentlayer(nextConfig);
+module.exports = withMDX(nextConfig);

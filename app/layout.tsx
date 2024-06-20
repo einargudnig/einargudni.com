@@ -43,7 +43,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 							<CommandMenu
 								links={[
 									{
-										url: '/blog',
+										url: '',
 										title: 'writing',
 										type: 'internal'
 									},

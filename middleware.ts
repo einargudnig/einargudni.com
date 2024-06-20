@@ -13,8 +13,8 @@ export const middleware: NextMiddleware = async (req, event) => {
 		// Change your production URL!
 		const URL =
 			process.env.NODE_ENV === 'production'
-				? 'https://einargudni.com/api/view'
-				: 'http://localhost:3000/api/view';
+				? 'https://einargudni.com/'
+				: 'http://localhost:3000/';
 		const res = await fetch(`${URL}`, {
 			method: 'POST',
 			headers: {
