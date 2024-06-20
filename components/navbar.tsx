@@ -1,6 +1,5 @@
 import Link from 'next/link';
 import { NowPlaying } from './now-playing';
-import { ThemeToggle } from './theme-toggle';
 import { MobileNav } from './mobile-nav';
 
 const navItems = {
@@ -26,7 +25,7 @@ export function Navbar() {
 											<Link
 												key={path}
 												href={path}
-												className="transition-all hover:text-neutral-800 dark:hover:text-neutral-200 flex align-middle relative py-1 px-2"
+												className="transition-all hover:text-neutral-2 flex align-middle relative py-1 px-2"
 											>
 												{name}
 											</Link>
@@ -35,7 +34,7 @@ export function Navbar() {
 								</div>
 								<Link
 									href="https://remix-workbook.fly.dev/"
-									className="transition-all hover:text-neutral-800 dark:hover:text-neutral-200 flex align-middle relative py-1 px-2"
+									className="transition-all hover:text-neutral-200 flex align-middle relative py-1 px-2"
 								>
 									learnings
 								</Link>
@@ -49,8 +48,6 @@ export function Navbar() {
 									<div className="md:flex hidden">
 										<NowPlaying />
 									</div>
-									<div className="w-2" />
-									<ThemeToggle />
 								</div>
 							</div>
 						</div>

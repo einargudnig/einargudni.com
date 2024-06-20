@@ -34,7 +34,7 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
 	return (
 		<html lang="en" className={GeistSans.className}>
-			<ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+			<ThemeProvider attribute="class" defaultTheme="dark">
 				<BGGrid>
 					<body className="antialiased mb-10 lg:mx-auto">
 						<main className="container relative mx-auto mt-8 overflow-auto print:p-12">
