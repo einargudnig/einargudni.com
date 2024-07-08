@@ -1,12 +1,12 @@
 import Link from 'next/link';
-import { NowPlaying } from './now-playing';
 import { MobileNav } from './mobile-nav';
+import { NowPlaying } from './now-playing';
 
 const navItems = {
 	'/': {
 		name: 'home'
 	},
-	'https://writings-iyjmu7z32-einargudnis-projects.vercel.app/': {
+	'https://writing.einargudni.com': {
 		name: 'writing'
 	}
 };
