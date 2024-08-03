@@ -1,13 +1,13 @@
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { Card, CardHeader, CardContent, CardFooter } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
-import { Metadata } from 'next';
-import { Section } from '@/components/ui/section';
-import { GlobeIcon, MailIcon } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { RESUME_DATA } from '@/data/resume-data';
 import { ProjectCard } from '@/components/project-card';
-import { EmailSignUp } from '@/components/email-signup';
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardFooter, CardHeader } from '@/components/ui/card';
+import { Section } from '@/components/ui/section';
+import { RESUME_DATA } from '@/data/resume-data';
+import { GlobeIcon, MailIcon } from 'lucide-react';
+import { Metadata } from 'next';
+// import { EmailSignUp } from '@/components/email-signup';
 
 export const metadata: Metadata = {
 	title: `${RESUME_DATA.name} | ${RESUME_DATA.about}`,
@@ -92,7 +92,7 @@ export default function Page() {
 						{RESUME_DATA.summary}
 					</p>
 				</Section>
-				<Section>
+				{/* <Section>
 					<Card>
 						<div className="p-3">
 							<h2 className="text-xl font-bold">Triple Three</h2>
@@ -109,7 +109,7 @@ export default function Page() {
 							<EmailSignUp />
 						</div>
 					</Card>
-				</Section>
+				</Section> */}
 
 				<Section>
 					<h2 className="text-xl font-bold">Work Experience</h2>
