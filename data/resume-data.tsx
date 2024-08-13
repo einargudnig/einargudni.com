@@ -1,7 +1,6 @@
-import { GitHubIconOutline } from '@/components/icons';
+import { GitHubIconOutline, InstagramIcon } from '@/components/icons';
 import { LinkedInIcon } from '@/components/icons/LinkedInIcon';
 import { XIcon } from '@/components/icons/XIcon';
-import { InstagramIcon } from '@/components/icons';
 
 export const RESUME_DATA = {
 	name: 'Einar Gudni',
@@ -107,13 +106,23 @@ export const RESUME_DATA = {
 	],
 	projects: [
 		{
-			title: 'Oktoberfest 22',
-			techStack: ['Side Project', 'TypeScript', 'Next.js', 'TailwindCSS'],
-			description: 'A small web app to count drinks during Oktoberfest 2022',
+			title: 'einargudni.com',
+			techStack: ['Side Project', 'Next.js', 'Tailwind'],
+			description: 'My personal website. Built with Next.js',
 			logo: '',
 			link: {
-				label: 'oktoberfest22.vercel.app',
-				href: 'https://oktoberfest22.vercel.app/'
+				label: 'einargudni.com',
+				href: 'https://einargudni.com/'
+			}
+		},
+		{
+			title: 'writings.einargudni.com',
+			techStack: ['Side Project', 'TypeScript', 'Astro', 'Prisma'],
+			description: 'My writings',
+			logo: '',
+			link: {
+				label: 'writing.einargudni.com',
+				href: 'https://writing.einargudni.com/'
 			}
 		},
 		{
@@ -127,23 +136,23 @@ export const RESUME_DATA = {
 			}
 		},
 		{
-			title: 'einargudni.com',
-			techStack: ['Side Project', 'Next.js', 'MDX'],
-			description: 'My personal website and blog. Built with Next.js',
-			logo: '',
-			link: {
-				label: 'github.com',
-				href: 'https://einargudni.com/'
-			}
-		},
-		{
 			title: 'Gigover',
 			techStack: ['Free lance', 'TypeScript', 'React', 'Chakra-Ui'],
 			description: 'Software to be used for construction work',
 			logo: '',
 			link: {
-				label: 'oktoberfest22.vercel.app',
+				label: 'gigover.com',
 				href: 'https://gigover.com/'
+			}
+		},
+		{
+			title: 'Oktoberfest 22',
+			techStack: ['Side Project', 'TypeScript', 'Next.js', 'TailwindCSS'],
+			description: 'A small web app to count drinks during Oktoberfest 2022',
+			logo: '',
+			link: {
+				label: 'oktoberfest22.vercel.app',
+				href: 'https://oktoberfest22.vercel.app/'
 			}
 		},
 		{
