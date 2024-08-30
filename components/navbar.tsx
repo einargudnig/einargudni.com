@@ -8,6 +8,12 @@ const navItems = {
 	},
 	'https://writing.einargudni.com': {
 		name: 'writing'
+	},
+	'https://craft.einargudni.com': {
+		name: 'craft'
+	},
+	'https://remix-workbook.fly.dev/': {
+		name: 'learning'
 	}
 };
 
@@ -32,12 +38,7 @@ export function Navbar() {
 										);
 									})}
 								</div>
-								<Link
-									href="https://remix-workbook.fly.dev/"
-									className="transition-all hover:text-neutral-200 flex align-middle relative py-1 px-2"
-								>
-									learnings
-								</Link>
+
 								{/* Mobile Navbar */}
 								<div className="md:hidden">
 									<MobileNav />
