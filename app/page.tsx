@@ -21,8 +21,10 @@ export default function Page() {
 				<div className="flex items-center justify-between">
 					<div className="flex-1 space-y-1.5">
 						<h1 className="md:text-2xl font-bold">{RESUME_DATA.name}</h1>
-						<p className="max-w-md text-pretty font-mono text-sm text-foreground">
-							{RESUME_DATA.about}
+						<p className="flex max-w-md text-pretty font-mono text-sm text-foreground">
+							{/* {RESUME_DATA.about} */}
+							<p className="italics font-bold">Curious</p>, Coder, Triplet, Late
+							bloomer & Nerd
 						</p>
 						<p className="max-w-md items-center text-pretty font-mono text-xs text-muted-foreground">
 							<a
