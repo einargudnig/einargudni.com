@@ -43,13 +43,11 @@ export default function Page() {
 					part of a small team with great people. High agency and a lot of responsibility.
 					Your voice is heard and lot of opportunities to learn from others.
 				</p>
-				<span className="flex">
-					<p>
-						I do some free lance work on the side, and have been adding features and
-						rebuilding the system for{' '}
-					</p>
+				<p>
+					I do some free lance work on the side, and have been adding features and
+					rebuilding the system for{' '}
 					<ExternalLink href="https://gigover.com">gigover</ExternalLink>
-				</span>
+				</p>
 			</div>
 			<Separator />
 			<div className="prose prose-neutral dark:prose-invert text-neutral-200">
