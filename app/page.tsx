@@ -1,12 +1,11 @@
 import { ProjectCard } from '@/components/project-card';
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Badge } from '@/components/ui/badge';
-import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardFooter, CardHeader } from '@/components/ui/card';
 import { Section } from '@/components/ui/section';
 import { RESUME_DATA } from '@/data/resume-data';
-import { GlobeIcon, MailIcon } from 'lucide-react';
+import { GlobeIcon } from 'lucide-react';
 import { Metadata } from 'next';
+import Link from 'next/link';
 // import { EmailSignUp } from '@/components/email-signup';
 
 export const metadata: Metadata = {
@@ -21,10 +20,10 @@ export default function Page() {
 				<div className="flex items-center justify-between">
 					<div className="flex-1 space-y-1.5">
 						<h1 className="md:text-3xl font-bold">{RESUME_DATA.name}</h1>
-						<p className="flex max-w-md text-pretty font-mono text-sm text-foreground">
+						<p className="flex max-w-md text-md text-foreground">
 							{/* {RESUME_DATA.about} */}
-							<p className="italics font-bold">Curious</p>, Coder, Triplet, Late
-							bloomer & Nerd
+							<p className="italics font-bold">Curious</p>, Coder, Triplet,&nbsp;
+							<p className="italics font-bold">Tinkerer</p>, Late bloomer & Nerd
 						</p>
 						<p className="max-w-md items-center text-pretty font-mono text-xs text-muted-foreground">
 							<a
@@ -37,63 +36,47 @@ export default function Page() {
 								{RESUME_DATA.location}
 							</a>
 						</p>
-						<div className="flex gap-x-1 pt-1 font-mono text-sm text-foreground print:hidden">
-							{RESUME_DATA.contact.email ? (
-								<Button className="h-8 w-8" variant="outline" size="icon" asChild>
-									<a href={`mailto:${RESUME_DATA.contact.email}`}>
-										<MailIcon className="h-4 w-4" />
-									</a>
-								</Button>
-							) : null}
-							{/* {RESUME_DATA.contact.tel ? (
-								<Button className="h-8 w-8" variant="outline" size="icon" asChild>
-									<a href={`tel:${RESUME_DATA.contact.tel}`}>
-										<PhoneIcon className="h-4 w-4" />
-									</a>
-								</Button>
-							) : null} */}
-							{RESUME_DATA.contact.social.map((social) => (
-								<Button
-									key={social.name}
-									className="h-8 w-8"
-									variant="outline"
-									size="icon"
-									asChild
-								>
-									<a href={social.url}>
-										<social.icon className="h-4 w-4" />
-									</a>
-								</Button>
-							))}
-							{/* <Button size="contact" variant="outline">
-								Contact
-							</Button> */}
-						</div>
-						<div className="hidden flex-col gap-x-1 font-mono text-sm text-muted-foreground print:flex">
-							{RESUME_DATA.contact.email ? (
-								<a href={`mailto:${RESUME_DATA.contact.email}`}>
-									<span className="underline">{RESUME_DATA.contact.email}</span>
-								</a>
-							) : null}
-							{/* {RESUME_DATA.contact.tel ? (
-								<a href={`tel:${RESUME_DATA.contact.tel}`}>
-									<span className="underline">{RESUME_DATA.contact.tel}</span>
-								</a>
-							) : null} */}
-						</div>
 					</div>
 
-					<Avatar className="h-20 w-20 md:h-28 md:w-28">
+					{/* <Avatar className="h-20 w-20 md:h-28 md:w-28">
 						<AvatarImage alt={RESUME_DATA.name} src={RESUME_DATA.avatarUrl} />
 						<AvatarFallback>{RESUME_DATA.initials}</AvatarFallback>
-					</Avatar>
+					</Avatar> */}
 				</div>
 				<Section>
+					<div className="flex items-center justify-between">
+						<div className="group">
+							<Link href="/about" className="group-hover:underline text-lg">
+								About
+							</Link>
+							<p className="text-muted-foreground group-hover:underline">
+								Who, What, Why
+							</p>
+						</div>
+						<div className="group">
+							<Link href="/now" className="group-hover:underline text-lg">
+								Now
+							</Link>
+							<p className="text-muted-foreground group-hover:underline">
+								Short-term focus
+							</p>
+						</div>
+						<div className="group">
+							<Link href="/someday" className="group-hover:underline text-lg">
+								Someday
+							</Link>
+							<p className="text-muted-foreground group-hover:underline">
+								Long-term focus
+							</p>
+						</div>
+					</div>
+				</Section>
+				{/* <Section>
 					<h2 className="text-xl font-bold">About</h2>
 					<p className="text-pretty font-mono text-sm text-foreground">
 						{RESUME_DATA.summary}
 					</p>
-				</Section>
+				</Section> */}
 				{/* <Section>
 					<Card>
 						<div className="p-3">
@@ -137,7 +120,7 @@ export default function Page() {
 												))}
 											</span>
 										</h3>
-										<div className="text-sm tabular-nums text-gray-500">
+										<div className="text-sm tabular-nums text-muted-foreground">
 											{work.start} - {work.end}
 										</div>
 									</div>
@@ -174,7 +157,7 @@ export default function Page() {
 										<h3 className="font-semibold leading-none">
 											{education.school}
 										</h3>
-										<div className="text-sm tabular-nums text-gray-500">
+										<div className="text-sm tabular-nums text-muted-foreground">
 											{education.start} - {education.end}
 										</div>
 									</div>

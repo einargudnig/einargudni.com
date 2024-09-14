@@ -1,4 +1,5 @@
 import { CommandMenu } from '@/components/command-menu';
+import Footer from '@/components/footer';
 import { Navbar } from '@/components/navbar';
 import { ThemeProvider } from '@/components/theme-provider';
 import { RESUME_DATA } from '@/data/resume-data';
@@ -61,6 +62,16 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 									type: 'internal'
 								},
 								{
+									url: '/now',
+									title: 'now',
+									type: 'internal'
+								},
+								{
+									url: '/someday',
+									title: 'someday',
+									type: 'internal'
+								},
+								{
 									url: '/uses',
 									title: 'uses',
 									type: 'internal'
@@ -87,6 +98,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 								}))
 							]}
 						/>
+						<Footer />
 					</main>
 				</body>
 			</ThemeProvider>

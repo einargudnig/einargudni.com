@@ -77,7 +77,7 @@ export const RESUME_DATA = {
 		{
 			company: 'Contractor',
 			link: 'https://einargudni.com',
-			badges: ['Free Lance', 'Remote'],
+			badges: ['Remote'],
 			title: 'Front end Developer',
 			logo: '',
 			start: '2022',
@@ -107,8 +107,8 @@ export const RESUME_DATA = {
 	projects: [
 		{
 			title: 'einargudni.com',
-			techStack: ['Side Project', 'Next.js', 'Tailwind'],
-			description: 'My personal website. Built with Next.js',
+			techStack: ['Next.js', 'Tailwind'],
+			description: 'My home on the internet, trying to make it simple as can be',
 			logo: '',
 			link: {
 				label: 'einargudni.com',
@@ -116,9 +116,9 @@ export const RESUME_DATA = {
 			}
 		},
 		{
-			title: 'writings.einargudni.com',
-			techStack: ['Side Project', 'TypeScript', 'Astro', 'Prisma'],
-			description: 'My writings',
+			title: 'my writing',
+			techStack: ['TypeScript', 'Astro', 'Tailwind'],
+			description: 'A place to dump my writings, thoughts and ideas',
 			logo: '',
 			link: {
 				label: 'writing.einargudni.com',
@@ -126,9 +126,19 @@ export const RESUME_DATA = {
 			}
 		},
 		{
-			title: 'curiosity.einargudni.com',
-			techStack: ['Side Project', 'TypeScript', 'Remix', 'Prisma', 'In progress'],
-			description: 'My learning journal. Built with Remix and Prisma',
+			title: 'craft',
+			techStack: ['TypeScript', 'Next', 'Tailwind'],
+			description: 'A place to craft and tinker',
+			logo: '',
+			link: {
+				label: 'craft.einargudni.com',
+				href: 'https://craft.einargudni.com/'
+			}
+		},
+		{
+			title: 'my learnings',
+			techStack: ['TypeScript', 'Remix', 'Tailwind'],
+			description: 'Everything interesting, weird and cool I find goes here when I remember',
 			logo: '',
 			link: {
 				label: 'curiosity.einargudni.com',
@@ -137,7 +147,7 @@ export const RESUME_DATA = {
 		},
 		{
 			title: 'Gigover',
-			techStack: ['Free lance', 'TypeScript', 'React', 'Chakra-Ui'],
+			techStack: ['TypeScript', 'React', 'Chakra-Ui'],
 			description: 'Software to be used for construction work',
 			logo: '',
 			link: {
@@ -147,29 +157,33 @@ export const RESUME_DATA = {
 		},
 		{
 			title: 'Oktoberfest 22',
-			techStack: ['Side Project', 'TypeScript', 'Next.js', 'TailwindCSS'],
+			techStack: ['TypeScript', 'Next.js', 'Tailwind'],
 			description: 'A small web app to count drinks during Oktoberfest 2022',
 			logo: '',
 			link: {
-				label: 'oktoberfest22.vercel.app',
-				href: 'https://oktoberfest22.vercel.app/'
+				label: 'git repo',
+				href: 'https://github.com/einargudnig/oktoberfest22'
 			}
 		},
 		{
 			title: 'Course grader',
-			techStack: ['Side Project', 'React', 'Firebase', 'Material-UI'],
+			techStack: ['React', 'Firebase', 'Material-UI'],
 			description: 'A simple web app to grade courses in University of Iceland',
-			logo: ''
+			logo: '',
+			link: {
+				label: 'git repo',
+				href: 'https://github.com/einargudnig/courseAdvisor'
+			}
 		},
 		{
 			title: 'Reboot hack',
-			techStack: ['Volunteer', 'React', 'PostgreSQL', 'Bootstrap'],
+			techStack: ['React', 'PostgreSQL', 'Bootstrap'],
 			description: 'Registration site for Reboot hack, a student driven hackathon in Iceland',
 			logo: ''
 		},
 		{
 			title: 'Grade checker',
-			techStack: ['Side Project', 'Python'],
+			techStack: ['Python'],
 			description: 'Sends you an email when your grade is published',
 			logo: ''
 		}
