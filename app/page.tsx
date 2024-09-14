@@ -5,7 +5,8 @@ import { Section } from '@/components/ui/section';
 import { RESUME_DATA } from '@/data/resume-data';
 import { GlobeIcon } from 'lucide-react';
 import { Metadata } from 'next';
-import Link from 'next/link';
+
+import { Link } from 'next-view-transitions';
 // import { EmailSignUp } from '@/components/email-signup';
 
 export const metadata: Metadata = {

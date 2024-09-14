@@ -1,4 +1,4 @@
-import Link from 'next/link';
+import { Link } from 'next-view-transitions';
 import { MobileNav } from './mobile-nav';
 import { NowPlaying } from './now-playing';
 

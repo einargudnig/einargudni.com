@@ -6,6 +6,7 @@ import { RESUME_DATA } from '@/data/resume-data';
 import { Analytics } from '@vercel/analytics/react';
 import { GeistSans } from 'geist/font/sans';
 import { Metadata } from 'next';
+import { ViewTransitions } from 'next-view-transitions';
 import './globals.css';
 
 export const metadata: Metadata = {
@@ -33,76 +34,78 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
 	return (
-		<html lang="en" className={GeistSans.className}>
-			<ThemeProvider attribute="class" defaultTheme="dark">
-				<body className="antialiased mb-10 lg:mx-auto">
-					<main className="container relative mx-auto mt-8 overflow-auto print:p-12">
-						<Navbar />
-						{children}
-						<CommandMenu
-							links={[
-								{
-									url: 'writing.einargudni.com',
-									title: 'writing',
-									type: 'internal'
-								},
-								{
-									url: 'craft.einargudni.com',
-									title: 'craft',
-									type: 'internal'
-								},
-								{
-									url: 'https://remix-workbook.fly.dev/',
-									title: 'learnings',
-									type: 'internal'
-								},
-								{
-									url: '/about',
-									title: 'about',
-									type: 'internal'
-								},
-								{
-									url: '/now',
-									title: 'now',
-									type: 'internal'
-								},
-								{
-									url: '/someday',
-									title: 'someday',
-									type: 'internal'
-								},
-								{
-									url: '/uses',
-									title: 'uses',
-									type: 'internal'
-								},
-								{
-									url: '/weeks',
-									title: 'weeks',
-									type: 'internal'
-								},
-								{
-									url: '/latex',
-									title: 'latex book',
-									type: 'internal'
-								},
-								{
-									url: RESUME_DATA.contact.email,
-									title: 'email',
-									type: 'contact'
-								},
-								...RESUME_DATA.contact.social.map((socialMediaLink) => ({
-									url: socialMediaLink.url,
-									title: socialMediaLink.name,
-									type: 'social'
-								}))
-							]}
-						/>
-						<Footer />
-					</main>
-				</body>
-			</ThemeProvider>
-			<Analytics />
-		</html>
+		<ViewTransitions>
+			<html lang="en" className={GeistSans.className}>
+				<ThemeProvider attribute="class" defaultTheme="dark">
+					<body className="antialiased mb-10 lg:mx-auto">
+						<main className="container relative mx-auto mt-8 overflow-auto print:p-12">
+							<Navbar />
+							{children}
+							<CommandMenu
+								links={[
+									{
+										url: 'writing.einargudni.com',
+										title: 'writing',
+										type: 'internal'
+									},
+									{
+										url: 'craft.einargudni.com',
+										title: 'craft',
+										type: 'internal'
+									},
+									{
+										url: 'https://remix-workbook.fly.dev/',
+										title: 'learnings',
+										type: 'internal'
+									},
+									{
+										url: '/about',
+										title: 'about',
+										type: 'internal'
+									},
+									{
+										url: '/now',
+										title: 'now',
+										type: 'internal'
+									},
+									{
+										url: '/someday',
+										title: 'someday',
+										type: 'internal'
+									},
+									{
+										url: '/uses',
+										title: 'uses',
+										type: 'internal'
+									},
+									{
+										url: '/weeks',
+										title: 'weeks',
+										type: 'internal'
+									},
+									{
+										url: '/latex',
+										title: 'latex book',
+										type: 'internal'
+									},
+									{
+										url: RESUME_DATA.contact.email,
+										title: 'email',
+										type: 'contact'
+									},
+									...RESUME_DATA.contact.social.map((socialMediaLink) => ({
+										url: socialMediaLink.url,
+										title: socialMediaLink.name,
+										type: 'social'
+									}))
+								]}
+							/>
+							<Footer />
+						</main>
+					</body>
+				</ThemeProvider>
+				<Analytics />
+			</html>
+		</ViewTransitions>
 	);
 }
