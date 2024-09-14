@@ -41,13 +41,23 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 						<CommandMenu
 							links={[
 								{
-									url: '',
+									url: 'writing.einargudni.com',
 									title: 'writing',
+									type: 'internal'
+								},
+								{
+									url: 'craft.einargudni.com',
+									title: 'craft',
 									type: 'internal'
 								},
 								{
 									url: 'https://remix-workbook.fly.dev/',
 									title: 'learnings',
+									type: 'internal'
+								},
+								{
+									url: '/about',
+									title: 'about',
 									type: 'internal'
 								},
 								{

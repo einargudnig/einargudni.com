@@ -1,6 +1,5 @@
 'use client';
 
-import * as React from 'react';
 import {
 	CommandDialog,
 	CommandEmpty,
@@ -10,6 +9,7 @@ import {
 	CommandList,
 	CommandSeparator
 } from '@/components/ui/command';
+import * as React from 'react';
 
 interface Props {
 	links: { url: string; title: string; type: string }[];

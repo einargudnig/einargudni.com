@@ -2,7 +2,6 @@
 
 import * as React from 'react';
 
-import { cn } from '@/utils/utils';
 import {
 	NavigationMenu,
 	NavigationMenuContent,
@@ -11,6 +10,7 @@ import {
 	NavigationMenuList,
 	NavigationMenuTrigger
 } from '@/components/ui/navigation-menu';
+import { cn } from '@/utils/utils';
 
 export function MobileNav() {
 	return (
@@ -21,7 +21,10 @@ export function MobileNav() {
 					<NavigationMenuContent>
 						<ul className=" gap-3 p-2 md:w-[400px] lg:w-[500px]">
 							<ListItem href="/" title="home" />
-							<ListItem href="/blog" title="writing" />
+							<ListItem href="https://writing.einargudni.com" title="writing" />
+							<ListItem href="https://craft.einargudni.com" title="craft" />
+							<ListItem href="https://remix-workbook.fly.dev/'" title="learnings" />
+							<ListItem href="/about" title="about" />
 							<ListItem href="/uses" title="uses" />
 						</ul>
 					</NavigationMenuContent>

@@ -46,14 +46,9 @@ export function Navbar() {
 							</div>
 							<div className="justify-end">
 								<div className="flex items-center">
-									<div className="md:flex hidden">
-										<NowPlaying />
-									</div>
+									<NowPlaying />
 								</div>
 							</div>
-						</div>
-						<div className="flex justify-end mt-2 md:hidden">
-							<NowPlaying />
 						</div>
 					</nav>
 				</div>
