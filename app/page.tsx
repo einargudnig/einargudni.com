@@ -23,8 +23,8 @@ export default function Page() {
 						<h1 className="md:text-3xl font-bold">{RESUME_DATA.name}</h1>
 						<p className="flex max-w-md text-md text-foreground ">
 							{/* {RESUME_DATA.about} */}
-							<p className="italics font-bold">Curious</p>, Coder, Tinkerer, Late
-							bloomer & Nerd
+							<p className="italics font-bold">Curious</p>, Tinkerer, Late bloomer &
+							Nerd
 						</p>
 						<p className="max-w-md items-center text-pretty font-mono text-xs text-muted-foreground">
 							<a
