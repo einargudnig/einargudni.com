@@ -15,7 +15,12 @@ export function NewestWriting() {
 				</p>
 			</div>
 			<Card>
-				<CardHeader className="font-semibold">tmux</CardHeader>
+				<CardHeader>
+					<div className="flex justify-between items-center">
+						<p className="font-semibold text-lg">tmux</p>
+						<p className="font-mono text-sm text-muted-foreground">11 october 2024</p>
+					</div>
+				</CardHeader>
 				<CardContent>
 					How I use tmux and why. tmux is a terminal multiplexer and I think it can help a
 					lot with keeping your workflow organized and efficient. I use it to simplify
