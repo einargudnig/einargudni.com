@@ -27,7 +27,8 @@ export default function Page() {
 				<p className="text-lg">Team tally</p>
 				<p className="-mt-2">
 					I am going to build and publish my first mobile app, stay tuned! More details
-					very soon.
+					very soon. This is going well, I have added authentication and started to build
+					the screens needed.
 				</p>
 				<p className="text-lg">Running</p>
 				<p className="-mt-2">
