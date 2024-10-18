@@ -15,8 +15,14 @@ export default function Page() {
 				Here I will dissect some of the software I use on daily bases!
 			</p>
 			<Separator className="bg-muted-foreground w-24" />
-			<div className="flex items-center justify-between">
-				<Link href="../dissect/marchon">Marchon</Link>
+			<div className="flex flex-col items-start w-full border-1 border-red-300">
+				{/* <Link href="../dissect/marchon">Marchon</Link> */}
+				{dissectData.map((item) => (
+					<div key={item.text} className="flex items-center justify-between">
+						<Link href={`../dissect/${item.url}`}>{item.text}</Link>
+						<span className="text-muted-foreground">{item.status}</span>
+					</div>
+				))}
 			</div>
 		</section>
 	);
