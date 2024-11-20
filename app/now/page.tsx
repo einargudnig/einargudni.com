@@ -5,7 +5,7 @@ export default function Page() {
 		<section className="mx-auto w-full max-w-2xl space-y-8 print:space-y-6 mb-8">
 			<div className="flex flex-col">
 				<h1 className="font-semibold text-2xl font-serif mb-5">Now</h1>
-				<p className="-mt-4 text-neutral-500">Updated 14. sept, 2024</p>
+				<p className="-mt-4 text-neutral-500">Updated 20. nov, 2024</p>
 			</div>
 			<div className="prose prose-neutral dark:prose-invert text-neutral-200">
 				<p className="text-lg">Writing</p>
@@ -21,26 +21,28 @@ export default function Page() {
 					I have seen other people post their own UI component creations and it inspires
 					my a lot. My bookmarks on Twitter are full of delightful UI components that I
 					want to try to recreate and add to my{' '}
-					<ExternalLink href="https://writing.einargudni.com">site.</ExternalLink> This
+					<ExternalLink href="https://craft.einargudni.com">site.</ExternalLink> This
 					seems like a fun way to spend an evening here and there.
 				</p>
-				<p className="text-lg">Team tally</p>
+				<p className="text-lg">Fundamentals</p>
 				<p className="-mt-2">
-					I am going to build and publish my first mobile app, stay tuned! More details
-					very soon. This is going well, I have added authentication and started to build
-					the screens needed.
+					I feel like I have some holes in the fundamentals when I am writing code, it
+					slows my annoyingly down. I will spend time on this to improve. This is super
+					important to me.
 				</p>
-				<p className="text-lg">Running</p>
+				<p className="text-lg">HYROX</p>
 				<p className="-mt-2">
-					Every other person around me has started running, which is great. I&apos;ve also
-					started to run more than I&apos;ve done before. This year I ran 20km trail run
-					and also managed to do half marathon under 2 hours. By no means a world class
-					time, but I am happy with it. This september I registered for a 100 challenge in
-					Strava. Basically, run 100km in the month of September
+					Me and my training partner have signed up for two{' '}
+					<ExternalLink href="https://hyrox.com/">HYROX</ExternalLink> competitions in
+					2025. One in Copenahgen in March and other in Cologne in April. We are training
+					hard. the main thing we have to improve is the running part. We have done three
+					&apos;inhouse&apos; competitions and we are getting very close to the under the
+					60 minute mark. It&apos;s alwasy fun to have something that &apos;scares&apos;
+					you on your calander!
 				</p>
 				<p className="text-lg">Reading</p>
 				<p className="-mt-2">
-					I am listening to the first book in the{' '}
+					I am listening to the second book in the{' '}
 					<ExternalLink href="https://www.goodreads.com/book/show/15839976-red-rising">
 						Red Rising
 					</ExternalLink>{' '}

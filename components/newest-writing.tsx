@@ -17,19 +17,20 @@ export function NewestWriting() {
 			<Card>
 				<CardHeader>
 					<div className="flex justify-between items-center">
-						<p className="font-semibold text-lg">tmux</p>
-						<p className="font-mono text-sm text-muted-foreground">11 october 2024</p>
+						<p className="font-semibold text-lg">team-tally 002</p>
+						<p className="font-mono text-sm text-muted-foreground">11 november 2024</p>
 					</div>
 				</CardHeader>
 				<CardContent>
-					How I use tmux and why. tmux is a terminal multiplexer and I think it can help a
-					lot with keeping your workflow organized and efficient. I use it to simplify
-					access and context switching for all my projects and I have made my workspace,
-					workflows and general productivity better with it.
+					I want to build, deploy and publish a mobile app. this is the second
+					postregarding the project. I changed the archiecture for the log in phase and
+					started to build that. I am also putting it on hold for a while, but hopefully I
+					can pick it up again soon. I have not give nup on this project, just shifting
+					the focus.
 				</CardContent>
 				<CardFooter>
 					<div className="flex justify-end">
-						<Link href="https://writing.einargudni.com/blog/tmux">
+						<Link href="https://writing.einargudni.com/blog/team-tally-002">
 							<Button variant="outline">Read post</Button>
 						</Link>
 					</div>

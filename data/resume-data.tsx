@@ -68,7 +68,7 @@ export const RESUME_DATA = {
 			title: 'Full Stack Developer',
 			logo: '',
 			start: '2022',
-			end: 'Present',
+			end: '2024',
 			description: `Helped take the product from 0 to 1. Built the first version of the product, implemented new features, and more.
 				 Spent time in Copenhagen to help with integration of system, solve ad-hoc problems and more.
 				`,
