@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
+import { Hardware } from '@/components/hardware';
 
 export const metadata: Metadata = {
 	title: 'Uses',
@@ -14,15 +15,7 @@ export default function UsesPage() {
 					What&apos;s on my desk
 				</h3>
 				<ul>
-					<li>Ikea Bekant desk</li>
-					<li>14&quot; Macbook Pro M1 Max 64GB 1TB</li>
-					<li>Nuphy Halo 65</li>
-					<li>27&quot; Asus monitor</li>
-					<li>Logitech MX Master 3 Mouse</li>
-					<li>Apple Magic Trackpad</li>
-					<li>Keychron K3</li>
-					<li>Ikea Styrspel chair</li>
-					<li>Twleve South Curve flex</li>
+					<Hardware />
 				</ul>
 				<h3 id="coding">Development</h3>
 				<ul>

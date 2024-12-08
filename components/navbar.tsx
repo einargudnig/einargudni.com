@@ -9,9 +9,9 @@ const navItems = {
 	'https://writing.einargudni.com': {
 		name: 'writing'
 	},
-	'https://craft.einargudni.com': {
-		name: 'craft'
-	},
+	// 'https://craft.einargudni.com': {
+	// 	name: 'craft'
+	// },
 	'https://remix-workbook.fly.dev/': {
 		name: 'learning'
 	}
