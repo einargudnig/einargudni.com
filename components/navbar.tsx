@@ -6,6 +6,9 @@ const navItems = {
 	'/': {
 		name: 'home'
 	},
+	'/uses': {
+		name: 'uses'
+	},
 	'https://writing.einargudni.com': {
 		name: 'writing'
 	},

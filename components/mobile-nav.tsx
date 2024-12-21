@@ -21,11 +21,10 @@ export function MobileNav() {
 					<NavigationMenuContent>
 						<ul className=" gap-3 p-2 md:w-[400px] lg:w-[500px]">
 							<ListItem href="/" title="home" />
-							<ListItem href="https://writing.einargudni.com" title="writing" />
-							<ListItem href="https://craft.einargudni.com" title="craft" />
-							<ListItem href="https://remix-workbook.fly.dev/'" title="learnings" />
-							<ListItem href="/about" title="about" />
 							<ListItem href="/uses" title="uses" />
+							<ListItem href="https://writing.einargudni.com" title="writing" />
+							{/* <ListItem href="https://craft.einargudni.com" title="craft" /> */}
+							<ListItem href="https://remix-workbook.fly.dev/'" title="learnings" />
 						</ul>
 					</NavigationMenuContent>
 				</NavigationMenuItem>
