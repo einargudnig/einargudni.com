@@ -17,23 +17,41 @@ export default function UsesPage() {
 				<ul>
 					<Hardware />
 				</ul>
-				<h3 id="coding">Development</h3>
+				<h3 id="coding">
+					Development -{' '}
+					<Link href="https://github.com/einargudnig/dotfiles">dotfiles</Link>
+				</h3>
 				<ul>
 					<li>
 						Editor: VSCode (
 						<Link href="https://gist.github.com/einargudnig/1d4efe842d2fdc1698a57ab7cb5fad31">
-							Settings
+							config
+						</Link>
+						) | neovim → <Link href="https://www.lazyvim.org/">Lazyvim</Link> (
+						<Link href="https://github.com/einargudnig/dotfiles/tree/master/nvim/lua/config">
+							config
 						</Link>
 						)
 					</li>
 					<li>
-						Theme:&nbsp;
-						<Link href="https://marketplace.visualstudio.com/items?itemName=RaillyHugo.one-hunter">
-							One Hunter Flexoki Dark
+						Terminal: wezterm (
+						<Link href="https://github.com/einargudnig/dotfiles/blob/master/wezterm/wezterm.lua">
+							config
 						</Link>
+						) + tmux (
+						<Link href="https://github.com/einargudnig/dotfiles/blob/master/tmux/tmux.conf">
+							config
+						</Link>
+						)
 					</li>
-					<li>Terminal: Warp</li>
 					<li>API testing: Insomnia</li>
+					<li>
+						Shell: zsh (
+						<Link href="https://github.com/einargudnig/dotfiles/blob/master/zsh/zshrc">
+							config
+						</Link>
+						)
+					</li>
 				</ul>
 				<h3 id="software">Software 💽</h3>
 				<ul>
@@ -60,7 +78,17 @@ export default function UsesPage() {
 						Calendar: <i>Cron</i>
 					</li>
 					<li>
-						Screenshots: CleanShot <i>X</i>
+						Screenshots: <i>CleanShot X</i>
+					</li>
+					<li>
+						Window manager:{' '}
+						<i>
+							Aerospace (
+							<Link href="https://github.com/einargudnig/dotfiles/blob/master/aerospace/aerospace.toml">
+								config
+							</Link>
+							)
+						</i>
 					</li>
 				</ul>
 				<h3 id="other-tech">Other Tech</h3>
