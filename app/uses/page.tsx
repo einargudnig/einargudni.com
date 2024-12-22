@@ -56,7 +56,10 @@ export default function UsesPage() {
 				<h3 id="software">Software 💽</h3>
 				<ul>
 					<li>
-						Launcher: <i>Raycast</i>
+						Launcher:{' '}
+						<i>
+							<Link href="https://raycast.com/?via=einar">Raycast</Link>
+						</i>
 					</li>
 					<li>
 						To-do: <i>Things</i>
