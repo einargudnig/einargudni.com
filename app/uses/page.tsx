@@ -44,7 +44,16 @@ export default function UsesPage() {
 						</Link>
 						)
 					</li>
-					<li>API testing: Insomnia</li>
+					<li>
+						Testing ghostty (
+						<Link href="https://github.com/einargudnig/dotfiles/blob/master/ghostty/config">
+							config
+						</Link>
+						)
+					</li>
+					<li>
+						API testing: <Link href="https://www.usebruno.com/">Bruno</Link>
+					</li>
 					<li>
 						Shell: zsh (
 						<Link href="https://github.com/einargudnig/dotfiles/blob/master/zsh/zshrc">
