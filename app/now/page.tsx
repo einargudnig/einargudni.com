@@ -28,8 +28,8 @@ export default function Page() {
 				<p className="-mt-2">
 					I feel like I have some holes in the fundamentals when I am writing code, it
 					slows my annoyingly down. I will spend time on this to improve. This is super
-					important to me. I feel like I've made some progress here, I have some notes I
-					want to share!
+					important to me. I feel like I&apos;ve made some progress here, I have some
+					notes I want to share!
 				</p>
 				<p className="text-lg">HYROX</p>
 				<p className="-mt-2">
