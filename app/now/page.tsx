@@ -5,7 +5,7 @@ export default function Page() {
 		<section className="mx-auto w-full max-w-2xl space-y-8 print:space-y-6 mb-8">
 			<div className="flex flex-col">
 				<h1 className="font-semibold text-2xl font-serif mb-5">Now</h1>
-				<p className="-mt-4 text-neutral-500">Updated 20. nov, 2024</p>
+				<p className="-mt-4 text-neutral-500">Updated 27. jan, 2025</p>
 			</div>
 			<div className="prose prose-neutral dark:prose-invert text-neutral-200">
 				<p className="text-lg">Writing</p>
@@ -28,7 +28,8 @@ export default function Page() {
 				<p className="-mt-2">
 					I feel like I have some holes in the fundamentals when I am writing code, it
 					slows my annoyingly down. I will spend time on this to improve. This is super
-					important to me.
+					important to me. I feel like I've made some progress here, I have some notes I
+					want to share!
 				</p>
 				<p className="text-lg">HYROX</p>
 				<p className="-mt-2">
@@ -42,7 +43,7 @@ export default function Page() {
 				</p>
 				<p className="text-lg">Reading</p>
 				<p className="-mt-2">
-					I am listening to the second book in the{' '}
+					I am listening to the third book in the{' '}
 					<ExternalLink href="https://www.goodreads.com/book/show/15839976-red-rising">
 						Red Rising
 					</ExternalLink>{' '}
