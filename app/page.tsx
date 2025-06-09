@@ -1,8 +1,8 @@
+import { NewestWriting } from '@/components/newest-writing';
 import { ProjectCard } from '@/components/project-card';
 import { Badge } from '@/components/ui/badge';
 import { Card, CardContent, CardFooter, CardHeader } from '@/components/ui/card';
 import { Section } from '@/components/ui/section';
-import { NewestWriting } from '@/components/newest-writing';
 import { RESUME_DATA } from '@/data/resume-data';
 import { GlobeIcon } from 'lucide-react';
 import { Metadata } from 'next';
@@ -188,4 +188,3 @@ export default function Page() {
 		</section>
 	);
 }
-
