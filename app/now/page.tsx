@@ -33,21 +33,18 @@ export default function Page() {
 				</p>
 				<p className="text-lg">HYROX</p>
 				<p className="-mt-2">
-					Me and my training partner have signed up for two{' '}
-					<ExternalLink href="https://hyrox.com/">HYROX</ExternalLink> competitions in
-					2025. One in Copenahgen in March and other in Cologne in April. We are training
-					hard. the main thing we have to improve is the running part. We have done three
-					&apos;inhouse&apos; competitions and we are getting very close to the under the
-					60 minute mark. It&apos;s alwasy fun to have something that &apos;scares&apos;
-					you on your calander!
+					Hyrox was great! We didn't manage to achieve our goal of going under 60 minutes,
+					we were 4 minutes away. Now we are back to training, mainly focusing on
+					functional fitness, stength and aeraobic base I think we will do another HYROX
+					later to try to beat our time.
 				</p>
 				<p className="text-lg">Reading</p>
 				<p className="-mt-2">
-					I am listening to the third book in the{' '}
+					I am listening to the fourth book in the{' '}
 					<ExternalLink href="https://www.goodreads.com/book/show/15839976-red-rising">
 						Red Rising
 					</ExternalLink>{' '}
-					trilogy, by Pierce Brown, and I am obsessed! I love it!
+					saga, by Pierce Brown, and I am obsessed! I love it!
 				</p>
 			</div>
 		</section>
