@@ -33,9 +33,9 @@ export default function Page() {
 				</p>
 				<p className="text-lg">HYROX</p>
 				<p className="-mt-2">
-					Hyrox was great! We didn't manage to achieve our goal of going under 60 minutes,
-					we were 4 minutes away. Now we are back to training, mainly focusing on
-					functional fitness, stength and aeraobic base I think we will do another HYROX
+					Hyrox was great! We didn&apos;t manage to achieve our goal of going under 60
+					minutes, we were 4 minutes away. Now we are back to training, mainly focusing on
+					functional fitness, strength and aerobic base I think we will do another HYROX
 					later to try to beat our time.
 				</p>
 				<p className="text-lg">Reading</p>
