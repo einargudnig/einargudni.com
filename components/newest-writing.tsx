@@ -17,16 +17,16 @@ export function NewestWriting() {
 			<Card>
 				<CardHeader>
 					<div className="flex justify-between items-center">
-						<p className="font-semibold text-lg">team-tally 002</p>
-						<p className="font-mono text-sm text-muted-foreground">11 november 2024</p>
+						<p className="font-semibold text-lg">keyboardj</p>
+						<p className="font-mono text-sm text-muted-foreground">08 june 2025</p>
 					</div>
 				</CardHeader>
 				<CardContent>
-					I want to build, deploy and publish a mobile app. this is the second
-					postregarding the project. I changed the archiecture for the log in phase and
-					started to build that. I am also putting it on hold for a while, but hopefully I
-					can pick it up again soon. I have not give nup on this project, just shifting
-					the focus.
+					<p className="mb-4">
+						I like writin on a good keyboard! This is a post about my daily driver that
+						I have at home! I have made some updates and even though I say it myself it
+						looks and feels great! Check out the updates, the photos and the image
+					</p>
 				</CardContent>
 				<CardFooter>
 					<div className="flex justify-end">
