@@ -17,7 +17,7 @@ export function NewestWriting() {
 			<Card>
 				<CardHeader>
 					<div className="flex justify-between items-center">
-						<p className="font-semibold text-lg">keyboardj</p>
+						<p className="font-semibold text-lg">keyboard</p>
 						<p className="font-mono text-sm text-muted-foreground">08 june 2025</p>
 					</div>
 				</CardHeader>
@@ -30,7 +30,7 @@ export function NewestWriting() {
 				</CardContent>
 				<CardFooter>
 					<div className="flex justify-end">
-						<Link href="https://writing.einargudni.com/blog/team-tally-002">
+						<Link href="https://writing.einargudni.com/blog/keyboard">
 							<Button variant="outline">Read post</Button>
 						</Link>
 					</div>
