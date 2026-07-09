@@ -6,13 +6,14 @@
     "dev": "next dev --turbo",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "oxlint",
+    "typecheck": "tsgo --noEmit",
+    "check": "oxlint && tsgo --noEmit"
   },
   "engines": {
     "node": "22.17.1"
   },
   "dependencies": {
-    "-": "^0.0.1",
     "@hookform/resolvers": "^3.3.4",
     "@octokit/rest": "^19.0.7",
     "@radix-ui/react-avatar": "^1.0.4",
@@ -37,10 +38,7 @@
     "cmdk": "^0.2.0",
     "date-fns": "^2.29.3",
     "dotenv": "^16.0.3",
-    "eslint": "^8.40.0",
-    "eslint-config-next": "^13.4.2",
     "framer-motion": "^10.12.9",
-    "g": "^2.0.1",
     "geist": "^1.2.0",
     "lucide-react": "^0.258.0",
     "next": "14.2.35",
@@ -70,17 +68,12 @@
     "@types/react-dom": "18.2.4",
     "@types/react-syntax-highlighter": "^15.5.13",
     "@types/rss": "^0.0.32",
-    "@typescript-eslint/eslint-plugin": "5.58.0",
-    "@typescript-eslint/parser": "5.58.0",
+    "@typescript/native-preview": "^7.0.0-dev.20260707.2",
     "autoprefixer": "^10.4.14",
     "encoding": "^0.1.13",
-    "eslint-config-prettier": "^8.1.0",
-    "eslint-plugin-prettier": "^4.2.1",
-    "eslint-plugin-react": "7.32.2",
-    "eslint-plugin-react-hooks": "4.6.0",
+    "oxlint": "^1.73.0",
     "postcss": "^8.4.23",
     "prettier": "^2.2.1",
-    "prettier-eslint": "15.0.1",
     "tailwindcss": "^3.3.2",
     "typescript": "5.0.4"
   }
