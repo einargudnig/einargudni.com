@@ -3,7 +3,7 @@
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { dracula } from 'react-syntax-highlighter/dist/esm/styles/prism';
 
-export default async function LatexTemplatePage() {
+export default function LatexTemplatePage() {
 	const images = `
   %%% LaTex code for images
   %%% DOCUMENT PREAMBLE %%%

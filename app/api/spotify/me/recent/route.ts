@@ -1,6 +1,6 @@
 import { revalidatePath } from 'next/cache';
 import { lastPlayedSong } from '../../lib';
-import { type Song, Tracks, Track } from '../../types';
+import { Tracks, Track } from '../../types';
 import { NextRequest, NextResponse } from 'next/server';
 
 export async function GET(request: NextRequest) {
