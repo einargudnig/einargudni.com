@@ -7,8 +7,9 @@
     "build": "next build",
     "start": "next start",
     "lint": "oxlint",
+    "pretypecheck": "node scripts/ensure-next-env.js",
     "typecheck": "tsgo --noEmit",
-    "check": "oxlint && tsgo --noEmit"
+    "check": "oxlint && npm run typecheck"
   },
   "engines": {
     "node": "22.17.1"
