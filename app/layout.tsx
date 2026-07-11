@@ -7,7 +7,8 @@ import { Analytics } from '@vercel/analytics/react';
 import { GeistSans } from 'geist/font/sans';
 import { Metadata } from 'next';
 import { ViewTransitions } from 'next-view-transitions';
-import './globals.css';
+import globalStyles from './globals.css';
+void globalStyles;
 
 export const metadata: Metadata = {
 	title: 'Einar Gudni',
