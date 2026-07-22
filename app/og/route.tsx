@@ -1,6 +1,7 @@
 // import { ImageResponse } from 'next/server';
 import { ImageResponse } from 'next/og';
 import { NextRequest } from 'next/server';
+import { logToHub } from '@/utils/hub-log';
 
 export const runtime = 'edge';
 
@@ -10,7 +11,20 @@ export async function GET(req: NextRequest) {
 	const font = fetch(new URL('../../public/fonts/kaisei-tokumin-bold.ttf', import.meta.url)).then(
 		(res) => res.arrayBuffer()
 	);
-	const fontData = await font;
+	let fontData: ArrayBuffer;
+	try {
+		fontData = await font;
+	} catch (err) {
+		await logToHub({
+			level: 'error',
+			event: 'api.error',
+			fields: {
+				route: '/og',
+				message: err instanceof Error ? err.message : String(err)
+			}
+		});
+		throw err;
+	}
 
 	return new ImageResponse(
 		(

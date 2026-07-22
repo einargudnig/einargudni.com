@@ -2,13 +2,27 @@ import { revalidatePath } from 'next/cache';
 import { lastPlayedSong } from '../../lib';
 import { Tracks, Track } from '../../types';
 import { NextRequest, NextResponse } from 'next/server';
+import { logToHub } from '@/utils/hub-log';
 
 export async function GET(request: NextRequest) {
 	const f = 'recent.GET';
 	console.log({ f });
 	const url = request.url;
 
-	const response = await lastPlayedSong(request);
+	let response: Response;
+	try {
+		response = await lastPlayedSong(request);
+	} catch (err) {
+		await logToHub({
+			level: 'error',
+			event: 'api.error',
+			fields: {
+				route: '/api/spotify/me/recent',
+				message: err instanceof Error ? err.message : String(err)
+			}
+		});
+		throw err;
+	}
 
 	// Here we handle the request from the API
 	if (response.status === 204) {
