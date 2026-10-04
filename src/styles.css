@@ -225,7 +225,9 @@
 .pi-dot,
 .pi-content,
 .pi-todo,
-.pi-heart {
+.pi-heart,
+.pi-sun-core,
+.pi-egg {
   transform-box: fill-box;
 }
 
@@ -243,6 +245,16 @@
 }
 .pi-heart {
   transform-origin: center;
+}
+.pi-sun-core {
+  transform-origin: center;
+}
+.pi-sun-rays {
+  transform-box: view-box;
+  transform-origin: 10px 10px;
+}
+.pi-egg {
+  transform-origin: center bottom;
 }
 .pi-posture {
   transform-box: view-box;
@@ -374,10 +386,54 @@
     animation: heart-beat 700ms var(--ease-out);
   }
 
+  /* sól og bjór: sun swells, rays turn and brighten */
+  .group:hover .pi-sun-core {
+    fill: var(--brand);
+    opacity: 0.8;
+    transform: scale(1.15);
+  }
+  .group:hover .pi-sun-rays {
+    stroke: var(--brand);
+    opacity: 0.7;
+    transform: rotate(45deg);
+    transition-delay: 40ms;
+  }
+
+  /* nido: nest warms, egg wobbles */
+  .group:hover .pi-nest {
+    stroke: var(--brand);
+    opacity: 0.6;
+  }
+  .group:hover .pi-nest-2 {
+    opacity: 0.4;
+    transition-delay: 60ms;
+  }
+  .group:hover .pi-egg {
+    fill: var(--brand);
+    opacity: 0.8;
+    animation: egg-wobble 600ms var(--ease-out);
+  }
+
   /* posture: slouched neck straightens up */
   .group:hover .pi-posture {
     color: var(--brand);
     transform: rotate(0deg);
+  }
+}
+
+@keyframes egg-wobble {
+  0%,
+  100% {
+    transform: rotate(0deg);
+  }
+  25% {
+    transform: rotate(-12deg);
+  }
+  50% {
+    transform: rotate(9deg);
+  }
+  75% {
+    transform: rotate(-4deg);
   }
 }
 
