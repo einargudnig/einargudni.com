@@ -244,6 +244,11 @@
 .pi-heart {
   transform-origin: center;
 }
+.pi-posture {
+  transform-box: view-box;
+  transform-origin: 10px 18px;
+  transform: rotate(28deg);
+}
 .pi-content {
   transform-origin: left center;
   transform: translateX(-4px);
@@ -367,6 +372,12 @@
     fill: var(--brand);
     opacity: 0.6;
     animation: heart-beat 700ms var(--ease-out);
+  }
+
+  /* posture: slouched neck straightens up */
+  .group:hover .pi-posture {
+    color: var(--brand);
+    transform: rotate(0deg);
   }
 }
 

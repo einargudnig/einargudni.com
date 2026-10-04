@@ -14,6 +14,13 @@ import { whoopQueryOptions } from "@/lib/whoop";
 
 const projects = [
   {
+    title: "posture",
+    description:
+      "A macOS app that reads your AirPods' motion sensors and tells you when you've been slouching, from a live strip beside the notch.",
+    href: "https://posture.einargudni.com",
+    tags: ["Swift", "macOS", "AirPods"],
+  },
+  {
     title: "jstop",
     description:
       "A macOs menu bar app that monitors node processes. Like htop, but for your Node.js toolkit.",

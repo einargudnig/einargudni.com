@@ -120,6 +120,18 @@ function NidoIcon() {
   );
 }
 
+function PostureIcon() {
+  return (
+    <svg viewBox="0 0 20 20" fill="none" className={cls}>
+      <line x1="10" y1="18" x2="10" y2="9" strokeWidth="1.5" strokeLinecap="round" strokeDasharray="1 2.5" stroke="currentColor" opacity="0.18" className="pi-el" />
+      <g className="pi-el pi-posture">
+        <line x1="10" y1="18" x2="10" y2="10" strokeWidth="1.5" strokeLinecap="round" stroke="currentColor" opacity="0.3" />
+        <circle cx="10" cy="6" r="3" fill="currentColor" opacity="0.3" />
+      </g>
+    </svg>
+  );
+}
+
 export const projectIcons: Record<string, () => ReactNode> = {
   jstop: JstopIcon,
   "ts-mini": TsMiniIcon,
@@ -129,4 +141,5 @@ export const projectIcons: Record<string, () => ReactNode> = {
   baby: BabyIcon,
   "sól og bjór": SolOgBjorIcon,
   nido: NidoIcon,
+  posture: PostureIcon,
 };
