@@ -48,9 +48,16 @@ const markdownNegotiation = createMiddleware().server(async ({ next, request }) 
     if (body) return markdown(body);
   }
 
-  // Routes without an MDX source fall through to HTML. Lenient by design:
-  // an agent that asked for markdown still gets something useful.
-  return next();
+  // No MDX source: hand back the prerendered HTML, lenient by design, so an
+  // agent that asked for markdown still gets something useful. Never fall
+  // through to next(): Start's SSR handler rejects a non-HTML Accept with a
+  // 500, which turned every missing or draft slug into a server error.
+  const asset = await env.ASSETS.fetch(request);
+  if (asset.status !== 404) return asset;
+  return new Response("Not found", {
+    status: 404,
+    headers: { "Content-Type": "text/plain; charset=utf-8" },
+  });
 });
 
 export const startInstance = createStart(() => ({
