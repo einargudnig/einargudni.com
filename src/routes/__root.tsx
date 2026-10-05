@@ -1,9 +1,10 @@
 import type { QueryClient } from "@tanstack/react-query";
-import { createRootRouteWithContext, HeadContent, Outlet, Scripts } from "@tanstack/react-router";
+import { createRootRouteWithContext, HeadContent, Scripts } from "@tanstack/react-router";
 import type { ReactNode } from "react";
 import { BirthdayConfetti } from "@/components/birthday-confetti";
 import { KeyboardNav } from "@/components/keyboard-nav";
 import { Navbar } from "@/components/navbar";
+import { NotFound, RouteError } from "@/components/route-error";
 import { editionScript } from "@/components/edition";
 import { WebMCP } from "@/components/web-mcp";
 import appCss from "../styles.css?url";
@@ -21,7 +22,11 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { rel: "icon", href: "/favicon.ico" },
     ],
   }),
-  component: RootComponent,
+  // The shell renders around every outcome, so an error or 404 page keeps the
+  // masthead, footer and edition script instead of replacing the document.
+  shellComponent: RootDocument,
+  errorComponent: RouteError,
+  notFoundComponent: NotFound,
 });
 
 // Kept in the emitted markup so the build can be audited against it.
@@ -31,14 +36,6 @@ STORY: A visitor learns he builds solutions that fit systems already running, ag
 FIRST VIEWPORT: Masthead rule with the name left and today's Reykjavik sunrise, sunset and edition right; the statement large and left-aligned at about 20ch; a solid ink "Work with me" and a plain link to the use cases; the use-case table starts above the fold on desktop.
 FORM: Almanak tables, candidate 4 of 7, seed 4502003c.
 FINISH: unreviewed and undocumented is unfinished; this build ends with the finish review, the verdict, DESIGN.md, and every shipping raster carrying its provenance`;
-
-function RootComponent() {
-  return (
-    <RootDocument>
-      <Outlet />
-    </RootDocument>
-  );
-}
 
 function RootDocument({ children }: Readonly<{ children: ReactNode }>) {
   return (
@@ -57,10 +54,16 @@ function RootDocument({ children }: Readonly<{ children: ReactNode }>) {
           <footer className="mt-24 mb-8 grid grid-cols-[1fr_auto] gap-4 border-t border-foreground pt-3 text-sm text-muted-foreground">
             <span>Don't half ass it.</span>
             <span className="flex items-center gap-4 tabular-nums">
-              <a href="https://github.com/einargudnig" className="hover:text-foreground transition-colors">
+              <a
+                href="https://github.com/einargudnig"
+                className="hover:text-foreground transition-colors"
+              >
                 GitHub
               </a>
-              <a href="https://x.com/einargudni" className="hover:text-foreground transition-colors">
+              <a
+                href="https://x.com/einargudni"
+                className="hover:text-foreground transition-colors"
+              >
                 X
               </a>
               <span>{new Date().getFullYear()}</span>

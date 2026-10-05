@@ -1,6 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { GitHubContributions } from "@/components/github-contributions";
 import { WhoopStats } from "@/components/whoop-stats";
+import { Island } from "@/components/island";
 import { LifeOsHealth } from "@/components/life-os-health";
 import { HireMe } from "@/components/hire-me";
 import { Ledger, LedgerEmpty } from "@/components/ledger";
@@ -129,9 +130,17 @@ const rowLink =
   "group grid gap-x-6 gap-y-0.5 border-t border-border py-3 first:border-t-0 sm:grid-cols-[7rem_1fr_auto]";
 const rowTitle = "underline-offset-4 decoration-1 group-hover:text-brand group-hover:underline";
 
-function RouteComponent() {
-  const { data: whoop } = useSuspenseQuery(whoopQueryOptions);
+const Health = () => {
+  const { data } = useSuspenseQuery(whoopQueryOptions);
+  return (
+    <div className="space-y-6">
+      <WhoopStats data={data} />
+      <LifeOsHealth data={data} />
+    </div>
+  );
+};
 
+function RouteComponent() {
   const work = [
     {
       company: "Maul",
@@ -315,15 +324,18 @@ function RouteComponent() {
       </div>
 
       <Ledger title="Health" aside="Whoop">
-        <div className="space-y-6 pt-4">
-          <WhoopStats data={whoop} />
-          <LifeOsHealth data={whoop} />
+        <div className="pt-4">
+          <Island name="health numbers">
+            <Health />
+          </Island>
         </div>
       </Ledger>
 
       <Ledger title="Activity" aside="GitHub">
         <div className="pt-4">
-          <GitHubContributions username="einargudnig" />
+          <Island name="contribution graph">
+            <GitHubContributions username="einargudnig" />
+          </Island>
         </div>
       </Ledger>
 
@@ -351,10 +363,12 @@ export const Route = createFileRoute("/")({
       { name: "twitter:image", content: "/og/home.png" },
     ],
   }),
+  // prefetchQuery never throws: a failed widget is the Island's problem, not
+  // a reason to fail the whole homepage.
   loader: ({ context }) =>
     Promise.all([
-      context.queryClient.ensureQueryData(whoopQueryOptions),
-      context.queryClient.ensureQueryData(contributionsQueryOptions("einargudnig")),
+      context.queryClient.prefetchQuery(whoopQueryOptions),
+      context.queryClient.prefetchQuery(contributionsQueryOptions("einargudnig")),
     ]),
   component: RouteComponent,
 });

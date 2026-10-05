@@ -19,7 +19,8 @@ import { FileTree } from "./blog/file-tree";
 import { Timeline } from "./blog/timeline";
 import { Heading, Subheading } from "./blog/heading";
 import { Architecture } from "./work/architecture";
-import { lazy, Suspense } from "react";
+import { lazy } from "react";
+import { Island } from "./island";
 import type { ComponentPropsWithoutRef, ComponentType, ReactNode } from "react";
 
 // A minimal type describing the MDX component we render
@@ -221,9 +222,14 @@ export const MDXContent = ({
         </p>
       )}
       <article className="mdx-content">
-        <Suspense fallback={null}>
+        {/* A body chunk can fail to load after a deploy replaces it; keep the
+            title and facts on screen and say how to recover. */}
+        <Island
+          name={`mdx:${path}`}
+          fallback="This piece didn't load. Reloading the page usually fixes it."
+        >
           <Component components={{ ...sharedComponents, ...components }} />
-        </Suspense>
+        </Island>
       </article>
     </>
   );
