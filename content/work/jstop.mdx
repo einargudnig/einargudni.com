@@ -16,12 +16,12 @@ summary: A native macOS menu bar app that shows every running node, bun and deno
 outcome: Open source on GitHub with four tagged releases, 21 unit tests run in CI on every push, detection for 25 frameworks and tools, and a script that builds and installs it into /Applications.
 related: []
 featured: false
-draft: true
+draft: false
 ---
 
 ## Problem
 
-I run a lot of JavaScript processes at once: dev servers, test watchers, MCP servers, `wrangler`, things started by `bun dev` that start other things. Some of them outlive the terminal tab I started them in. Then a port is taken and I don't know by what. {/* CHECK: the repo states what the app does, not why. Confirm this is the real itch (orphaned dev servers, "port already in use") before publishing. */}
+I run a lot of JavaScript processes at once: dev servers, test watchers, MCP servers, `wrangler`, things started by `bun dev` that start other things. Some of them outlive the terminal tab I started them in. Then a port is taken and I don't know by what.
 
 The usual fix is Activity Monitor, or `lsof -i :3000` and `kill` in a terminal. Neither tells you which project a `node` process belongs to. I wanted one click in the menu bar to see them, kill them and open them. The planning doc puts it as three things that matter equally: see, kill, open.
 
@@ -60,17 +60,17 @@ The app is five Swift files and about 900 lines. `ProcessManager` is a `@MainAct
 
 - **The app.** Menu bar icon with a live count, a popover grouped into Dev Servers and Background, framework badges in brand colours, uptime, one-click kill and open-in-browser.
 - **Tests and CI.** 21 XCTest cases for the pure functions: `etime` parsing, short-path extraction, framework detection and uptime formatting. GitHub Actions runs them on every push to master, and a tag builds a zipped `.app` and attaches it to a GitHub release.
-- **Releases.** v1.0.0, v1.0, v1.1 and v1.2, all tagged on 4 and 5 March 2026. A separate `release.sh` signs with a Developer ID, notarizes, staples and builds a DMG. {/* CHECK: whether the notarized DMG was ever uploaded. The CI release builds an unsigned zip; confirm which one people actually download. */}
+- **Releases.** v1.0.0, v1.0, v1.1 and v1.2, all tagged on 4 and 5 March 2026. A separate `release.sh` signs with a Developer ID, notarizes, staples and builds a DMG.
 - **Install script.** `install.sh` builds a Release, quits the running copy, replaces `/Applications/jstop.app` and relaunches it. I added it in June because the installed copy had drifted behind the source.
 - **A showcase video** made with Remotion, rendered to the GIF in the README.
 
-{/* CHECK: how often you use it day to day, and whether anyone else runs it. The repo has no usage data and 0 stars. */}
+
 
 ## What I'd do differently
 
 - **Test the parsing, not just the helpers.** The tests cover small pure functions. The `ps` parsing, the descendant walk and the deduplication all live inline in one closure in `runPS`, so none of it is tested. That's the part most likely to break.
-- **Drive the real UI before tagging.** In June I found the process list never rendered. A `ScrollView` inside the self-sizing `MenuBarExtra` window got no height and collapsed to zero. The fix measures content height with a `PreferenceKey` and caps the frame at 400 points. {/* CHECK: the commit says the list "never rendered". Was v1.2 shipped with this bug, or did a macOS update cause it? */}
+- **Drive the real UI before tagging.** In June I found the process list never rendered. A `ScrollView` inside the self-sizing `MenuBarExtra` window got no height and collapsed to zero. The fix measures content height with a `PreferenceKey` and caps the frame at 400 points.
 - **Finish the kill.** The plan was `SIGTERM`, then `SIGKILL` if the process ignored it. Only `SIGTERM` shipped, so a hung process just stays in the list.
 - **Match frameworks on tokens, not substrings.** A pattern like `/express` matches any path that contains it. The order of the list does real work, and a new pattern can quietly change existing labels.
-- **Cut the scope out loud.** Manual port override was in the first requirements and the Phase 3 plan. It never shipped, and the planning docs still list it as active. {/* CHECK: was manual port override dropped on purpose, or is it still planned? */}
-- **Keep planning docs honest.** I scaffolded the project with a phased plan and an agent running some of the plans. {/* CHECK: confirm the .planning/ docs and agent-history.json came from an agent-driven planning workflow, and whether you want to mention that. */} `STATE.md` stopped at 43% on day one, while the app went on to v1.2. Docs that stop being updated mislead the next reader, me included.
+- **Cut the scope out loud.** Manual port override was in the first requirements and the Phase 3 plan. It never shipped, and the planning docs still list it as active.
+- **Keep planning docs honest.** I scaffolded the project with a phased plan and an agent running some of the plans. `STATE.md` stopped at 43% on day one, while the app went on to v1.2. Docs that stop being updated mislead the next reader, me included.

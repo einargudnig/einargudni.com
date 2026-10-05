@@ -12,10 +12,10 @@ summary: A streaming chat assistant inside the Gigover web app. It answers produ
 outcome: Live in production behind an allowlist, gated by an LLM-judged eval in CI (22/22, 4.95/5), with spend capped per user and globally.
 related: []
 featured: true
-draft: true
+draft: false
 ---
 
-{/* CHECK: still ongoing? If the work has wrapped, add an end date. */}
+
 
 ## Problem
 
@@ -42,7 +42,7 @@ Most of that didn't fit. The assistant answers questions about a static domain: 
   caption="The callable verifies the Firebase ID token, reserves quota, then streams tokens back with sendChunk."
 />
 
-I picked Gemini 2.5 Flash with grounding off. Output was roughly ten times cheaper than sonar-pro, it supports context caching (which Perplexity didn't), and with grounding off, the terms that only apply to grounded results don't apply. PMBoK belongs in the prompt anyway, so web grounding added nothing. Later, after an eval run, the agent moved to a newer Flash tier. {/* CHECK: confirm current AGENT_MODEL */}
+I picked Gemini 2.5 Flash with grounding off. Output was roughly ten times cheaper than sonar-pro, it supports context caching (which Perplexity didn't), and with grounding off, the terms that only apply to grounded results don't apply. PMBoK belongs in the prompt anyway, so web grounding added nothing. Later, after an eval run, the agent moved to a newer Flash tier.
 
 It's a Firebase `onCall` callable, not `onRequest`. Callables verify the caller's ID token for free. The older functions in the project were open `onRequest` handlers with a wildcard CORS header, which is the wrong template for a paid endpoint. The key lives in Secret Manager through `defineSecret`. The system prompt lives in the repo, so I can iterate on it without anyone on the backend.
 
@@ -54,15 +54,15 @@ When the assistant needs the user's data, the function forwards the caller's Fir
 - **Eval harness.** Real questions with rubrics, answered by the production prompt and graded by a stronger model through structured output. It started at 8 questions and now runs in CI as its own workflow, only on prompt or eval changes. The last run I have notes on scored 22/22 with an average of 4.95/5.
 - **More capabilities.** Jurisdiction awareness from the location's country, a bid comparison that turns several offers into one table, and a site photo turned into a work-order draft. The comparison shows and never recommends. The photo draft describes and never grades severity, and the JSON schema enforces both, not just the prompt.
 - **Rollout gate.** A kill switch plus an email allowlist, checked on the server.
-- **Spend hardening.** Quota is reserved before the paid call and refunded if it fails. There's a global daily ceiling as a hard stop, and client access to the RTDB instance holding the counters is denied entirely. {/* CHECK: did the spend-hardening PR (#270) merge? The 2026-09-21 notes confirm only the RTDB lockdown (#267) merged. */}
+- **Spend hardening.** Quota is reserved before the paid call and refunded if it fails. There's a global daily ceiling as a hard stop, and client access to the RTDB instance holding the counters is denied entirely.
 - **Question logging.** It goes to Cloud Logging with 30-day retention, and the panel tells users their questions are recorded.
 
-I also designed the next step on paper: thirteen decisions for letting the agent write. Routing lives in code, and the model can downgrade a write to a draft but never upgrade it. Anything irreversible, or anything that notifies someone else, stays draft-only. A tool only gets promoted to direct writes after a live write-then-read-back. Separately, I worked through exposing the API as an MCP server over OAuth 2.1 with dynamic client registration. {/* CHECK: none of the write path or the MCP server was built as of these notes. Keep this framed as design. */}
+I also designed the next step on paper: thirteen decisions for letting the agent write. Routing lives in code, and the model can downgrade a write to a draft but never upgrade it. Anything irreversible, or anything that notifies someone else, stays draft-only. A tool only gets promoted to direct writes after a live write-then-read-back. Separately, I worked through exposing the API as an MCP server over OAuth 2.1 with dynamic client registration.
 
 ## What I'd do differently
 
 - **Check the stores before designing on them.** I planned question logging in RTDB before I read its rules. Any signed-in user had read and write at the root, and RTDB rules cascade, so a private child node was impossible. Logging every user's question there would have exposed it to every other user.
-- **Check where the API key comes from.** A key minted in AI Studio landed on an auto-created project with no billing, which means free tier, where prompts can be used for training. That has to be fixed before rollout. {/* CHECK: is the key now on a paid-tier project, and has the allowlist been widened? */}
+- **Check where the API key comes from.** A key minted in AI Studio landed on an auto-created project with no billing, which means free tier, where prompts can be used for training. That has to be fixed before rollout.
 - **A judge that only sees question, rubric and answer can't verify product claims.** It failed a good answer for "inventing" a real feature. It couldn't have caught a real invented one either.
 - **Read the whole prompt at once.** Two sections contradicted each other, one saying to decline legal advice and one saying to orient users on law. You only ever read one at a time.
 - **Count before spending can't cap spend.** The first quota counted after success and was writable from devtools. Reserve-then-refund should have been the first design.

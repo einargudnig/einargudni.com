@@ -26,12 +26,12 @@ summary: A personal data store. A collector on my Mac syncs Whoop, Strava, calen
 outcome: 14 connectors across 11 sources, an MCP server, a /v1 read API on Cloudflare backed by a D1 replica, a Tauri desktop app, and 262 tests over 135 commits. It feeds the Whoop numbers on this site.
 related: []
 featured: false
-draft: true
+draft: false
 ---
 
 ## Problem
 
-My data was spread across a dozen apps. Recovery and sleep in Whoop, runs in Strava, meetings in Google Calendar, tasks in Things and Asana, time in Toggl, code in GitHub, notes in Obsidian, and screen time locked inside macOS. Each app answers questions about itself. None of them answers "does a late night on my laptop show up in tomorrow's recovery?" {/* CHECK: the motivation isn't written down anywhere in the repo. Confirm this is why you started, or replace it with the real reason. */}
+My data was spread across a dozen apps. Recovery and sleep in Whoop, runs in Strava, meetings in Google Calendar, tasks in Things and Asana, time in Toggl, code in GitHub, notes in Obsidian, and screen time locked inside macOS. Each app answers questions about itself. None of them answers "does a late night on my laptop show up in tomorrow's recovery?"
 
 I wanted one place that holds all of it, in a shape I can query with SQL, and that any agent or app can read without its own integration to every source.
 
@@ -70,12 +70,12 @@ The read API started as Hono and ArkType on the Mac. In August I moved it to a C
 ## What shipped
 
 - **Collector.** 14 connectors over 11 sources: Whoop (recovery, sleep, workouts, day strain), Strava, Google Calendar, Things, Asana, Toggl, GitHub, Spotify, Obsidian, Screen Time and weather. It runs as a launchd agent, with backups, an off-device copy and staleness alerts.
-- **MCP server.** Read-only SQL over the whole store, capped at 1,000 rows. {/* CHECK: which agents you actually connect it to (Claude Code, Claude Desktop) and what you use it for. */}
+- **MCP server.** Read-only SQL over the whole store, capped at 1,000 rows.
 - **Edge API.** `/v1` resource and aggregate endpoints on Cloudflare, with OpenAPI docs, separate read, replicate and ingest keys, and Cloudflare's rate limiter. A parity harness compares it against the local Hono API: 37 of 37 responses identical, auth rejections included. Weather is now polled by a Worker cron: Open-Meteo has no history, so every hour the laptop slept was lost.
 - **Lumen.** A Tauri menu-bar app that wraps a React dashboard as a sidecar, with today's recovery in the tray. It also has a local "Ask your data" view that turns questions into SQL with qwen2.5-coder on Ollama, and a `life` CLI.
-- **This site.** The Whoop numbers on einargudni.com come from the edge API, on their own read key. {/* CHECK: confirm the site reads the Cloudflare edge now, not the old Tailscale Funnel the key was first issued for. */}
+- **This site.** The Whoop numbers on einargudni.com come from the edge API, on their own read key.
 
-The test count is 262 `test` and `it` calls across 49 files, counted from the source. {/* CHECK: run bun test and use the real number it reports. */} {/* CHECK: 13 of 135 commits are authored by Claude. Decide whether "sole developer" needs a note about agent-written commits. */}
+The test count is 262 `test` and `it` calls across 49 files, counted from the source.
 
 ## What I'd do differently
 
@@ -83,4 +83,4 @@ The test count is 262 `test` and `it` calls across 49 files, counted from the so
 - **Poll each source in exactly one place.** I planned to move all the HTTP connectors to Cloudflare cron. The data said only weather needed it. Everything else catches up from a cursor or a snapshot, and two Whoop pollers would break each other's refresh token.
 - **Mark where each row came from before replicating both ways.** A log line or weather reading pulled from the edge would be pushed straight back. An `origin` column on each row stops the loop.
 - **Test the refusals, not only the successes.** `/v1/sources` returned a 500 instead of a 401 and still passed the parity harness, because the harness only sent authenticated requests.
-- **Don't trust whatever is listening on a port.** The desktop app used to accept anything on :4321 as its dashboard. It now supervises its own sidecar, and the sidecar exits when Lumen does. {/* CHECK: confirm what went wrong here. The commits show the fix, not the incident. */}
+- **Don't trust whatever is listening on a port.** The desktop app used to accept anything on :4321 as its dashboard. It now supervises its own sidecar, and the sidecar exits when Lumen does.

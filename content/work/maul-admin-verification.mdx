@@ -12,12 +12,12 @@ summary: A harness that lets an agent drive Maul's admin app in a headless brows
 outcome: Writing the feature map found five real product bugs before any test existed, including an edit form that silently wiped a company's billing discount.
 related: []
 featured: true
-draft: true
+draft: false
 ---
 
 ## Problem
 
-I'm moving Maul's internal admin panel off Retool and onto our own React app, much of it written with coding agents. {/* CHECK: fair to say most of the admin code is agent-written? */} The weak point was the last step. An agent would say a change worked. Typecheck and unit tests passed, but nobody had opened the page.
+I'm moving Maul's internal admin panel off Retool and onto our own React app, much of it written with coding agents. The weak point was the last step. An agent would say a change worked. Typecheck and unit tests passed, but nobody had opened the page.
 
 That gap had already bitten me. Early in the migration, unit tests said admin users could reach the CRUD routes. A live contract test showed every one returning 403, because a separate route-level guard only accepted service tokens.
 
@@ -52,11 +52,11 @@ Lauren Tan's "Verification is all you need" (part 1 of her pstack guide) put it 
 
 The first version went out as one PR: five commits, 39 files. Since then it's how admin changes get proven: request counts after a framework upgrade, zero console errors and zero writes across a 19-page design-system pass, a ticket closed with a real screenshot.
 
-The map paid off before any of that. Drafting it surfaced five product bugs nobody was looking for. The worst: the company edit form always sent a billing discount of zero, because the detail endpoint never returned it. Renaming a company wiped its discount. {/* CHECK: a later note says "7 product bugs". Pick the right number. */}
+The map paid off before any of that. Drafting it surfaced five product bugs nobody was looking for. The worst: the company edit form always sent a billing discount of zero, because the detail endpoint never returned it. Renaming a company wiped its discount.
 
 In September I ran the skill on itself. A read-only pass over all 28 surfaces found that the shell's doc had been wrong for nine days, since the top-bar redesign, and `check:map` hadn't caught it. Its freshness check compares timestamps, only for files that own a route, and the shell doc owns none. So I added `check:handles`: it drives each page and diffs every control the map names against the live accessibility tree. Only a browser run can write the baseline, never a human. The first one resolved 91 of 165 claims. A claim never seen may be behind a click and is reported separately; only a recorded handle that's now missing fails the gate.
 
-On top of this I built `/opinions` in the admin app, where we write down how we build: 40 opinions across lint, verification and supply chain, each with a do/don't example and what enforces it. It shows the release flow as the three commands a person types, and nine errors that point the wrong way, each with its symptom, real cause and fix. A test checks every `source` path exists on disk, because dead links are what make people stop trusting a page like this. {/* CHECK: PR #175 was open on 2026-10-02. Confirm it merged. */}
+On top of this I built `/opinions` in the admin app, where we write down how we build: 40 opinions across lint, verification and supply chain, each with a do/don't example and what enforces it. It shows the release flow as the three commands a person types, and nine errors that point the wrong way, each with its symptom, real cause and fix. A test checks every `source` path exists on disk, because dead links are what make people stop trusting a page like this.
 
 ## What I'd do differently
 

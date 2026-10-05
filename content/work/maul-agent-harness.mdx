@@ -12,7 +12,7 @@ summary: A self-hosted agentic loop on the Anthropic API that talks to Maul's pr
 outcome: Replaced a managed-agents prototype with a thin CLI client that discovers the server's 32 tools at startup and filters out the 3 that write, so the model can only read.
 related: []
 featured: false
-draft: true
+draft: false
 ---
 
 ## Problem
@@ -52,21 +52,21 @@ When I started, I found Maul's MCP server was already production grade: 32 tools
 
 **One local tool.** I kept `read_file` for exploring the codebase and removed `write_file` and `run_command`, so nothing local can write either.
 
-**System prompt.** It carries the domain: B2B, company-paid, our own drivers, and routing through Detrack. {/* CHECK: confirm these are what ended up in the prompt. The note records them as Q&A while the prompt was being designed. */}
+**System prompt.** It carries the domain: B2B, company-paid, our own drivers, and routing through Detrack.
 
 ## What shipped
 
 `agent.ts` was a complete rewrite. The managed-agents client became a self-hosted harness with an MCP client, the agentic loop and an interactive CLI. It came with a `TODO.md` covering setup and next steps.
 
-Setup was two environment variables: an Anthropic key and the MCP API key. Then `npx tsx agent.ts`, and you can ask for a list of active companies. {/* CHECK: the note lists the end-to-end test ("list active companies") as an open follow-up. Confirm it ran before saying it works. */}
+Setup was two environment variables: an Anthropic key and the MCP API key. Then `npx tsx agent.ts`, and you can ask for a list of active companies.
 
-{/* CHECK: did teammates actually use it, and where does the repo live now? The note leaves "standalone vs monorepo" open. */}
 
-A few days later I connected a Discord bot to the same MCP server. That bot ran on the managed agents API, not this harness. {/* CHECK: confirm the Discord bot is a sibling on managed agents, not a later version of this harness. */} To make that work, I patched the MCP server to accept `Authorization: Bearer` alongside `x-api-key`. The change was additive: existing callers still send `x-api-key`, and the server checks it first.
+
+A few days later I connected a Discord bot to the same MCP server. That bot ran on the managed agents API, not this harness. To make that work, I patched the MCP server to accept `Authorization: Bearer` alongside `x-api-key`. The change was additive: existing callers still send `x-api-key`, and the server checks it first.
 
 ## What I'd do differently
 
-**Filter writes by allowlist, not by name.** The guard removes three named tools. Tool discovery is dynamic, so any new write tool reaches the model unless someone remembers to add it to the list. The server has since gained a `createOrder` write tool. {/* CHECK: is the filter a hardcoded denylist? If yes, does the harness now expose createOrder? The note doesn't say how the filter is implemented. */} An allowlist of read tools, or a read/write flag on each tool, fails closed.
+**Filter writes by allowlist, not by name.** The guard removes three named tools. Tool discovery is dynamic, so any new write tool reaches the model unless someone remembers to add it to the list. The server has since gained a `createOrder` write tool. An allowlist of read tools, or a read/write flag on each tool, fails closed.
 
 **Log every conversation from day one.** Audit logging is still in the follow-ups. For an agent that reads production customer data, it belongs in the first version.
 
