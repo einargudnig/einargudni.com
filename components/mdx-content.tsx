@@ -18,6 +18,7 @@ import { ColorSwatch } from "./blog/color-swatch";
 import { FileTree } from "./blog/file-tree";
 import { Timeline } from "./blog/timeline";
 import { Heading, Subheading } from "./blog/heading";
+import { Architecture } from "./work/architecture";
 import { Alert, AlertDescription, AlertTitle } from "./ui/alert";
 import { lazy, Suspense } from "react";
 import type { ComponentPropsWithoutRef, ComponentType, ReactNode } from "react";
@@ -168,6 +169,9 @@ const sharedComponents: Record<string, ComponentType<any>> = {
   Timeline,
   Heading,
   Subheading,
+
+  // Case study components
+  Architecture,
 };
 
 // Every MDX file under content/ becomes a real module. The map is lazy so

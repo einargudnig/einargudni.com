@@ -1,0 +1,79 @@
+---
+title: A read-only agent harness over Maul's production MCP server
+slug: maul-agent-harness
+client: Maul
+clientUrl: https://maul.is
+engagement: in-house
+kind: agent
+role: Software developer
+start: 2026-04-13
+stack: [TypeScript, Node.js, Anthropic API, Model Context Protocol, AWS Lambda]
+summary: A self-hosted agentic loop on the Anthropic API that talks to Maul's production MCP server, hides every write tool from the model, and ships as a CLI anyone on the team can run.
+outcome: Replaced a managed-agents prototype with a thin CLI client that discovers the server's 32 tools at startup and filters out the 3 that write, so the model can only read.
+related: []
+featured: false
+draft: true
+---
+
+## Problem
+
+Maul does B2B lunch delivery in Iceland. Companies pay for their employees' lunches, and we run our own drivers. Many everyday questions are lookups: which companies are active, what someone ordered, how last week's deliveries went. Answering them meant knowing where the data lives.
+
+My first attempt used Anthropic's managed agents beta. It runs the whole agent server-side, which is convenient, but I couldn't customise the system prompt, the tools or the behaviour. For a tool the team relies on, that was too opaque. I wanted to own the loop.
+
+## Constraints
+
+- **Production data.** The agent reads live data: users, companies, restaurants, orders, menus and delivery stats. It must not be able to change any of it by accident.
+- **Easy to share.** Teammates shouldn't need the backend repo cloned or a local server running. The goal was clone, add two environment variables, run.
+- **No duplicated tool definitions.** The backend already had an MCP server. The agent should use it, not hardcode its own copy of 32 tool schemas.
+- **Maul context.** A general model doesn't know how Maul works: who pays, how orders are tracked, how delivery is routed. That has to go into the system prompt.
+
+## Architecture
+
+<Architecture
+  nodes={[
+    { label: "CLI", detail: "interactive prompt" },
+    { label: "Agent loop", detail: "Anthropic API" },
+    { label: "MCP client", detail: "write tools filtered out" },
+    { label: "Maul MCP server", detail: "32 tools" },
+  ]}
+  caption="The harness is only the left three boxes. The MCP server already existed and runs on Lambda behind API Gateway."
+/>
+
+The pattern is the standard agentic loop. Send the conversation to the model. If it replies with tool calls, execute them and append the results. Repeat until it answers in plain text. I call the whole thing a harness: the thin layer of system prompt, tools and loop that makes a model useful in one specific context.
+
+When I started, I found Maul's MCP server was already production grade: 32 tools, deployed on Lambda behind API Gateway. That turned the job from building data access into writing a thin client.
+
+**Transport.** I connected over HTTP instead of stdio. With stdio, every user needs the server code locally. With HTTP, they need an API key.
+
+**Tool discovery.** On boot the harness calls `tools/list` instead of hardcoding definitions. A tool added to the server shows up in every client with no code change.
+
+**Read-only by filtering.** Three of the 32 tools write: creating guest accounts, uploading an image and updating a restaurant's image. The client removes them from the list before the model sees it. The model can't call a tool it doesn't know exists.
+
+**One local tool.** I kept `read_file` for exploring the codebase and removed `write_file` and `run_command`, so nothing local can write either.
+
+**System prompt.** It carries the domain: B2B, company-paid, our own drivers, and routing through Detrack. {/* CHECK: confirm these are what ended up in the prompt. The note records them as Q&A while the prompt was being designed. */}
+
+## What shipped
+
+`agent.ts` was a complete rewrite. The managed-agents client became a self-hosted harness with an MCP client, the agentic loop and an interactive CLI. It came with a `TODO.md` covering setup and next steps.
+
+Setup was two environment variables: an Anthropic key and the MCP API key. Then `npx tsx agent.ts`, and you can ask for a list of active companies. {/* CHECK: the note lists the end-to-end test ("list active companies") as an open follow-up. Confirm it ran before saying it works. */}
+
+{/* CHECK: did teammates actually use it, and where does the repo live now? The note leaves "standalone vs monorepo" open. */}
+
+A few days later I connected a Discord bot to the same MCP server. That bot ran on the managed agents API, not this harness. {/* CHECK: confirm the Discord bot is a sibling on managed agents, not a later version of this harness. */} To make that work, I patched the MCP server to accept `Authorization: Bearer` alongside `x-api-key`. The change was additive: existing callers still send `x-api-key`, and the server checks it first.
+
+## What I'd do differently
+
+**Filter writes by allowlist, not by name.** The guard removes three named tools. Tool discovery is dynamic, so any new write tool reaches the model unless someone remembers to add it to the list. The server has since gained a `createOrder` write tool. {/* CHECK: is the filter a hardcoded denylist? If yes, does the harness now expose createOrder? The note doesn't say how the filter is implemented. */} An allowlist of read tools, or a read/write flag on each tool, fails closed.
+
+**Log every conversation from day one.** Audit logging is still in the follow-ups. For an agent that reads production customer data, it belongs in the first version.
+
+**Don't trust the agent's account of its own tools.** In the Discord bot, the MCP toolset once failed to load. The agent didn't notice. It saw a shorter tool list and confidently explained that it only had `read_file`. Since then I check the event stream and error payloads, not what the model says it can do.
+
+**Give it the date on every message.** The system prompt is static, so the model doesn't know what day it is. Maul tracks orders by ISO week. Putting the date, weekday and ISO week on every message costs about 25 tokens and saves the model from doing date arithmetic, which it often gets wrong.
+
+**Treat `read_file` as a liability.** It was fine in a local CLI. Exposed through a chat surface, a file-read tool is a real security concern. I should have left it out of anything shared.
+
+**Add writes deliberately.** Unlocking writes behind a confirmation prompt is still open. I'd decide which writes the team needs before adding any, not after.

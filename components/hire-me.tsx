@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
+import { Link } from "@/components/ui/link";
 
 const EMAIL = "einargudnig@gmail.com";
 
@@ -50,7 +51,16 @@ export function HireMe() {
       </span>
 
       <p className="mt-3 text-sm text-muted-foreground leading-relaxed">
-        Software, AI and automation — whatever the problem, if software can solve it I'm interested.
+        I integrate AI agents into systems that already exist: assistants inside products,
+        tool-calling over your own APIs, and the evals and guardrails that make them safe to ship.
+        Plus the plain product engineering around it.{" "}
+        <Link
+          href="/work"
+          className="underline underline-offset-4 hover:text-brand transition-colors"
+        >
+          See the case studies
+        </Link>
+        .
       </p>
 
       {status === "sent" ? (

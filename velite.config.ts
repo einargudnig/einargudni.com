@@ -63,6 +63,35 @@ export default defineConfig({
         })),
     },
 
+    // collection for case studies: freelance and in-house work
+    work: {
+      name: "Work",
+      pattern: "work/**/*.{md,mdx}",
+      schema: s
+        .object({
+          title: s.string().max(120),
+          slug: s.slug("work"),
+          client: s.string().max(60),
+          clientUrl: s.string().url().optional(),
+          engagement: s.enum(["freelance", "in-house"]),
+          kind: s.enum(["agent", "product", "web"]),
+          role: s.string().max(80),
+          start: s.isodate(),
+          end: s.isodate().optional(), // omitted while ongoing
+          stack: s.array(s.string()),
+          summary: s.string().max(220),
+          outcome: s.string().max(220),
+          // Site paths (/blog/x, /deep-dive/y); vite.config.ts fails the build on unknown ones
+          related: s.array(s.string()).default([]),
+          featured: s.boolean().default(false),
+          draft: s.boolean().optional().default(false),
+          metadata: s.metadata(),
+          path: s.path(),
+          body: s.raw(),
+        })
+        .transform((data) => ({ ...data, permalink: `/work/${data.slug}` })),
+    },
+
     // collection for shared links / bookmarks
     links: {
       name: "Link",

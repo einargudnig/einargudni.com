@@ -1,6 +1,6 @@
 import { createMiddleware, createStart } from "@tanstack/react-start";
 import { env } from "cloudflare:workers";
-import { deepDives, posts } from "@/.velite";
+import { deepDives, posts, work } from "@/.velite";
 import { CACHE_HEADERS, llmsBody } from "@/lib/discovery";
 
 // Replaces the Next middleware.ts. Rather than rewriting to /api/md*, this
@@ -9,6 +9,7 @@ import { CACHE_HEADERS, llmsBody } from "@/lib/discovery";
 const MARKDOWN_ROUTES: Array<[RegExp, (slug: string) => string | undefined]> = [
   [/^\/blog\/([^/]+)$/, (slug) => posts.find((p) => p.slug === slug && !p.draft)?.body],
   [/^\/deep-dive\/([^/]+)$/, (slug) => deepDives.find((d) => d.slug === slug && !d.draft)?.body],
+  [/^\/work\/([^/]+)$/, (slug) => work.find((w) => w.slug === slug && !w.draft)?.body],
 ];
 
 const markdown = (body: string) =>
@@ -20,7 +21,10 @@ const markdown = (body: string) =>
 // are the only paths where the Worker sees the request before the asset
 // server, and the only ones this middleware may serve assets for.
 const runsWorkerFirst = (pathname: string) =>
-  pathname === "/" || pathname.startsWith("/blog/") || pathname.startsWith("/deep-dive/");
+  pathname === "/" ||
+  pathname.startsWith("/blog/") ||
+  pathname.startsWith("/deep-dive/") ||
+  pathname.startsWith("/work/");
 
 const markdownNegotiation = createMiddleware().server(async ({ next, request }) => {
   const { pathname } = new URL(request.url);

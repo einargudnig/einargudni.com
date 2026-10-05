@@ -1,0 +1,81 @@
+---
+title: "Sterkir pabbar: a scoped AI assistant inside a coaching platform for dads"
+slug: sterkir-pabbar
+client: Sterkir pabbar
+clientUrl: https://sterkirpabbar.is
+engagement: freelance
+kind: agent
+role: Sole developer, from landing page design to members' app and assistant
+start: 2026-07-26
+stack:
+  - Astro
+  - Tailwind CSS v4
+  - Sanity
+  - React Router
+  - Clerk
+  - Neon Postgres
+  - Drizzle
+  - Zod
+  - Vitest
+  - Vercel AI SDK
+  - Vercel AI Gateway
+  - OpenAI
+  - Vercel
+summary: A landing page and members' app for an Icelandic coach who trains dads, with an AI assistant that answers members from their own plan, their macros and the coach's FAQs, and refuses everything else.
+outcome: Landing page live on HTTPS with a CMS the coach edits himself; members' app in production at app.sterkirpabbar.is; assistant passing 57 of 63 acceptance evals with zero critical failures.
+related: []
+featured: true
+draft: true
+---
+
+## Problem
+
+Sterkir pabbar is an online coaching business for dads in Iceland. The coach needed two things: a landing page that turns cold traffic into a free intro chat, and a paid members' area where members get a training plan, calorie and macro targets, and articles.
+
+The members' area also has an assistant. A member can ask about their training, their nutrition or how to use the app, and get an answer grounded in their own assigned plan, their latest macro targets and the FAQ answers the coach writes. {/* CHECK: the notes never state why the coach wanted an assistant; confirm the motivation (e.g. fewer repeat questions to him) before publishing */} Anything outside that has to be refused. When I tested it, it hedged and then wrote a Python function anyway.
+
+## Constraints
+
+- **Iceland.** Stripe doesn't support Iceland at all. The UI is Icelandic, and `toLocaleString("is-IS")` can't be trusted in a browser.
+- **Health numbers.** The app calculates calorie targets for people I've never met. Every input that produced a number has to be kept, so "why did the app tell me 1,800 kcal in October" stays answerable. {/* CHECK: whether the legal position on prescribing macros in Iceland was ever resolved */}
+- **A client without GitHub.** That ruled out every git-backed CMS. He gets an email invite and that's it.
+- **The client's email lives on the domain.** Google Workspace MX records, and every CTA on the site points at that inbox.
+- **A fixed launch date** of 1 October, and the coach's filming time was the real bottleneck.
+- **The assistant costs money per message,** and the AI Gateway's budgets don't cover BYOK spend.
+
+## Architecture
+
+<Architecture
+  nodes={[
+    { label: "sterkirpabbar.is", detail: "Astro landing page, zero JS" },
+    { label: "app.sterkirpabbar.is", detail: "React Router + Clerk" },
+    { label: "/api/assistant", detail: "AI SDK streamText, member-scoped tools" },
+    { label: "AI Gateway", detail: "BYOK to OpenAI" },
+    { label: "Neon + Sanity", detail: "Member rows, plans, FAQs" },
+  ]}
+  caption="The landing page links into the app; the assistant route reads only the signed-in member's data."
+/>
+
+The landing page is static Astro. One `site.ts` module feeds both the visible copy and the JSON-LD, so the structured data can't drift from the page. Sanity content is fetched at build time into a committed JSON file, so a Sanity outage can't break a deploy. Publishing in the Studio fires a Vercel deploy hook, with drafts excluded so autosave doesn't trigger builds.
+
+The members' app is a separate React Router app on a subdomain. There's no API service: loaders and actions are the backend. Onboarding, macro targets and plan assignments are append-only tables in Neon. Access is two nested layouts, not one check: a parent redirect beats the child loaders, so plan data is never sent to an unpaid member.
+
+The assistant runs inside that app. Its tools take injected readers (`assignedPlan`, `latestMacros`) scoped to the signed-in member, so the eval harness runs the real tool mapping against a synthetic member without database rows. Off-topic questions get one fixed reply, `OFF_TOPIC_REPLY`, word for word. Emergencies are the one exception, and those point to 112. Route and evals share one `generationSettings` object so the evals can't drift from production. A daily per-member message limit and an `ASSISTANT_ENABLED` flag are both set through env vars.
+
+## What shipped
+
+- **Landing page.** Designed, critiqued and reworked. I deleted placeholder testimonials, added a coach section ahead of pricing, and moved the first price further down the page. DNS moved to Vercel without breaking mail, and the site is on HTTPS.
+- **CMS.** A Sanity singleton with Icelandic labels and character caps, validated in the Studio and again in the fetch script. The coach publishes on his own.
+- **Members' app.** Clerk auth, an onboarding wizard (signed-cookie drafts, a health-flag acknowledgement step, Mifflin-St Jeor macros with a calorie floor and a protein ceiling), a weekly plan view, settings, an admin dashboard with payment-claim tracking, and preview-before-access for unpaid members. {/* CHECK: whether Kling subscriptions were built or claims are still tracked by hand */}
+- **Assistant.** Scope fix and an acceptance eval harness built from the coach's 60 handoff cases plus off-topic and in-scope cases. Exact match for refusals, an LLM judge from a different model family for the rest. Result: 57/63, zero critical, and every off-topic and safety case passed. {/* CHECK: as of 2026-10-01 the prod migration, ASSISTANT_ENABLED and FAQ publishing were still pending; confirm the assistant is live before calling it shipped */}
+
+## What I'd do differently
+
+- **Write the refusal on day one.** A list of what the assistant helps with doesn't stop it doing other things. Without explicit off-topic handling the model treats being helpful as the default.
+- **Give the judge the same context as the assistant.** Without the instructions and FAQ, it marked a real support email as made up. With them the score went from 55 to 57.
+- **Treat evals as content tests too.** One case failed because a developer note had been left in an FAQ answer.
+- **Set the spend cap at the provider from the start.** Gateway budgets ignore BYOK spend. Usage tracking also missed streams closed mid-answer, because an abort fires `onAbort` and the route only handled the end and error callbacks.
+- **Give production its own database branch.** Dev and prod shared one Neon database, so local writes went to production data.
+- **Never trust a platform's green status.** Vercel reported the domain verified while serving no certificate at all. Certificate issuance had failed before the nameservers moved and was never retried. Now I check the TLS handshake myself and force issuance right after a cutover.
+- **Design a success signal into fallbacks.** A build that never fails also looked the same when it never reached Sanity.
+- **Drive the real UI earlier.** Using the app in a browser found four defects that typecheck, lint and 40 passing tests had missed. One was a radio button at 1.05:1 contrast that nobody could see.

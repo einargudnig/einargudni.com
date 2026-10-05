@@ -1,0 +1,73 @@
+---
+title: Draft with AI for Gigover's create forms
+slug: gigover-draft-with-ai
+client: Gigover
+clientUrl: https://gigover.com
+engagement: freelance
+kind: agent
+role: Contract full-stack engineer
+start: 2026-09-06
+stack: [Gemini, Firebase Cloud Functions, TypeScript, React, Chakra UI, React Hook Form, Zod]
+summary: Free text in, pre-filled form out. A Gemini callable picks the right template and fills tasks, tenders, bids, locations and resources, and a person reviews before anything is saved.
+outcome: Five draft callables in production behind the assistant allowlist, with schema-checked prompt rules, a relative-date fix and an acceptance eval harness.
+related: []
+featured: true
+draft: true
+---
+
+{/* CHECK: still ongoing (the items loop and the suggestion affordance are open)? If it has wrapped, add an end date. */}
+
+## Problem
+
+Gigover's create flows are long forms. A task alone has 16 templates: RFI, meetings, change order, daily site log, risk register and more, each with its own fields. People know what they want to say, but turning a paragraph into the right template with the right fields is slow.
+
+This was also the first time the assistant could produce something that ends up in real project data. Until then it had only answered questions.
+
+## Constraints
+
+- **Never auto-create.** A wrong template pick or an invented field must not land in a project. The filled-in form is always shown for review, and saving goes through the existing mutation.
+- **The model never sets identity or permission fields.** I left out the responsible user on resources and org invites altogether. Those are trust decisions, not form-fills.
+- **The database is strict.** MySQL refuses over-length values instead of truncating them, and the refusal comes back inside an HTTP 200. Drafted text has to fit the real column widths.
+- **No new infrastructure.** It should match the single-shot structured-extraction callables already in the app (bid analysis, photo condition reports).
+
+## Architecture
+
+<Architecture
+  nodes={[
+    { label: "Create form", detail: "free text + offered templates" },
+    { label: "draftTask callable", detail: "allowlist, quota, date anchor" },
+    { label: "Gemini", detail: "JSON schema output" },
+    { label: "Normaliser", detail: "offered ids only, field caps" },
+    { label: "Pre-filled form", detail: "human reviews and submits" },
+  ]}
+  caption="One structured-extraction call per surface. No tool loop, no write from the model."
+/>
+
+The trust boundary is the normaliser, not the prompt. The client sends the templates it offers. The normaliser only accepts a `typeId` from that list and falls back to the first one otherwise, so the model can't invent an identity. Strings are capped to the column widths.
+
+The forms already had the seam. Each template wraps a shared shell built on React Hook Form, so I added an `initialValues` prop, merged in only when creating, and passed a `draft` through all 16 templates.
+
+## What shipped
+
+- **Five callables** (`draftTask`, `draftTender`, `draftBid`, `draftProperty`, `draftResource`), each using the same server-side allowlist and quota as the chat assistant. One shared `DraftWithAI` component, which I pulled out after the second form.
+- **Per-template mapping rules.** Three behavior manuals for tasks, tenders and resources came in. Their core diagnosis was right: the prompt was a list of don'ts with no mapping, so the model dumped the whole brief into `text`. I added rules keyed by `typeId`, injected only for the templates actually offered, and written using schema property names, not UI labels. A unit test checks that every field a rule quotes exists in the schema, so a stale rule fails the build.
+- **Pushback where the manuals were wrong.** Both addenda were written from screenshots. Tender items have no cost field in the write payload, so "enforce cost blank" needed no work. I declined three "suggested default" features because no form has any way to mark a value as a suggestion, and without one you're quietly writing invented warranty periods into a contract field.
+- **Better than specified on resource IDs.** The modal already loads the org's resource list and checks for clashes, so the model suggests an ID by convention and the client bumps it to a free number.
+- **Relative dates.** Running the acceptance cases against the live functions, 5 of 7 passed. Both failures were dates. The prompts asked for a date "only if implied" but never said what day it was, so "by end of month" always came back empty, even at temperature 0. The fix is a shared helper:
+
+```ts
+export const withToday = (text: string, now = new Date()) =>
+  `Today is ${now.toISOString().slice(0, 10)}.\n\n${text}`;
+```
+
+I used UTC on purpose. Iceland is UTC+0 year-round, so converting to local time would only add off-by-ones around midnight.
+
+- **`npm run eval:drafts`.** A permanent acceptance harness that imports the real compiled prompts and normalisers. It has an XFAIL state for the one case that can't pass yet, so the gate still catches regressions. {/* CHECK: confirm PR #291 merged and deploy:assistant ran */}
+- **Limits that match the database.** Once the backend widened four columns, the draft limits, the form caps and the docs all moved to the new widths together, and actions and hazards now come back as numbered lists. {/* CHECK: notes say the numbered-list prompt was deployed but not yet tried in a live draft */}
+
+## What I'd do differently
+
+- **Search open PRs before designing.** An unmerged 431-line design doc and an unmerged quota-race fix both covered this exact feature, and I only found them after shipping. The five new callables still use the old racy quota helpers. {/* CHECK: has this been fixed since? */}
+- **Expect bugs that typecheck can't see.** Three of the five draft boxes were invisible because the modals were mounted outside the assistant's context provider. No error, just a context value that was always false. A Chakra prop that silently did nothing was only caught by a screenshot.
+- **Review a spec against the write payload, not the screen.** Most of the manuals' wrong claims came from reading labels instead of what actually goes over the wire.
+- **Build the eval before widening access.** The drafts had only parsing tests until the date bug forced an acceptance harness into existence.

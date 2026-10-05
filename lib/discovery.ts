@@ -30,7 +30,7 @@ export const agentSkills = () => ({
       name: "markdown-negotiation",
       type: "content-negotiation",
       description:
-        "Blog posts and deep-dives return their MDX source as text/markdown when requested via Accept: text/markdown.",
+        "Blog posts, deep-dives and case studies return their MDX source as text/markdown when requested via Accept: text/markdown.",
       url: `${SITE_URL}/blog`,
     },
   ],

@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { deepDives, posts } from "@/.velite";
+import { deepDives, posts, work } from "@/.velite";
 import { CACHE_HEADERS, SITE_URL } from "@/lib/discovery";
 
 interface Entry {
@@ -29,6 +29,7 @@ const staticPaths: string[] = [
   "/uses/devices",
   "/uses/infrastructure",
   "/uses/keyboard",
+  "/work",
 ];
 
 // No lastmod on static pages: the only honest value would be hand-maintained,
@@ -45,6 +46,9 @@ const entries = (): Entry[] => [
   ...deepDives
     .filter((entry) => !entry.draft)
     .map((entry) => ({ url: `${SITE_URL}/deep-dive/${entry.slug}`, lastModified: entry.date })),
+  ...work
+    .filter((entry) => !entry.draft)
+    .map((entry) => ({ url: `${SITE_URL}${entry.permalink}` })),
   ...staticPaths.map((path) => ({ url: `${SITE_URL}${path}` })),
 ];
 

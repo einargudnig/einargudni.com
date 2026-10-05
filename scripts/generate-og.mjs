@@ -85,7 +85,13 @@ const template = ({ title, description, date, type }) =>
       h(
         "div",
         { style: badgeStyle },
-        type === "blog" ? "Blog Post" : type === "deep-dive" ? "Deep Dive" : "",
+        type === "blog"
+          ? "Blog Post"
+          : type === "deep-dive"
+            ? "Deep Dive"
+            : type === "work"
+              ? "Case Study"
+              : "",
       ),
     h(
       "div",
@@ -195,6 +201,12 @@ const STATIC_PAGES = [
     type: "page",
   },
   { name: "uses", title: "Uses", description: "My tools, setup, and tech stack", type: "page" },
+  {
+    name: "work",
+    title: "Work",
+    description: "Case studies: freelance work and agent integrations",
+    type: "page",
+  },
 ];
 
 await mkdir(outDir, { recursive: true });
@@ -204,9 +216,10 @@ await mkdir(outDir, { recursive: true });
 const readCollection = async (name) =>
   JSON.parse(await readFile(join(root, ".velite", `${name}.json`), "utf8"));
 
-const [posts, deepDives] = await Promise.all([
+const [posts, deepDives, work] = await Promise.all([
   readCollection("posts"),
   readCollection("deepDives"),
+  readCollection("work"),
 ]);
 
 const generated = await Promise.all([
@@ -225,6 +238,15 @@ const generated = await Promise.all([
       type: "deep-dive",
     }),
   ),
+  ...work
+    .filter((entry) => !entry.draft)
+    .map((entry) =>
+      render(`work-${entry.slug}`, {
+        title: entry.title,
+        date: entry.client,
+        type: "work",
+      }),
+    ),
 ]);
 
 console.log(`[og] generated ${generated.length} images into public/og/`);
