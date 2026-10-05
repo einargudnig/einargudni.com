@@ -12,7 +12,7 @@ summary: A private plugin marketplace that gives everyone at Maul the same Claud
 outcome: maul-core 0.7.0 passed 6/6 eval cases over 36 runs with a mean +83 delta against the same model without the plugin, and its time-rules reference is generated from live code.
 related: []
 featured: true
-draft: true
+draft: false
 ---
 
 ## Problem
@@ -47,24 +47,24 @@ There is no global registry behind this. A marketplace is just a git URL someone
 
 For the time rules, the skill's reference tables are generated from the live rule arrays in the web app. A script writes the markdown, and a Vitest test compares the checked-in file with fresh generator output. CI already runs the tests, so editing a cutoff in code without regenerating the doc fails the build. I checked it by deliberately changing a cutoff and watching the test fail.
 
-The gap I didn't expect was that Cowork skills and repo-local skills are separate catalogs. A skill in the repo's `.agents/skills/` never shows up in Cowork, and publishing to the org catalog is a manual admin step. `maul-core` partly closes this by carrying a cached copy of the time-rules skill, marked as not the source of truth, with a refresh path. {/* CHECK: confirm how the cached copy is refreshed (manual regenerate vs. script) before describing it further */}
+The gap I didn't expect was that Cowork skills and repo-local skills are separate catalogs. A skill in the repo's `.agents/skills/` never shows up in Cowork, and publishing to the org catalog is a manual admin step. `maul-core` partly closes this by carrying a cached copy of the time-rules skill, marked as not the source of truth, with a refresh path.
 
 ## What shipped
 
 - **maul-brand** (`look-the-part`): applies Maul's favicons, fonts, logo and colors to an internal tool. A version-gated script copies the assets; the agent wires them into whatever framework the project uses.
 - **maul-time-rules**: cutoff and opening times per brand, role and meal, including guidance for autonomous order actions where the API won't enforce a cutoff.
 - **maul-notion-writes**: the approval pattern and the known Notion API traps, used by every Maul skill that writes to Notion.
-- **maul-roles**: who owns what, walked from the org model in Notion. Read-only, and it never repeats personal data. {/* CHECK: confirm I authored maul-roles and maul-surveys, not just moved them into maul-core */}
+- **maul-roles**: who owns what, walked from the org model in Notion. Read-only, and it never repeats personal data.
 - **maul-surveys**: brings up the weakest customer-satisfaction category when someone is drafting a complaint reply or an incident report.
 - **Evals** for `maul-core` using `claude plugin eval`, with Notion mocked by an eval-only stub plugin and a side-by-side page of answers with and without the plugin.
 
 I rejected a shared npm brand-tokens package as overkill for a team this size; it only makes sense if the internal tools settle on one stack. Bundling the roughly 520K of assets in the plugin keeps it offline and versioned.
 
-The 0.7.0 eval passed all 6 cases over 36 runs in about five minutes, with a mean delta of +83 over the same model without the plugin. {/* CHECK: confirm +83 is percentage points, and how much of it is trigger-only graders, whose delta is maximal by construction */} The more useful number is from the one case with an LLM grader: it checks that the cutoff answer is correct and gives a firm verdict based on the actual clock, not just that the skill fired.
+The 0.7.0 eval passed all 6 cases over 36 runs in about five minutes, with a mean delta of +83 over the same model without the plugin. The more useful number is from the one case with an LLM grader: it checks that the cutoff answer is correct and gives a firm verdict based on the actual clock, not just that the skill fired.
 
 ## What I'd do differently
 
-- **Plan for Cowork from day one.** I built the time-rules skill repo-side and only then found it couldn't reach the Cowork automation that needed it most. The late-order skill still needs a pointer to it. {/* CHECK: whether the pointer has since been added to the live late-order skill */}
+- **Plan for Cowork from day one.** I built the time-rules skill repo-side and only then found it couldn't reach the Cowork automation that needed it most. The late-order skill still needs a pointer to it.
 - **Write answer-quality graders first.** Trigger graders only show that the skill loaded. The meaningful deltas came from LLM graders, and one "failure" turned out to be my rubric wording, which I'd only have found by reading the answers.
 - **Keep fixtures out of the shipped tree.** Desktop sync rejected the whole plugin because eval stubs carried nested manifests. Deleting them worked; a stub with only `.mcp.json` still loads in evals.
 - **Don't rely on bash for plugin scripts.** The fetch script passed `bash -n` but broke on macOS's bash 3.2, and it needs `jq` just to read its own manifest. Every plugin runs alongside Node, so a `.mjs` script would avoid both.

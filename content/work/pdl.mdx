@@ -22,21 +22,21 @@ summary: An installable web app for my weekly padel group. Log who won and who l
 outcome: Live on a Cloudflare Worker with D1 behind basic auth. 22 tests run against a real local D1, and one check command (format, lint, typecheck, test, build) gates every push in CI.
 related: []
 featured: false
-draft: true
+draft: false
 ---
 
 ## Problem
 
-I play padel every week with the same group: me, Jói, Bjössi and Gísli. {/* CHECK: confirm it is weekly and that these four are the regulars. The names come from migration 0003, "weekly" from the repo description. */} Padel is always two against two, so after a few weeks the obvious questions are who is actually winning, who is on a run and who should pair with whom tonight.
+I play padel every week with the same group: me, Jói, Bjössi and Gísli. Padel is always two against two, so after a few weeks the obvious questions are who is actually winning, who is on a run and who should pair with whom tonight.
 
-Nobody keeps that in their head. {/* CHECK: what the group used before (a notes app, a group chat, nothing) is not in the repo. Confirm or cut this line. */} I wanted something I could open on my phone at the court, tap four names, mark the winners, and have the table update.
+Nobody keeps that in their head. I wanted something I could open on my phone at the court, tap four names, mark the winners, and have the table update.
 
 ## Constraints
 
 - **It is used on a phone, at the court.** Logging a match has to take a few taps. It installs as a PWA with a standalone manifest and a service worker.
 - **Private, but no accounts.** Four people don't need sign-up. The API sits behind one shared basic-auth password.
 - **The real scores must be hard to break.** I develop against the same Cloudflare account the live app runs on, so local work can't be allowed to write to the group's data.
-- **Close to free to run.** One Worker and one D1 database, on Cloudflare. {/* CHECK: confirm it runs on the free plan. */}
+- **Close to free to run.** One Worker and one D1 database, on Cloudflare.
 - **A fair table.** A player who has played twice and won twice shouldn't top someone who is 8 and 4. Ranking has to account for that.
 
 ## Architecture
@@ -70,13 +70,13 @@ Only the `prod` stage points at the live `pdl` Worker and database. Every other 
 - **One gate.** `bun run check` runs format, lint, typecheck, test and build in that order. CI runs it on every push to master and on pull requests.
 - **Structured logs.** Each request emits one wide event through evlog. The allowed fields and event names are a closed type, so logging a new field means adding it to the schema first.
 
-The project has 13 commits. Two `v1` commits in April were the app. The August work moved it to Vite 8, React 19, StyleX and Base UI, and replaced `wrangler.toml` with Alchemy. I adopted the live Worker and database into Alchemy's state without recreating them. {/* CHECK: is the group still using it, and roughly how many matches are logged? Nothing in the repo shows usage. */}
+The project has 13 commits. Two `v1` commits in April were the app. The August work moved it to Vite 8, React 19, StyleX and Base UI, and replaced `wrangler.toml` with Alchemy. I adopted the live Worker and database into Alchemy's state without recreating them.
 
 ## What I'd do differently
 
 - **Make a missing secret fail the deploy from day one.** The Worker treats an empty password as "no auth" so local dev works without one. That meant a missing secret would have shipped the app wide open. Prod now refuses to plan or deploy without `PDL_PASSWORD`.
 - **Test the routing I declared, not the routing I assumed.** The config said single-page-application fallback, but asset-first routing sent unknown paths to the Worker, so the setting never ran and deep links returned 404 in production. Two tests now cover it.
 - **Read what a config option actually routes.** I added `runWorkerFirst: ['/api/*']` to be explicit. It sent everything else, including Vite's dev module runner, through the asset handler, and local dev died with `Expected 101 status code`. The default already did the right thing.
-- **Ship a way to undo a match.** There is no edit or delete route. A mis-tapped result stays in the standings until someone fixes it in D1 by hand. {/* CHECK: confirm there is no other correction path in use. */}
-- **Commit the icons the manifest promises.** The manifest lists `icon-192.png`, `icon-512.png`, a maskable icon and `apple-touch-icon.png`, but only `favicon.svg` is in `public/`. {/* CHECK: confirm the PNG icons are really missing from the deployed app, then add them or drop this point. */}
-- **Finish the custom domain.** The app still lives on `pdl.einargudni.workers.dev`. The delegation runbook is written, but the old Vercel records for `pdl` block it. {/* CHECK: now that einargudni.com is moving to Cloudflare, this may be a plain Worker custom domain instead. Confirm the current state. */}
+- **Ship a way to undo a match.** There is no edit or delete route. A mis-tapped result stays in the standings until someone fixes it in D1 by hand.
+- **Commit the icons the manifest promises.** The manifest lists `icon-192.png`, `icon-512.png`, a maskable icon and `apple-touch-icon.png`, but only `favicon.svg` is in `public/`.
+- **Finish the custom domain.** The app still lives on `pdl.einargudni.workers.dev`. The delegation runbook is written, but the old Vercel records for `pdl` block it.

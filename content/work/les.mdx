@@ -16,16 +16,16 @@ summary: A native Mac app that keeps RSS feeds and saved articles in one local S
 outcome: Feeds, bookmarks, OPML import and export, FTS5 search and a keyboard help overlay, in about 4,500 lines of Swift across 26 files and 16 commits, with one dependency.
 related: []
 featured: false
-draft: true
+draft: false
 ---
 
 ## Problem
 
-I read a lot of things online: blog feeds, newsletters, and articles someone links me to. RSS readers handle the first. Read-it-later apps handle the second. I wanted both in one place, in one list, read the same way. {/* CHECK: confirm the motivation. The repo never says which apps you were replacing or why. */}
+I read a lot of things online: blog feeds, newsletters, and articles someone links me to. RSS readers handle the first. Read-it-later apps handle the second. I wanted both in one place, in one list, read the same way.
 
 I also wanted to read without the mouse. Move down the list, open an article, scroll it, star it, mark it read, all from the home row.
 
-The name is Icelandic: "les" means "I read". {/* CHECK: confirm this is where the name comes from. */}
+The name is Icelandic: "les" means "I read".
 
 ## Constraints
 
@@ -63,7 +63,7 @@ The name is Icelandic: "les" means "I read". {/* CHECK: confirm this is where th
 
 ## What shipped
 
-Two days of work, 27 to 29 March 2026. The first version was a three-pane RSS reader. I then wrote a design spec and implementation plan for a sidebar and read-it-later, and built that on top. {/* CHECK: the spec and plan live under docs/superpowers/, which suggests they were written with an AI agent's planning workflow. Confirm, and decide whether to say so. */}
+Two days of work, 27 to 29 March 2026. The first version was a three-pane RSS reader. I then wrote a design spec and implementation plan for a sidebar and read-it-later, and built that on top.
 
 - **Sidebar.** Smart views (Inbox, Reading List, Starred, Today) with unread counts and SF Symbols, then feeds in folders below a divider.
 - **Feeds.** RSS and Atom, OPML import and export from the File menu, and context menus to remove feeds or mark all read.
@@ -71,7 +71,7 @@ Two days of work, 27 to 29 March 2026. The first version was a three-pane RSS re
 - **Reading.** Inline images with a SHA-256-keyed disk cache, dark mode through a central `Theme`, an empty state, and the web view fallback for thin content.
 - **Search and keys.** FTS5 search and the full keyboard map with its help overlay.
 
-The last commit was on 29 March, and there is one uncommitted change in the items list. {/* CHECK: do you still use les day to day, or has it stopped? If it's dormant, consider setting `end`. */}
+The last commit was on 29 March, and there is one uncommitted change in the items list.
 
 ## What I'd do differently
 

@@ -12,10 +12,10 @@ summary: Free text in, pre-filled form out. A Gemini callable picks the right te
 outcome: Five draft callables in production behind the assistant allowlist, with schema-checked prompt rules, a relative-date fix and an acceptance eval harness.
 related: []
 featured: true
-draft: true
+draft: false
 ---
 
-{/* CHECK: still ongoing (the items loop and the suggestion affordance are open)? If it has wrapped, add an end date. */}
+
 
 ## Problem
 
@@ -62,12 +62,12 @@ export const withToday = (text: string, now = new Date()) =>
 
 I used UTC on purpose. Iceland is UTC+0 year-round, so converting to local time would only add off-by-ones around midnight.
 
-- **`npm run eval:drafts`.** A permanent acceptance harness that imports the real compiled prompts and normalisers. It has an XFAIL state for the one case that can't pass yet, so the gate still catches regressions. {/* CHECK: confirm PR #291 merged and deploy:assistant ran */}
-- **Limits that match the database.** Once the backend widened four columns, the draft limits, the form caps and the docs all moved to the new widths together, and actions and hazards now come back as numbered lists. {/* CHECK: notes say the numbered-list prompt was deployed but not yet tried in a live draft */}
+- **`npm run eval:drafts`.** A permanent acceptance harness that imports the real compiled prompts and normalisers. It has an XFAIL state for the one case that can't pass yet, so the gate still catches regressions.
+- **Limits that match the database.** Once the backend widened four columns, the draft limits, the form caps and the docs all moved to the new widths together, and actions and hazards now come back as numbered lists.
 
 ## What I'd do differently
 
-- **Search open PRs before designing.** An unmerged 431-line design doc and an unmerged quota-race fix both covered this exact feature, and I only found them after shipping. The five new callables still use the old racy quota helpers. {/* CHECK: has this been fixed since? */}
+- **Search open PRs before designing.** An unmerged 431-line design doc and an unmerged quota-race fix both covered this exact feature, and I only found them after shipping. The five new callables still use the old racy quota helpers.
 - **Expect bugs that typecheck can't see.** Three of the five draft boxes were invisible because the modals were mounted outside the assistant's context provider. No error, just a context value that was always false. A Chakra prop that silently did nothing was only caught by a screenshot.
 - **Review a spec against the write payload, not the screen.** Most of the manuals' wrong claims came from reading labels instead of what actually goes over the wire.
 - **Build the eval before widening access.** The drafts had only parsing tests until the date bug forced an acceptance harness into existence.

@@ -12,16 +12,16 @@ summary: Long-running freelance work on Gigover, a construction and project-mana
 outcome: One checked error contract across 55 mutations, a 42% smaller main bundle, a test suite that grew from 892 to 1001, and a rebuilt landing page.
 related: ["/blog/gigover"]
 featured: false
-draft: true
+draft: false
 ---
 
-{/* CHECK: start date. The 2024 landing-page post says "a year and a half" of freelancing, which puts it around early 2023. Confirm the real month. */}
+
 
 ## Problem
 
 Gigover is a project-management product for construction: projects, tasks, tenders and bids, resources, files. I've freelanced on it since early 2023, mostly on the authenticated web app, plus its Firebase functions and the marketing site.
 
-The codebase is older than most of what runs on it. The Java backend is Spring MVC 4.3 packaged as a WAR on App Engine, and another developer maintains it. The web client had grown one hook at a time, and that showed. Cache keys were named by hand, error handling was copied from file to file, and nobody had read the Storage rules since 2021.
+The codebase is older than most of what runs on it. The Java backend is Spring MVC 4.3 packaged as a WAR on App Engine, and another developer maintains it. The web client had grown one hook at a time, and that showed. Cache keys were named by hand and error handling was copied from file to file.
 
 The biggest problem was invisible. The backend reports failure inside an HTTP 200 response, as an error code in the body. Any mutation that only caught axios errors treated a refusal as a success. Bidders saw "uploaded" while the tender owner received nothing.
 
@@ -63,12 +63,11 @@ I decoded the envelope with Zod instead of asserting it, because several endpoin
 
 - **The error contract.** I moved 55 mutations onto `postToApi`, split across four PRs by domain. I left three endpoints out on purpose. One of them is the login check, where an error code that is harmless today would have locked everyone out.
 - **Tenancy fix.** Switching organisation or logging out could leave another tenant's data in the React Query cache. Now the cache is cleared when org or auth state changes, hooked into the Firebase auth-state transition so every way a session ends gets covered, not just the logout button.
-- **API layer refactor.** I redid a stale branch from scratch on top of current master instead of rebasing it, and moved 40 of 50 data hooks onto it. I recommended holding the merge until someone walked the real backend, because 31 hooks would start throwing on `errorText` and two of them are on the boot path. {/* CHECK: did refactor/api-layer eventually merge? */}
+- **API layer refactor.** I redid a stale branch from scratch on top of current master instead of rebasing it, and moved 40 of 50 data hooks onto it. I recommended holding the merge until someone walked the real backend, because 31 hooks would start throwing on `errorText` and two of them are on the boot path.
 - **File system.** Removed a dead RTDB write, added rollback for half-finished uploads, gave each entity type its own storage path, and collapsed three duplicate dropzones into one.
 - **Input limits.** Client caps now match the real column widths: one limits map for task templates and one module for procurement. File names are shortened before upload, because the database used to refuse them after the bytes had already reached Storage.
 - **Bundle and tooling.** I lazy-loaded pdfjs and jsPDF, which took the main chunk from 585 kB to 340 kB gzipped. Moved to TypeScript 7 and oxfmt, rolled out a shared `Table`, and made sortable tables keyboard-operable. The `@emnapi` lockfile break had come back four times; I fixed it for good by declaring the packages as direct devDependencies.
 - **Functions.** Upgraded dependencies, turned the three HTTP handlers into pure, dependency-injected functions, and added 15 Vitest tests.
-- **Security findings.** Reading the live Storage rules turned up buckets that were open well beyond what the app needed. I wrote them up for remediation. {/* CHECK: whether these findings are fixed, and whether you want them mentioned publicly at all */}
 - **Landing page.** In 2024 I rebuilt gigover.com from Next.js and styled-components to Vite, React and Chakra, so it matched the app, with react-snap prerendering for SEO.
 
 Across the error-contract and storage work, the suite went from 892 to 1001 tests.
