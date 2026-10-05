@@ -174,11 +174,11 @@ Quiet and solid; there is one kind that matters.
 - **Shape:** slightly softened corners (6px).
 - **Action:** solid ink ground, paper text, 500 weight, 8px × 16px. "Work with me" and "Send".
 - **Hover / Active:** brightness 110% and scale 0.98 on press, 200ms on the `--ease-out` curve.
-- **Secondary:** not a button. A plain ink link with a 1px underline at 4px offset that underlines on hover ("Case studies").
+- **Secondary:** not a button. A plain ink link with a 1px underline at 4px offset that underlines on hover ("Use cases").
 
 ### Ledger (signature)
 The almanac table, the site's reusable unit.
-- **Head:** full-weight ink rule on top, table name as Title on the left, and on the right either a count ("9 entries", tabular) or a faded link to the rest ("All case studies") that underlines on hover.
+- **Head:** full-weight ink rule on top, table name as Title on the left, and on the right either a count ("9 entries", tabular) or a faded link to the rest ("All use cases") that underlines on hover.
 - **Rows:** hairline between rows (none above the first; the head rule does that job). Date/label column in faded Label type; entry title in ink at 500 that underlines on row hover; metadata in faded ink.
 - **Empty:** an empty table still prints its hairline and a faded sentence, so absence reads as designed.
 

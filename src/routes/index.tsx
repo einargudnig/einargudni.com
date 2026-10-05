@@ -109,7 +109,7 @@ const projects = [
   },
 ];
 
-// Three is what fits a first read; /work has the rest.
+// Three is what fits a first read; /use-cases has the rest.
 const selectedWork = orderWork(publishedWork.filter((entry) => entry.featured)).slice(0, 3);
 
 const latestWriting = [
@@ -155,7 +155,7 @@ function RouteComponent() {
     },
     {
       company: "Freelance",
-      link: "/work",
+      link: "/use-cases",
       badges: ["Remote"],
       title: "Software Developer",
       logo: "",
@@ -199,21 +199,21 @@ function RouteComponent() {
               Work with me
             </Link>
             <Link
-              href="/work"
+              href="/use-cases"
               className="underline decoration-1 underline-offset-4 transition-colors hover:text-brand"
             >
-              Case studies
+              Use cases
             </Link>
           </div>
         </div>
       </section>
 
-      <Ledger title="Work" href="/work" aside="All case studies">
+      <Ledger title="Use cases" href="/use-cases" aside="All use cases">
         {selectedWork.length > 0 ? (
           <WorkList entries={selectedWork} />
         ) : (
           <LedgerEmpty>
-            The first case studies are being written up.{" "}
+            The first use cases are being written up.{" "}
             <Link href="/#contact" className="text-brand underline-offset-4 hover:underline">
               Ask me about them
             </Link>
@@ -337,7 +337,7 @@ function RouteComponent() {
 }
 
 const DESCRIPTION =
-  "Einar Gudni builds solutions that fit the systems you already have: products, integrations and AI agents. Case studies, writing and projects.";
+  "Einar Gudni builds solutions that fit the systems you already have: products, integrations and AI agents. Use cases, writing and projects.";
 
 export const Route = createFileRoute("/")({
   head: () => ({

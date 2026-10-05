@@ -5,7 +5,7 @@ import { KeyboardHint } from "@/components/keyboard-hint";
 import { EditionToggle, SunTimes } from "@/components/edition";
 
 const navItems = [
-  { path: "/work", name: "work" },
+  { path: "/use-cases", name: "use cases" },
   { path: "/blog", name: "blog" },
   { path: "/uses", name: "uses" },
 ];

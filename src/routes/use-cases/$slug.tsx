@@ -6,14 +6,14 @@ import { Link } from "@/components/ui/link";
 import { ArrowLeft, ArrowRight } from "lucide-react";
 import { ENGAGEMENT_LABEL, findWork, formatMonth, relatedTitle } from "@/lib/work";
 
-export const Route = createFileRoute("/work/$slug")({
+export const Route = createFileRoute("/use-cases/$slug")({
   loader: ({ params }) => {
     if (!findWork(params.slug)) throw notFound();
   },
   head: ({ params }) => {
     const entry = findWork(params.slug);
     if (!entry) return {};
-    const image = `/og/work-${entry.slug}.png`;
+    const image = `/og/use-cases-${entry.slug}.png`;
     return {
       meta: [
         { title: `${entry.title} — Einar Gudni` },
@@ -47,11 +47,11 @@ function CaseStudy() {
     <section className="w-full max-w-2xl space-y-8 print:space-y-6">
       <div>
         <Link
-          href="/work"
+          href="/use-cases"
           className="inline-flex items-center gap-1 text-sm text-muted-foreground hover:text-brand transition-colors"
         >
           <ArrowLeft className="h-3 w-3" aria-hidden="true" />
-          All work
+          All use cases
         </Link>
         <h1 className="mt-4 text-4xl md:text-5xl font-semibold tracking-[-0.035em] leading-[1.05] max-w-[22ch]">
           <Balancer>{entry.title}</Balancer>
@@ -61,18 +61,20 @@ function CaseStudy() {
         </p>
 
         <dl className="mt-10 border-t border-foreground text-sm">
-          <Fact label="Client">
-            {entry.clientUrl ? (
-              <a
-                href={entry.clientUrl}
-                className="underline decoration-1 underline-offset-4 hover:text-brand transition-colors"
-              >
-                {entry.client}
-              </a>
-            ) : (
-              entry.client
-            )}
-          </Fact>
+          {entry.engagement !== "personal" && (
+            <Fact label="Client">
+              {entry.clientUrl ? (
+                <a
+                  href={entry.clientUrl}
+                  className="underline decoration-1 underline-offset-4 hover:text-brand transition-colors"
+                >
+                  {entry.client}
+                </a>
+              ) : (
+                entry.client
+              )}
+            </Fact>
+          )}
           <Fact label="Engagement">{ENGAGEMENT_LABEL[entry.engagement]}</Fact>
           <Fact label="Role">{entry.role}</Fact>
           <Fact label="Started">

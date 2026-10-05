@@ -63,7 +63,7 @@ export default defineConfig({
         })),
     },
 
-    // collection for case studies: freelance and in-house work
+    // collection for use cases: freelance, in-house and personal work, served at /use-cases
     work: {
       name: "Work",
       pattern: "work/**/*.{md,mdx}",
@@ -73,7 +73,7 @@ export default defineConfig({
           slug: s.slug("work"),
           client: s.string().max(60),
           clientUrl: s.string().url().optional(),
-          engagement: s.enum(["freelance", "in-house"]),
+          engagement: s.enum(["freelance", "in-house", "personal"]),
           kind: s.enum(["agent", "product", "web"]),
           role: s.string().max(80),
           start: s.isodate(),
@@ -89,7 +89,7 @@ export default defineConfig({
           path: s.path(),
           body: s.raw(),
         })
-        .transform((data) => ({ ...data, permalink: `/work/${data.slug}` })),
+        .transform((data) => ({ ...data, permalink: `/use-cases/${data.slug}` })),
     },
 
     // collection for shared links / bookmarks

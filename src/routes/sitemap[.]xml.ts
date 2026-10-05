@@ -30,7 +30,7 @@ const staticPaths: string[] = [
   "/uses/infrastructure",
   "/uses/keyboard",
   "/uses/personal-software",
-  "/work",
+  "/use-cases",
 ];
 
 // No lastmod on static pages: the only honest value would be hand-maintained,

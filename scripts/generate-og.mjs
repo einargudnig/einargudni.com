@@ -89,8 +89,8 @@ const template = ({ title, description, date, type }) =>
           ? "Blog Post"
           : type === "deep-dive"
             ? "Deep Dive"
-            : type === "work"
-              ? "Case Study"
+            : type === "use-case"
+              ? "Use Case"
               : "",
       ),
     h(
@@ -202,9 +202,9 @@ const STATIC_PAGES = [
   },
   { name: "uses", title: "Uses", description: "My tools, setup, and tech stack", type: "page" },
   {
-    name: "work",
-    title: "Work",
-    description: "Case studies: freelance work and agent integrations",
+    name: "use-cases",
+    title: "Use cases",
+    description: "Products, integrations, AI agents and personal tools",
     type: "page",
   },
 ];
@@ -241,10 +241,10 @@ const generated = await Promise.all([
   ...work
     .filter((entry) => !entry.draft)
     .map((entry) =>
-      render(`work-${entry.slug}`, {
+      render(`use-cases-${entry.slug}`, {
         title: entry.title,
         date: entry.client,
-        type: "work",
+        type: "use-case",
       }),
     ),
 ]);

@@ -9,7 +9,7 @@
     // Assets are served before the Worker by default, which would hide these
     // paths from the Accept: text/markdown negotiation in src/start.ts.
     // Mirrors the matcher the Next middleware used.
-    "run_worker_first": ["/", "/blog/*", "/deep-dive/*", "/work/*"],
+    "run_worker_first": ["/", "/blog/*", "/deep-dive/*", "/use-cases/*"],
   },
   // www is caught first by a Redirect Rule (301 -> apex); attaching it here
   // just gives the hostname a record and a certificate.

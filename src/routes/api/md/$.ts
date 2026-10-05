@@ -5,7 +5,7 @@ const lookup = (type?: string, slug?: string): string | undefined => {
   if (!type || !slug) return undefined;
   if (type === "blog") return posts.find((p) => p.slug === slug && !p.draft)?.body;
   if (type === "deep-dive") return deepDives.find((d) => d.slug === slug && !d.draft)?.body;
-  if (type === "work") return work.find((w) => w.slug === slug && !w.draft)?.body;
+  if (type === "use-cases") return work.find((w) => w.slug === slug && !w.draft)?.body;
   return undefined;
 };
 

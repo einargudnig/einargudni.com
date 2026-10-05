@@ -13,6 +13,7 @@ export const findWork = (slug: string) => publishedWork.find((entry) => entry.sl
 export const ENGAGEMENT_LABEL: Record<WorkEntry["engagement"], string> = {
   freelance: "Freelance",
   "in-house": "In-house at Maul",
+  personal: "Personal",
 };
 
 const writingTitles = new Map<string, string>(

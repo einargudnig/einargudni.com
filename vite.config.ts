@@ -58,14 +58,14 @@ const STATIC_PATHS = [
   "/uses/infrastructure",
   "/uses/keyboard",
   "/uses/personal-software",
-  "/work",
+  "/use-cases",
 ];
 
 const contentPages = [
   ...STATIC_PATHS.map((path) => ({ path })),
   ...slugs("posts").map((slug) => ({ path: `/blog/${slug}` })),
   ...slugs("deepDives").map((slug) => ({ path: `/deep-dive/${slug}` })),
-  ...workEntries.map(({ slug }) => ({ path: `/work/${slug}` })),
+  ...workEntries.map(({ slug }) => ({ path: `/use-cases/${slug}` })),
 ];
 
 // Crawling is off (see below), so nothing else would catch a case study

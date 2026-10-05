@@ -1,7 +1,7 @@
 import { Link } from "@/components/ui/link";
 import { formatMonth, type WorkEntry } from "@/lib/work";
 
-// Case studies as almanac rows: period, entry, client. Under the title sits
+// Use cases as almanac rows: period, entry, client. Under the title sits
 // the outcome, because someone deciding whether to hire reads results first;
 // the stack waits on the case study itself.
 export function WorkList({ entries }: { entries: WorkEntry[] }) {

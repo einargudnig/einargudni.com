@@ -28,7 +28,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
 const DESIGN_CONTRACT = `THESIS: An almanac of one person's work. Entries are ruled into tables and printed in a day or night edition by the real Reykjavik sun. Refuses the dark developer portfolio of cards, chips and glow.
 OWN-WORLD: Warm paper by day, charcoal by night, warm black ink, hairline rules, a full-weight rule over each table. No accent colour; actions are marked by a solid ink button and underlines. Geist with tabular numerals; tables, never cards.
 STORY: A visitor learns he builds solutions that fit systems already running, agents among them, scans the work table, opens a case study, and writes to him.
-FIRST VIEWPORT: Masthead rule with the name left and today's Reykjavik sunrise, sunset and edition right; the statement large and left-aligned at about 20ch; a solid ink "Work with me" and a plain link to the case studies; the work table starts above the fold on desktop.
+FIRST VIEWPORT: Masthead rule with the name left and today's Reykjavik sunrise, sunset and edition right; the statement large and left-aligned at about 20ch; a solid ink "Work with me" and a plain link to the use cases; the use-case table starts above the fold on desktop.
 FORM: Almanak tables, candidate 4 of 7, seed 4502003c.
 FINISH: unreviewed and undocumented is unfinished; this build ends with the finish review, the verdict, DESIGN.md, and every shipping raster carrying its provenance`;
 

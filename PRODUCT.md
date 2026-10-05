@@ -27,7 +27,7 @@ Software developer at Maul (food delivery, Reykjavík) since 2020 and independen
 ## Capabilities and Constraints
 
 - TanStack Start on Cloudflare Workers, fully prerendered; MDX content via Velite.
-- Content types: blog posts, deep dives, learnings/notes, links, quotes, case studies (/work), static pages (about, now, someday, uses, referrals, resolutions).
+- Content types: blog posts, deep dives, learnings/notes, links, quotes, use cases (/use-cases; content in content/work/), static pages (about, now, someday, uses, referrals, resolutions).
 - Contact form posts to /api/contact (Resend).
 - Every page must also work as markdown for agents (Accept: text/markdown).
 
@@ -39,7 +39,7 @@ Software developer at Maul (food delivery, Reykjavík) since 2020 and independen
 
 ## Evidence on Hand
 
-- Seven case-study drafts in content/work/ (Gigover x3, Sterkir pabbar, Maul x3), all `draft: true` with CHECK notes pending.
+- Use-case drafts in content/work/: seven client/in-house (Gigover x3, Sterkir pabbar, Maul x3) and four personal tools (life-os, jstop, les, pdl), all `draft: true` with CHECK notes pending.
 - Blog posts and deep dives in content/.
 - No testimonials, client logos, rates or metrics beyond those in the case studies. Do not invent any.
 
