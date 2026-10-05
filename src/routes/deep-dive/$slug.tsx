@@ -38,7 +38,7 @@ function DeepDive() {
           <Balancer>{dive.title}</Balancer>
         </h1>
         <div className="flex items-center gap-3 mt-4 mb-8">
-          <div className="font-mono text-sm text-muted-foreground tabular-nums tracking-tighter">
+          <div className="text-sm text-muted-foreground tabular-nums">
             {formatBlogDate(dive.date)}
           </div>
           <div className="h-px flex-1 bg-border/50" />

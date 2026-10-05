@@ -19,7 +19,6 @@ import { FileTree } from "./blog/file-tree";
 import { Timeline } from "./blog/timeline";
 import { Heading, Subheading } from "./blog/heading";
 import { Architecture } from "./work/architecture";
-import { Alert, AlertDescription, AlertTitle } from "./ui/alert";
 import { lazy, Suspense } from "react";
 import type { ComponentPropsWithoutRef, ComponentType, ReactNode } from "react";
 
@@ -217,12 +216,9 @@ export const MDXContent = ({
     <>
       {enableTableOfContents && <TableOfContents />}
       {draft && (
-        <div className="mb-6">
-          <Alert>
-            <AlertTitle>Under construction</AlertTitle>
-            <AlertDescription>This post is not finished!</AlertDescription>
-          </Alert>
-        </div>
+        <p className="mb-6 border-y border-border py-2.5 text-sm text-muted-foreground">
+          Draft. This piece is not finished yet.
+        </p>
       )}
       <article className="mdx-content">
         <Suspense fallback={null}>

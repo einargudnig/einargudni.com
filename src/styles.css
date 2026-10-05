@@ -55,26 +55,26 @@
   --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
 
   --radius: 0.625rem;
-  --background: oklch(0.985 0.005 85);
-  --foreground: oklch(0.19 0.012 70);
-  --card: oklch(0.995 0.003 85);
-  --card-foreground: oklch(0.19 0.012 70);
-  --popover: oklch(0.995 0.003 85);
-  --popover-foreground: oklch(0.19 0.012 70);
-  --primary: oklch(0.24 0.012 70);
-  --primary-foreground: oklch(0.985 0.005 85);
-  --secondary: oklch(0.955 0.008 85);
-  --secondary-foreground: oklch(0.24 0.012 70);
-  --muted: oklch(0.955 0.008 85);
-  --muted-foreground: oklch(0.5 0.014 70);
-  --accent: oklch(0.955 0.008 85);
-  --accent-foreground: oklch(0.24 0.012 70);
-  /* Darker than the dark-theme brand: the emerald at 0.696 is ~2.5:1 on paper */
-  --brand: oklch(0.52 0.12 162.48);
-  --brand-foreground: oklch(0.985 0.005 85);
-  --destructive: oklch(0.577 0.245 27.325);
-  --border: oklch(0.9 0.01 80);
-  --input: oklch(0.9 0.01 80);
+  /* Day edition: cool paper, blue-black ink, rubric red for what you can act on */
+  --background: oklch(0.975 0.004 240);
+  --foreground: oklch(0.22 0.03 258);
+  --card: oklch(0.99 0.002 240);
+  --card-foreground: oklch(0.22 0.03 258);
+  --popover: oklch(0.99 0.002 240);
+  --popover-foreground: oklch(0.22 0.03 258);
+  --primary: oklch(0.22 0.03 258);
+  --primary-foreground: oklch(0.975 0.004 240);
+  --secondary: oklch(0.945 0.006 240);
+  --secondary-foreground: oklch(0.22 0.03 258);
+  --muted: oklch(0.945 0.006 240);
+  --muted-foreground: oklch(0.47 0.02 255);
+  --accent: oklch(0.945 0.006 240);
+  --accent-foreground: oklch(0.22 0.03 258);
+  --brand: oklch(0.53 0.19 27);
+  --brand-foreground: oklch(0.985 0.004 240);
+  --destructive: oklch(0.53 0.19 27);
+  --border: oklch(0.22 0.03 258 / 14%);
+  --input: oklch(0.22 0.03 258 / 22%);
   --ring: var(--brand);
   --chart-1: oklch(0.646 0.222 41.116);
   --chart-2: oklch(0.6 0.118 184.704);
@@ -92,25 +92,26 @@
 }
 
 .dark {
-  --background: oklch(0.155 0.006 75);
-  --foreground: oklch(0.965 0.008 85);
-  --card: oklch(0.2 0.008 75);
-  --card-foreground: oklch(0.965 0.008 85);
-  --popover: oklch(0.2 0.008 75);
-  --popover-foreground: oklch(0.965 0.008 85);
-  --primary: oklch(0.92 0.008 85);
-  --primary-foreground: oklch(0.2 0.008 75);
-  --secondary: oklch(0.26 0.008 75);
-  --secondary-foreground: oklch(0.965 0.008 85);
-  --muted: oklch(0.26 0.008 75);
-  --muted-foreground: oklch(0.72 0.012 80);
-  --accent: oklch(0.26 0.008 75);
-  --accent-foreground: oklch(0.965 0.008 85);
-  --brand: oklch(0.696 0.17 162.48);
-  --brand-foreground: oklch(0.155 0.006 75);
-  --destructive: oklch(0.704 0.191 22.216);
-  --border: oklch(0.95 0.02 85 / 10%);
-  --input: oklch(0.95 0.02 85 / 15%);
+  /* Night edition: night-blue ground, pale ink, a warmer rubric */
+  --background: oklch(0.185 0.028 258);
+  --foreground: oklch(0.93 0.012 240);
+  --card: oklch(0.215 0.03 258);
+  --card-foreground: oklch(0.93 0.012 240);
+  --popover: oklch(0.215 0.03 258);
+  --popover-foreground: oklch(0.93 0.012 240);
+  --primary: oklch(0.93 0.012 240);
+  --primary-foreground: oklch(0.185 0.028 258);
+  --secondary: oklch(0.255 0.03 258);
+  --secondary-foreground: oklch(0.93 0.012 240);
+  --muted: oklch(0.255 0.03 258);
+  --muted-foreground: oklch(0.72 0.022 245);
+  --accent: oklch(0.255 0.03 258);
+  --accent-foreground: oklch(0.93 0.012 240);
+  --brand: oklch(0.73 0.15 33);
+  --brand-foreground: oklch(0.185 0.028 258);
+  --destructive: oklch(0.73 0.15 33);
+  --border: oklch(0.93 0.012 240 / 13%);
+  --input: oklch(0.93 0.012 240 / 20%);
   --ring: var(--brand);
   --chart-1: oklch(0.488 0.243 264.376);
   --chart-2: oklch(0.696 0.17 162.48);
@@ -463,6 +464,7 @@
   }
   body {
     @apply bg-background text-foreground;
+    transition: background-color 600ms var(--ease-out), color 600ms var(--ease-out);
   }
   /* Browser surfaces carry the palette too */
   ::selection {
@@ -527,6 +529,7 @@
   --tw-prose-invert-td-borders: var(--tw-prose-td-borders);
   font-size: 1.0625rem;
   line-height: 1.7;
+  font-variant-numeric: tabular-nums;
 }
 
 .prose :where(h2):not(:where(.not-prose, .not-prose *)) {

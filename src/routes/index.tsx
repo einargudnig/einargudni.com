@@ -1,19 +1,16 @@
 import { createFileRoute } from "@tanstack/react-router";
-import type { ReactNode } from "react";
-import { Section } from "@/components/section";
-import { Badge } from "@/components/ui/badge";
-import { ProjectCard } from "@/components/project-card";
 import { GitHubContributions } from "@/components/github-contributions";
 import { WhoopStats } from "@/components/whoop-stats";
 import { LifeOsHealth } from "@/components/life-os-health";
 import { HireMe } from "@/components/hire-me";
+import { Ledger, LedgerEmpty } from "@/components/ledger";
 import { WorkList } from "@/components/work/work-list";
 import { orderWork, publishedWork } from "@/lib/work";
-import { ArrowRight, GlobeIcon } from "lucide-react";
+import { ArrowRight, ArrowUpRight } from "lucide-react";
 import { Link } from "@/components/ui/link";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { deepDives, posts } from "@/.velite";
-import { formatBlogDate } from "@/lib/utils";
+import { formatShortDate } from "@/lib/utils";
 import { contributionsQueryOptions } from "@/lib/github";
 import { whoopQueryOptions } from "@/lib/whoop";
 
@@ -88,17 +85,21 @@ const projects = [
 const selectedWork = orderWork(publishedWork.filter((entry) => entry.featured)).slice(0, 3);
 
 const latestWriting = [
-  ...posts.filter((post) => !post.draft),
-  ...deepDives.filter((dive) => !dive.draft),
+  ...posts.filter((post) => !post.draft).map((post) => ({ ...post, kind: "Post" })),
+  ...deepDives.filter((dive) => !dive.draft).map((dive) => ({ ...dive, kind: "Deep dive" })),
 ]
   .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
-  .slice(0, 4);
+  .slice(0, 5);
 
-const INTRO_LINKS = [
+const ELSEWHERE = [
   { href: "/about", title: "About", blurb: "Who, what, why" },
   { href: "/now", title: "Now", blurb: "Short-term focus" },
   { href: "/someday", title: "Someday", blurb: "Long-term focus" },
 ];
+
+const rowLink =
+  "group grid gap-x-6 gap-y-0.5 border-t border-border py-3 first:border-t-0 sm:grid-cols-[7rem_1fr_auto]";
+const rowTitle = "underline-offset-4 decoration-1 group-hover:text-brand group-hover:underline";
 
 function RouteComponent() {
   const { data: whoop } = useSuspenseQuery(whoopQueryOptions);
@@ -145,178 +146,164 @@ function RouteComponent() {
   ];
 
   return (
-    <div className="w-full space-y-20">
-      <section className="space-y-6">
-        <h1 className="text-5xl md:text-7xl font-semibold tracking-[-0.045em] leading-[0.9]">
-          Einar Gudni
+    <div className="space-y-20 md:space-y-24">
+      <section className="space-y-8">
+        <h1 className="max-w-[18ch] text-[2.75rem] font-semibold leading-[1.02] tracking-[-0.04em] text-balance md:text-7xl">
+          I integrate AI agents into systems that already exist.
         </h1>
-        <p className="max-w-[24ch] text-2xl md:text-3xl font-medium tracking-tight leading-[1.15] text-balance">
-          I integrate AI agents into systems that already exist
-          <span className="text-brand">.</span>
-        </p>
-        <p className="max-w-[58ch] text-muted-foreground leading-relaxed text-pretty">
-          Assistants inside products, tool-calling over your own APIs, and the evals and guardrails
-          that make them safe to ship. Software developer at Maul and independent contractor.
-        </p>
-        <div className="flex flex-wrap items-center gap-3 pt-1">
-          <Link
-            href="/work"
-            className="inline-flex items-center gap-1.5 rounded-md bg-foreground px-4 py-2 text-sm font-medium text-background transition-[background-color,transform] duration-200 ease-[var(--ease-out)] hover:bg-brand active:scale-[0.98]"
-          >
-            See the case studies
-            <ArrowRight className="h-3.5 w-3.5" aria-hidden="true" />
-          </Link>
-          <Link
-            href="/#contact"
-            className="inline-flex items-center rounded-md border border-border px-4 py-2 text-sm font-medium transition-colors hover:border-brand/50 hover:text-brand"
-          >
-            Work with me
-          </Link>
-        </div>
-        <p className="flex flex-wrap items-center gap-x-3 gap-y-1 pt-2 font-mono text-xs text-muted-foreground">
-          <span>
-            <span className="italic font-semibold text-foreground">Curious</span>, Tinkerer, Late
-            bloomer & Nerd
-          </span>
-          <a
-            className="inline-flex items-center gap-x-1.5 hover:text-brand transition-colors"
-            href="https://www.google.com/maps/place/Reykjavík"
-            target="_blank"
-            rel="noreferrer"
-          >
-            <GlobeIcon className="h-3 w-3" aria-hidden="true" />
-            Reykjavík, Iceland
-          </a>
-        </p>
-        <nav aria-label="About me" className="grid grid-cols-3 gap-2 pt-4 sm:gap-4">
-          {INTRO_LINKS.map(({ href, title, blurb }) => (
+        <div className="grid gap-6 md:grid-cols-[1fr_auto] md:items-end md:gap-10">
+          <div className="max-w-[54ch] space-y-3 text-lg leading-relaxed text-muted-foreground text-pretty">
+            <p>
+              Assistants inside products, tool-calling over your own APIs, and the evals and
+              guardrails that make them safe to ship. Software developer at Maul and independent
+              contractor.
+            </p>
+            <p className="text-base">Curious, Tinkerer, Late bloomer & Nerd.</p>
+          </div>
+          <div className="flex items-center gap-5">
             <Link
-              key={href}
-              href={href}
-              className="group rounded-md border border-border/60 px-3 py-2.5 transition-colors hover:border-brand/40 hover:bg-muted/40"
+              href="/#contact"
+              className="rounded-sm bg-brand px-4 py-2 font-medium text-brand-foreground transition-[filter,transform] duration-200 ease-[var(--ease-out)] hover:brightness-110 active:scale-[0.98]"
             >
-              <span className="block font-medium group-hover:text-brand transition-colors">
-                {title}
-              </span>
-              <span className="block text-xs text-muted-foreground sm:text-sm">{blurb}</span>
+              Work with me
             </Link>
-          ))}
-        </nav>
+            <Link
+              href="/work"
+              className="underline decoration-1 underline-offset-4 transition-colors hover:text-brand"
+            >
+              Case studies
+            </Link>
+          </div>
+        </div>
       </section>
 
-      {selectedWork.length > 0 && (
-        <Section>
-          <SectionHeading href="/work" more="all case studies">
-            Selected work
-          </SectionHeading>
+      <Ledger title="Work" href="/work" aside="All case studies">
+        {selectedWork.length > 0 ? (
           <WorkList entries={selectedWork} />
-        </Section>
-      )}
+        ) : (
+          <LedgerEmpty>
+            The first case studies are being written up.{" "}
+            <Link href="/#contact" className="text-brand underline-offset-4 hover:underline">
+              Ask me about them
+            </Link>
+            .
+          </LedgerEmpty>
+        )}
+      </Ledger>
 
-      {latestWriting.length > 0 && (
-        <Section>
-          <SectionHeading href="/blog" more="all posts">
-            Writing
-          </SectionHeading>
-          <ul className="divide-y divide-border/50">
-            {latestWriting.map((entry) => (
-              <li key={entry.permalink}>
+      <Ledger title="Writing" href="/blog" aside="All writing">
+        <ol>
+          {latestWriting.map((entry) => (
+            <li key={entry.permalink}>
+              <Link href={entry.permalink} className={rowLink}>
+                <time dateTime={entry.date} className="text-sm text-muted-foreground tabular-nums">
+                  {formatShortDate(entry.date)}
+                </time>
+                <span className={rowTitle}>{entry.title}</span>
+                <span className="text-sm text-muted-foreground">{entry.kind}</span>
+              </Link>
+            </li>
+          ))}
+        </ol>
+      </Ledger>
+
+      <Ledger title="Projects" aside={`${projects.length} entries`}>
+        <ol>
+          {projects.map((project) => {
+            const external = project.external !== false;
+            return (
+              <li key={project.title}>
                 <Link
-                  href={entry.permalink}
-                  className="group flex items-baseline justify-between gap-4 py-3 px-2 -mx-2 rounded-md transition-colors hover:bg-muted/40"
+                  href={project.href}
+                  {...(external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
+                  className="group grid gap-x-6 gap-y-1 border-t border-border py-3 sm:grid-cols-[10rem_1fr_auto] first:border-t-0"
                 >
-                  <span className="group-hover:text-brand transition-colors">{entry.title}</span>
-                  <span className="shrink-0 font-mono text-xs tabular-nums text-muted-foreground">
-                    {formatBlogDate(entry.date)}
+                  <span className="font-medium">
+                    <span className={rowTitle}>{project.title}</span>
+                  </span>
+                  <span className="max-w-[62ch] text-sm text-muted-foreground leading-relaxed text-pretty sm:pt-0.5">
+                    {project.description}
+                  </span>
+                  <span className="hidden text-muted-foreground sm:block sm:pt-0.5">
+                    {external ? (
+                      <ArrowUpRight className="h-4 w-4" aria-label="Opens in a new tab" />
+                    ) : (
+                      <ArrowRight className="h-4 w-4" aria-hidden="true" />
+                    )}
                   </span>
                 </Link>
               </li>
-            ))}
-          </ul>
-        </Section>
-      )}
+            );
+          })}
+        </ol>
+      </Ledger>
 
-      <Section>
-        <SectionHeading>Projects</SectionHeading>
-        <div className="grid md:grid-cols-2 gap-3 stagger-list">
-          {projects.map((project) => (
-            <ProjectCard key={project.title} {...project} />
-          ))}
-        </div>
-      </Section>
-
-      <Section id="work">
-        <SectionHeading>Experience</SectionHeading>
-        <div className="divide-y divide-border/50">
-          {work.map((job) => (
-            <div key={job.company} className="py-4 first:pt-0">
-              <div className="flex items-center justify-between gap-x-2 text-base">
-                <h3 className="inline-flex items-center gap-x-2 font-semibold leading-none">
-                  <Link className="hover:text-brand transition-colors" href={job.link}>
+      <div className="grid gap-20 md:grid-cols-2 md:gap-10">
+        <Ledger title="Experience" id="work">
+          <ol>
+            {work.map((job) => (
+              <li
+                key={job.company}
+                className="grid grid-cols-[7rem_1fr] gap-x-6 border-t border-border py-3 first:border-t-0"
+              >
+                <span className="text-sm text-muted-foreground tabular-nums">
+                  {job.start}–{job.end === "Present" ? "" : job.end}
+                </span>
+                <span>
+                  <Link
+                    href={job.link}
+                    className="font-medium underline-offset-4 hover:text-brand hover:underline"
+                  >
                     {job.company}
                   </Link>
-                  {job.badges.map((badge) => (
-                    <Badge variant="secondary" className="text-xs" key={badge}>
-                      {badge}
-                    </Badge>
-                  ))}
-                </h3>
-                <div className="text-sm font-mono tabular-nums text-muted-foreground">
-                  {job.start} – {job.end}
-                </div>
-              </div>
-              <p className="text-sm text-muted-foreground mt-1">{job.title}</p>
-              <p className="mt-2 font-mono text-xs text-muted-foreground">
-                {job.stack.join(" · ")}
-              </p>
-            </div>
-          ))}
+                  <span className="block text-sm text-muted-foreground">
+                    {job.title}
+                    {job.badges.length > 0 && `, ${job.badges.join(", ").toLowerCase()}`}
+                  </span>
+                </span>
+              </li>
+            ))}
+          </ol>
+        </Ledger>
+
+        <Ledger title="Elsewhere">
+          <ol>
+            {ELSEWHERE.map(({ href, title, blurb }) => (
+              <li key={href}>
+                <Link
+                  href={href}
+                  className="group grid grid-cols-[7rem_1fr] gap-x-6 border-t border-border py-3 first:border-t-0"
+                >
+                  <span className={`font-medium ${rowTitle}`}>{title}</span>
+                  <span className="text-sm text-muted-foreground sm:pt-0.5">{blurb}</span>
+                </Link>
+              </li>
+            ))}
+          </ol>
+        </Ledger>
+      </div>
+
+      <Ledger title="Health" aside="Whoop">
+        <div className="space-y-6 pt-4">
+          <WhoopStats data={whoop} />
+          <LifeOsHealth data={whoop} />
         </div>
-      </Section>
+      </Ledger>
 
-      <Section>
-        <SectionHeading>
-          Health <span className="font-normal text-muted-foreground">· Whoop</span>
-        </SectionHeading>
-        <WhoopStats data={whoop} />
-        <LifeOsHealth data={whoop} />
-      </Section>
+      <Ledger title="Activity" aside="GitHub">
+        <div className="pt-4">
+          <GitHubContributions username="einargudnig" />
+        </div>
+      </Ledger>
 
-      <Section>
-        <SectionHeading>Activity</SectionHeading>
-        <GitHubContributions username="einargudnig" />
-      </Section>
-
-      <Section className="scroll-mt-8" id="contact">
-        <SectionHeading>Work with me</SectionHeading>
-        <HireMe />
-      </Section>
+      <Ledger title="Work with me" id="contact">
+        <div className="pt-4">
+          <HireMe />
+        </div>
+      </Ledger>
     </div>
   );
 }
-
-const SectionHeading = ({
-  children,
-  href,
-  more,
-}: {
-  children: ReactNode;
-  href?: string;
-  more?: string;
-}) => (
-  <div className="flex items-baseline justify-between gap-4 border-b border-border/50 pb-3 mb-1">
-    <h2 className="text-2xl font-semibold tracking-tight">{children}</h2>
-    {href && more && (
-      <Link
-        href={href}
-        className="inline-flex items-center gap-1 font-mono text-xs text-muted-foreground hover:text-brand transition-colors"
-      >
-        {more}
-        <ArrowRight className="h-3 w-3" aria-hidden="true" />
-      </Link>
-    )}
-  </div>
-);
 
 const DESCRIPTION =
   "Einar Gudni integrates AI agents into systems that already exist. Case studies, writing and projects.";

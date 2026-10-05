@@ -16,27 +16,27 @@ interface ArchitectureProps {
 // system that already exists", and this is that system. Stacks on phones.
 export function Architecture({ nodes, caption }: ArchitectureProps) {
   return (
-    <figure className="not-prose my-10 rounded-lg border border-border/60 bg-card/60 p-4 md:p-5">
+    <figure className="not-prose my-10 border-y border-foreground py-5">
       <ol className="flex flex-col items-stretch gap-1 md:flex-row md:items-stretch md:gap-0">
         {nodes.map((node, index) => (
           <Fragment key={node.label}>
             {index > 0 && (
               <li
                 aria-hidden="true"
-                className="flex items-center justify-center text-brand md:px-1.5"
+                className="flex items-center justify-center text-muted-foreground md:px-1.5"
               >
                 <ArrowDown className="h-4 w-4 md:hidden" strokeWidth={1.75} />
                 <ArrowRight className="hidden h-4 w-4 md:block" strokeWidth={1.75} />
               </li>
             )}
-            <li className="flex-1 rounded-md border border-border/60 bg-background px-3 py-2.5">
+            <li className="flex-1 rounded-sm border border-border px-3 py-2.5">
               <p className="flex items-center gap-2 font-mono text-[13px] font-medium leading-tight">
                 <span
                   aria-hidden="true"
                   className={
                     index === 0 || index === nodes.length - 1
-                      ? "h-1.5 w-1.5 shrink-0 rounded-full bg-brand"
-                      : "h-1.5 w-1.5 shrink-0 rounded-full border border-brand"
+                      ? "h-1.5 w-1.5 shrink-0 rounded-full bg-foreground"
+                      : "h-1.5 w-1.5 shrink-0 rounded-full border border-foreground"
                   }
                 />
                 {node.label}

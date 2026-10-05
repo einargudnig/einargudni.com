@@ -4,7 +4,7 @@ import type { ReactNode } from "react";
 import { BirthdayConfetti } from "@/components/birthday-confetti";
 import { KeyboardNav } from "@/components/keyboard-nav";
 import { Navbar } from "@/components/navbar";
-import { ThemeProvider } from "@/components/theme-provider";
+import { editionScript } from "@/components/edition";
 import { WebMCP } from "@/components/web-mcp";
 import appCss from "../styles.css?url";
 
@@ -24,6 +24,14 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
   component: RootComponent,
 });
 
+// Kept in the emitted markup so the build can be audited against it.
+const DESIGN_CONTRACT = `THESIS: An almanac of one person's work. Entries are ruled into tables and printed in a day or night edition by the real Reykjavik sun. Refuses the dark developer portfolio of cards, chips and glow.
+OWN-WORLD: Cool paper by day, night-blue by night, blue-black ink, hairline rules, a full-weight rule over each table. One rubric red, reserved for what you can act on. Geist with tabular numerals; tables, never cards.
+STORY: A visitor learns he puts agents into systems that already run, scans the work table, opens a case study, and writes to him.
+FIRST VIEWPORT: Masthead rule with the name left and today's Reykjavik sunrise, sunset and edition right; the statement large and left-aligned at about 20ch; a rubric "Work with me" and a plain link to the case studies; the work table starts above the fold on desktop.
+FORM: Almanak tables, candidate 4 of 7, seed 4502003c.
+FINISH: unreviewed and undocumented is unfinished; this build ends with the finish review, the verdict, DESIGN.md, and every shipping raster carrying its provenance`;
+
 function RootComponent() {
   return (
     <RootDocument>
@@ -37,29 +45,29 @@ function RootDocument({ children }: Readonly<{ children: ReactNode }>) {
     <html lang="en" suppressHydrationWarning>
       <head>
         <HeadContent />
+        <script dangerouslySetInnerHTML={{ __html: editionScript }} />
       </head>
-      <body className="antialiased mb-10 lg:mx-auto">
-        <ThemeProvider attribute="class" defaultTheme="dark">
-          <WebMCP />
-          <BirthdayConfetti />
-          <main className="relative mx-auto mt-8 flex min-h-[calc(100dvh-4.5rem)] max-w-4xl flex-col overflow-auto px-6 md:px-8">
-            <Navbar />
-            <div className="flex-1">{children}</div>
-            <footer className="mt-16 mb-8 border-t border-border/50 pt-6 flex items-center justify-between text-xs text-muted-foreground font-mono">
-              <span>don't half ass it</span>
-              <span className="flex items-center gap-4">
-                <a href="https://github.com/einargudnig" className="hover:text-brand transition-colors">
-                  github
-                </a>
-                <a href="https://x.com/einargudni" className="hover:text-brand transition-colors">
-                  x
-                </a>
-                <span className="tabular-nums">{new Date().getFullYear()}</span>
-              </span>
-            </footer>
-            <KeyboardNav />
-          </main>
-        </ThemeProvider>
+      <body className="antialiased">
+        <div hidden dangerouslySetInnerHTML={{ __html: `<!--\n${DESIGN_CONTRACT}\n-->` }} />
+        <WebMCP />
+        <BirthdayConfetti />
+        <main className="relative mx-auto flex min-h-dvh max-w-4xl flex-col px-5 pt-6 md:px-8 md:pt-10">
+          <Navbar />
+          <div className="flex-1">{children}</div>
+          <footer className="mt-24 mb-8 grid grid-cols-[1fr_auto] gap-4 border-t border-foreground pt-3 text-sm text-muted-foreground">
+            <span>Don't half ass it.</span>
+            <span className="flex items-center gap-4 tabular-nums">
+              <a href="https://github.com/einargudnig" className="hover:text-foreground transition-colors">
+                GitHub
+              </a>
+              <a href="https://x.com/einargudni" className="hover:text-foreground transition-colors">
+                X
+              </a>
+              <span>{new Date().getFullYear()}</span>
+            </span>
+          </footer>
+          <KeyboardNav />
+        </main>
         <Scripts />
       </body>
     </html>

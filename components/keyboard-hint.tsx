@@ -70,7 +70,7 @@ export function KeyboardHint() {
         )}
         aria-label="Keyboard shortcuts"
       >
-        <Keyboard size={20} strokeWidth={1.5} />
+        <Keyboard size={16} strokeWidth={1.5} />
       </button>
 
       {/* First visit hint */}

@@ -1,3 +1,4 @@
+import type { ReactNode } from "react";
 import { createFileRoute, notFound } from "@tanstack/react-router";
 import { Balancer } from "react-wrap-balancer";
 import { MDXContent } from "@/components/mdx-content";
@@ -29,10 +30,11 @@ export const Route = createFileRoute("/work/$slug")({
   component: CaseStudy,
 });
 
-const Fact = ({ label, children }: { label: string; children: React.ReactNode }) => (
-  <div>
-    <dt className="font-mono text-xs text-muted-foreground">{label}</dt>
-    <dd className="mt-0.5 text-sm">{children}</dd>
+// One ruled row of the facts table: label in the first column, value after.
+const Fact = ({ label, children }: { label: string; children: ReactNode }) => (
+  <div className="grid grid-cols-[7rem_1fr] gap-x-6 border-b border-border py-2.5">
+    <dt className="text-muted-foreground">{label}</dt>
+    <dd>{children}</dd>
   </div>
 );
 
@@ -46,7 +48,7 @@ function CaseStudy() {
       <div>
         <Link
           href="/work"
-          className="inline-flex items-center gap-1 font-mono text-xs text-muted-foreground hover:text-brand transition-colors"
+          className="inline-flex items-center gap-1 text-sm text-muted-foreground hover:text-brand transition-colors"
         >
           <ArrowLeft className="h-3 w-3" aria-hidden="true" />
           All work
@@ -58,10 +60,13 @@ function CaseStudy() {
           {entry.summary}
         </p>
 
-        <dl className="mt-8 grid grid-cols-2 gap-x-4 gap-y-4 rounded-lg border border-border/60 bg-card/60 p-4 md:p-5 sm:grid-cols-4">
+        <dl className="mt-10 border-t border-foreground text-sm">
           <Fact label="Client">
             {entry.clientUrl ? (
-              <a href={entry.clientUrl} className="hover:text-brand transition-colors">
+              <a
+                href={entry.clientUrl}
+                className="underline decoration-1 underline-offset-4 hover:text-brand transition-colors"
+              >
                 {entry.client}
               </a>
             ) : (
@@ -71,16 +76,14 @@ function CaseStudy() {
           <Fact label="Engagement">{ENGAGEMENT_LABEL[entry.engagement]}</Fact>
           <Fact label="Role">{entry.role}</Fact>
           <Fact label="Period">
-            <span className="font-mono tabular-nums">{formatPeriod(entry)}</span>
+            <span className="tabular-nums">{formatPeriod(entry)}</span>
           </Fact>
-          <div className="col-span-2 sm:col-span-4 border-t border-border/50 pt-4">
-            <dt className="font-mono text-xs text-brand">Outcome</dt>
-            <dd className="mt-1 text-base font-medium leading-snug text-pretty">{entry.outcome}</dd>
-          </div>
-          <div className="col-span-2 sm:col-span-4">
-            <dt className="sr-only">Stack</dt>
-            <dd className="font-mono text-xs text-muted-foreground">{entry.stack.join(" · ")}</dd>
-          </div>
+          <Fact label="Stack">
+            <span className="text-muted-foreground">{entry.stack.join(", ")}</span>
+          </Fact>
+          <Fact label="Outcome">
+            <span className="text-base font-medium leading-snug text-pretty">{entry.outcome}</span>
+          </Fact>
         </dl>
       </div>
 
@@ -88,24 +91,24 @@ function CaseStudy() {
         <MDXContent path={entry.path} draft={entry.draft} />
       </article>
 
-      <aside className="rounded-lg border border-border/60 p-5 md:p-6">
-        <p className="text-lg font-semibold tracking-tight">Building something like this?</p>
+      <aside className="border-t border-foreground pt-3">
+        <p className="font-semibold tracking-tight">Building something like this?</p>
         <p className="mt-1 max-w-[52ch] text-muted-foreground leading-relaxed">
           If you have a system that could use an agent, or an agent that needs to be trusted in
           production, tell me about it.
         </p>
         <Link
           href="/#contact"
-          className="mt-4 inline-flex items-center gap-1.5 rounded-md bg-foreground px-4 py-2 text-sm font-medium text-background transition-[background-color,transform] duration-200 ease-[var(--ease-out)] hover:bg-brand active:scale-[0.98]"
+          className="mt-4 inline-flex items-center gap-1.5 rounded-sm bg-brand px-4 py-2 font-medium text-brand-foreground transition-[filter,transform] duration-200 ease-[var(--ease-out)] hover:brightness-110 active:scale-[0.98]"
         >
-          Get in touch
-          <ArrowRight className="h-3.5 w-3.5" aria-hidden="true" />
+          Work with me
+          <ArrowRight className="h-4 w-4" aria-hidden="true" />
         </Link>
       </aside>
 
       {entry.related.length > 0 && (
-        <aside className="border-t border-border/50 pt-6">
-          <h2 className="font-mono text-xs text-muted-foreground">Related writing</h2>
+        <aside className="border-t border-border pt-3">
+          <h2 className="text-sm text-muted-foreground">Related writing</h2>
           <ul className="mt-2 space-y-1">
             {entry.related.map((path) => (
               <li key={path}>

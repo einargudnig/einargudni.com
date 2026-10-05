@@ -1,4 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { Ledger, LedgerEmpty } from "@/components/ledger";
 import { WorkList } from "@/components/work/work-list";
 import { ENGAGEMENT_LABEL, orderWork, publishedWork, type WorkEntry } from "@/lib/work";
 
@@ -9,29 +10,29 @@ const GROUPS: Array<{ engagement: WorkEntry["engagement"]; blurb: string }> = [
 
 function RouteComponent() {
   return (
-    <section className="w-full max-w-2xl space-y-10 mb-8">
-      <div className="space-y-3">
+    <section className="w-full space-y-16 mb-8">
+      <div className="max-w-2xl space-y-4">
         <h1 className="text-4xl md:text-5xl font-semibold tracking-[-0.04em] leading-[1.05] text-balance">
           Work
         </h1>
-        <p className="text-muted-foreground leading-relaxed">
+        <p className="text-lg text-muted-foreground leading-relaxed text-pretty">
           Case studies, mostly about putting agents into systems that already exist and making them
           trustworthy there. Each one covers the problem, the constraints, the architecture, what
           shipped and what I'd do differently.
         </p>
       </div>
 
+      {publishedWork.length === 0 && (
+        <LedgerEmpty>The first case studies are being written up.</LedgerEmpty>
+      )}
+
       {GROUPS.map(({ engagement, blurb }) => {
         const entries = orderWork(publishedWork.filter((entry) => entry.engagement === engagement));
         if (entries.length === 0) return null;
         return (
-          <div key={engagement} className="space-y-3">
-            <div>
-              <h2 className="text-xl font-bold">{ENGAGEMENT_LABEL[engagement]}</h2>
-              <p className="text-sm text-muted-foreground">{blurb}</p>
-            </div>
+          <Ledger key={engagement} title={ENGAGEMENT_LABEL[engagement]} aside={blurb}>
             <WorkList entries={entries} />
-          </div>
+          </Ledger>
         );
       })}
     </section>

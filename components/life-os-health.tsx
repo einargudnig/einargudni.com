@@ -14,15 +14,17 @@ export function LifeOsHealth({ data }: { data: WhoopSnapshot }) {
 
   return (
     <div className="mt-5 space-y-3 border-t border-border/50 pt-4">
-      <p className="font-mono text-xs text-muted-foreground tabular-nums">
+      <p className="text-xs text-muted-foreground tabular-nums">
         {trends.days}-day avg · {summary.join(" · ")}
       </p>
       {insight.enough && insight.sleepDelta != null && (
         <p className="max-w-[65ch] text-sm leading-relaxed text-muted-foreground">
           Sleep is my recovery lever: nights of 7h+ average{" "}
-          <span className="font-medium text-brand">{insight.afterGood}</span> recovery vs{" "}
-          <span className="font-medium text-brand">{insight.afterShort}</span> after short ones — a{" "}
-          <span className="font-mono">
+          <span className="font-medium text-foreground tabular-nums">{insight.afterGood}</span>{" "}
+          recovery vs{" "}
+          <span className="font-medium text-foreground tabular-nums">{insight.afterShort}</span>{" "}
+          after short ones — a{" "}
+          <span className="tabular-nums">
             {insight.sleepDelta > 0 ? "+" : ""}
             {insight.sleepDelta}
           </span>{" "}

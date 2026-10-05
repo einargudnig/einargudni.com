@@ -3,7 +3,6 @@ import { Link } from "@/components/ui/link";
 import { learnings, links } from "@/.velite";
 import { MDXContent } from "@/components/mdx-content";
 import { formatBlogDate } from "@/lib/utils";
-import { Button } from "@/components/ui/button";
 import { ArrowTopRightIcon } from "@radix-ui/react-icons";
 import { NotesTabs } from "@/components/notes-tabs";
 
@@ -24,24 +23,28 @@ function RouteComponent() {
 
       <NotesTabs
         notes={
-          <div className="divide-y divide-border/50 stagger-list">
+          <div className="divide-y divide-border">
             {sortedLearnings.map((item) => (
               <div key={`${item.topic}-${item.date}`} className="py-8 first:pt-0">
                 <article className="prose dark:prose-invert mb-3">
                   <header className="mb-4">
                     <h2 className="text-xl font-semibold">{item.title}</h2>
                     <div className="text-sm text-muted-foreground flex items-center gap-2">
-                      <span className="text-brand font-mono">{item.topic}</span>
+                      <span className="text-foreground">{item.topic}</span>
                       <span>·</span>
-                      <time className="font-mono tabular-nums" dateTime={item.date}>
+                      <time className="tabular-nums" dateTime={item.date}>
                         {formatBlogDate(item.date)}
                       </time>
                       {item.deepDiveSlug && (
-                        <Link href={`/deep-dive/${item.deepDiveSlug}`} className="no-underline">
-                          <Button size="sm" variant="outline">
-                            Deep Dive
-                          </Button>
-                        </Link>
+                        <>
+                          <span>·</span>
+                          <Link
+                            href={`/deep-dive/${item.deepDiveSlug}`}
+                            className="text-foreground underline decoration-1 underline-offset-4 hover:text-brand"
+                          >
+                            Deep dive
+                          </Link>
+                        </>
                       )}
                     </div>
                   </header>
@@ -52,7 +55,7 @@ function RouteComponent() {
           </div>
         }
         links={
-          <div className="divide-y divide-border/50 stagger-list">
+          <div className="divide-y divide-border">
             {sortedLinks.map((item) => (
               <div key={item.url} className="py-6 first:pt-0">
                 <a
@@ -71,14 +74,14 @@ function RouteComponent() {
                         {item.description}
                       </p>
                       <div className="flex items-center gap-2 text-xs text-muted-foreground/70">
-                        <time className="font-mono tabular-nums" dateTime={item.date}>
+                        <time className="tabular-nums" dateTime={item.date}>
                           {formatBlogDate(item.date)}
                         </time>
                         {item.tags && item.tags.length > 0 && (
                           <>
                             <span>·</span>
                             {item.tags.map((tag) => (
-                              <span key={tag} className="text-brand/70 font-mono">
+                              <span key={tag} className="text-muted-foreground">
                                 {tag}
                               </span>
                             ))}

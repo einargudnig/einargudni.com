@@ -1,41 +1,39 @@
 import { Link } from "@/components/ui/link";
 import { formatPeriod, type WorkEntry } from "@/lib/work";
 
-// Outcome before stack: someone deciding whether to hire reads results first,
-// so the stack is a single quiet line rather than a wall of chips.
+// Case studies as almanac rows: period, entry, client. Under the title sits
+// the outcome, because someone deciding whether to hire reads results first;
+// the stack waits on the case study itself.
 export function WorkList({ entries }: { entries: WorkEntry[] }) {
   return (
-    <div className="divide-y divide-border/50 stagger-list">
+    <ol>
       {entries.map((entry) => (
-        <Link
-          key={entry.slug}
-          href={entry.permalink}
-          className="group block py-5 px-3 -mx-3 rounded-md transition-colors hover:bg-muted/40"
-        >
-          <div className="flex items-baseline justify-between gap-x-3">
-            <h3 className="text-lg font-semibold tracking-tight group-hover:text-brand transition-colors">
-              {entry.title}
-            </h3>
-            <span className="shrink-0 font-mono text-xs tabular-nums text-muted-foreground">
+        <li key={entry.slug} className="border-t border-border first:border-t-0">
+          <Link
+            href={entry.permalink}
+            className="group grid gap-x-6 gap-y-1 py-4 sm:grid-cols-[7rem_1fr_12rem]"
+          >
+            <span className="text-sm text-muted-foreground tabular-nums sm:pt-0.5">
               {formatPeriod(entry)}
             </span>
-          </div>
-          <p className="mt-1 font-mono text-xs text-muted-foreground">
-            {entry.client}
-            {entry.kind === "agent" && <span className="text-brand"> · agents</span>}
-            {entry.draft && <span> · draft</span>}
-          </p>
-          <p className="mt-3 max-w-[62ch] text-muted-foreground leading-relaxed text-pretty">
-            {entry.summary}
-          </p>
-          <p className="mt-3 max-w-[62ch] border-l border-brand/60 pl-3 text-sm leading-relaxed">
-            {entry.outcome}
-          </p>
-          <p className="mt-3 font-mono text-xs text-muted-foreground/80">
-            {entry.stack.join(" · ")}
-          </p>
-        </Link>
+            <span className="min-w-0">
+              <span className="block font-medium underline-offset-4 decoration-1 group-hover:text-brand group-hover:underline">
+                {entry.title}
+              </span>
+              <span className="mt-1 block max-w-[60ch] text-sm text-muted-foreground leading-relaxed text-pretty">
+                {entry.outcome}
+              </span>
+            </span>
+            <span className="text-sm text-muted-foreground sm:pt-0.5 sm:text-right">
+              {entry.client}
+              {entry.kind === "agent" && (
+                <span className="whitespace-nowrap text-foreground"> · agents</span>
+              )}
+              {entry.draft && <span className="whitespace-nowrap"> · draft</span>}
+            </span>
+          </Link>
+        </li>
       ))}
-    </div>
+    </ol>
   );
 }

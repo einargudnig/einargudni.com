@@ -2,7 +2,6 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { Link } from "@/components/ui/link";
 
 const EMAIL = "einargudnig@gmail.com";
 
@@ -41,40 +40,39 @@ export function HireMe() {
   }
 
   return (
-    <div className="rounded-lg border border-border/50 p-5 md:p-6">
-      <span className="inline-flex items-center gap-x-2 font-mono text-xs text-muted-foreground">
-        <span className="relative flex h-1.5 w-1.5">
-          <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-brand opacity-60 motion-reduce:hidden" />
-          <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-brand" />
-        </span>
-        Open for opportunities
-      </span>
-
-      <p className="mt-3 text-sm text-muted-foreground leading-relaxed">
-        I integrate AI agents into systems that already exist: assistants inside products,
-        tool-calling over your own APIs, and the evals and guardrails that make them safe to ship.
-        Plus the plain product engineering around it.{" "}
-        <Link
-          href="/work"
-          className="underline underline-offset-4 hover:text-brand transition-colors"
-        >
-          See the case studies
-        </Link>
-        .
-      </p>
+    <div className="grid gap-8 md:grid-cols-[1fr_1.4fr] md:gap-10">
+      <div className="space-y-3">
+        <p className="inline-flex items-center gap-x-2 text-sm">
+          <span aria-hidden="true" className="h-2 w-2 rounded-full bg-foreground" />
+          Open for opportunities
+        </p>
+        <p className="max-w-[44ch] text-muted-foreground leading-relaxed text-pretty">
+          Tell me about the system and where an agent could help. I also take on the plain product
+          engineering around it.
+        </p>
+        <p className="text-sm text-muted-foreground">
+          Or write to{" "}
+          <a
+            href={`mailto:${EMAIL}`}
+            className="text-foreground underline decoration-1 underline-offset-4 transition-colors hover:text-brand"
+          >
+            {EMAIL}
+          </a>
+        </p>
+      </div>
 
       {status === "sent" ? (
-        <div className="mt-5 flex flex-wrap items-center justify-between gap-3">
-          <p className="text-sm text-brand">Thanks — that landed in my inbox. I'll reply soon.</p>
+        <div className="flex flex-wrap items-center justify-between gap-3 self-start">
+          <p className="text-sm">Thanks — that landed in my inbox. I'll reply soon.</p>
           <Button variant="ghost" size="sm" onClick={() => setStatus("idle")}>
             Send another
           </Button>
         </div>
       ) : (
-        <form onSubmit={onSubmit} className="mt-5 space-y-3">
+        <form onSubmit={onSubmit} className="space-y-3">
           <div className="grid gap-3 sm:grid-cols-2">
             <label className="space-y-1.5">
-              <span className="font-mono text-xs text-muted-foreground">Name</span>
+              <span className="text-sm text-muted-foreground">Name</span>
               <Input
                 name="name"
                 required
@@ -84,7 +82,7 @@ export function HireMe() {
               />
             </label>
             <label className="space-y-1.5">
-              <span className="font-mono text-xs text-muted-foreground">Email</span>
+              <span className="text-sm text-muted-foreground">Email</span>
               <Input
                 name="email"
                 type="email"
@@ -97,7 +95,7 @@ export function HireMe() {
           </div>
 
           <label className="block space-y-1.5">
-            <span className="font-mono text-xs text-muted-foreground">Message</span>
+            <span className="text-sm text-muted-foreground">Message</span>
             <Textarea
               name="message"
               required
@@ -118,17 +116,12 @@ export function HireMe() {
             className="sr-only"
           />
 
-          <div className="flex flex-wrap items-center justify-between gap-3 pt-1">
-            <p className="font-mono text-xs text-muted-foreground">
-              or{" "}
-              <a
-                href={`mailto:${EMAIL}`}
-                className="hover:text-brand transition-colors underline underline-offset-4"
-              >
-                {EMAIL}
-              </a>
-            </p>
-            <Button type="submit" size="sm" disabled={status === "sending"}>
+          <div className="flex items-center justify-end pt-1">
+            <Button
+              type="submit"
+              disabled={status === "sending"}
+              className="rounded-sm bg-brand text-brand-foreground hover:bg-brand hover:brightness-110"
+            >
               {status === "sending" ? "Sending…" : "Send"}
             </Button>
           </div>
