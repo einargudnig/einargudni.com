@@ -34,7 +34,7 @@ Software developer at Maul (food delivery, Reykjavík) since 2020 and independen
 ## Brand Commitments
 
 - Name: Einar Gudni. Identity line "Builder. Curious, tinkerer, late bloomer & nerd." Footer motto "Don't half ass it."
-- Visual world is the Almanak (see DESIGN.md): day/night editions by the Reykjavík sun, ruled tables, rubric red for actions only. It replaced the emerald dark theme and the hand-drawn project icons on the homepage.
+- Visual world is the Almanak (see DESIGN.md): day/night editions by the Reykjavík sun, ruled tables, no accent colour (actions marked by form). It replaced the emerald dark theme and the hand-drawn project icons on the homepage.
 - **User-pinned (2026-10-05): keep it minimal.** Anything else, including light vs dark and a complete visual change, is open.
 
 ## Evidence on Hand

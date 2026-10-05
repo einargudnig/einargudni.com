@@ -2,17 +2,17 @@
 name: Einar Gudni
 description: An almanac of one person's work, ruled into tables and printed in a day or night edition by the Reykjavík sun.
 colors:
-  rubric: "oklch(0.53 0.19 27)"
-  rubric-night: "oklch(0.73 0.15 33)"
-  paper: "oklch(0.975 0.004 240)"
-  ink: "oklch(0.22 0.03 258)"
-  ink-muted: "oklch(0.47 0.02 255)"
-  rule-hairline: "oklch(0.22 0.03 258 / 14%)"
-  field-stroke: "oklch(0.22 0.03 258 / 22%)"
-  night-ground: "oklch(0.185 0.028 258)"
-  night-ink: "oklch(0.93 0.012 240)"
-  night-ink-muted: "oklch(0.72 0.022 245)"
-  night-rule-hairline: "oklch(0.93 0.012 240 / 13%)"
+  action: "oklch(0.2 0.008 70)"
+  action-night: "oklch(0.92 0.008 85)"
+  paper: "oklch(0.975 0.006 85)"
+  ink: "oklch(0.2 0.008 70)"
+  ink-muted: "oklch(0.48 0.012 70)"
+  rule-hairline: "oklch(0.2 0.008 70 / 14%)"
+  field-stroke: "oklch(0.2 0.008 70 / 22%)"
+  night-ground: "oklch(0.2 0.006 70)"
+  night-ink: "oklch(0.92 0.008 85)"
+  night-ink-muted: "oklch(0.72 0.012 80)"
+  night-rule-hairline: "oklch(0.92 0.008 85 / 13%)"
 typography:
   display:
     fontFamily: "Geist Variable, ui-sans-serif, system-ui, sans-serif"
@@ -63,13 +63,13 @@ spacing:
   section-md: "96px"
 components:
   button-action:
-    backgroundColor: "{colors.rubric}"
+    backgroundColor: "{colors.action}"
     textColor: "{colors.paper}"
     rounded: "{rounded.sm}"
     padding: "8px 16px"
     typography: "{typography.body}"
   link-action:
-    textColor: "{colors.rubric}"
+    textColor: "{colors.action}"
     typography: "{typography.label}"
   ledger-head:
     textColor: "{colors.ink}"
@@ -97,34 +97,34 @@ components:
 
 **Creative North Star: "The Almanak"**
 
-The site is an almanac of one person's work, after the Icelandic almanac tables: entries ruled into tables, dated, counted, and printed in one of two editions. The day edition is cool paper with blue-black ink; the night edition is a night-blue ground with pale ink. Which edition you get is decided by the real sun over Reykjavík: below -6° altitude (civil dusk) the page prints at night, and it turns over while you read. A reader can pin day or night; the toggle cycles sun → day → night.
+The site is an almanac of one person's work, after the Icelandic almanac tables: entries ruled into tables, dated, counted, and printed in one of two editions. The day edition is warm paper with warm black ink; the night edition is a charcoal ground with pale ink. Which edition you get is decided by the real sun over Reykjavík: below -6° altitude (civil dusk) the page prints at night, and it turns over while you read. A reader can pin day or night; the toggle cycles sun → day → night.
 
-Density is that of a reference table, not a brochure. Everything sits in one narrow column (max 56rem), every list is a ruled table under a full-weight rule, and the only colour on the page is a single rubric red that marks what you can act on. The system refuses the dark developer portfolio: no cards, no chips, no glow. It is deliberately minimal (user-pinned); every element earns its place.
+Density is that of a reference table, not a brochure. Everything sits in one narrow column (max 56rem), every list is a ruled table under a full-weight rule, and there is no accent colour at all: what you can act on is marked by form, a solid ink button or an underline. The system refuses the dark developer portfolio: no cards, no chips, no glow. It is deliberately minimal (user-pinned); every element earns its place.
 
 **Key Characteristics:**
 - Two editions (day/night) chosen by Reykjavík sun altitude, user-pinnable.
 - Tables, never cards: full-weight rule over each table, hairlines between rows.
-- One rubric red, for actions only. Ink for everything else, data included.
+- No accent colour. Actions are marked by a solid ink button and underlines; everything is ink.
 - One family (Geist) with tabular numerals; mono only for code.
 - Flat paper: no shadows, no fills behind content.
 
 ## Colors
 
-Two inks on two grounds, and one red that means "act here".
+Two inks on two grounds, and nothing else. Action is shown by form, never by hue.
 
 ### Primary
-- **Rubric Red** (`rubric` day, `rubric-night` night): the almanac's rubric. Used only for things you can act on: the "Work with me" button and masthead link, link hover states, row-title hover, focus rings, caret and text selection tint. The night rubric is lighter and warmer so it holds on night-blue.
+- **Action Ink** (`action` day, `action-night` night): the same value as the edition's ink, kept as its own role (`--brand`) so actions can be recoloured in one place. Fills the "Work with me" and Send buttons, focus rings, caret and selection tint.
 
 ### Neutral
-- **Cool Paper** (`paper`): day-edition ground.
-- **Blue-Black Ink** (`ink`): day-edition text, headings, data, and the full-weight table rule.
+- **Warm Paper** (`paper`): day-edition ground.
+- **Warm Black Ink** (`ink`): day-edition text, headings, data, and the full-weight table rule.
 - **Faded Ink** (`ink-muted`): dates, row metadata, outcomes, form labels, masthead sun times.
 - **Hairline** (`rule-hairline`): ink at 14%. The rule between table rows and the default border everywhere.
 - **Field Stroke** (`field-stroke`): ink at 22%, input borders.
-- **Night Blue** (`night-ground`), **Pale Ink** (`night-ink`), **Faded Pale Ink** (`night-ink-muted`), **Night Hairline** (`night-rule-hairline`): the same roles in the night edition. `primary` mirrors ink in both editions; it is not an accent.
+- **Night Charcoal** (`night-ground`), **Pale Ink** (`night-ink`), **Faded Pale Ink** (`night-ink-muted`), **Night Hairline** (`night-rule-hairline`): the same roles in the night edition. `primary` mirrors ink in both editions; it is not an accent.
 
 ### Named Rules
-**The Rubric Rule.** Rubric red is reserved for what you can act on. Data, figures, labels, decoration and status are ink. If it isn't a link, button, or focus state, it isn't red.
+**The Ink Rule.** There is no accent colour. What you can act on is marked by form: a solid ink button, an underline, a focus ring. Never introduce a hue for actions, data, status or decoration. Error text is the one exception and stays red.
 
 **The Two Editions Rule.** Every colour exists twice, as a day and a night value of the same role. Never write a colour for one edition only; define the role on `:root` and `.dark`. Edition switches cross-fade the ground and ink over 600ms.
 
@@ -172,14 +172,14 @@ Square and printed. Rules are 1px and run the full width of the column. The only
 ### Buttons
 Quiet and solid; there is one kind that matters.
 - **Shape:** slightly softened corners (6px).
-- **Action:** rubric ground, paper text, 500 weight, 8px × 16px. "Work with me" and "Send".
+- **Action:** solid ink ground, paper text, 500 weight, 8px × 16px. "Work with me" and "Send".
 - **Hover / Active:** brightness 110% and scale 0.98 on press, 200ms on the `--ease-out` curve.
-- **Secondary:** not a button. A plain ink link with a 1px underline at 4px offset that turns rubric on hover ("Case studies").
+- **Secondary:** not a button. A plain ink link with a 1px underline at 4px offset that underlines on hover ("Case studies").
 
 ### Ledger (signature)
 The almanac table, the site's reusable unit.
-- **Head:** full-weight ink rule on top, table name as Title on the left, and on the right either a count ("9 entries", tabular) or a faded link to the rest ("All case studies") that turns rubric on hover.
-- **Rows:** hairline between rows (none above the first; the head rule does that job). Date/label column in faded Label type; entry title in ink at 500 that turns rubric and underlines on row hover; metadata in faded ink.
+- **Head:** full-weight ink rule on top, table name as Title on the left, and on the right either a count ("9 entries", tabular) or a faded link to the rest ("All case studies") that underlines on hover.
+- **Rows:** hairline between rows (none above the first; the head rule does that job). Date/label column in faded Label type; entry title in ink at 500 that underlines on row hover; metadata in faded ink.
 - **Empty:** an empty table still prints its hairline and a faded sentence, so absence reads as designed.
 
 ### Facts table
@@ -187,17 +187,17 @@ The case-study header: a definition list opened by a full-weight ink rule, each 
 
 ### Inputs / Fields
 - **Style:** transparent ground, field-stroke border, 8px radius, 36px tall, 0.875rem text, faded placeholder. Labels sit above in faded Label type.
-- **Focus:** border shifts toward rubric with a soft 3px rubric ring.
+- **Focus:** border shifts toward ink with a soft 3px ink ring.
 - **Error / Disabled:** error border and message use the destructive role; disabled at 50% opacity.
 
 ### Navigation (masthead)
-A full-weight ink rule under the name and sections: "Einar Gudni" as Title on the left (rubric on hover), lower-case section links in faded Label type on the right, the current one in ink with a 1px underline at 6px offset, and "work with me" in rubric as the only coloured link. Beneath the rule: today's Reykjavík sunrise and sunset (tabular, filled in after mount into reserved width) on the left, the edition toggle on the right. The footer mirrors it: a full-weight rule, the motto, links and the year.
+A full-weight ink rule under the name and sections: "Einar Gudni" as Title on the left, lower-case section links in faded Label type on the right, the current one in ink with a 1px underline at 6px offset, and "work with me" in full ink, set apart from the faded section links. Beneath the rule: today's Reykjavík sunrise and sunset (tabular, filled in after mount into reserved width) on the left, the edition toggle on the right. The footer mirrors it: a full-weight rule, the motto, links and the year.
 
 ## Do's and Don'ts
 
 ### Do:
 - **Do** open every table with a full-weight `foreground` rule and separate rows with `border` hairlines.
-- **Do** keep rubric red for links, buttons, hover and focus; set data and figures in ink.
+- **Do** mark actions by form: a solid ink button, an underline, a focus ring.
 - **Do** set dates, periods, counts and figures with tabular numerals in Geist sans.
 - **Do** define every new colour role for both editions (`:root` and `.dark`).
 - **Do** use the 7rem / 1fr / auto row grid so columns align across tables.
@@ -205,7 +205,7 @@ A full-weight ink rule under the name and sections: "Einar Gudni" as Title on th
 
 ### Don't:
 - **Don't** use cards, chips, tag walls, glows or shadows to group content.
-- **Don't** colour data, status or decoration with rubric red.
+- **Don't** add an accent hue for actions, data, status or decoration.
 - **Don't** set labels, figures or headings in Geist Mono; mono is for code and component names.
 - **Don't** add a second accent colour or a second type family.
 - **Don't** hard-code an edition; the edition comes from the sun or the reader's pin.
