@@ -27,7 +27,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
 // Kept in the emitted markup so the build can be audited against it.
 const DESIGN_CONTRACT = `THESIS: An almanac of one person's work. Entries are ruled into tables and printed in a day or night edition by the real Reykjavik sun. Refuses the dark developer portfolio of cards, chips and glow.
 OWN-WORLD: Cool paper by day, night-blue by night, blue-black ink, hairline rules, a full-weight rule over each table. One rubric red, reserved for what you can act on. Geist with tabular numerals; tables, never cards.
-STORY: A visitor learns he puts agents into systems that already run, scans the work table, opens a case study, and writes to him.
+STORY: A visitor learns he builds solutions that fit systems already running, agents among them, scans the work table, opens a case study, and writes to him.
 FIRST VIEWPORT: Masthead rule with the name left and today's Reykjavik sunrise, sunset and edition right; the statement large and left-aligned at about 20ch; a rubric "Work with me" and a plain link to the case studies; the work table starts above the fold on desktop.
 FORM: Almanak tables, candidate 4 of 7, seed 4502003c.
 FINISH: unreviewed and undocumented is unfinished; this build ends with the finish review, the verdict, DESIGN.md, and every shipping raster carrying its provenance`;

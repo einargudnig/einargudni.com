@@ -149,16 +149,19 @@ function RouteComponent() {
     <div className="space-y-20 md:space-y-24">
       <section className="space-y-8">
         <h1 className="max-w-[18ch] text-[2.75rem] font-semibold leading-[1.02] tracking-[-0.04em] text-balance md:text-7xl">
-          I integrate AI agents into systems that already exist.
+          I build solutions that fit the systems you already have.
         </h1>
         <div className="grid gap-6 md:grid-cols-[1fr_auto] md:items-end md:gap-10">
           <div className="max-w-[54ch] space-y-3 text-lg leading-relaxed text-muted-foreground text-pretty">
             <p>
-              Assistants inside products, tool-calling over your own APIs, and the evals and
-              guardrails that make them safe to ship. Software developer at Maul and independent
+              Product features, internal tools, integrations and, lately, AI agents, with the evals
+              and guardrails that make them safe to ship. Software developer at Maul and independent
               contractor.
             </p>
-            <p className="text-base">Curious, Tinkerer, Late bloomer & Nerd.</p>
+            <p className="text-base">
+              <span className="font-medium text-foreground">Builder.</span> Curious, tinkerer, late
+              bloomer & nerd.
+            </p>
           </div>
           <div className="flex items-center gap-5">
             <Link
@@ -191,23 +194,7 @@ function RouteComponent() {
         )}
       </Ledger>
 
-      <Ledger title="Writing" href="/blog" aside="All writing">
-        <ol>
-          {latestWriting.map((entry) => (
-            <li key={entry.permalink}>
-              <Link href={entry.permalink} className={rowLink}>
-                <time dateTime={entry.date} className="text-sm text-muted-foreground tabular-nums">
-                  {formatShortDate(entry.date)}
-                </time>
-                <span className={rowTitle}>{entry.title}</span>
-                <span className="text-sm text-muted-foreground">{entry.kind}</span>
-              </Link>
-            </li>
-          ))}
-        </ol>
-      </Ledger>
-
-      <Ledger title="Projects" aside={`${projects.length} entries`}>
+      <Ledger title="Things I've built" aside={projects.length}>
         <ol>
           {projects.map((project) => {
             const external = project.external !== false;
@@ -235,6 +222,22 @@ function RouteComponent() {
               </li>
             );
           })}
+        </ol>
+      </Ledger>
+
+      <Ledger title="Writing" href="/blog" aside="All writing">
+        <ol>
+          {latestWriting.map((entry) => (
+            <li key={entry.permalink}>
+              <Link href={entry.permalink} className={rowLink}>
+                <time dateTime={entry.date} className="text-sm text-muted-foreground tabular-nums">
+                  {formatShortDate(entry.date)}
+                </time>
+                <span className={rowTitle}>{entry.title}</span>
+                <span className="text-sm text-muted-foreground">{entry.kind}</span>
+              </Link>
+            </li>
+          ))}
         </ol>
       </Ledger>
 
@@ -306,7 +309,7 @@ function RouteComponent() {
 }
 
 const DESCRIPTION =
-  "Einar Gudni integrates AI agents into systems that already exist. Case studies, writing and projects.";
+  "Einar Gudni builds solutions that fit the systems you already have: products, integrations and AI agents. Case studies, writing and projects.";
 
 export const Route = createFileRoute("/")({
   head: () => ({

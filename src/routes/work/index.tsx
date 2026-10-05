@@ -16,9 +16,9 @@ function RouteComponent() {
           Work
         </h1>
         <p className="text-lg text-muted-foreground leading-relaxed text-pretty">
-          Case studies, mostly about putting agents into systems that already exist and making them
-          trustworthy there. Each one covers the problem, the constraints, the architecture, what
-          shipped and what I'd do differently.
+          Case studies of solutions I've built: products, integrations and, more and more, agents
+          inside systems that already exist. Each one covers the problem, the constraints, the
+          architecture, what shipped and what I'd do differently.
         </p>
       </div>
 
@@ -39,7 +39,7 @@ function RouteComponent() {
   );
 }
 
-const DESCRIPTION = "Case studies: freelance work and agent integrations";
+const DESCRIPTION = "Case studies: products, integrations and AI agents";
 
 export const Route = createFileRoute("/work/")({
   head: () => ({

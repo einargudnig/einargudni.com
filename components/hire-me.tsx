@@ -47,8 +47,8 @@ export function HireMe() {
           Open for opportunities
         </p>
         <p className="max-w-[44ch] text-muted-foreground leading-relaxed text-pretty">
-          Tell me about the system and where an agent could help. I also take on the plain product
-          engineering around it.
+          Tell me about the problem and the system it lives in. Sometimes the answer is an agent;
+          often it is plain, careful engineering.
         </p>
         <p className="text-sm text-muted-foreground">
           Or write to{" "}
