@@ -30,7 +30,10 @@ const markdownNegotiation = createMiddleware().server(async ({ next, request }) 
   const { pathname } = new URL(request.url);
   // Anything else reaches Start on its own terms — touching the request here
   // would consume the body before a server route could read it.
-  if (request.method !== "GET" || !runsWorkerFirst(pathname)) return next();
+  // HEAD too: left to next(), a HEAD for markdown reached Start's SSR handler,
+  // which 500s on a non-HTML Accept. The runtime drops the body for HEAD.
+  const readOnly = request.method === "GET" || request.method === "HEAD";
+  if (!readOnly || !runsWorkerFirst(pathname)) return next();
 
   const accept = request.headers.get("accept") ?? "";
   if (!accept.includes("text/markdown")) {
