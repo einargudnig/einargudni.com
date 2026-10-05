@@ -8,7 +8,6 @@ const bindings = [
   { keys: "g h", label: "Home" },
   { keys: "g b", label: "Blog" },
   { keys: "g u", label: "Uses" },
-  { keys: "g n", label: "Notes" },
   { keys: "g a", label: "About" },
   { keys: "g w", label: "Now" },
   { keys: "g q", label: "Quotes" },

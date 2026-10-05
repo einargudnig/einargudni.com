@@ -7,7 +7,6 @@ import { EditionToggle, SunTimes } from "@/components/edition";
 const navItems = [
   { path: "/work", name: "work" },
   { path: "/blog", name: "blog" },
-  { path: "/notes", name: "notes" },
   { path: "/uses", name: "uses" },
 ];
 
