@@ -58,6 +58,7 @@
     "@vitejs/plugin-react": "^6.1.1",
     "oxfmt": "^0.20.0",
     "oxlint": "^1.53.0",
+    "remark-frontmatter": "^5.0.0",
     "satori": "^0.29.0",
     "shiki": "^3.13.0",
     "tailwindcss": "^4.3.3",

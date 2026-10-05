@@ -1,4 +1,5 @@
 import mdx from "@mdx-js/rollup";
+import remarkFrontmatter from "remark-frontmatter";
 import { cloudflare } from "@cloudflare/vite-plugin";
 import tailwindcss from "@tailwindcss/vite";
 import { tanstackStart } from "@tanstack/react-start/plugin/vite";
@@ -62,7 +63,13 @@ export default defineConfig({
     // MDX compiles to real modules here. Velite's s.mdx() emits a code string
     // that mdx-content used to eval, and workerd forbids `new Function`, so
     // every post silently fell back to client rendering.
-    { enforce: "pre", ...mdx({ providerImportSource: "@mdx-js/react" }) },
+    //
+    // remark-frontmatter claims the YAML block. Without it the closing `---`
+    // reads as a setext underline and the frontmatter renders as an <h2>.
+    {
+      enforce: "pre",
+      ...mdx({ providerImportSource: "@mdx-js/react", remarkPlugins: [remarkFrontmatter] }),
+    },
     tanstackStart({
       pages: contentPages,
       prerender: {

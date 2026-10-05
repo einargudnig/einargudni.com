@@ -1,12 +1,12 @@
 import { cn } from "@/lib/utils";
 import { CheckIcon, CircleIcon } from "lucide-react";
-import React, { type ReactNode } from "react";
+import React, { type ComponentPropsWithoutRef, type ReactNode } from "react";
 
-type ListItemProps = {
-  children: ReactNode;
-  icon?: "check" | "circle" | "number" | "none";
+type ListIcon = "check" | "circle" | "number" | "none";
+
+type ListItemProps = ComponentPropsWithoutRef<"li"> & {
+  icon?: ListIcon;
   index?: number;
-  className?: string;
 };
 
 type ListStyleType = "disc" | "circle" | "check" | "number" | "none";
@@ -23,6 +23,7 @@ export function StylishListItem({
   icon = "none",
   index,
   className,
+  ...props
 }: ListItemProps) {
   const renderIcon = () => {
     switch (icon) {
@@ -50,7 +51,7 @@ export function StylishListItem({
   };
 
   return (
-    <li className={cn("flex items-start", className)}>
+    <li className={cn("flex items-start", className)} {...props}>
       {renderIcon()}
       <div className="flex-1">{children}</div>
     </li>
@@ -63,17 +64,18 @@ export function StylishList({
   className,
   gap = "normal",
 }: StylishListProps) {
-  // Convert children to array to handle both single and multiple children
-  const childrenArray = React.Children.toArray(children);
+  // MDX emits a "\n" text node between list items; wrapping those renders
+  // as empty bullets.
+  const childrenArray = React.Children.toArray(children).filter(
+    (child) => !(typeof child === "string" && child.trim() === ""),
+  );
 
   // Content-derived, deduped keys for children that need to be wrapped
   // (a plain index would misreconcile if the list is ever reordered/filtered)
   const keyCounts = new Map<string, number>();
   const keyFor = (child: ReactNode) => {
     const base =
-      React.isValidElement(child) && child.key != null
-        ? String(child.key)
-        : String(child);
+      React.isValidElement(child) && child.key != null ? String(child.key) : String(child);
     const count = keyCounts.get(base) ?? 0;
     keyCounts.set(base, count + 1);
     return count === 0 ? base : `${base}-${count}`;
@@ -96,22 +98,9 @@ export function StylishList({
   };
 
   return (
-    <ul
-      className={cn("my-6", gapClasses[gap], listTypeClasses[type], className)}
-    >
+    <ul className={cn("my-6", gapClasses[gap], listTypeClasses[type], className)}>
       {childrenArray.map((child, index) => {
-        // If child is already a StylishListItem, just clone it with the index
-        if (React.isValidElement(child) && child.type === StylishListItem) {
-          return React.cloneElement(
-            child as React.ReactElement<ListItemProps>,
-            {
-              index: index + 1,
-            },
-          );
-        }
-
-        // Otherwise, wrap it in a StylishListItem with appropriate icon
-        let icon: "check" | "circle" | "number" | "none" = "none";
+        let icon: ListIcon = "none";
         switch (type) {
           case "check":
             icon = "check";
@@ -127,6 +116,15 @@ export function StylishList({
             break;
           default:
             icon = "none";
+        }
+
+        // Already an item (including MDX's `li`): fill in what the list knows.
+        // Wrapping it again would nest an <li> inside an <li>.
+        if (React.isValidElement<ListItemProps>(child) && child.type === StylishListItem) {
+          return React.cloneElement(child, {
+            index: index + 1,
+            icon: child.props.icon ?? icon,
+          });
         }
 
         return (

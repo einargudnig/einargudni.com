@@ -117,9 +117,8 @@ const sharedComponents: Record<string, ComponentType<any>> = {
     </StylishList>
   ),
 
-  li: ({ children, ...props }: ComponentPropsWithoutRef<"li">) => (
-    <StylishListItem {...props}>{children}</StylishListItem>
-  ),
+  // Passed as-is, not wrapped: StylishList recognises its items by identity.
+  li: StylishListItem,
 
   ol: (props: ComponentPropsWithoutRef<"ol">) => {
     const { children, ...rest } = props;
