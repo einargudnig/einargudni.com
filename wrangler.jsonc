@@ -11,6 +11,12 @@
     // Mirrors the matcher the Next middleware used.
     "run_worker_first": ["/", "/blog/*", "/deep-dive/*"],
   },
+  // www is caught first by a Redirect Rule (301 -> apex); attaching it here
+  // just gives the hostname a record and a certificate.
+  "routes": [
+    { "pattern": "einargudni.com", "custom_domain": true },
+    { "pattern": "www.einargudni.com", "custom_domain": true },
+  ],
   "observability": {
     "enabled": true,
   },
