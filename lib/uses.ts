@@ -8,6 +8,32 @@ export type UsesFolder = {
 
 export const usesFolders: UsesFolder[] = [
   {
+    slug: "personal-software",
+    entries: [
+      {
+        name: "life-os",
+        href: "https://github.com/einargudnig/life-os",
+        description: "Syncs Whoop, Strava, calendar and tasks into one store agents can query",
+      },
+      {
+        name: "jstop",
+        href: "https://github.com/einargudnig/jstop",
+        description: "Menu bar monitor for Node.js processes",
+      },
+      {
+        name: "les",
+        href: "https://github.com/einargudnig/les",
+        description: "macOS RSS and read-it-later reader",
+      },
+      {
+        name: "pdl",
+        href: "https://pdl.einargudni.workers.dev",
+        description: "Our weekly padel matches, standings and streaks",
+      },
+    ],
+    readme: ["Tools I built for my own use."],
+  },
+  {
     slug: "desk",
     entries: [
       {

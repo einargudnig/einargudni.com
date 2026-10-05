@@ -23,6 +23,34 @@ const projects = [
     tags: ["Swift", "macOS", "AirPods"],
   },
   {
+    title: "pdl",
+    description:
+      "Tracks a weekly padel group's matches, standings and streaks. Mobile-first, on Cloudflare Workers and D1.",
+    href: "https://pdl.einargudni.workers.dev",
+    tags: ["React", "Hono", "D1"],
+  },
+  {
+    title: "eggo",
+    description:
+      "The Icelandic landing site for Eggo, a small software and tech consultancy, with a working contact form.",
+    href: "https://www.eggo.is",
+    tags: ["Astro", "Cloudflare"],
+  },
+  {
+    title: "team tally",
+    description:
+      "An offline, no-account mobile app for tracking player fines in team sports, with a waitlist landing page.",
+    href: "https://team-tally-psi.vercel.app",
+    tags: ["Expo", "SQLite", "Astro"],
+  },
+  {
+    title: "les",
+    description:
+      "A native macOS RSS and read-it-later app: OPML import, bookmarks, Readability article text and full-text search.",
+    href: "https://github.com/einargudnig/les",
+    tags: ["Swift", "AppKit", "SQLite"],
+  },
+  {
     title: "jstop",
     description:
       "A macOS menu bar app that monitors node processes. Like htop, but for your Node.js toolkit.",

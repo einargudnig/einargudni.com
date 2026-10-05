@@ -57,6 +57,7 @@ const STATIC_PATHS = [
   "/uses/devices",
   "/uses/infrastructure",
   "/uses/keyboard",
+  "/uses/personal-software",
   "/work",
 ];
 
