@@ -466,6 +466,16 @@
     @apply bg-background text-foreground;
     transition: background-color 600ms var(--ease-out), color 600ms var(--ease-out);
   }
+  /* Edition switch: components/edition.tsx animates the clip itself */
+  ::view-transition-old(root),
+  ::view-transition-new(root) {
+    animation: none;
+    mix-blend-mode: normal;
+  }
+  .edition-switching,
+  .edition-switching * {
+    transition: none !important;
+  }
   /* Browser surfaces carry the palette too */
   ::selection {
     background: color-mix(in oklch, var(--brand) 30%, transparent);

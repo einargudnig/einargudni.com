@@ -38,6 +38,40 @@ export const editionScript = `(() => {
   document.documentElement.style.colorScheme = night ? "dark" : "light";
 })();`;
 
+const prefersReducedMotion = () => matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+// The new edition spreads out from the toggle as a widening circle. The
+// browser snapshots the old page, applies the new edition underneath, then
+// we grow the new snapshot's clip from the button's centre to the far corner.
+const switchEdition = (pref: Pref, origin: HTMLElement) => {
+  const root = document.documentElement;
+  const changes = (resolve(pref) === "night") !== root.classList.contains("dark");
+  if (!changes || !("startViewTransition" in document) || prefersReducedMotion()) {
+    apply(pref);
+    return;
+  }
+
+  const { left, top, width, height } = origin.getBoundingClientRect();
+  const x = left + width / 2;
+  const y = top + height / 2;
+  const radius = Math.hypot(Math.max(x, innerWidth - x), Math.max(y, innerHeight - y));
+
+  // Colour transitions would fade inside the new snapshot and blur the edge.
+  root.classList.add("edition-switching");
+  const transition = document.startViewTransition(() => apply(pref));
+  transition.ready.then(() =>
+    root.animate(
+      { clipPath: [`circle(0px at ${x}px ${y}px)`, `circle(${radius}px at ${x}px ${y}px)`] },
+      {
+        duration: 700,
+        easing: "cubic-bezier(0.22, 1, 0.36, 1)",
+        pseudoElement: "::view-transition-new(root)",
+      },
+    ),
+  );
+  transition.finished.finally(() => root.classList.remove("edition-switching"));
+};
+
 const useEdition = () => {
   const [pref, setPref] = useState<Pref>("auto");
   const [edition, setEdition] = useState<"day" | "night" | null>(null);
@@ -60,12 +94,12 @@ const useEdition = () => {
     return () => clearInterval(id);
   }, [pref]);
 
-  const cycle = () => {
+  const cycle = (origin: HTMLElement) => {
     const next = PREFS[(PREFS.indexOf(pref) + 1) % PREFS.length];
     try {
       localStorage.setItem(STORAGE_KEY, next);
     } catch {}
-    apply(next);
+    switchEdition(next, origin);
     setPref(next);
     setEdition(resolve(next));
   };
@@ -87,7 +121,7 @@ export function EditionToggle() {
   return (
     <button
       type="button"
-      onClick={cycle}
+      onClick={(event) => cycle(event.currentTarget)}
       aria-label={label}
       title={label}
       className="inline-flex items-center gap-1.5 rounded-sm text-sm text-muted-foreground transition-colors hover:text-foreground"
