@@ -34,6 +34,55 @@ export const usesFolders: UsesFolder[] = [
     readme: ["Tools I built for my own use."],
   },
   {
+    slug: "agents",
+    entries: [
+      {
+        name: "Claude Code",
+        href: "https://www.anthropic.com/claude-code",
+        description: "Where most of my code gets written now",
+      },
+      {
+        name: "Codex",
+        href: "https://github.com/openai/codex",
+        description: "OpenAI's coding agent, for a second opinion",
+      },
+      { name: "OpenCode", href: "https://opencode.ai", description: "Open-source coding agent" },
+      {
+        name: "pi",
+        href: "https://github.com/badlogic/pi-mono",
+        description: "Minimal, hackable coding agent",
+      },
+      {
+        name: "Hermes",
+        href: "https://github.com/NousResearch/hermes-agent",
+        description: "Nous Research's agent, from the terminal",
+      },
+      {
+        name: "Conductor",
+        href: "https://conductor.build",
+        description: "Runs agents side by side in their own worktrees",
+      },
+      {
+        name: "herdr",
+        href: "https://herdr.dev",
+        description: "Agent multiplexer that lives in the terminal",
+      },
+      {
+        name: "worktrunk",
+        href: "https://worktrunk.dev",
+        description: "Git worktrees for parallel agent work",
+      },
+      {
+        name: "hunk",
+        href: "https://hunk.dev",
+        description: "Review-first diff viewer for agent-written changes",
+      },
+    ],
+    readme: [
+      "Most code I ship now starts in one of these. herdr, worktrunk and hunk are how I run several agents at once and review what they wrote.",
+    ],
+  },
+  {
     slug: "desk",
     entries: [
       {
@@ -165,6 +214,44 @@ export const usesFolders: UsesFolder[] = [
         description: "Resource monitor",
       },
       { name: "jq", href: "https://jqlang.github.io/jq/", description: "JSON processor" },
+      {
+        name: "dotfiles",
+        href: "https://github.com/einargudnig/dotfiles",
+        description: "Everything in this tree, linked into place with GNU Stow",
+      },
+      {
+        name: "sesh",
+        href: "https://github.com/joshmedeski/sesh",
+        description: "tmux session manager",
+      },
+      { name: "starship", href: "https://starship.rs", description: "Shell prompt" },
+      {
+        name: "television",
+        href: "https://alexpasmantier.github.io/television/",
+        description: "Fuzzy finder TUI",
+      },
+      {
+        name: "ghui",
+        href: "https://github.com/kitlangton/ghui",
+        description: "Terminal UI for GitHub pull requests",
+      },
+      {
+        name: "gh-dash",
+        href: "https://github.com/dlvhdr/gh-dash",
+        description: "GitHub dashboard in the terminal",
+      },
+      {
+        name: "emeraldian",
+        href: "https://github.com/iamrohithrnair/emeraldian",
+        description: "Terminal UI for my Obsidian vault",
+      },
+      {
+        name: "spotify_player",
+        href: "https://github.com/aome510/spotify-player",
+        description: "Spotify in the terminal",
+      },
+      { name: "fnm", href: "https://github.com/Schniz/fnm", description: "Node version manager" },
+      { name: "uv", href: "https://docs.astral.sh/uv/", description: "Python tools and packages" },
     ],
   },
   {
@@ -178,6 +265,12 @@ export const usesFolders: UsesFolder[] = [
       },
       { name: "Zsh", href: "https://www.zsh.org", description: "Shell" },
       {
+        name: "AeroSpace",
+        href: "https://github.com/nikitabobko/AeroSpace",
+        description: "Tiling window manager",
+      },
+      { name: "Zed", href: "https://zed.dev", description: "Code editor" },
+      {
         name: "Raycast",
         href: "https://raycast.com",
         description: "Launcher and productivity tool",
@@ -185,7 +278,7 @@ export const usesFolders: UsesFolder[] = [
       { name: "Obsidian", href: "https://obsidian.md", description: "Knowledge base and notes" },
       { name: "Things 3", href: "https://culturedcode.com/things/", description: "Task manager" },
       { name: "Spark", href: "https://sparkmailapp.com", description: "Email client" },
-      { name: "Arc", href: "https://arc.net", description: "Browser" },
+      { name: "Helium", href: "https://helium.computer", description: "Browser" },
       {
         name: "Notion Calendar",
         href: "https://www.notion.so/product/calendar",

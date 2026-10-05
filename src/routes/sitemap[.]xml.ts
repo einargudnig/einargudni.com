@@ -24,6 +24,7 @@ const staticPaths: string[] = [
   "/tldr/is",
   "/ts-mini",
   "/uses",
+  "/uses/agents",
   "/uses/command-line",
   "/uses/desk",
   "/uses/devices",

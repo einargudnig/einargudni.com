@@ -52,6 +52,7 @@ const STATIC_PATHS = [
   "/tldr/is",
   "/ts-mini",
   "/uses",
+  "/uses/agents",
   "/uses/command-line",
   "/uses/desk",
   "/uses/devices",
