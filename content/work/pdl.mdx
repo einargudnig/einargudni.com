@@ -1,0 +1,82 @@
+---
+title: "pdl: a phone-first scoreboard for a weekly padel group"
+slug: pdl
+client: Personal
+engagement: personal
+kind: product
+role: Sole developer; built it for my own use
+start: 2026-04-21
+stack:
+  - React
+  - Vite
+  - StyleX
+  - Base UI
+  - Hono
+  - Zod
+  - Cloudflare Workers
+  - Cloudflare D1
+  - Alchemy
+  - Bun
+  - TypeScript
+summary: An installable web app for my weekly padel group. Log who won and who lost from the court, and it keeps the standings, current streaks and match history, and rolls random pairings for the next game.
+outcome: Live on a Cloudflare Worker with D1 behind basic auth. 22 tests run against a real local D1, and one check command (format, lint, typecheck, test, build) gates every push in CI.
+related: []
+featured: false
+draft: true
+---
+
+## Problem
+
+I play padel every week with the same group: me, Jói, Bjössi and Gísli. {/* CHECK: confirm it is weekly and that these four are the regulars. The names come from migration 0003, "weekly" from the repo description. */} Padel is always two against two, so after a few weeks the obvious questions are who is actually winning, who is on a run and who should pair with whom tonight.
+
+Nobody keeps that in their head. {/* CHECK: what the group used before (a notes app, a group chat, nothing) is not in the repo. Confirm or cut this line. */} I wanted something I could open on my phone at the court, tap four names, mark the winners, and have the table update.
+
+## Constraints
+
+- **It is used on a phone, at the court.** Logging a match has to take a few taps. It installs as a PWA with a standalone manifest and a service worker.
+- **Private, but no accounts.** Four people don't need sign-up. The API sits behind one shared basic-auth password.
+- **The real scores must be hard to break.** I develop against the same Cloudflare account the live app runs on, so local work can't be allowed to write to the group's data.
+- **Close to free to run.** One Worker and one D1 database, on Cloudflare. {/* CHECK: confirm it runs on the free plan. */}
+- **A fair table.** A player who has played twice and won twice shouldn't top someone who is 8 and 4. Ranking has to account for that.
+
+## Architecture
+
+<Architecture
+  nodes={[
+    { label: "React PWA", detail: "Vite, StyleX, Base UI" },
+    { label: "Typed RPC client", detail: "hc<AppType> from Hono" },
+    { label: "Hono Worker", detail: "/api/*, Zod validation, basic auth" },
+    { label: "D1", detail: "players and matches tables" },
+  ]}
+  caption="One Worker serves the SPA and the API on the same origin. Infrastructure is declared in alchemy.run.ts."
+/>
+
+One Cloudflare Worker serves both the React app and the `/api/*` routes. Static files are served first. Anything that matches no file falls through to the Worker, which answers API calls and hands every other path back to the assets binding so deep links load the app.
+
+The schema is two tables. Because a match is always 2v2, a match row holds four player columns, `winner_1`, `winner_2`, `loser_1` and `loser_2`, instead of a join table. Standings aren't stored. The Worker reads every player and match and computes the table on each request in `scoring.ts`, a pure module with no I/O.
+
+Scoring is one point per win. The current streak is counted backwards from the newest match. Players with at least five matches are ranked by win rate. Everyone else, and any comparison between a qualified and an unqualified player, falls back to points.
+
+Types run end to end. Request schemas live in `shared/types.ts` and both sides import them. The Worker's route chain exports its own type, and the client is `hc<AppType>()`, so a renamed field breaks the build instead of the app. Worker bindings are inferred from the infrastructure file in `alchemy.run.ts`, so they can't drift from what is deployed.
+
+Only the `prod` stage points at the live `pdl` Worker and database. Every other stage, including `alchemy dev`, gets its own stage-scoped copies.
+
+## What shipped
+
+- **Scores tab.** Standings with played, wins, losses, points and streak, a match logger and match history. In the logger, each tap on a name cycles it through winner, loser and unselected. It only submits with exactly two of each.
+- **Tools tab.** Pick four players, roll, and it shuffles them into two teams. Adding a player is a name field, capped at 40 characters.
+- **API.** Six routes: health, list players, list matches, standings, add player, add match. The server rejects a match without four distinct players.
+- **Tests.** 22 in total. 13 cover scoring and sort order. 9 hit the HTTP routes against a real local D1 (Miniflare) with the migrations replayed from disk, so the tests always run on the real schema.
+- **One gate.** `bun run check` runs format, lint, typecheck, test and build in that order. CI runs it on every push to master and on pull requests.
+- **Structured logs.** Each request emits one wide event through evlog. The allowed fields and event names are a closed type, so logging a new field means adding it to the schema first.
+
+The project has 13 commits. Two `v1` commits in April were the app. The August work moved it to Vite 8, React 19, StyleX and Base UI, and replaced `wrangler.toml` with Alchemy. I adopted the live Worker and database into Alchemy's state without recreating them. {/* CHECK: is the group still using it, and roughly how many matches are logged? Nothing in the repo shows usage. */}
+
+## What I'd do differently
+
+- **Make a missing secret fail the deploy from day one.** The Worker treats an empty password as "no auth" so local dev works without one. That meant a missing secret would have shipped the app wide open. Prod now refuses to plan or deploy without `PDL_PASSWORD`.
+- **Test the routing I declared, not the routing I assumed.** The config said single-page-application fallback, but asset-first routing sent unknown paths to the Worker, so the setting never ran and deep links returned 404 in production. Two tests now cover it.
+- **Read what a config option actually routes.** I added `runWorkerFirst: ['/api/*']` to be explicit. It sent everything else, including Vite's dev module runner, through the asset handler, and local dev died with `Expected 101 status code`. The default already did the right thing.
+- **Ship a way to undo a match.** There is no edit or delete route. A mis-tapped result stays in the standings until someone fixes it in D1 by hand. {/* CHECK: confirm there is no other correction path in use. */}
+- **Commit the icons the manifest promises.** The manifest lists `icon-192.png`, `icon-512.png`, a maskable icon and `apple-touch-icon.png`, but only `favicon.svg` is in `public/`. {/* CHECK: confirm the PNG icons are really missing from the deployed app, then add them or drop this point. */}
+- **Finish the custom domain.** The app still lives on `pdl.einargudni.workers.dev`. The delegation runbook is written, but the old Vercel records for `pdl` block it. {/* CHECK: now that einargudni.com is moving to Cloudflare, this may be a plain Worker custom domain instead. Confirm the current state. */}
