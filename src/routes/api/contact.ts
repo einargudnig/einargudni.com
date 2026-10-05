@@ -87,20 +87,26 @@ async function handleContact(request: Request) {
 
   recordSend(ip);
 
-  const response = await fetch("https://api.resend.com/emails", {
-    method: "POST",
-    headers: {
-      Authorization: `Bearer ${apiKey}`,
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({
-      from: `einargudni.com <${FROM_EMAIL}>`,
-      to: [TO_EMAIL],
-      reply_to: email,
-      subject: `Work enquiry from ${name}`,
-      text: [`From: ${name} <${email}>`, "", message].join("\n"),
-    }),
-  });
+  let response: Response;
+  try {
+    response = await fetch("https://api.resend.com/emails", {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${apiKey}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        from: `einargudni.com <${FROM_EMAIL}>`,
+        to: [TO_EMAIL],
+        reply_to: email,
+        subject: `Work enquiry from ${name}`,
+        text: [`From: ${name} <${email}>`, "", message].join("\n"),
+      }),
+    });
+  } catch (cause) {
+    console.error("[contact] Resend unreachable:", cause);
+    return fail(`Couldn't send that — email ${TO_EMAIL} directly.`, 502);
+  }
 
   if (!response.ok) {
     console.error("[contact] Resend responded %d: %s", response.status, await response.text());
