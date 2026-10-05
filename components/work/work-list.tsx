@@ -1,5 +1,5 @@
 import { Link } from "@/components/ui/link";
-import { formatPeriod, type WorkEntry } from "@/lib/work";
+import { formatMonth, type WorkEntry } from "@/lib/work";
 
 // Case studies as almanac rows: period, entry, client. Under the title sits
 // the outcome, because someone deciding whether to hire reads results first;
@@ -14,7 +14,7 @@ export function WorkList({ entries }: { entries: WorkEntry[] }) {
             className="group grid gap-x-6 gap-y-1 py-4 sm:grid-cols-[7rem_1fr_12rem]"
           >
             <span className="text-sm text-muted-foreground tabular-nums sm:pt-0.5">
-              {formatPeriod(entry)}
+              {formatMonth(entry)}
             </span>
             <span className="min-w-0">
               <span className="block font-medium underline-offset-4 decoration-1 group-hover:text-brand group-hover:underline">

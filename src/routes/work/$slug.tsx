@@ -4,7 +4,7 @@ import { Balancer } from "react-wrap-balancer";
 import { MDXContent } from "@/components/mdx-content";
 import { Link } from "@/components/ui/link";
 import { ArrowLeft, ArrowRight } from "lucide-react";
-import { ENGAGEMENT_LABEL, findWork, formatPeriod, relatedTitle } from "@/lib/work";
+import { ENGAGEMENT_LABEL, findWork, formatMonth, relatedTitle } from "@/lib/work";
 
 export const Route = createFileRoute("/work/$slug")({
   loader: ({ params }) => {
@@ -75,8 +75,8 @@ function CaseStudy() {
           </Fact>
           <Fact label="Engagement">{ENGAGEMENT_LABEL[entry.engagement]}</Fact>
           <Fact label="Role">{entry.role}</Fact>
-          <Fact label="Period">
-            <span className="tabular-nums">{formatPeriod(entry)}</span>
+          <Fact label="Started">
+            <span className="tabular-nums">{formatMonth(entry)}</span>
           </Fact>
           <Fact label="Stack">
             <span className="text-muted-foreground">{entry.stack.join(", ")}</span>

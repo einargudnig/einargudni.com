@@ -22,22 +22,10 @@ const writingTitles = new Map<string, string>(
 // `related` is validated at build time, so the path fallback is only reached in dev.
 export const relatedTitle = (path: string) => writingTitles.get(path) ?? path;
 
-const year = (iso: string) => new Date(iso).getFullYear();
+// "Sep 2026": the month the work started. UTC, so an ISO date never slips a month.
+export const formatMonth = ({ start }: Pick<WorkEntry, "start">) =>
+  new Date(start).toLocaleDateString("en-US", { month: "short", year: "numeric", timeZone: "UTC" });
 
-export const formatPeriod = ({ start, end }: Pick<WorkEntry, "start" | "end">) => {
-  const from = year(start);
-  if (!end) return `${from} – Present`;
-  const to = year(end);
-  return from === to ? `${from}` : `${from} – ${to}`;
-};
-
-// Decides what a visitor reads first on /work and in "Selected work" on the
-// homepage, so it is a positioning call as much as a sort. Applied within each
-// engagement group, so it never mixes freelance and in-house entries.
-//
-// Fields available: start, end (undefined = ongoing), kind ("agent" |
-// "product" | "web"), featured, title.
-export const orderWork = (entries: WorkEntry[]): WorkEntry[] => {
-  // TODO(einar): choose the ordering. Return a new array, don't sort in place.
-  return [...entries];
-};
+// Newest first. `start` is an ISO date, so string order is date order.
+export const orderWork = (entries: WorkEntry[]): WorkEntry[] =>
+  entries.toSorted((a, b) => b.start.localeCompare(a.start));
