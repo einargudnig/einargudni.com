@@ -1,17 +1,4 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { Image } from "@/components/ui/image";
-
-function RouteComponent() {
-  return (
-    <div>
-      <Image src="/images/desk.png" alt="Desk" className="rounded-md" preload />
-      <p className="mt-3 text-xs text-muted-foreground">
-        Point and shoot photo of the current setup
-      </p>
-    </div>
-  );
-}
-
 export const Route = createFileRoute("/uses/")({
   head: () => ({
     meta: [
@@ -24,5 +11,4 @@ export const Route = createFileRoute("/uses/")({
       { name: "twitter:image", content: "/og/uses.png" },
     ],
   }),
-  component: RouteComponent,
 });

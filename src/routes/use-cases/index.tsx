@@ -1,0 +1,58 @@
+import { createFileRoute } from "@tanstack/react-router";
+import { Ledger, LedgerEmpty } from "@/components/ledger";
+import { WorkList } from "@/components/work/work-list";
+import { ENGAGEMENT_LABEL, orderWork, publishedWork, type WorkEntry } from "@/lib/work";
+
+const GROUPS: Array<{ engagement: WorkEntry["engagement"]; blurb: string }> = [
+  { engagement: "freelance", blurb: "Client work I've taken on as a contractor." },
+  { engagement: "in-house", blurb: "Things I've built as an engineer at Maul." },
+  { engagement: "personal", blurb: "Tools I built for my own use." },
+];
+
+function RouteComponent() {
+  return (
+    <section className="w-full space-y-16 mb-8">
+      <div className="max-w-2xl space-y-4">
+        <h1 className="text-4xl md:text-5xl font-semibold tracking-[-0.04em] leading-[1.05] text-balance">
+          Use cases
+        </h1>
+        <p className="text-lg text-muted-foreground leading-relaxed text-pretty">
+          Write-ups of solutions I've built: products, integrations and, more and more, agents
+          inside systems that already exist. Each one covers the problem, the constraints, the
+          architecture, what shipped and what I'd do differently.
+        </p>
+      </div>
+
+      {publishedWork.length === 0 && (
+        <LedgerEmpty>The first use cases are being written up.</LedgerEmpty>
+      )}
+
+      {GROUPS.map(({ engagement, blurb }) => {
+        const entries = orderWork(publishedWork.filter((entry) => entry.engagement === engagement));
+        if (entries.length === 0) return null;
+        return (
+          <Ledger key={engagement} title={ENGAGEMENT_LABEL[engagement]} aside={blurb}>
+            <WorkList entries={entries} />
+          </Ledger>
+        );
+      })}
+    </section>
+  );
+}
+
+const DESCRIPTION = "Use cases: products, integrations, AI agents and personal tools";
+
+export const Route = createFileRoute("/use-cases/")({
+  head: () => ({
+    meta: [
+      { title: "Use cases — Einar Gudni" },
+      { name: "description", content: DESCRIPTION },
+      { property: "og:title", content: "Use cases" },
+      { property: "og:description", content: DESCRIPTION },
+      { property: "og:image", content: "/og/use-cases.png" },
+      { name: "twitter:card", content: "summary_large_image" },
+      { name: "twitter:image", content: "/og/use-cases.png" },
+    ],
+  }),
+  component: RouteComponent,
+});

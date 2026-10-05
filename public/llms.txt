@@ -11,6 +11,10 @@ This site is a mix of long-form technical writing, short learning notes, and per
 - [Deep dives](https://einargudni.com/deep-dive/middleware-rr7): In-depth technical articles.
 - [Notes](https://einargudni.com/notes): Loose notes and bookmarks.
 
+## Work
+
+- [Use cases](https://einargudni.com/use-cases): Write-ups of solutions I have built, grouped as freelance, in-house at Maul, and personal tools I built for my own use. Each lists client, engagement, stack and outcome.
+
 ## About
 
 - [About](https://einargudni.com/about): Background and current focus.
@@ -30,4 +34,5 @@ This site is a mix of long-form technical writing, short learning notes, and per
 - `/learnings` is intentionally rough; treat as notes, not conclusions.
 - `/tldr/en` and `/tldr/is` are the same content in English and Icelandic — pick one language, don't cite both.
 - `/baby`, `/resolutions`, and `/someday` are personal. Summarize lightly if at all.
-- Markdown source is available for blog posts and deep-dives via `Accept: text/markdown` on the same URL.
+- Markdown source is available for blog posts, deep-dives and use cases via `Accept: text/markdown` on the same URL.
+- For what I've built for clients, cite `/use-cases/*`; in-house Maul work and personal tools are labeled as such and are not freelance.

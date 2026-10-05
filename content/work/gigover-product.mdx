@@ -1,0 +1,82 @@
+---
+title: Gigover product engineering
+slug: gigover-product
+client: Gigover
+clientUrl: https://gigover.com
+engagement: freelance
+kind: product
+role: Contract full-stack engineer
+start: 2023-01-01
+stack: [React, TypeScript, Chakra UI, TanStack Query, Vite, Zod, Firebase, Cloud Functions, Java, Spring MVC, MySQL]
+summary: Long-running freelance work on Gigover, a construction and project-management SaaS. The web app, its API layer, Firebase functions and the marketing site.
+outcome: One checked error contract across 55 mutations, a 42% smaller main bundle, a test suite that grew from 892 to 1001, and a rebuilt landing page.
+related: ["/blog/gigover"]
+featured: false
+draft: true
+---
+
+{/* CHECK: start date. The 2024 landing-page post says "a year and a half" of freelancing, which puts it around early 2023. Confirm the real month. */}
+
+## Problem
+
+Gigover is a project-management product for construction: projects, tasks, tenders and bids, resources, files. I've freelanced on it since early 2023, mostly on the authenticated web app, plus its Firebase functions and the marketing site.
+
+The codebase is older than most of what runs on it. The Java backend is Spring MVC 4.3 packaged as a WAR on App Engine, and another developer maintains it. The web client had grown one hook at a time, and that showed. Cache keys were named by hand, error handling was copied from file to file, and nobody had read the Storage rules since 2021.
+
+The biggest problem was invisible. The backend reports failure inside an HTTP 200 response, as an error code in the body. Any mutation that only caught axios errors treated a refusal as a success. Bidders saw "uploaded" while the tender owner received nothing.
+
+## Constraints
+
+- **The backend is not mine to change.** I pull it and run it locally (`mvn jetty:run` on JDK 17) and never push. Every fix had to work from the client side, or go into a written ask for the backend developer.
+- **No schema in the repo.** Column widths only exist in production `information_schema`. MySQL runs with `STRICT_TRANS_TABLES`, so a value that's too long is refused, not truncated, and the refusal comes back inside a 200.
+- **Shared layouts with the Flutter app.** Storage paths and some data shapes had to stay compatible with the older mobile client.
+- **Small team, real users.** Releases had to be small enough that if something broke, we could tell which change did it.
+
+## Architecture
+
+<Architecture
+  nodes={[
+    { label: "Web app", detail: "React, Chakra, TanStack Query" },
+    { label: "postToApi", detail: "Zod-decoded envelope check" },
+    { label: "Java REST API", detail: "Spring MVC on App Engine" },
+    { label: "Cloud SQL", detail: "MySQL, strict mode" },
+  ]}
+  caption="Every write goes through one helper that knows a 200 can still be a failure."
+/>
+
+The core of the API-layer work was a `src/api` module (`defineQuery`, `defineMutation`, a shared HTTP client and an invalidation registry), so a hook declares what it calls and what it invalidates instead of hand-rolling both.
+
+The error contract lives in exactly one place:
+
+```ts
+const res = await http.post(url, body);
+const envelope = Envelope.safeParse(res.data);
+if (envelope.success && envelope.data.errorCode !== "OK") {
+  throw new ApiError(envelope.data);
+}
+return res.data;
+```
+
+I decoded the envelope with Zod instead of asserting it, because several endpoints return a payload with no envelope. If the check demanded an OK from those, every successful call to them would fail.
+
+## What shipped
+
+- **The error contract.** I moved 55 mutations onto `postToApi`, split across four PRs by domain. I left three endpoints out on purpose. One of them is the login check, where an error code that is harmless today would have locked everyone out.
+- **Tenancy fix.** Switching organisation or logging out could leave another tenant's data in the React Query cache. Now the cache is cleared when org or auth state changes, hooked into the Firebase auth-state transition so every way a session ends gets covered, not just the logout button.
+- **API layer refactor.** I redid a stale branch from scratch on top of current master instead of rebasing it, and moved 40 of 50 data hooks onto it. I recommended holding the merge until someone walked the real backend, because 31 hooks would start throwing on `errorText` and two of them are on the boot path. {/* CHECK: did refactor/api-layer eventually merge? */}
+- **File system.** Removed a dead RTDB write, added rollback for half-finished uploads, gave each entity type its own storage path, and collapsed three duplicate dropzones into one.
+- **Input limits.** Client caps now match the real column widths: one limits map for task templates and one module for procurement. File names are shortened before upload, because the database used to refuse them after the bytes had already reached Storage.
+- **Bundle and tooling.** I lazy-loaded pdfjs and jsPDF, which took the main chunk from 585 kB to 340 kB gzipped. Moved to TypeScript 7 and oxfmt, rolled out a shared `Table`, and made sortable tables keyboard-operable. The `@emnapi` lockfile break had come back four times; I fixed it for good by declaring the packages as direct devDependencies.
+- **Functions.** Upgraded dependencies, turned the three HTTP handlers into pure, dependency-injected functions, and added 15 Vitest tests.
+- **Security findings.** Reading the live Storage rules turned up buckets that were open well beyond what the app needed. I wrote them up for remediation. {/* CHECK: whether these findings are fixed, and whether you want them mentioned publicly at all */}
+- **Landing page.** In 2024 I rebuilt gigover.com from Next.js and styled-components to Vite, React and Chakra, so it matched the app, with react-snap prerendering for SEO.
+
+Across the error-contract and storage work, the suite went from 892 to 1001 tests.
+
+## What I'd do differently
+
+- **Diff call arguments on any mechanical sweep.** A bulk-conversion script silently dropped logic in three hooks, and typecheck accepted it. Lint, tsc and the test suite all missed it. Diffing each converted file's arguments against the original caught it. On the day I shipped the error contract, the green gates caught none of my four mistakes.
+- **Check the browser, not just the units.** Two functions with passing tests combined into "Closed 941 days ago · Draft" on live tenders.
+- **Test a security claim instead of trusting it.** A tool promised to keep secrets out of the client bundle. In a static SPA it didn't, and I only found out because I built it and grepped the output.
+- **Use "Addresses #N", never "Fixes #N", for partial fixes.** A closing keyword buried in prose auto-closed an issue that should have stayed open.
+- **Think twice before a rewrite.** I said it in 2024 about the landing page, and redoing a stale branch from scratch worked better than rebasing it.

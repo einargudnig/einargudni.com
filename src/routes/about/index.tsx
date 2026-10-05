@@ -6,9 +6,11 @@ import { Link } from "@/components/ui/link";
 
 function RouteComponent() {
   return (
-    <section className="mx-auto w-full max-w-2xl space-y-8 print:space-y-6 mb-8">
+    <section className="w-full max-w-2xl space-y-8 print:space-y-6 mb-8">
       <div className="flex items-start justify-between gap-6">
-        <h1 className="font-bold text-3xl tracking-tight">About</h1>
+        <h1 className="text-4xl md:text-5xl font-semibold tracking-[-0.04em] leading-[1.05] text-balance">
+          About
+        </h1>
         <Image
           src="/images/avatar.jpeg"
           alt="Einar Gudni"
@@ -50,7 +52,7 @@ function RouteComponent() {
           Your voice is heard and lot of opportunities to learn from others.
         </p>
         <p className="leading-relaxed max-w-[65ch]">
-          I do some free lance work on the side, and have been adding features and rebuilding the
+          I do some freelance work on the side, and have been adding features and rebuilding the
           system for <ExternalLink href="https://gigover.com">gigover</ExternalLink>
         </p>
       </div>
@@ -76,9 +78,10 @@ function RouteComponent() {
       <div className="flex justify-start">
         <Link
           href="/"
-          className="p-2 -m-2 text-muted-foreground hover:text-brand transition-colors"
+          className="inline-flex items-center gap-1.5 p-2 -m-2 font-mono text-xs text-muted-foreground hover:text-brand transition-colors"
         >
-          <ArrowLeft />
+          <ArrowLeft className="h-3.5 w-3.5" aria-hidden="true" />
+          Home
         </Link>
       </div>
     </section>

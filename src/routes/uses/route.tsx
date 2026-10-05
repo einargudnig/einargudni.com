@@ -1,45 +1,25 @@
-import { createFileRoute, Outlet } from "@tanstack/react-router";
-import { Button } from "@/components/ui/button";
-import { ButtonGroup } from "@/components/ui/button-group";
-import { Link } from "@/components/ui/link";
+import { createFileRoute, useRouterState } from "@tanstack/react-router";
+import { UsesTree } from "@/components/uses-tree";
+import { usesFolders } from "@/lib/uses";
 
+// /uses starts with every folder collapsed; /uses/<folder> opens that one, so the
+// old section URLs still land somewhere sensible.
 function UsesLayout() {
-  return (
-    <section className="mx-auto w-full max-w-2xl space-y-8 print:space-y-6 mb-8">
-      <Link href="/uses">
-        <h1 className="font-bold text-3xl tracking-tight mb-5">Uses</h1>
-      </Link>
-      <div className="flex-col items-center justify-center">
-        <UsesNav />
-        <div className="mt-8">
-          <Outlet />
-        </div>
-      </div>
-    </section>
-  );
-}
+  const pathname = useRouterState({ select: (s) => s.location.pathname });
+  const open = pathname.split("/")[2] || undefined;
 
-function UsesNav() {
   return (
-    <div className="flex items-center justify-center">
-      <ButtonGroup>
-        <Button variant="outline" asChild>
-          <Link href="/uses/desk">Desk</Link>
-        </Button>
-        <Button variant="outline" asChild>
-          <Link href="/uses/devices">Devices</Link>
-        </Button>
-        <Button variant="outline" asChild>
-          <Link href="/uses/keyboard">Keyboard</Link>
-        </Button>
-        <Button variant="outline" asChild>
-          <Link href="/uses/command-line">Command line</Link>
-        </Button>
-        <Button variant="outline" asChild>
-          <Link href="/uses/infrastructure">Infrastructure</Link>
-        </Button>
-      </ButtonGroup>
-    </div>
+    <section className="w-full max-w-3xl space-y-10 mb-8">
+      <div className="space-y-4">
+        <h1 className="text-4xl md:text-5xl font-semibold tracking-[-0.04em] leading-[1.05] text-balance">
+          Uses
+        </h1>
+        <p className="max-w-[54ch] text-lg text-muted-foreground leading-relaxed text-pretty">
+          The hardware and software I build with, laid out like my dotfiles.
+        </p>
+      </div>
+      <UsesTree folders={usesFolders} open={open} />
+    </section>
   );
 }
 

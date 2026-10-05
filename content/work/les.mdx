@@ -1,0 +1,81 @@
+---
+title: "les: a native macOS RSS reader and read-it-later app, driven from the keyboard"
+slug: les
+client: Personal
+engagement: personal
+kind: product
+role: Sole developer; built it for my own use
+start: 2026-03-27
+stack:
+  - Swift
+  - AppKit
+  - GRDB
+  - SQLite FTS5
+  - WebKit
+summary: A native Mac app that keeps RSS feeds and saved articles in one local SQLite database, with an inbox, full-text search and vim-style keys for everything.
+outcome: Feeds, bookmarks, OPML import and export, FTS5 search and a keyboard help overlay, in about 4,500 lines of Swift across 26 files and 16 commits, with one dependency.
+related: []
+featured: false
+draft: true
+---
+
+## Problem
+
+I read a lot of things online: blog feeds, newsletters, and articles someone links me to. RSS readers handle the first. Read-it-later apps handle the second. I wanted both in one place, in one list, read the same way. {/* CHECK: confirm the motivation. The repo never says which apps you were replacing or why. */}
+
+I also wanted to read without the mouse. Move down the list, open an article, scroll it, star it, mark it read, all from the home row.
+
+The name is Icelandic: "les" means "I read". {/* CHECK: confirm this is where the name comes from. */}
+
+## Constraints
+
+- **Mine alone.** One user, one machine. No accounts, no sync, no server. Everything lives in `~/Library/Application Support/LES/`.
+- **Native.** An AppKit app on macOS 14, not a web view in a wrapper. The list and reader had to feel like the rest of the system, including dark mode.
+- **Few dependencies.** The only package is GRDB. The design spec says the article extractor should be written in Swift "(no external dependency)" to keep full control over what gets kept.
+- **Be polite to feeds.** Refreshing on a timer means hitting other people's servers every half hour. That needs conditional requests and backoff.
+
+## Architecture
+
+<Architecture
+  nodes={[
+    { label: "Refresh scheduler", detail: "every 30 min, backoff on errors" },
+    { label: "Fetch + parse", detail: "ETag, RSS/Atom, OPML" },
+    { label: "Readability extractor", detail: "saved URLs to title, author, text" },
+    { label: "SQLite via GRDB", detail: "feeds, bookmarks, items, FTS5" },
+    { label: "AppKit UI", detail: "sidebar, list, reader, vim keys" },
+  ]}
+  caption="Feeds and bookmarks take different paths in, but both land as rows in one items table."
+/>
+
+**One table for everything.** An item belongs to either a feed or a bookmark. Exactly one of `feedId` and `bookmarkId` is set. Keeping both kinds in one `items` table means Inbox, Starred and Today are plain `WHERE` clauses, with no `UNION`. Making `feedId` nullable needed a migration that rebuilds the table, because SQLite can't alter a column.
+
+**Stable IDs.** Each item's primary key is a SHA-256 hash. For feed items it's the feed ID plus the entry's GUID, falling back to the link, then to title and date. For bookmarks it's `"bookmark:" + url`. Refetching a feed or saving the same link twice doesn't create duplicates.
+
+**Fetching.** A `FeedFetcher` actor runs at most four feeds at once, sends `If-None-Match` and `If-Modified-Since`, and treats a 304 as nothing to do. A feed that keeps failing backs off from 15 minutes up to 24 hours. Each feed keeps at most 2,000 items, and the cleanup only deletes read, unstarred ones.
+
+**Extraction.** Saving a URL fetches the page and runs my own Readability-style extractor. It parses the HTML with `XMLDocument`, strips navigation, footers, ads and share widgets by tag and class name, scores the remaining blocks by text density, and pulls the title, author and site name from meta tags. If that fails, the bookmark is still saved with a link back to the page.
+
+**Two readers.** Feed items render as native text: HTML converted to an `NSAttributedString`, archived into a versioned `readerCache` table so reopening an article is instant. Bookmarks, and feed items with under 200 characters of text, open the original page in a lazily created `WKWebView` instead. So the extracted text feeds the title and search index, while I read the real page.
+
+**Search.** An FTS5 table holds plain-text title, author and body with the `porter unicode61` tokenizer. The `/` key focuses search, and each word becomes a prefix match.
+
+**Keyboard.** A `KeyWindow` subclass intercepts key events before AppKit does. `j`/`k` move through the list, or scroll when the reader has focus. `h`/`l` move between panes, `gg` and `G` jump, `n`/`p` find the next unread, `s` stars, `m` toggles read, `b` saves a URL, `O` opens in the browser and `?` shows the help overlay. Keys pass through when a text field has focus or Cmd or Ctrl is held.
+
+## What shipped
+
+Two days of work, 27 to 29 March 2026. The first version was a three-pane RSS reader. I then wrote a design spec and implementation plan for a sidebar and read-it-later, and built that on top. {/* CHECK: the spec and plan live under docs/superpowers/, which suggests they were written with an AI agent's planning workflow. Confirm, and decide whether to say so. */}
+
+- **Sidebar.** Smart views (Inbox, Reading List, Starred, Today) with unread counts and SF Symbols, then feeds in folders below a divider.
+- **Feeds.** RSS and Atom, OPML import and export from the File menu, and context menus to remove feeds or mark all read.
+- **Bookmarks.** Save a URL, extract it, keep it in Reading List after it's read.
+- **Reading.** Inline images with a SHA-256-keyed disk cache, dark mode through a central `Theme`, an empty state, and the web view fallback for thin content.
+- **Search and keys.** FTS5 search and the full keyboard map with its help overlay.
+
+The last commit was on 29 March, and there is one uncommitted change in the items list. {/* CHECK: do you still use les day to day, or has it stopped? If it's dormant, consider setting `end`. */}
+
+## What I'd do differently
+
+- **Write tests.** There are none. The pieces most worth testing are pure functions: the feed parser, the OPML parser, the stable ID hash and the extractor. The `setupInMemory()` hook on the database is already there for it.
+- **Keep the search index in sync on delete.** The FTS table is contentless and only ever gets inserts. Deleting a feed, a bookmark or old items leaves their rows in the index, and SQLite can reuse those rowids, so a search could match the wrong item. Triggers on `items` would fix it.
+- **Decide what a bookmark is for.** I built an extractor and then show the live page anyway. Either render the extracted text, so saved articles survive the site changing or going away, or drop most of the extractor and keep only metadata.
+- **Stop swallowing errors.** Refresh failures end in `catch {}` with a "log but don't crash" comment, and nothing is logged. A feed's `lastError` is stored but I never surface it.

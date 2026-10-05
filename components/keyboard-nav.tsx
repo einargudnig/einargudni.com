@@ -8,7 +8,6 @@ const routes: Record<string, { path: string; label: string }> = {
   h: { path: "/", label: "home" },
   b: { path: "/blog", label: "blog" },
   u: { path: "/uses", label: "uses" },
-  n: { path: "/notes", label: "notes" },
   a: { path: "/about", label: "about" },
   s: { path: "/someday", label: "someday" },
   w: { path: "/now", label: "now" },

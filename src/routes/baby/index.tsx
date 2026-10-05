@@ -118,10 +118,12 @@ function BabyPage() {
     weightTotal > 0 ? Math.round(((weightTotals?.under || 0) / weightTotal) * 100) : 0;
 
   return (
-    <section className="mx-auto w-full max-w-2xl space-y-8 mb-8">
+    <section className="w-full max-w-2xl space-y-8 mb-8">
       <div className="flex items-center gap-3">
         <Baby className="size-8 text-muted-foreground" />
-        <h1 className="font-semibold text-2xl tracking-tight">Baby Prediction Market</h1>
+        <h1 className="text-4xl md:text-5xl font-semibold tracking-[-0.04em] leading-[1.05] text-balance">
+          Baby Prediction Market
+        </h1>
       </div>
 
       {/* Countdown */}

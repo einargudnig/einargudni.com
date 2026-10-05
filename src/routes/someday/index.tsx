@@ -4,8 +4,10 @@ import { Link } from "@/components/ui/link";
 
 function RouteComponent() {
   return (
-    <section className="mx-auto w-full max-w-2xl space-y-8 print:space-y-6 mb-8">
-      <h1 className="font-semibold text-3xl tracking-tight mb-5">Someday</h1>
+    <section className="w-full max-w-2xl space-y-8 print:space-y-6 mb-8">
+      <h1 className="text-4xl md:text-5xl font-semibold tracking-[-0.04em] leading-[1.05] text-balance mb-6">
+        Someday
+      </h1>
       <div className="divide-y divide-border/50 stagger-list">
         <div className="pb-8">
           <p className="text-brand text-lg font-mono mb-3">
@@ -57,9 +59,10 @@ function RouteComponent() {
       <div className="flex justify-start">
         <Link
           href="/"
-          className="p-2 -m-2 text-muted-foreground hover:text-brand transition-colors"
+          className="inline-flex items-center gap-1.5 p-2 -m-2 font-mono text-xs text-muted-foreground hover:text-brand transition-colors"
         >
-          <ArrowLeft />
+          <ArrowLeft className="h-3.5 w-3.5" aria-hidden="true" />
+          Home
         </Link>
       </div>
     </section>

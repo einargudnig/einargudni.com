@@ -10,6 +10,14 @@ export function cn(...inputs: ClassValue[]) {
  * @param dateString - ISO format date string (YYYY-MM-DD)
  * @returns Formatted date string (e.g., "October 11, 2024")
  */
+// "10 Feb 2026": fits a ledger's date column without wrapping.
+export const formatShortDate = (dateString: string) =>
+  new Date(dateString).toLocaleDateString("en-GB", {
+    year: "numeric",
+    month: "short",
+    day: "numeric",
+  });
+
 export function formatBlogDate(dateString: string): string {
   const date = new Date(dateString);
 

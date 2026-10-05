@@ -32,13 +32,13 @@ function DeepDive() {
   if (!dive) throw notFound();
 
   return (
-    <section className="mx-auto w-full max-w-2xl space-y-8 print:space-y-6">
+    <section className="w-full max-w-2xl space-y-8 print:space-y-6">
       <div>
-        <h1 className="font-bold text-3xl md:text-4xl tracking-tight max-w-[650px] leading-tight">
+        <h1 className="text-4xl md:text-5xl font-semibold tracking-[-0.035em] leading-[1.05] max-w-[22ch]">
           <Balancer>{dive.title}</Balancer>
         </h1>
         <div className="flex items-center gap-3 mt-4 mb-8">
-          <div className="font-mono text-sm text-muted-foreground tabular-nums tracking-tighter">
+          <div className="text-sm text-muted-foreground tabular-nums">
             {formatBlogDate(dive.date)}
           </div>
           <div className="h-px flex-1 bg-border/50" />

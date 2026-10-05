@@ -1,0 +1,76 @@
+---
+title: "jstop: a macOS menu bar app that lists, kills and opens running Node, Bun and Deno processes"
+slug: jstop
+client: Personal
+engagement: personal
+kind: product
+role: Sole developer; built it for my own use
+start: 2026-03-03
+stack:
+  - Swift
+  - SwiftUI
+  - XcodeGen
+  - GitHub Actions
+  - Remotion
+summary: A native macOS menu bar app that shows every running node, bun and deno process with its ports, framework and uptime, and lets me kill it or open its dev server in one click.
+outcome: Open source on GitHub with four tagged releases, 21 unit tests run in CI on every push, detection for 25 frameworks and tools, and a script that builds and installs it into /Applications.
+related: []
+featured: false
+draft: true
+---
+
+## Problem
+
+I run a lot of JavaScript processes at once: dev servers, test watchers, MCP servers, `wrangler`, things started by `bun dev` that start other things. Some of them outlive the terminal tab I started them in. Then a port is taken and I don't know by what. {/* CHECK: the repo states what the app does, not why. Confirm this is the real itch (orphaned dev servers, "port already in use") before publishing. */}
+
+The usual fix is Activity Monitor, or `lsof -i :3000` and `kill` in a terminal. Neither tells you which project a `node` process belongs to. I wanted one click in the menu bar to see them, kill them and open them. The planning doc puts it as three things that matter equally: see, kill, open.
+
+## Constraints
+
+- **Native only.** No Electron and no web wrapper. A tool that watches for stray Node processes shouldn't be one.
+- **macOS 13 and up,** so I could use SwiftUI's `MenuBarExtra` instead of `NSStatusItem`.
+- **No special permissions.** Only user-space tools (`ps`, `lsof`) and no full disk access. That meant turning off the App Sandbox, which can't run either.
+- **Every runtime,** not just Node. Bun and Deno count too.
+- **Version managers.** My Node comes from fnm, so the binary lives deep in a path like `~/.local/state/fnm_multishells/...`. Matching by process name had to survive that.
+
+## Architecture
+
+<Architecture
+  nodes={[
+    { label: "Menu bar label", detail: "Icon + live process count" },
+    { label: "ProcessManager", detail: "Polls 2s open, 10s idle" },
+    { label: "ps + lsof", detail: "Process tree and TCP listeners" },
+    { label: "JSProcess", detail: "Framework, short path, uptime" },
+    { label: "Popover", detail: "Dev Servers / Background, kill, open" },
+  ]}
+  caption="One singleton shells out to ps and lsof on a background queue and publishes a list that the SwiftUI views render."
+/>
+
+The app is five Swift files and about 900 lines. `ProcessManager` is a `@MainActor` singleton. On a timer it runs `ps -axo pid=,ppid=,etime=,comm=,args=` on a background queue, then `lsof -iTCP -sTCP:LISTEN -nP -Fn` for every listening TCP socket on the machine. It publishes the result through `@Published`, and SwiftUI re-renders. Polling is every 2 seconds with the popover open and every 10 seconds when only the menu bar count needs updating.
+
+**Matching the runtime.** macOS truncates the `comm` column to about 15 characters, so fnm's `node` showed up as `/Users/einargudj`. The fix checks the basename of `argv[0]` from the full args first and falls back to `comm`.
+
+**Ports from the whole tree.** `bun dev` doesn't own port 3000. It spawns `node .../next dev`, which spawns `next-server`, which does. So I build a parent-to-children map for every process on the system, walk each target's descendants and give the target their ports. Then I hide any target whose ancestor is also a target, so `bun dev` shows once with port 3000 instead of twice.
+
+**Framework detection.** The same subtree walk collects descendant args. `JSProcess` matches them against 25 patterns (Next.js, Vite, Remix, Astro, Wrangler, Vitest and so on) and falls back to the runtime name. It also cuts the args down to a short project path, dropping everything after `node_modules`.
+
+**Actions.** Kill sends `SIGTERM` and rescans after half a second. A port badge opens `http://localhost:<port>` through `NSWorkspace`. Processes with ports go under Dev Servers, and the rest go under a collapsed Background section.
+
+## What shipped
+
+- **The app.** Menu bar icon with a live count, a popover grouped into Dev Servers and Background, framework badges in brand colours, uptime, one-click kill and open-in-browser.
+- **Tests and CI.** 21 XCTest cases for the pure functions: `etime` parsing, short-path extraction, framework detection and uptime formatting. GitHub Actions runs them on every push to master, and a tag builds a zipped `.app` and attaches it to a GitHub release.
+- **Releases.** v1.0.0, v1.0, v1.1 and v1.2, all tagged on 4 and 5 March 2026. A separate `release.sh` signs with a Developer ID, notarizes, staples and builds a DMG. {/* CHECK: whether the notarized DMG was ever uploaded. The CI release builds an unsigned zip; confirm which one people actually download. */}
+- **Install script.** `install.sh` builds a Release, quits the running copy, replaces `/Applications/jstop.app` and relaunches it. I added it in June because the installed copy had drifted behind the source.
+- **A showcase video** made with Remotion, rendered to the GIF in the README.
+
+{/* CHECK: how often you use it day to day, and whether anyone else runs it. The repo has no usage data and 0 stars. */}
+
+## What I'd do differently
+
+- **Test the parsing, not just the helpers.** The tests cover small pure functions. The `ps` parsing, the descendant walk and the deduplication all live inline in one closure in `runPS`, so none of it is tested. That's the part most likely to break.
+- **Drive the real UI before tagging.** In June I found the process list never rendered. A `ScrollView` inside the self-sizing `MenuBarExtra` window got no height and collapsed to zero. The fix measures content height with a `PreferenceKey` and caps the frame at 400 points. {/* CHECK: the commit says the list "never rendered". Was v1.2 shipped with this bug, or did a macOS update cause it? */}
+- **Finish the kill.** The plan was `SIGTERM`, then `SIGKILL` if the process ignored it. Only `SIGTERM` shipped, so a hung process just stays in the list.
+- **Match frameworks on tokens, not substrings.** A pattern like `/express` matches any path that contains it. The order of the list does real work, and a new pattern can quietly change existing labels.
+- **Cut the scope out loud.** Manual port override was in the first requirements and the Phase 3 plan. It never shipped, and the planning docs still list it as active. {/* CHECK: was manual port override dropped on purpose, or is it still planned? */}
+- **Keep planning docs honest.** I scaffolded the project with a phased plan and an agent running some of the plans. {/* CHECK: confirm the .planning/ docs and agent-history.json came from an agent-driven planning workflow, and whether you want to mention that. */} `STATE.md` stopped at 43% on day one, while the app went on to v1.2. Docs that stop being updated mislead the next reader, me included.

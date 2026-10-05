@@ -1,0 +1,72 @@
+---
+title: Claude plugins and skills for the Maul team
+slug: maul-cowork-skills
+client: Maul
+clientUrl: https://maul.is
+engagement: in-house
+kind: agent
+role: Software developer
+start: 2026-06-01
+stack: [Claude Code plugins, Agent Skills, Claude Cowork, MCP, claude plugin eval, TypeScript, Vitest, Bash, Notion]
+summary: A private plugin marketplace that gives everyone at Maul the same Claude skills, from brand assets to order cutoffs, with a shared core plugin and evals that show what each skill adds.
+outcome: maul-core 0.7.0 passed 6/6 eval cases over 36 runs with a mean +83 delta against the same model without the plugin, and its time-rules reference is generated from live code.
+related: []
+featured: true
+draft: true
+---
+
+## Problem
+
+Maul's working knowledge lives in a few places: order cutoffs in the web app, ownership in Notion, the brand in one codebase. Colleagues were starting to use Claude for real work, developers in Claude Code and the ops team in Desktop and Cowork. Without that context Claude guessed. One case made it concrete: a Cowork skill that places late orders for customers did not check cutoffs, its own instructions said so, and the API it calls doesn't enforce a cutoff for that kind of privileged call either. Nothing stopped a late order except the model knowing better.
+
+## Constraints
+
+- Internal only. Nothing could be published to a public registry, and access had to follow existing permissions.
+- Two audiences with different clients: developers in Claude Code with repo checkouts, ops staff in Desktop/Cowork without them.
+- Domain knowledge already had a source of truth in code. A second hand-written copy would drift.
+- Small team. Whatever I built had to be cheap to maintain, which ruled out heavier distribution options.
+
+## Architecture
+
+The first decision was plugin versus bare skill. The skill is the whole capability; the plugin is two JSON files that add distribution and managed updates. That wrapper is worth it once more than one person needs the skill, so everything ships as a plugin.
+
+There is no global registry behind this. A marketplace is just a git URL someone opts into with `/plugin marketplace add`, so a private repo in Maul's GitHub org is a private marketplace. Access is whatever repo permissions say, and I didn't have to build anything for it.
+
+`maul-core` is the shared plumbing. It owns what other Maul skills depend on, mainly safe Notion writes, so they point at it by name instead of restating the same API traps. Domain skills sit on top. Brand assets get their own plugin.
+
+<Architecture
+  nodes={[
+    { label: "Source of truth", detail: "app code, Notion databases" },
+    { label: "maul-core", detail: "shared plumbing: Notion writes, cached rules" },
+    { label: "Domain skills", detail: "time rules, roles, surveys, brand" },
+    { label: "Private marketplace", detail: "git repo, gated by org access" },
+    { label: "Claude Code / Cowork", detail: "developers and ops" },
+  ]}
+  caption="Knowledge flows from where it already lives, through a shared core, out through a repo-gated marketplace."
+/>
+
+For the time rules, the skill's reference tables are generated from the live rule arrays in the web app. A script writes the markdown, and a Vitest test compares the checked-in file with fresh generator output. CI already runs the tests, so editing a cutoff in code without regenerating the doc fails the build. I checked it by deliberately changing a cutoff and watching the test fail.
+
+The gap I didn't expect was that Cowork skills and repo-local skills are separate catalogs. A skill in the repo's `.agents/skills/` never shows up in Cowork, and publishing to the org catalog is a manual admin step. `maul-core` partly closes this by carrying a cached copy of the time-rules skill, marked as not the source of truth, with a refresh path. {/* CHECK: confirm how the cached copy is refreshed (manual regenerate vs. script) before describing it further */}
+
+## What shipped
+
+- **maul-brand** (`look-the-part`): applies Maul's favicons, fonts, logo and colors to an internal tool. A version-gated script copies the assets; the agent wires them into whatever framework the project uses.
+- **maul-time-rules**: cutoff and opening times per brand, role and meal, including guidance for autonomous order actions where the API won't enforce a cutoff.
+- **maul-notion-writes**: the approval pattern and the known Notion API traps, used by every Maul skill that writes to Notion.
+- **maul-roles**: who owns what, walked from the org model in Notion. Read-only, and it never repeats personal data. {/* CHECK: confirm I authored maul-roles and maul-surveys, not just moved them into maul-core */}
+- **maul-surveys**: brings up the weakest customer-satisfaction category when someone is drafting a complaint reply or an incident report.
+- **Evals** for `maul-core` using `claude plugin eval`, with Notion mocked by an eval-only stub plugin and a side-by-side page of answers with and without the plugin.
+
+I rejected a shared npm brand-tokens package as overkill for a team this size; it only makes sense if the internal tools settle on one stack. Bundling the roughly 520K of assets in the plugin keeps it offline and versioned.
+
+The 0.7.0 eval passed all 6 cases over 36 runs in about five minutes, with a mean delta of +83 over the same model without the plugin. {/* CHECK: confirm +83 is percentage points, and how much of it is trigger-only graders, whose delta is maximal by construction */} The more useful number is from the one case with an LLM grader: it checks that the cutoff answer is correct and gives a firm verdict based on the actual clock, not just that the skill fired.
+
+## What I'd do differently
+
+- **Plan for Cowork from day one.** I built the time-rules skill repo-side and only then found it couldn't reach the Cowork automation that needed it most. The late-order skill still needs a pointer to it. {/* CHECK: whether the pointer has since been added to the live late-order skill */}
+- **Write answer-quality graders first.** Trigger graders only show that the skill loaded. The meaningful deltas came from LLM graders, and one "failure" turned out to be my rubric wording, which I'd only have found by reading the answers.
+- **Keep fixtures out of the shipped tree.** Desktop sync rejected the whole plugin because eval stubs carried nested manifests. Deleting them worked; a stub with only `.mcp.json` still loads in evals.
+- **Don't rely on bash for plugin scripts.** The fetch script passed `bash -n` but broke on macOS's bash 3.2, and it needs `jq` just to read its own manifest. Every plugin runs alongside Node, so a `.mjs` script would avoid both.
+- **Sort out access before announcing.** A colleague without access to the private repo gets a confusing marketplace error, not a clear "no permission".
+- **The autonomous cutoff guard is still untested.** Asserting that no order gets placed needs a mock of the Maul MCP, which is no longer bundled in the plugin.

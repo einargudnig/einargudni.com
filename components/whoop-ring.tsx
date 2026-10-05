@@ -57,7 +57,7 @@ export function WhoopRing({
           />
         </svg>
         <div className="absolute inset-0 flex items-center justify-center">
-          <span className={cn("font-mono text-2xl tabular-nums", colorClass)}>
+          <span className={cn("text-2xl tabular-nums", colorClass)}>
             {displayValue}
           </span>
         </div>

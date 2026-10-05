@@ -1,0 +1,73 @@
+---
+title: Proof over trust — letting an agent verify Maul's admin app
+slug: maul-admin-verification
+client: Maul
+clientUrl: https://maul.is
+engagement: in-house
+kind: agent
+role: Software developer
+start: 2026-09-02
+stack: [TypeScript, Playwright, Node.js, React Router, Vitest, oxlint]
+summary: A harness that lets an agent drive Maul's admin app in a headless browser and come back with evidence, a feature map that tells it where everything is, and an /opinions page that writes down how we build.
+outcome: Writing the feature map found five real product bugs before any test existed, including an edit form that silently wiped a company's billing discount.
+related: []
+featured: true
+draft: true
+---
+
+## Problem
+
+I'm moving Maul's internal admin panel off Retool and onto our own React app, much of it written with coding agents. {/* CHECK: fair to say most of the admin code is agent-written? */} The weak point was the last step. An agent would say a change worked. Typecheck and unit tests passed, but nobody had opened the page.
+
+That gap had already bitten me. Early in the migration, unit tests said admin users could reach the CRUD routes. A live contract test showed every one returning 403, because a separate route-level guard only accepted service tokens.
+
+Lauren Tan's "Verification is all you need" (part 1 of her pstack guide) put it plainly: an agent that can launch the app, use a feature like a person would, and capture evidence closes its own loop.
+
+## Constraints
+
+- **Real data, carefully.** Verification runs against the shared dev API, not a mock. Otherwise it doesn't prove anything. Writes are dry-run by default, only touch `verify-*` fixture records that are deleted in the same run, and every non-GET is announced before it fires.
+- **Some "safe" actions aren't.** Unticking the broadcasts page's "dry run" toggle sends a real POST. The harness has to know that.
+- **Agent-shaped.** Instructions alone don't get an agent to use a browser. It needs a CLI with JSON output, called one step at a time.
+- **No CI E2E suite, on purpose.** The harness gathers proof; it isn't a merge gate.
+
+## Architecture
+
+<Architecture
+  nodes={[
+    { label: "Agent", detail: "Claude Code / Codex" },
+    { label: "control.mjs", detail: "JSON CLI, one call per step" },
+    { label: "Headless Chromium", detail: "one persistent Playwright context" },
+    { label: "Admin app", detail: "real dev API" },
+  ]}
+  caption="Every CLI call is a short-lived process that connects over CDP to one long-lived browser."
+/>
+
+**The CLI.** `control.mjs` wraps Playwright: `goto`, `snapshot` (the accessibility tree), `click`, `type`, `screenshot`, `console`, `network --summary`, and `writes`, an audit trail of every non-GET. I used `launchPersistentContext` because `connectOverCDP` only sees the default context, which lets each command be a fresh process sharing one browser page. The agent finds controls by accessible name.
+
+**The feature map.** One markdown file per surface, written for an agent that has never seen the app: how to reach it, what proves it works, what it writes. Four agents drafted the first 26 files in parallel from the source, then I spot-checked them against the running app. The map is the real asset, not the CLI.
+
+**The upkeep loop.** A maintenance skill and `npm run check:map` hold the map against live routes and nav.
+
+## What shipped
+
+The first version went out as one PR: five commits, 39 files. Since then it's how admin changes get proven: request counts after a framework upgrade, zero console errors and zero writes across a 19-page design-system pass, a ticket closed with a real screenshot.
+
+The map paid off before any of that. Drafting it surfaced five product bugs nobody was looking for. The worst: the company edit form always sent a billing discount of zero, because the detail endpoint never returned it. Renaming a company wiped its discount. {/* CHECK: a later note says "7 product bugs". Pick the right number. */}
+
+In September I ran the skill on itself. A read-only pass over all 28 surfaces found that the shell's doc had been wrong for nine days, since the top-bar redesign, and `check:map` hadn't caught it. Its freshness check compares timestamps, only for files that own a route, and the shell doc owns none. So I added `check:handles`: it drives each page and diffs every control the map names against the live accessibility tree. Only a browser run can write the baseline, never a human. The first one resolved 91 of 165 claims. A claim never seen may be behind a click and is reported separately; only a recorded handle that's now missing fails the gate.
+
+On top of this I built `/opinions` in the admin app, where we write down how we build: 40 opinions across lint, verification and supply chain, each with a do/don't example and what enforces it. It shows the release flow as the three commands a person types, and nine errors that point the wrong way, each with its symptom, real cause and fix. A test checks every `source` path exists on disk, because dead links are what make people stop trusting a page like this. {/* CHECK: PR #175 was open on 2026-10-02. Confirm it merged. */}
+
+## What I'd do differently
+
+**Don't use timestamps as a proxy for truth.** `freshness` measured "edited recently", not "still correct". I'd have checked handles against the live app from the start.
+
+**Keep staleness signals quiet.** In the drift pass, 12 of 13 flagged files were harmless refactors, so the one real problem gets skimmed past. CI also left freshness out of the exit code.
+
+**Make cleanup kill what it started.** The recorded pid was a wrapper that exited immediately, so `cleanup` leaked the dev server every run, and the next `start` could report `ok` against a stale server. It cost a few sessions before I fixed it.
+
+**Know where the browser can't prove things.** Two-key chords and clipboard reads still need a human.
+
+**Write process docs as what people type.** My first release section showed seven steps with a command each, and it read as seven manual steps. "You do" and "then, automatically" need to be separate.
+
+**Get real telemetry.** The admin app has no usage or error tracking. Verification proves a change works when it ships, not what breaks later. And the planned CI smoke job, walking every nav path and failing on console errors or 5xx, still isn't built.
