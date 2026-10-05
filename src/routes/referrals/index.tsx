@@ -18,8 +18,10 @@ const referrals = [
 
 function RouteComponent() {
   return (
-    <section className="mx-auto w-full max-w-2xl space-y-8 print:space-y-6 mb-8">
-      <h1 className="font-semibold text-2xl tracking-tight">Referrals</h1>
+    <section className="w-full max-w-2xl space-y-8 print:space-y-6 mb-8">
+      <h1 className="text-4xl md:text-5xl font-semibold tracking-[-0.04em] leading-[1.05] text-balance">
+        Referrals
+      </h1>
       <p className="-mt-4 text-muted-foreground">
         Products and services I use and recommend. Use these links to get a discount (and I might
         get one too).
@@ -36,9 +38,10 @@ function RouteComponent() {
       <div className="flex justify-start">
         <Link
           href="/"
-          className="p-2 -m-2 text-muted-foreground hover:text-brand transition-colors"
+          className="inline-flex items-center gap-1.5 p-2 -m-2 font-mono text-xs text-muted-foreground hover:text-brand transition-colors"
         >
-          <ArrowLeft />
+          <ArrowLeft className="h-3.5 w-3.5" aria-hidden="true" />
+          Home
         </Link>
       </div>
     </section>

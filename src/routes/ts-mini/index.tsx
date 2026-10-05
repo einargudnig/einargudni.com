@@ -6,7 +6,7 @@ function TypeScriptMiniPage() {
   return (
     <section className="mx-auto w-full max-w-4xl space-y-8 print:space-y-6">
       <div className="space-y-4">
-        <h1 className="font-bold text-3xl tracking-tight">
+        <h1 className="text-4xl md:text-5xl font-semibold tracking-[-0.04em] leading-[1.05] text-balance">
           <Balancer>How the TypeScript Compiler Works</Balancer>
         </h1>
         <p className="text-muted-foreground text-lg">

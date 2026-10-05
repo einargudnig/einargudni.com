@@ -5,9 +5,11 @@ import { Link } from "@/components/ui/link";
 
 function RouteComponent() {
   return (
-    <section className="mx-auto w-full max-w-2xl space-y-8 print:space-y-6 mb-8">
+    <section className="w-full max-w-2xl space-y-8 print:space-y-6 mb-8">
       <div>
-        <h1 className="font-semibold text-3xl tracking-tight">Chroncal — Terms of Service</h1>
+        <h1 className="text-4xl md:text-5xl font-semibold tracking-[-0.04em] leading-[1.05] text-balance">
+          Chroncal — Terms of Service
+        </h1>
         <p className="mt-1 text-sm font-mono text-muted-foreground">Updated 9. Sep, 2026</p>
       </div>
 
@@ -79,9 +81,10 @@ function RouteComponent() {
       <div className="flex justify-start">
         <Link
           href="/"
-          className="p-2 -m-2 text-muted-foreground hover:text-brand transition-colors"
+          className="inline-flex items-center gap-1.5 p-2 -m-2 font-mono text-xs text-muted-foreground hover:text-brand transition-colors"
         >
-          <ArrowLeft />
+          <ArrowLeft className="h-3.5 w-3.5" aria-hidden="true" />
+          Home
         </Link>
       </div>
     </section>

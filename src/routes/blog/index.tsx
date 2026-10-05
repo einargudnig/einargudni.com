@@ -6,14 +6,17 @@ import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { PencilLine } from "lucide-react";
 
 function RouteComponent() {
-  // Sort posts by date (newest first)
-  const sortedPosts = [...posts].sort(
-    (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime(),
-  );
+  // Drafts stay reachable by URL (they render with an "under construction"
+  // banner) but are not listed.
+  const sortedPosts = posts
+    .filter((post) => !post.draft)
+    .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
 
   return (
-    <section className="mx-auto w-full space-y-8 print:space-y-6 mb-8">
-      <h1 className="font-bold text-3xl tracking-tight mb-5">Blog</h1>
+    <section className="w-full max-w-2xl space-y-8 print:space-y-6 mb-8">
+      <h1 className="text-4xl md:text-5xl font-semibold tracking-[-0.04em] leading-[1.05] text-balance mb-6">
+        Blog
+      </h1>
 
       <div className="grid stagger-list">
         {sortedPosts.length === 0 && (

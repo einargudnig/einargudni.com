@@ -3,19 +3,23 @@ import { Link } from "@/components/ui/link";
 import { useRouterState } from "@tanstack/react-router";
 import { cn } from "@/lib/utils";
 import { KeyboardHint } from "@/components/keyboard-hint";
+import { ThemeToggle } from "@/components/theme-toggle";
 
 const navItems = {
   "/": {
     name: "home",
   },
-  "/uses": {
-    name: "uses",
+  "/work": {
+    name: "work",
   },
   "/blog": {
     name: "blog",
   },
-  "/work": {
-    name: "work",
+  "/notes": {
+    name: "notes",
+  },
+  "/uses": {
+    name: "uses",
   },
 };
 
@@ -23,8 +27,8 @@ export function Navbar() {
   const pathname = useRouterState({ select: (s) => s.location.pathname });
 
   return (
-    <nav className="mx-auto w-full space-y-8 print:space-y-6">
-      <aside className="mb-16 tracking-tight">
+    <header className="mx-auto w-full space-y-8 print:space-y-6">
+      <div className="mb-16 tracking-tight">
         <div className="lg:sticky lg:top-20">
           <nav className="pb-4 border-b border-border/50" id="nav">
             <div className="flex justify-between items-center">
@@ -32,19 +36,18 @@ export function Navbar() {
                 <div className="flex flex-row gap-x-1">
                   {Object.entries(navItems).map(([path, { name }]) => {
                     const isActive =
-                      path === "/"
-                        ? pathname === "/"
-                        : (pathname?.startsWith(path) ?? false);
+                      path === "/" ? pathname === "/" : (pathname?.startsWith(path) ?? false);
 
                     return (
                       <Link
                         key={path}
                         href={path}
+                        aria-current={isActive ? "page" : undefined}
                         className={cn(
-                          "transition-colors duration-200 flex align-middle relative py-2 px-3 rounded-md",
-                          "after:absolute after:bottom-0 after:left-3 after:right-3 after:h-px",
+                          "transition-colors duration-200 flex align-middle relative py-2 px-2 sm:px-3 rounded-md",
+                          "after:absolute after:bottom-0 after:left-2 after:right-2 sm:after:left-3 sm:after:right-3 after:h-px",
                           isActive
-                            ? "text-foreground after:bg-foreground/60"
+                            ? "text-foreground after:bg-brand"
                             : "text-muted-foreground hover:text-brand hover:bg-muted/50 after:bg-transparent",
                         )}
                       >
@@ -81,15 +84,18 @@ export function Navbar() {
                   <Mail size={20} strokeWidth={1.5} />
                 </Link>
                 <KeyboardHint />
+                <ThemeToggle />
                 <Link
                   href="https://github.com/einargudnig"
-                  className="text-muted-foreground hover:text-brand transition-colors p-2 -m-1"
+                  aria-label="GitHub"
+                  className="hidden sm:block text-muted-foreground hover:text-brand transition-colors p-2 -m-1"
                 >
                   <Github size={20} strokeWidth={1.5} />
                 </Link>
                 <Link
                   href="https://x.com/einargudni"
-                  className="text-muted-foreground hover:text-brand transition-colors p-2 -m-1"
+                  aria-label="X (Twitter)"
+                  className="hidden sm:block text-muted-foreground hover:text-brand transition-colors p-2 -m-1"
                 >
                   <Twitter size={20} strokeWidth={1.5} />
                 </Link>
@@ -97,7 +103,7 @@ export function Navbar() {
             </div>
           </nav>
         </div>
-      </aside>
-    </nav>
+      </div>
+    </header>
   );
 }

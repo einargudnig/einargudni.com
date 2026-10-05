@@ -9,8 +9,10 @@ function RouteComponent() {
   );
 
   return (
-    <section className="mx-auto w-full max-w-2xl space-y-10 print:space-y-8 mb-8">
-      <h1 className="font-bold text-3xl tracking-tight mb-5">Quotes</h1>
+    <section className="w-full max-w-2xl space-y-10 print:space-y-8 mb-8">
+      <h1 className="text-4xl md:text-5xl font-semibold tracking-[-0.04em] leading-[1.05] text-balance mb-6">
+        Quotes
+      </h1>
 
       <div className="divide-y divide-border/50 stagger-list">
         {sorted.map((quote) => (

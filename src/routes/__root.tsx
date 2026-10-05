@@ -47,7 +47,15 @@ function RootDocument({ children }: Readonly<{ children: ReactNode }>) {
             <div className="flex-1">{children}</div>
             <footer className="mt-16 mb-8 border-t border-border/50 pt-6 flex items-center justify-between text-xs text-muted-foreground font-mono">
               <span>don't half ass it</span>
-              <span className="tabular-nums">{new Date().getFullYear()}</span>
+              <span className="flex items-center gap-4">
+                <a href="https://github.com/einargudnig" className="hover:text-brand transition-colors">
+                  github
+                </a>
+                <a href="https://x.com/einargudni" className="hover:text-brand transition-colors">
+                  x
+                </a>
+                <span className="tabular-nums">{new Date().getFullYear()}</span>
+              </span>
             </footer>
             <KeyboardNav />
           </main>
