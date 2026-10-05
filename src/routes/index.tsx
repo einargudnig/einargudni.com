@@ -177,7 +177,7 @@ function RouteComponent() {
     <div className="space-y-20 md:space-y-24">
       <section className="space-y-8">
         <h1 className="max-w-[18ch] text-[2.75rem] font-semibold leading-[1.02] tracking-[-0.04em] text-balance md:text-7xl">
-          I build solutions that fit the systems you already have.
+          I build solutions that fit your systems.
         </h1>
         <div className="grid gap-6 md:grid-cols-[1fr_auto] md:items-end md:gap-10">
           <div className="max-w-[54ch] space-y-3 text-lg leading-relaxed text-muted-foreground text-pretty">
@@ -337,7 +337,7 @@ function RouteComponent() {
 }
 
 const DESCRIPTION =
-  "Einar Gudni builds solutions that fit the systems you already have: products, integrations and AI agents. Use cases, writing and projects.";
+  "Einar Gudni builds solutions that fit your systems: products, integrations and AI agents. Use cases, writing and projects.";
 
 export const Route = createFileRoute("/")({
   head: () => ({

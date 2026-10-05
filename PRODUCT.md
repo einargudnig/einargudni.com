@@ -18,7 +18,7 @@ Einar Gudni's personal site (einargudni.com): a place to share his thinking and 
 
 ## Positioning
 
-**A builder of solutions that fit the systems you already have** (user-pinned 2026-10-05). The headline is the solution, not the technology: product engineering, internal tools and integrations, and lately AI agents inside real, running systems (an embedded assistant in Gigover, a self-hosted harness over Maul's production MCP server, verification harnesses, Cowork plugins). Agents are the sharpest current evidence, never the only offer; sometimes the right answer is plain, careful engineering. He writes candidly about the constraints, architecture and what he'd do differently. The site is itself a working example: markdown negotiation, llms.txt, agent-discovery endpoints.
+**A builder of solutions that fit your systems** (user-pinned 2026-10-05). The headline is the solution, not the technology: product engineering, internal tools and integrations, and lately AI agents inside real, running systems (an embedded assistant in Gigover, a self-hosted harness over Maul's production MCP server, verification harnesses, Cowork plugins). Agents are the sharpest current evidence, never the only offer; sometimes the right answer is plain, careful engineering. He writes candidly about the constraints, architecture and what he'd do differently. The site is itself a working example: markdown negotiation, llms.txt, agent-discovery endpoints.
 
 ## Operating Context
 
