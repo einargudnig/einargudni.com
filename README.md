@@ -25,9 +25,20 @@ bun run dev      # velite --watch alongside vite, on http://localhost:5173
 
 ## How it fits together
 
-**Content.** `content/posts/`, `content/learnings/` and `content/deep-dives/`
-are validated by `velite.config.ts` into typed collections under `.velite/`,
-importable as `@/.velite`. Velite runs at build time, so `.velite/` has to
+**Content.** Each directory under `content/` is a collection, validated by
+`velite.config.ts` into typed data under `.velite/` and importable as
+`@/.velite`:
+
+| Directory             | Rendered at                      |
+| --------------------- | -------------------------------- |
+| `content/posts/`      | `/blog`, `/blog/$slug`           |
+| `content/deep-dives/` | `/deep-dive/$slug`               |
+| `content/work/`       | `/use-cases`, `/use-cases/$slug` |
+| `content/learnings/`  | `/learnings`, `/notes`           |
+| `content/links/`      | `/notes`                         |
+| `content/quotes/`     | `/quotes`                        |
+
+Velite runs at build time, so `.velite/` has to
 exist before `vite build` — both `dev` and `build` invoke it.
 
 MDX compiles to real ES modules via `@mdx-js/rollup`, and `components/mdx-content.tsx`
@@ -54,7 +65,7 @@ native addon that won't load in workerd.
 
 Cloudflare Workers, configured in `wrangler.jsonc`. Pages prerender to
 `dist/client` and are served by the assets binding. `assets.run_worker_first`
-covers `/`, `/blog/*` and `/deep-dive/*` so the markdown-negotiation middleware
+covers `/`, `/blog/*`, `/deep-dive/*` and `/use-cases/*` so the markdown-negotiation middleware
 sees those requests — keep that list and the matcher in `src/start.ts` in sync.
 
 `autoSubfolderIndex: false` keeps URLs slash-free (`/blog/tmux`, not
