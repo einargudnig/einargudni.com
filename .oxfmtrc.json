@@ -10,6 +10,8 @@
     ".velite",
     "content",
     "docs",
-    ".agents"
+    ".agents",
+    "convex/_generated",
+    ".impeccable"
   ]
 }

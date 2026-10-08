@@ -1,0 +1,21 @@
+name: check
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: 1.4.2
+      - run: bun install --frozen-lockfile
+      # Generates the gitignored src/routeTree.gen.ts that tsc needs, and
+      # catches prerender failures (dead links, unresolved CHECK notes).
+      - run: bun run build
+      # oxlint + oxfmt --check + velite + tsc
+      - run: bun run check

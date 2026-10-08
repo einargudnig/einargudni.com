@@ -21,7 +21,7 @@ bun run preview
 # Deploy to Cloudflare Workers
 bun run deploy
 
-# Lint (oxlint) + typecheck (tsc, TypeScript 7)
+# Lint (oxlint, warnings fail) + format check (oxfmt) + typecheck (tsc, TypeScript 7)
 bun run check
 
 # Format with oxfmt
@@ -66,6 +66,10 @@ The project uses **Velite** as a content processing pipeline that transforms Mar
 ### Code Quality
 
 - **oxlint** for linting and **oxfmt** for formatting (from the oxc project)
+- `bun run check` fails on lint warnings and unformatted files; CI
+  (`.github/workflows/check.yml`) runs `build` then `check` on every push and PR
+- Generated files (`convex/_generated`, `.velite`, `src/routeTree.gen.ts`) are
+  excluded from formatting; don't hand-format them
 - **TypeScript** with strict mode enabled
 - Path alias `@/*` maps to project root
 
@@ -95,6 +99,7 @@ The project uses **Velite** as a content processing pipeline that transforms Mar
 ### Dynamic Pages
 
 Blog posts and deep dives use:
+
 - An explicit `pages` list in `vite.config.ts`, built from the velite output.
   This replaces `generateStaticParams()`. Link-crawling is deliberately off:
   it misses unlinked entries and fails the build on dead links inside content.
@@ -120,6 +125,7 @@ Blog posts and deep dives use:
 ### Custom MDX Components
 
 To add new custom components for use in MDX:
+
 1. Create component in `components/blog/`
 2. Import and add to `sharedComponents` object in `components/mdx-content.tsx`
 3. Component will be available in all MDX files
@@ -174,18 +180,18 @@ Two kinds, and they are set in different places:
 **Build-time** (`VITE_`-prefixed, inlined into the bundle — must be present
 when `vite build` runs, not at request time):
 
-| Variable | Effect if missing |
-| --- | --- |
-| `VITE_CONVEX_URL` | `/baby` renders without live vote data |
-| `VITE_CF_IMAGES` | Images served untransformed. Set to `1` **only after** enabling Image Transformations on the zone, otherwise every `/cdn-cgi/image/` URL 404s |
+| Variable          | Effect if missing                                                                                                                             |
+| ----------------- | --------------------------------------------------------------------------------------------------------------------------------------------- |
+| `VITE_CONVEX_URL` | `/baby` renders without live vote data                                                                                                        |
+| `VITE_CF_IMAGES`  | Images served untransformed. Set to `1` **only after** enabling Image Transformations on the zone, otherwise every `/cdn-cgi/image/` URL 404s |
 
 **Runtime** (Worker secrets — `wrangler secret put NAME`):
 
-| Variable | Effect if missing |
-| --- | --- |
-| `RESEND_API_KEY` | Contact form returns 503 with a "email me directly" message |
-| `LIFEOS_API_URL`, `LIFEOS_WEB_TOKEN` | Whoop numbers fall back to the committed snapshot in `data/whoop/latest.json` |
-| `CONTACT_TO_EMAIL`, `CONTACT_FROM_EMAIL` | Defaults in `src/routes/api/contact.ts` are used |
+| Variable                                 | Effect if missing                                                             |
+| ---------------------------------------- | ----------------------------------------------------------------------------- |
+| `RESEND_API_KEY`                         | Contact form returns 503 with a "email me directly" message                   |
+| `LIFEOS_API_URL`, `LIFEOS_WEB_TOKEN`     | Whoop numbers fall back to the committed snapshot in `data/whoop/latest.json` |
+| `CONTACT_TO_EMAIL`, `CONTACT_FROM_EMAIL` | Defaults in `src/routes/api/contact.ts` are used                              |
 
 Every one of these degrades gracefully; none will fail a build or a request.
 

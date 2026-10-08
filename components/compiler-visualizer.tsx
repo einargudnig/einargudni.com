@@ -2,13 +2,7 @@ import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { highlight } from "@/lib/highlighter";
-import {
-  ChevronLeft,
-  ChevronRight,
-  Play,
-  RotateCcw,
-  Pause,
-} from "lucide-react";
+import { ChevronLeft, ChevronRight, Play, RotateCcw, Pause } from "lucide-react";
 
 interface CompilerStage {
   id: number;
@@ -84,12 +78,12 @@ const stages: CompilerStage[] = [
       {
         start: sampleCode.indexOf("function"),
         end: sampleCode.indexOf("\n\nconst"),
-        label: "FunctionDeclaration"
+        label: "FunctionDeclaration",
       },
       {
         start: sampleCode.indexOf("const person"),
         end: sampleCode.indexOf("};\n\ngreet") + 2,
-        label: "VariableDeclaration"
+        label: "VariableDeclaration",
       },
       { ...findToken(sampleCode, "greet(person)"), label: "CallExpression" },
     ],
@@ -119,9 +113,9 @@ const stages: CompilerStage[] = [
       { ...findToken(sampleCode, "string"), label: "Return type" },
       { ...findToken(sampleCode, "User", 3), label: "Type annotation" },
       {
-        start: sampleCode.indexOf("{\n  name: \"Alice\""),
+        start: sampleCode.indexOf('{\n  name: "Alice"'),
         end: sampleCode.indexOf("30\n}") + 2,
-        label: "Type check: matches User"
+        label: "Type check: matches User",
       },
       { ...findToken(sampleCode, "greet(person)"), label: "Type check: valid call" },
     ],
@@ -200,25 +194,23 @@ export function CompilerVisualizer() {
           };
         };
 
-        const decorations = stage.highlights.map((highlight) => {
-          const start = getPosition(highlight.start);
-          const end = getPosition(highlight.end);
+        const decorations = stage.highlights.map((range) => {
+          const start = getPosition(range.start);
+          const end = getPosition(range.end);
 
           return {
             start,
             end,
             properties: {
               class: "compiler-highlight",
-              "data-label": highlight.label || "",
+              "data-label": range.label || "",
             },
           };
         });
 
-        const html = await highlight(
-          displayCode,
-          stage.output ? "javascript" : "typescript",
-          { decorations },
-        );
+        const html = await highlight(displayCode, stage.output ? "javascript" : "typescript", {
+          decorations,
+        });
         setHighlightedCode(html);
       } catch (error) {
         console.error("Failed to highlight code:", error);
@@ -282,10 +274,7 @@ export function CompilerVisualizer() {
               setCurrentStage(idx);
               setIsPlaying(false);
             }}
-            className={cn(
-              "text-xs",
-              currentStage === idx && "ring-2 ring-blue-500",
-            )}
+            className={cn("text-xs", currentStage === idx && "ring-2 ring-blue-500")}
           >
             {idx}. {s.name}
           </Button>
@@ -300,8 +289,9 @@ export function CompilerVisualizer() {
 
       {/* Code Display */}
       <div className="relative overflow-hidden rounded-lg border border-[#313244]">
-        <style dangerouslySetInnerHTML={{
-          __html: `
+        <style
+          dangerouslySetInnerHTML={{
+            __html: `
             .compiler-highlight {
               background-color: rgba(59, 130, 246, 0.25);
               border-bottom: 2px solid rgba(59, 130, 246, 0.6);
@@ -339,8 +329,9 @@ export function CompilerVisualizer() {
             .compiler-highlight[data-label=""]::after {
               display: none;
             }
-          `
-        }} />
+          `,
+          }}
+        />
         <div className="absolute top-2 left-2 z-10 text-xs font-medium text-[#7f849c] bg-[#1e1e2e]/80 px-2 py-1 rounded">
           {stage.output ? "JavaScript Output" : "TypeScript Source"}
         </div>
@@ -364,16 +355,8 @@ export function CompilerVisualizer() {
           >
             <ChevronLeft className="h-4 w-4" />
           </Button>
-          <Button
-            variant="outline"
-            size="icon"
-            onClick={handlePlayPause}
-          >
-            {isPlaying ? (
-              <Pause className="h-4 w-4" />
-            ) : (
-              <Play className="h-4 w-4" />
-            )}
+          <Button variant="outline" size="icon" onClick={handlePlayPause}>
+            {isPlaying ? <Pause className="h-4 w-4" /> : <Play className="h-4 w-4" />}
           </Button>
           <Button
             variant="outline"
