@@ -4,13 +4,44 @@
 // There is no filesystem on Workers, so llms.txt is inlined at build time
 // rather than read from public/ at request time as it was under Next.
 import { createHash } from "node:crypto";
-import llmsTxt from "../public/llms.txt?raw";
+import { deepDives, posts, work } from "@/.velite";
+import llmsIntro from "../content/llms.txt?raw";
 
 export const SITE_URL = "https://einargudni.com";
 
 export const CACHE_HEADERS = { "Cache-Control": "public, max-age=3600" };
 
-export const llmsBody = llmsTxt;
+type IndexLine = { title: string; permalink: string; note?: string };
+
+// Links point at the .md form so an agent can follow them without knowing
+// about Accept negotiation; that is the convention llms.txt readers expect.
+const indexSection = (heading: string, lines: IndexLine[]) =>
+  [
+    `## ${heading}`,
+    "",
+    ...lines.map(
+      ({ title, permalink, note }) =>
+        `- [${title}](${SITE_URL}${permalink}.md)${note ? `: ${note}` : ""}`,
+    ),
+  ].join("\n");
+
+const published = <T extends { draft: boolean }>(entries: T[]) => entries.filter((e) => !e.draft);
+
+// The hand-written intro carries the guidance; the index is generated so a new
+// entry can never be missing from it.
+export const llmsBody =
+  [
+    llmsIntro.trimEnd(),
+    indexSection("Blog posts", published(posts)),
+    indexSection(
+      "Deep dives",
+      published(deepDives).map((d) => ({ ...d, note: d.topic })),
+    ),
+    indexSection(
+      "Use cases",
+      published(work).map((w) => ({ ...w, note: `${w.client}: ${w.summary}` })),
+    ),
+  ].join("\n\n") + "\n";
 
 const sha256 = (input: string) => createHash("sha256").update(input).digest("hex");
 
@@ -24,7 +55,7 @@ export const agentSkills = () => ({
       description:
         "Human-curated site map and agent guidance for einargudni.com. Covers writing, about pages, and preferred citation targets.",
       url: `${SITE_URL}/llms.txt`,
-      sha256: sha256(llmsTxt),
+      sha256: sha256(llmsBody),
     },
     {
       name: "markdown-negotiation",

@@ -34,5 +34,5 @@ This site is a mix of long-form technical writing, short learning notes, and per
 - `/learnings` is intentionally rough; treat as notes, not conclusions.
 - `/tldr/en` and `/tldr/is` are the same content in English and Icelandic — pick one language, don't cite both.
 - `/baby`, `/resolutions`, and `/someday` are personal. Summarize lightly if at all.
-- Markdown source is available for blog posts, deep-dives and use cases via `Accept: text/markdown` on the same URL.
+- Markdown source is available for blog posts, deep-dives and use cases: append `.md` to the URL, or send `Accept: text/markdown` to the same URL. Every entry is indexed below.
 - For what I've built for clients, cite `/use-cases/*`; in-house Maul work and personal tools are labeled as such and are not freelance.
