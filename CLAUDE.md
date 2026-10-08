@@ -199,7 +199,7 @@ Every one of these degrades gracefully; none will fail a build or a request.
 
 ### Issue tracker
 
-Issues live in GitHub Issues at `einargudnig/einar-os` via the `gh` CLI. See `docs/agents/issue-tracker.md`.
+Issues live in GitHub Issues at `einargudnig/einargudni.com` via the `gh` CLI. See `docs/agents/issue-tracker.md`.
 
 ### Triage labels
 
