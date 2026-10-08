@@ -7,11 +7,7 @@ interface KeyboardShortcutProps {
   className?: string;
 }
 
-export function KeyboardShortcut({
-  keys,
-  description,
-  className,
-}: KeyboardShortcutProps) {
+export function KeyboardShortcut({ keys, description, className }: KeyboardShortcutProps) {
   return (
     <div className={cn("flex items-center text-sm my-2", className)}>
       <div className="flex items-center gap-1">
@@ -27,9 +23,7 @@ export function KeyboardShortcut({
           </React.Fragment>
         ))}
       </div>
-      {description && (
-        <span className="ml-3 text-muted-foreground">{description}</span>
-      )}
+      {description && <span className="ml-3 text-muted-foreground">{description}</span>}
     </div>
   );
 }

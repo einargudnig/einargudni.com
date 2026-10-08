@@ -2,8 +2,7 @@ import { readFileSync, existsSync } from "fs";
 import postgres from "postgres";
 
 // Configuration - update these values for your local PostgreSQL
-const DATABASE_URL =
-  process.env.DATABASE_URL || "postgres://localhost:5432/baby_predictions";
+const DATABASE_URL = process.env.DATABASE_URL || "postgres://localhost:5432/baby_predictions";
 
 const sql = postgres(DATABASE_URL);
 
@@ -14,10 +13,7 @@ interface ConvexDocument {
   timestamp: number;
 }
 
-async function importJsonl(
-  filePath: string,
-  tableName: string
-): Promise<number> {
+async function importJsonl(filePath: string, tableName: string): Promise<number> {
   if (!existsSync(filePath)) {
     console.log(`File not found: ${filePath}`);
     return 0;
@@ -42,7 +38,7 @@ async function importJsonl(
           prediction = EXCLUDED.prediction,
           timestamp = EXCLUDED.timestamp
       `;
-    })
+    }),
   );
 
   return lines.length;

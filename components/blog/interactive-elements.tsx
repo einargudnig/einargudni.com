@@ -81,9 +81,5 @@ interface AccordionProps {
 }
 
 export function Accordion({ children, className }: AccordionProps) {
-  return (
-    <div className={cn("my-6 divide-y rounded-lg border", className)}>
-      {children}
-    </div>
-  );
+  return <div className={cn("my-6 divide-y rounded-lg border", className)}>{children}</div>;
 }

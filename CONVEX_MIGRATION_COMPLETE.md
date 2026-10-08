@@ -5,6 +5,7 @@ Your baby prediction page has been migrated from Turso to Convex for real-time s
 ## ✅ What's Been Done
 
 ### 1. Convex Setup
+
 - ✅ Installed `convex` package
 - ✅ Created database schema in `convex/schema.ts`
 - ✅ Created backend functions in `convex/votes.ts`
@@ -14,6 +15,7 @@ Your baby prediction page has been migrated from Turso to Convex for real-time s
 - ✅ Removed Turso dependencies
 
 ### 2. Baby Prediction Page
+
 - ✅ Migrated to real-time data fetching with `useQuery` and `useMutation`
 - ✅ Live updates - votes appear instantly across all clients
 - ✅ Optimistic UI with loading states
@@ -21,6 +23,7 @@ Your baby prediction page has been migrated from Turso to Convex for real-time s
 - ✅ Statistics panel with vote totals
 
 ### 3. Documentation
+
 - ✅ Created `app/baby/README.md` - Complete feature guide
 - ✅ Created `CONVEX_SETUP.md` - Convex setup instructions
 - ✅ Created `scripts/setup-convex.sh` - Setup helper script
@@ -31,11 +34,13 @@ Your baby prediction page has been migrated from Turso to Convex for real-time s
 ### 1. Initialize Convex (One-Time Setup)
 
 Run this command in your terminal:
+
 ```bash
 npx convex dev
 ```
 
 This will:
+
 - Prompt you to create a Convex account and project
 - Generate TypeScript types
 - Add `NEXT_PUBLIC_CONVEX_URL` to `.env.local`
@@ -43,6 +48,7 @@ This will:
 ### 2. Start Development (Single Terminal!)
 
 Now you can run both servers with one command:
+
 ```bash
 npm run dev:all
 ```
@@ -65,6 +71,7 @@ Visit: `http://localhost:3000/baby`
 ## 📁 Files Created/Modified
 
 ### New Files:
+
 - `convex/schema.ts` - Database schema
 - `convex/votes.ts` - Backend functions
 - `components/convex-provider.tsx` - React provider
@@ -74,11 +81,13 @@ Visit: `http://localhost:3000/baby`
 - `scripts/setup-convex.sh` - Helper script
 
 ### Modified Files:
+
 - `app/layout.tsx` - Added ConvexProvider
 - `tsconfig.json` - Added convex generated directory
 - `package.json` - Added convex:dev script, removed Turso
 
 ### Deleted Files:
+
 - `lib/baby-db.ts` - Turso integration (no longer needed)
 - `app/baby/actions.ts` - Turso server actions (no longer needed)
 
@@ -92,6 +101,7 @@ Visit: `http://localhost:3000/baby`
 ## 🔧 Adding More Features
 
 ### Add a New Field to Schema:
+
 ```typescript
 // convex/schema.ts
 export default defineSchema({
@@ -105,6 +115,7 @@ export default defineSchema({
 ```
 
 ### Add a New Query:
+
 ```typescript
 // convex/votes.ts
 export const getByConfidence = query({
@@ -118,6 +129,7 @@ export const getByConfidence = query({
 ```
 
 ### Use in Component:
+
 ```typescript
 const highConfidenceVotes = useQuery(api.votes.getByConfidence, {
   minConfidence: 0.8
@@ -127,6 +139,7 @@ const highConfidenceVotes = useQuery(api.votes.getByConfidence, {
 ## 🌐 Deployment
 
 1. **Deploy to Convex:**
+
    ```bash
    npx convex deploy
    ```

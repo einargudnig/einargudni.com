@@ -15,9 +15,9 @@ export function LifeOs() {
     <div className="prose prose-neutral dark:prose-invert text-pretty">
       <p className="text-brand text-lg font-mono">life-os</p>
       <p className="leading-relaxed max-w-[65ch]">
-        A local-first personal data OS I built — a Bun collector daemon that syncs{" "}
-        {system.sources} sources into one SQLite store, exposed through an MCP server,
-        a designed dashboard, and a native Mac app. Runs entirely on my own machine.
+        A local-first personal data OS I built — a Bun collector daemon that syncs {system.sources}{" "}
+        sources into one SQLite store, exposed through an MCP server, a designed dashboard, and a
+        native Mac app. Runs entirely on my own machine.
       </p>
       <div className="grid grid-cols-2 gap-4 not-prose font-mono sm:grid-cols-4">
         {stats.map((s) => (

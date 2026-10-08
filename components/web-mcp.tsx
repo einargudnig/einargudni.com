@@ -69,8 +69,7 @@ export function WebMCP() {
     let registered = false;
     const register = () => {
       if (registered) return true;
-      const modelContext = (navigator as Navigator & { modelContext?: ModelContext })
-        .modelContext;
+      const modelContext = (navigator as Navigator & { modelContext?: ModelContext }).modelContext;
       if (!modelContext?.provideContext) return false;
       try {
         modelContext.provideContext({ tools });

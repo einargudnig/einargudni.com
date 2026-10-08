@@ -24,8 +24,7 @@ type ImageProps = Omit<ComponentPropsWithoutRef<"img">, "src"> & {
 // which is slower but never broken. Set VITE_CF_IMAGES=1 once the zone setting
 // is on. It is also off for `vite dev` and `vite preview`, where nothing is
 // listening on /cdn-cgi at all.
-const transformsEnabled =
-  import.meta.env.PROD && import.meta.env.VITE_CF_IMAGES === "1";
+const transformsEnabled = import.meta.env.PROD && import.meta.env.VITE_CF_IMAGES === "1";
 
 const resolveSrc = (src: string, width?: number, unoptimized?: boolean) => {
   if (unoptimized || src.startsWith("http") || src.startsWith("data:")) {

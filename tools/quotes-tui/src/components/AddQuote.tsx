@@ -87,11 +87,7 @@ export function AddQuote({ onBack }: AddQuoteProps) {
         <Box>
           <Text color={field === "text" ? "cyan" : "gray"}>Quote text: </Text>
           {field === "text" ? (
-            <TextInput
-              value={text}
-              onChange={setText}
-              onSubmit={handleSubmit}
-            />
+            <TextInput value={text} onChange={setText} onSubmit={handleSubmit} />
           ) : (
             <Text>{text}</Text>
           )}
@@ -101,11 +97,7 @@ export function AddQuote({ onBack }: AddQuoteProps) {
           <Box>
             <Text color={field === "author" ? "cyan" : "gray"}>Author: </Text>
             {field === "author" ? (
-              <TextInput
-                value={author}
-                onChange={setAuthor}
-                onSubmit={handleSubmit}
-              />
+              <TextInput value={author} onChange={setAuthor} onSubmit={handleSubmit} />
             ) : (
               <Text>{author}</Text>
             )}
@@ -115,11 +107,7 @@ export function AddQuote({ onBack }: AddQuoteProps) {
         {field === "source" && (
           <Box>
             <Text color="cyan">Source (optional): </Text>
-            <TextInput
-              value={source}
-              onChange={setSource}
-              onSubmit={handleSubmit}
-            />
+            <TextInput value={source} onChange={setSource} onSubmit={handleSubmit} />
           </Box>
         )}
       </Box>

@@ -11,11 +11,7 @@ interface ColorSwatchProps {
   size?: "small" | "medium" | "large";
 }
 
-export function ColorSwatch({
-  colors,
-  className,
-  size = "medium",
-}: ColorSwatchProps) {
+export function ColorSwatch({ colors, className, size = "medium" }: ColorSwatchProps) {
   const sizeClasses = {
     small: "h-8 w-8",
     medium: "h-12 w-12",
@@ -35,21 +31,14 @@ export function ColorSwatch({
         return (
           <div key={key} className="flex flex-col items-center">
             <div
-              className={cn(
-                "rounded-md shadow-md border border-border",
-                sizeClasses[size],
-              )}
+              className={cn("rounded-md shadow-md border border-border", sizeClasses[size])}
               style={{ backgroundColor: color.color }}
               title={color.value || color.color}
             />
             {(color.label || color.value) && (
               <div className="mt-2 text-xs text-center">
                 {color.label && <div className="font-medium">{color.label}</div>}
-                {color.value && (
-                  <div className="text-muted-foreground">
-                    {color.value}
-                  </div>
-                )}
+                {color.value && <div className="text-muted-foreground">{color.value}</div>}
               </div>
             )}
           </div>

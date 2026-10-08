@@ -99,9 +99,7 @@ export function ListQuotes({ onBack }: ListQuotesProps) {
             borderColor={index === selectedIndex ? "cyan" : undefined}
             paddingX={index === selectedIndex ? 1 : 0}
           >
-            <Text color={index === selectedIndex ? "cyan" : "white"}>
-              "{quote.text}"
-            </Text>
+            <Text color={index === selectedIndex ? "cyan" : "white"}>"{quote.text}"</Text>
             <Text color="gray">
               — {quote.author}
               {quote.source ? `, ${quote.source}` : ""} ({quote.date})

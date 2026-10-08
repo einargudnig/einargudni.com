@@ -60,14 +60,11 @@ export function LifeOsFeeds() {
           sub={`${spotify.hours}h · ${spotify.artists} artists`}
         >
           <div className="text-xs text-muted-foreground">
-            ♪ <span className="text-brand">{spotify.topArtist.name}</span> ×{spotify.topArtist.plays}
+            ♪ <span className="text-brand">{spotify.topArtist.name}</span> ×
+            {spotify.topArtist.plays}
           </div>
         </Card>
-        <Card
-          label="focus"
-          value={`${toggl.hours}h`}
-          sub={`${toggl.last7Hours}h last 7 days`}
-        >
+        <Card label="focus" value={`${toggl.hours}h`} sub={`${toggl.last7Hours}h last 7 days`}>
           <div className="text-xs text-muted-foreground">
             <span className="text-brand">{toggl.topProject.name}</span> {toggl.topProject.hours}h
           </div>

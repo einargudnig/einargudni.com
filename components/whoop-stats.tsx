@@ -4,14 +4,10 @@ import { WhoopRing } from "./whoop-ring";
 const STRAIN_MAX = 21;
 
 const recoveryColor = (score: number) =>
-  score >= 67 ? "text-emerald-400"
-  : score >= 34 ? "text-yellow-400"
-  : "text-red-500";
+  score >= 67 ? "text-emerald-400" : score >= 34 ? "text-yellow-400" : "text-red-500";
 
 const sleepColor = (perf: number) =>
-  perf >= 85 ? "text-emerald-400"
-  : perf >= 70 ? "text-yellow-400"
-  : "text-red-500";
+  perf >= 85 ? "text-emerald-400" : perf >= 70 ? "text-yellow-400" : "text-red-500";
 
 export function WhoopStats({ data }: { data: WhoopSnapshot }) {
   const dateLabel = new Date(data.date).toLocaleDateString("en", {

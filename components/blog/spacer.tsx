@@ -14,7 +14,5 @@ export function Spacer({ size = "medium", className }: SpacerProps) {
     xl: "h-16", // 4rem / 64px
   };
 
-  return (
-    <div className={cn(sizeClasses[size], className)} aria-hidden="true" />
-  );
+  return <div className={cn(sizeClasses[size], className)} aria-hidden="true" />;
 }

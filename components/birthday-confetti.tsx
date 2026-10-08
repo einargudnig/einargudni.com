@@ -79,9 +79,7 @@ export function BirthdayConfetti() {
         size: Math.random() * 8 + 4,
         rotation: Math.random() * Math.PI * 2,
         rotationSpeed: (Math.random() - 0.5) * 0.2,
-        shape: (["square", "circle", "strip"] as const)[
-          Math.floor(Math.random() * 3)
-        ],
+        shape: (["square", "circle", "strip"] as const)[Math.floor(Math.random() * 3)],
         opacity: 1,
       });
     }

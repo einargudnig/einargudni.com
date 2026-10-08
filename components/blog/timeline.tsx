@@ -10,14 +10,7 @@ interface TimelineItemProps {
   className?: string;
 }
 
-function TimelineItem({
-  date,
-  title,
-  description,
-  icon,
-  isLast,
-  className,
-}: TimelineItemProps) {
+function TimelineItem({ date, title, description, icon, isLast, className }: TimelineItemProps) {
   return (
     <div className={cn("flex gap-4 relative", className)}>
       {/* Icon and line */}
@@ -32,9 +25,7 @@ function TimelineItem({
       <div className="pb-8">
         <p className="text-sm font-medium text-muted-foreground mb-1">{date}</p>
         <h3 className="text-base font-semibold mb-2">{title}</h3>
-        {description && (
-          <p className="text-muted-foreground text-sm">{description}</p>
-        )}
+        {description && <p className="text-muted-foreground text-sm">{description}</p>}
       </div>
     </div>
   );

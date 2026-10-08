@@ -90,10 +90,7 @@ export function KeyboardHint() {
       {/* Cheat sheet popover */}
       {open && (
         <>
-          <div
-            className="fixed inset-0 z-40"
-            onClick={() => setOpen(false)}
-          />
+          <div className="fixed inset-0 z-40" onClick={() => setOpen(false)} />
           <div className="absolute right-0 top-full mt-3 z-50 w-64 rounded-lg border border-border bg-card p-4 shadow-lg animate-fade-in-up">
             <div className="flex items-center justify-between mb-3">
               <p className="text-sm font-semibold">Keyboard shortcuts</p>
@@ -109,16 +106,9 @@ export function KeyboardHint() {
                     {b.label}
                   </p>
                 ) : (
-                  <div
-                    key={b.label}
-                    className="flex items-center justify-between py-0.5"
-                  >
-                    <span className="text-xs text-muted-foreground">
-                      {b.label}
-                    </span>
-                    <kbd className="text-xs font-mono text-brand">
-                      {b.keys}
-                    </kbd>
+                  <div key={b.label} className="flex items-center justify-between py-0.5">
+                    <span className="text-xs text-muted-foreground">{b.label}</span>
+                    <kbd className="text-xs font-mono text-brand">{b.keys}</kbd>
                   </div>
                 ),
               )}

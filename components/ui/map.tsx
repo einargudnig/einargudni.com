@@ -70,7 +70,7 @@ function Map({ children, styles, ...props }: MapProps) {
       dark: styles?.dark ?? defaultStyles.dark,
       light: styles?.light ?? defaultStyles.light,
     }),
-    [styles]
+    [styles],
   );
 
   useEffect(() => {
@@ -80,8 +80,7 @@ function Map({ children, styles, ...props }: MapProps) {
   useEffect(() => {
     if (!isMounted || !containerRef.current) return;
 
-    const mapStyle =
-      resolvedTheme === "dark" ? mapStyles.dark : mapStyles.light;
+    const mapStyle = resolvedTheme === "dark" ? mapStyles.dark : mapStyles.light;
 
     const mapInstance = new MapLibreGL.Map({
       container: containerRef.current,
@@ -112,10 +111,9 @@ function Map({ children, styles, ...props }: MapProps) {
   useEffect(() => {
     if (mapRef.current) {
       setIsStyleLoaded(false);
-      mapRef.current.setStyle(
-        resolvedTheme === "dark" ? mapStyles.dark : mapStyles.light,
-        { diff: true }
-      );
+      mapRef.current.setStyle(resolvedTheme === "dark" ? mapStyles.dark : mapStyles.light, {
+        diff: true,
+      });
     }
   }, [resolvedTheme, mapStyles]);
 
@@ -126,7 +124,7 @@ function Map({ children, styles, ...props }: MapProps) {
       map: mapRef.current,
       isLoaded: isMounted && isLoaded && isStyleLoaded,
     }),
-    [isMounted, isLoaded, isStyleLoaded]
+    [isMounted, isLoaded, isStyleLoaded],
   );
 
   return (
@@ -226,10 +224,8 @@ function MapMarker({
     markerRef.current = marker;
 
     const handleClick = (e: MouseEvent) => handlersRef.current.onClick?.(e);
-    const handleMouseEnter = (e: MouseEvent) =>
-      handlersRef.current.onMouseEnter?.(e);
-    const handleMouseLeave = (e: MouseEvent) =>
-      handlersRef.current.onMouseLeave?.(e);
+    const handleMouseEnter = (e: MouseEvent) => handlersRef.current.onMouseEnter?.(e);
+    const handleMouseLeave = (e: MouseEvent) => handlersRef.current.onMouseLeave?.(e);
 
     container.addEventListener("click", handleClick);
     container.addEventListener("mouseenter", handleMouseEnter);
@@ -287,14 +283,10 @@ function MapMarker({
 
   const markerContextValue = useMemo<MarkerContextValue>(
     () => ({ markerRef, markerElementRef, map, isReady }),
-    [markerRef, markerElementRef, map, isReady]
+    [markerRef, markerElementRef, map, isReady],
   );
 
-  return (
-    <MarkerContext.Provider value={markerContextValue}>
-      {children}
-    </MarkerContext.Provider>
-  );
+  return <MarkerContext.Provider value={markerContextValue}>{children}</MarkerContext.Provider>;
 }
 
 type MarkerContentProps = {
@@ -311,7 +303,7 @@ function MarkerContent({ children, className }: MarkerContentProps) {
     <div className={cn("relative cursor-pointer", className)}>
       {children || <DefaultMarkerIcon />}
     </div>,
-    markerElementRef.current
+    markerElementRef.current,
   );
 }
 
@@ -375,7 +367,7 @@ function MarkerPopup({
     <div
       className={cn(
         "relative rounded-md border bg-popover p-3 text-popover-foreground shadow-md animate-in fade-in-0 zoom-in-95",
-        className
+        className,
       )}
     >
       {closeButton && (
@@ -391,7 +383,7 @@ function MarkerPopup({
       )}
       {children}
     </div>,
-    containerRef.current
+    containerRef.current,
   );
 }
 
@@ -400,19 +392,14 @@ type MarkerTooltipProps = {
   className?: string;
 } & Omit<PopupOptions, "className" | "closeButton" | "closeOnClick">;
 
-function MarkerTooltip({
-  children,
-  className,
-  ...popupOptions
-}: MarkerTooltipProps) {
+function MarkerTooltip({ children, className, ...popupOptions }: MarkerTooltipProps) {
   const { markerRef, markerElementRef, map, isReady } = useMarkerContext();
   const containerRef = useRef<HTMLDivElement | null>(null);
   const popupRef = useRef<MapLibreGL.Popup | null>(null);
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
-    if (!isReady || !markerRef.current || !markerElementRef.current || !map)
-      return;
+    if (!isReady || !markerRef.current || !markerElementRef.current || !map) return;
 
     const container = document.createElement("div");
     containerRef.current = container;
@@ -460,12 +447,12 @@ function MarkerTooltip({
     <div
       className={cn(
         "rounded-md bg-foreground px-2 py-1 text-xs text-background shadow-md animate-in fade-in-0 zoom-in-95",
-        className
+        className,
       )}
     >
       {children}
     </div>,
-    containerRef.current
+    containerRef.current,
   );
 }
 
@@ -475,11 +462,7 @@ type MarkerLabelProps = {
   position?: "top" | "bottom";
 };
 
-function MarkerLabel({
-  children,
-  className,
-  position = "top",
-}: MarkerLabelProps) {
+function MarkerLabel({ children, className, position = "top" }: MarkerLabelProps) {
   const positionClasses = {
     top: "bottom-full mb-1",
     bottom: "top-full mt-1",
@@ -491,7 +474,7 @@ function MarkerLabel({
         "absolute left-1/2 -translate-x-1/2 whitespace-nowrap",
         "text-[10px] font-medium text-foreground",
         positionClasses[position],
-        className
+        className,
       )}
     >
       {children}
@@ -542,7 +525,7 @@ function ControlButton({
       type="button"
       className={cn(
         "flex items-center justify-center size-8 hover:bg-accent dark:hover:bg-accent/40 transition-colors",
-        disabled && "opacity-50 pointer-events-none cursor-not-allowed"
+        disabled && "opacity-50 pointer-events-none cursor-not-allowed",
       )}
       disabled={disabled}
     >
@@ -592,7 +575,7 @@ function MapControls({
         (error) => {
           console.error("Error getting location:", error);
           setWaitingForLocation(false);
-        }
+        },
       );
     }
   };
@@ -609,11 +592,7 @@ function MapControls({
 
   return (
     <div
-      className={cn(
-        "absolute z-10 flex flex-col gap-1.5",
-        positionClasses[position],
-        className
-      )}
+      className={cn("absolute z-10 flex flex-col gap-1.5", positionClasses[position], className)}
     >
       {showZoom && (
         <ControlGroup>
@@ -779,7 +758,7 @@ function MapPopup({
     <div
       className={cn(
         "relative rounded-md border bg-popover p-3 text-popover-foreground shadow-md animate-in fade-in-0 zoom-in-95",
-        className
+        className,
       )}
     >
       {closeButton && (
@@ -795,7 +774,7 @@ function MapPopup({
       )}
       {children}
     </div>,
-    container
+    container,
   );
 }
 
@@ -859,17 +838,7 @@ function MapRoute({
         // ignore
       }
     };
-  }, [
-    isLoaded,
-    map,
-    coordinates,
-    color,
-    width,
-    opacity,
-    dashArray,
-    sourceId,
-    layerId,
-  ]);
+  }, [isLoaded, map, coordinates, color, width, opacity, dashArray, sourceId, layerId]);
 
   return null;
 }

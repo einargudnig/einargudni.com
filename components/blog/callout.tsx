@@ -1,10 +1,5 @@
 import { cn } from "@/lib/utils";
-import {
-  AlertCircleIcon,
-  AlertTriangleIcon,
-  InfoIcon,
-  LightbulbIcon,
-} from "lucide-react";
+import { AlertCircleIcon, AlertTriangleIcon, InfoIcon, LightbulbIcon } from "lucide-react";
 
 type CalloutType = "info" | "warning" | "error" | "tip";
 
@@ -15,12 +10,7 @@ interface CalloutProps {
   className?: string;
 }
 
-export function Callout({
-  children,
-  type = "info",
-  title,
-  className,
-}: CalloutProps) {
+export function Callout({ children, type = "info", title, className }: CalloutProps) {
   const icons: Record<CalloutType, React.ReactNode> = {
     info: <InfoIcon className="h-5 w-5" />,
     warning: <AlertTriangleIcon className="h-5 w-5" />,

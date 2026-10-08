@@ -15,13 +15,7 @@ const STROKE = 10;
 const RADIUS = (SIZE - STROKE) / 2;
 const CIRCUMFERENCE = 2 * Math.PI * RADIUS;
 
-export function WhoopRing({
-  label,
-  displayValue,
-  fill,
-  colorClass,
-  subtitle,
-}: WhoopRingProps) {
+export function WhoopRing({ label, displayValue, fill, colorClass, subtitle }: WhoopRingProps) {
   const clamped = Math.max(0, Math.min(1, fill));
   const dashOffset = CIRCUMFERENCE * (1 - clamped);
 
@@ -57,16 +51,12 @@ export function WhoopRing({
           />
         </svg>
         <div className="absolute inset-0 flex items-center justify-center">
-          <span className={cn("text-2xl tabular-nums", colorClass)}>
-            {displayValue}
-          </span>
+          <span className={cn("text-2xl tabular-nums", colorClass)}>{displayValue}</span>
         </div>
       </div>
       <div className="text-center">
         <p className="text-sm font-medium">{label}</p>
-        {subtitle ? (
-          <p className="text-xs text-muted-foreground">{subtitle}</p>
-        ) : null}
+        {subtitle ? <p className="text-xs text-muted-foreground">{subtitle}</p> : null}
       </div>
     </div>
   );

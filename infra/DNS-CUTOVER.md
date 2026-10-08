@@ -10,7 +10,7 @@ Moving the zone from Vercel DNS to Cloudflare, then the apps that sit on it.
 > **Corrected 2026-09-14.** An earlier version of this file claimed the zone had
 > no email and only four live hosts. Both were wrong. The method was flawed:
 > "returns a Vercel 404" was treated as proof a name had no record, and MX/TXT
-> were checked only at the apex. The wildcard answers *every* name, so a 404 is
+> were checked only at the apex. The wildcard answers _every_ name, so a 404 is
 > exactly what a missing record looks like — and Resend's email lives on
 > `send.einargudni.com`, not the apex.
 
@@ -23,32 +23,32 @@ CNAME, or an A that differs from the wildcard's answer (`216.150.x.x`).
 
 ### Explicit records — must all be carried across
 
-| Host | Record | State |
-| --- | --- | --- |
-| `craft` | A `76.76.21.21` | live, 200 (Vercel legacy IP) |
-| `writing` | A `76.76.21.21` | live, 200 |
-| `learning` | A `66.241.124.56` | Fly.io — currently not responding, record is real |
-| `learnings` | CNAME `remix-workbook.fly.dev` | Fly.io |
-| `coolify` | A `37.27.184.91` | Hetzner, self-hosted |
-| `sologbjor` | CNAME `sol-og-bjor.pages.dev` | live, Cloudflare Pages |
-| `send` | MX `feedback-smtp.us-east-1.amazonses.com` + SPF | **Resend email** |
-| `resend._domainkey` | TXT | **DKIM** |
-| `@` | 3× CAA | letsencrypt, pki.goog, sectigo |
+| Host                | Record                                           | State                                             |
+| ------------------- | ------------------------------------------------ | ------------------------------------------------- |
+| `craft`             | A `76.76.21.21`                                  | live, 200 (Vercel legacy IP)                      |
+| `writing`           | A `76.76.21.21`                                  | live, 200                                         |
+| `learning`          | A `66.241.124.56`                                | Fly.io — currently not responding, record is real |
+| `learnings`         | CNAME `remix-workbook.fly.dev`                   | Fly.io                                            |
+| `coolify`           | A `37.27.184.91`                                 | Hetzner, self-hosted                              |
+| `sologbjor`         | CNAME `sol-og-bjor.pages.dev`                    | live, Cloudflare Pages                            |
+| `send`              | MX `feedback-smtp.us-east-1.amazonses.com` + SPF | **Resend email**                                  |
+| `resend._domainkey` | TXT                                              | **DKIM**                                          |
+| `@`                 | 3× CAA                                           | letsencrypt, pki.goog, sectigo                    |
 
-### Served *only* by the wildcard
+### Served _only_ by the wildcard
 
-| Host | State | After cutover |
-| --- | --- | --- |
-| `einargudni.com` | 307 → www | **becomes canonical**, Worker |
-| `www` | 200, the site | **301 → apex** |
-| `posture` | 200, Astro/static on Vercel | needs its **own** record |
-| `nido` | 200, Next.js/SSR on Vercel | needs its **own** record |
+| Host             | State                       | After cutover                 |
+| ---------------- | --------------------------- | ----------------------------- |
+| `einargudni.com` | 307 → www                   | **becomes canonical**, Worker |
+| `www`            | 200, the site               | **301 → apex**                |
+| `posture`        | 200, Astro/static on Vercel | needs its **own** record      |
+| `nido`           | 200, Next.js/SSR on Vercel  | needs its **own** record      |
 
 > [!CAUTION]
 > **The wildcard is load-bearing.** `www`, `posture` and `nido` have no records
 > of their own — they resolve through `*` and are routed by Host header at
 > Vercel. Either keep the wildcard, or give those three explicit records
-> *before* dropping it. Dropping it blind takes down the main site and both apps.
+> _before_ dropping it. Dropping it blind takes down the main site and both apps.
 
 > [!WARNING]
 > Still confirm against Vercel's domain list before dropping the wildcard.
@@ -63,7 +63,7 @@ and per Cloudflare's docs you **cannot** create a Worker Custom Domain "on a
 hostname with an existing CNAME DNS record or on a zone you do not own." It is
 structurally blocked until the zone is in the account.
 
-`posture` is static Astro and *could* move to Pages first over external DNS, the
+`posture` is static Astro and _could_ move to Pages first over external DNS, the
 way `sologbjor` already does. But there is no reason to: every record you
 flipped would be flipped in Vercel DNS, the system being abandoned. Move the
 zone and each app migration becomes one reversible record change in the
@@ -79,18 +79,18 @@ repeatable behind it.
 
 ## Target record set
 
-| Type | Name | Value | Proxy | Why |
-| --- | --- | --- | --- | --- |
-| — | `@` | Worker custom domain | Proxied | Created by attaching the Worker |
-| — | `www` | Worker custom domain | Proxied | Redirect Rule catches it first; Worker is the harmless fallback |
-| CNAME | `posture` | `cname.vercel-dns.com` | **DNS only** | New record — was wildcard-served. Grey-cloud so Vercel keeps terminating TLS |
-| CNAME | `nido` | `cname.vercel-dns.com` | **DNS only** | New record — same |
-| A | `craft`, `writing` | `76.76.21.21` | **DNS only** | Existing Vercel apps |
-| A/CNAME | `learning`, `learnings`, `coolify` | Fly.io / Hetzner | **DNS only** | Not Vercel; carry across as-is |
-| CNAME | `sologbjor` | `sol-og-bjor.pages.dev` | Proxied | Better: re-add as a Pages custom domain once the zone is live |
-| MX+TXT | `send` | SES relay + SPF | n/a | **Resend email — do not lose** |
-| TXT | `resend._domainkey` | DKIM public key | n/a | **Resend DKIM — do not lose** |
-| CAA | `@` | `letsencrypt.org`, `pki.goog`, `sectigo.com` | n/a | Already permits Cloudflare's two issuers |
+| Type    | Name                               | Value                                        | Proxy        | Why                                                                          |
+| ------- | ---------------------------------- | -------------------------------------------- | ------------ | ---------------------------------------------------------------------------- |
+| —       | `@`                                | Worker custom domain                         | Proxied      | Created by attaching the Worker                                              |
+| —       | `www`                              | Worker custom domain                         | Proxied      | Redirect Rule catches it first; Worker is the harmless fallback              |
+| CNAME   | `posture`                          | `cname.vercel-dns.com`                       | **DNS only** | New record — was wildcard-served. Grey-cloud so Vercel keeps terminating TLS |
+| CNAME   | `nido`                             | `cname.vercel-dns.com`                       | **DNS only** | New record — same                                                            |
+| A       | `craft`, `writing`                 | `76.76.21.21`                                | **DNS only** | Existing Vercel apps                                                         |
+| A/CNAME | `learning`, `learnings`, `coolify` | Fly.io / Hetzner                             | **DNS only** | Not Vercel; carry across as-is                                               |
+| CNAME   | `sologbjor`                        | `sol-og-bjor.pages.dev`                      | Proxied      | Better: re-add as a Pages custom domain once the zone is live                |
+| MX+TXT  | `send`                             | SES relay + SPF                              | n/a          | **Resend email — do not lose**                                               |
+| TXT     | `resend._domainkey`                | DKIM public key                              | n/a          | **Resend DKIM — do not lose**                                                |
+| CAA     | `@`                                | `letsencrypt.org`, `pki.goog`, `sectigo.com` | n/a          | Already permits Cloudflare's two issuers                                     |
 
 `posture` and `nido` need explicit CNAMEs to `cname.vercel-dns.com` added to the
 zone file before the wildcard goes; `www` and the apex are covered by attaching
@@ -114,7 +114,7 @@ picks must serve a working answer.
 2. Let it scan and import existing records.
 3. Note the two assigned nameservers. **Stop there** — do not touch Name.com.
 
-**Gate:** zone reads *Pending Nameserver Update*. Nothing is live, nothing has
+**Gate:** zone reads _Pending Nameserver Update_. Nothing is live, nothing has
 broken; the site is still served entirely by Vercel.
 
 ### 02 — Reconcile records and attach the Worker · **you + Claude**
@@ -184,14 +184,14 @@ Everything degrades gracefully without these, so none of them block the
 cutover. Values are **not** recoverable from Vercel, so have them to hand:
 
 - `LIFEOS_API_URL` and `LIFEOS_WEB_TOKEN` are stored there as write-only
-  *Secret*-type variables. `vercel env pull` returns `[SENSITIVE]` placeholders
+  _Secret_-type variables. `vercel env pull` returns `[SENSITIVE]` placeholders
   and the dashboard will not reveal them either.
 - `RESEND_API_KEY` was **never set on Vercel at all**. The contact form has been
   answering 503 in production since before this migration — verified 2026-09-22
   against `www.einargudni.com/api/contact`. Issue a fresh key at
   <https://resend.com/api-keys>; there is nothing to carry over.
 
-`NEXT_PUBLIC_CONVEX_URL` *is* readable and has already been carried across as
+`NEXT_PUBLIC_CONVEX_URL` _is_ readable and has already been carried across as
 the build-time `VITE_CONVEX_URL`.
 
 ```bash
@@ -200,11 +200,11 @@ bunx wrangler secret put LIFEOS_API_URL
 bunx wrangler secret put LIFEOS_WEB_TOKEN
 ```
 
-| Secret | Missing means |
-| --- | --- |
-| `RESEND_API_KEY` | Contact form returns 503 with an "email me directly" message |
-| `LIFEOS_API_URL` | Whoop numbers serve the committed snapshot |
-| `LIFEOS_WEB_TOKEN` | Same |
+| Secret             | Missing means                                                |
+| ------------------ | ------------------------------------------------------------ |
+| `RESEND_API_KEY`   | Contact form returns 503 with an "email me directly" message |
+| `LIFEOS_API_URL`   | Whoop numbers serve the committed snapshot                   |
+| `LIFEOS_WEB_TOKEN` | Same                                                         |
 
 ### 06 — Flip nameservers at Name.com · **you**
 
@@ -216,7 +216,7 @@ bunx wrangler secret put LIFEOS_WEB_TOKEN
 > [!WARNING]
 > **Expect a long tail, not an instant switch.** The registry NS TTL is
 > ~85,795s (≈24h) and cannot be shortened in advance. Resolvers will use
-> *either* nameserver set for up to two days — which is exactly why phases
+> _either_ nameserver set for up to two days — which is exactly why phases
 > 02–03 come first. Record TTLs are short (~1,200s now, 300s after import), so
 > the records themselves settle quickly once a resolver has switched.
 
@@ -293,10 +293,10 @@ they are what rollback depends on.
 
 ## Reference
 
-| | |
-| --- | --- |
-| Branch | `migrate/tanstack` (PR #39) |
-| Worker | `einar-os` → <https://einar-os.einargudni.workers.dev> |
-| Zone file | [`infra/einargudni.com.zone`](./einargudni.com.zone) |
-| Verify | [`scripts/verify-dns.sh`](../scripts/verify-dns.sh) |
+|                |                                                          |
+| -------------- | -------------------------------------------------------- |
+| Branch         | `migrate/tanstack` (PR #39)                              |
+| Worker         | `einar-os` → <https://einar-os.einargudni.workers.dev>   |
+| Zone file      | [`infra/einargudni.com.zone`](./einargudni.com.zone)     |
+| Verify         | [`scripts/verify-dns.sh`](../scripts/verify-dns.sh)      |
 | Canonical host | apex `einargudni.com` — `SITE_URL` in `lib/discovery.ts` |

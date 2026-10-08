@@ -23,10 +23,9 @@ export function TableOfContents({
 
   // Extract headings from the content
   useEffect(() => {
-    const selectors = Array.from(
-      { length: maxDepth },
-      (_, i) => `article h${i + 1}[id]`,
-    ).join(", ");
+    const selectors = Array.from({ length: maxDepth }, (_, i) => `article h${i + 1}[id]`).join(
+      ", ",
+    );
 
     const elements = document.querySelectorAll(selectors);
     const items: TOCItem[] = Array.from(elements).map((element) => ({
@@ -51,9 +50,7 @@ export function TableOfContents({
       { rootMargin: "-80px 0px -80% 0px" },
     );
 
-    const elements = document.querySelectorAll(
-      "article h1[id], article h2[id], article h3[id]",
-    );
+    const elements = document.querySelectorAll("article h1[id], article h2[id], article h3[id]");
     elements.forEach((element) => observer.observe(element));
 
     return () => {
@@ -82,9 +79,7 @@ export function TableOfContents({
                 href={`#${heading.id}`}
                 className={cn(
                   "text-sm inline-block hover:underline",
-                  activeId === heading.id
-                    ? "font-medium text-primary"
-                    : "text-muted-foreground",
+                  activeId === heading.id ? "font-medium text-primary" : "text-muted-foreground",
                 )}
                 onClick={(e) => {
                   e.preventDefault();

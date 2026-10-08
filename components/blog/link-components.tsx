@@ -26,9 +26,7 @@ export function CardLink({
           {children}
         </a>
       )
-    : ({ children }: { children: React.ReactNode }) => (
-        <Link href={href}>{children}</Link>
-      );
+    : ({ children }: { children: React.ReactNode }) => <Link href={href}>{children}</Link>;
 
   return (
     <LinkComponent>
@@ -42,13 +40,9 @@ export function CardLink({
         <div className="space-y-1">
           <div className="font-medium group-hover:underline flex items-center gap-1.5">
             {title}
-            {external ? (
-              <ExternalLinkIcon className="h-3.5 w-3.5 opacity-70" />
-            ) : null}
+            {external ? <ExternalLinkIcon className="h-3.5 w-3.5 opacity-70" /> : null}
           </div>
-          {description && (
-            <div className="text-sm text-muted-foreground">{description}</div>
-          )}
+          {description && <div className="text-sm text-muted-foreground">{description}</div>}
         </div>
       </div>
     </LinkComponent>
@@ -61,11 +55,7 @@ interface InlineResourceLinkProps {
   className?: string;
 }
 
-export function ResourceLink({
-  href,
-  children,
-  className,
-}: InlineResourceLinkProps) {
+export function ResourceLink({ href, children, className }: InlineResourceLinkProps) {
   const isExternal = href.startsWith("http");
 
   if (isExternal) {
@@ -102,12 +92,7 @@ export function ReadMoreLink({
   if (external) {
     return (
       <ExternalLink href={href}>
-        <span
-          className={cn(
-            "inline-flex items-center gap-1.5 hover:underline",
-            className,
-          )}
-        >
+        <span className={cn("inline-flex items-center gap-1.5 hover:underline", className)}>
           {children}
         </span>
       </ExternalLink>

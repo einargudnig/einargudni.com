@@ -5,15 +5,18 @@ This project uses Convex for real-time database sync in baby prediction market.
 ## Setup
 
 1. **Install Convex CLI:**
+
    ```bash
    brew install convex
    # Or visit https://convex.dev to sign up and install
    ```
 
 2. **Create a Convex project:**
+
    ```bash
    npx convex dev
    ```
+
    This will prompt you to log in and create a new project.
 
 3. **Add environment variables:**
@@ -47,6 +50,7 @@ The baby prediction uses a simple `votes` table:
 ## Convex Functions
 
 Located in `convex/votes.ts`:
+
 - `recordVote`: Mutation to record a new vote
 - `getRecentVotes`: Query to get latest votes
 - `getDailyAggregates`: Query to get daily prediction history
@@ -55,6 +59,7 @@ Located in `convex/votes.ts`:
 ## Development
 
 When you make changes to `convex/schema.ts`, run:
+
 ```bash
 npx convex dev
 ```

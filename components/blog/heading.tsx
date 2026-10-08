@@ -9,13 +9,7 @@ interface BaseHeadingProps {
 
 export function Heading({ id, className, children }: BaseHeadingProps) {
   return (
-    <h2
-      id={id}
-      className={cn(
-        "mt-10 scroll-m-20 text-3xl font-bold tracking-tight",
-        className,
-      )}
-    >
+    <h2 id={id} className={cn("mt-10 scroll-m-20 text-3xl font-bold tracking-tight", className)}>
       {children}
     </h2>
   );

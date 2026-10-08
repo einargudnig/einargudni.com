@@ -464,7 +464,9 @@
   }
   body {
     @apply bg-background text-foreground;
-    transition: background-color 600ms var(--ease-out), color 600ms var(--ease-out);
+    transition:
+      background-color 600ms var(--ease-out),
+      color 600ms var(--ease-out);
   }
   /* Edition switch: components/edition.tsx animates the clip itself */
   ::view-transition-old(root),

@@ -78,9 +78,7 @@ export function YouTubeEmbed({
   const id = extractVideoId(videoId);
 
   // Build the embed URL
-  const domain = privacyMode
-    ? "https://www.youtube-nocookie.com"
-    : "https://www.youtube.com";
+  const domain = privacyMode ? "https://www.youtube-nocookie.com" : "https://www.youtube.com";
 
   const params = new URLSearchParams();
 

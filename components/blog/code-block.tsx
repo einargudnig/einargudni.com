@@ -35,7 +35,7 @@ export function CodeBlock({
                   pre(node) {
                     // Preserve existing background and add counter-reset
                     const existingStyle = node.properties.style || "";
-                    node.properties.style = `${existingStyle}${existingStyle ? ';' : ''} counter-reset: line;`;
+                    node.properties.style = `${existingStyle}${existingStyle ? ";" : ""} counter-reset: line;`;
                   },
                 },
               ]
@@ -65,8 +65,9 @@ export function CodeBlock({
         </div>
       )}
       <div className="relative">
-        <style dangerouslySetInnerHTML={{
-          __html: `
+        <style
+          dangerouslySetInnerHTML={{
+            __html: `
             .code-with-lines .line {
               display: inline-block;
               width: 100%;
@@ -83,8 +84,9 @@ export function CodeBlock({
               border-right: 1px solid rgba(127, 132, 156, 0.3);
               padding-right: 0.75rem;
             }
-          `
-        }} />
+          `,
+          }}
+        />
         <div
           className={cn(
             "overflow-x-auto text-sm [&_pre]:p-4 [&_pre]:m-0",

@@ -10,16 +10,10 @@ export interface QuoteData {
 
 export function writeQuote(data: QuoteData): string {
   const date = new Date().toISOString().split("T")[0];
-  const slug = slugify(
-    `${data.author}-${data.text.slice(0, 30)}`.toLowerCase(),
-    { strict: true },
-  );
+  const slug = slugify(`${data.author}-${data.text.slice(0, 30)}`.toLowerCase(), { strict: true });
   const filename = `${date}-${slug}.mdx`;
 
-  const quotesDir = path.resolve(
-    process.cwd(),
-    "../../content/quotes",
-  );
+  const quotesDir = path.resolve(process.cwd(), "../../content/quotes");
 
   if (!fs.existsSync(quotesDir)) {
     fs.mkdirSync(quotesDir, { recursive: true });

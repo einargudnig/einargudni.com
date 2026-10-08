@@ -8,12 +8,7 @@ interface BlockquoteProps {
   author?: string;
 }
 
-export function Blockquote({
-  children,
-  className,
-  citation,
-  author,
-}: BlockquoteProps) {
+export function Blockquote({ children, className, citation, author }: BlockquoteProps) {
   return (
     <figure className={cn("my-8 relative", className)}>
       <div className="absolute -left-6 top-0 text-muted-foreground">

@@ -14,14 +14,8 @@ interface FileTreeProps {
   initialExpandAll?: boolean;
 }
 
-export function FileTree({
-  data,
-  className,
-  initialExpandAll = false,
-}: FileTreeProps) {
-  const [expandedItems, setExpandedItems] = React.useState<
-    Record<string, boolean>
-  >(
+export function FileTree({ data, className, initialExpandAll = false }: FileTreeProps) {
+  const [expandedItems, setExpandedItems] = React.useState<Record<string, boolean>>(
     data.reduce(
       (acc, item) => {
         if (item.children) {
@@ -73,23 +67,14 @@ export function FileTree({
         </div>
 
         {isFolder && isExpanded && item.children && (
-          <div>
-            {item.children.map((child) =>
-              renderItem(child, level + 1, currentPath),
-            )}
-          </div>
+          <div>{item.children.map((child) => renderItem(child, level + 1, currentPath))}</div>
         )}
       </div>
     );
   };
 
   return (
-    <div
-      className={cn(
-        "my-4 p-3 bg-muted/30 rounded-md border border-border",
-        className,
-      )}
-    >
+    <div className={cn("my-4 p-3 bg-muted/30 rounded-md border border-border", className)}>
       {data.map((item) => renderItem(item, 0))}
     </div>
   );

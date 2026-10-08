@@ -57,7 +57,5 @@ export function Ledger({
 
 // An empty table still prints its ruling, so absence reads as designed.
 export function LedgerEmpty({ children }: { children: ReactNode }) {
-  return (
-    <p className="border-t border-border py-3 text-sm text-muted-foreground">{children}</p>
-  );
+  return <p className="border-t border-border py-3 text-sm text-muted-foreground">{children}</p>;
 }
