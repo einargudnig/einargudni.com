@@ -4,7 +4,7 @@ Moving the zone from Vercel DNS to Cloudflare, then the apps that sit on it.
 
 - **Registrar:** Name.com (expires 2027-01-22)
 - **Nameservers today:** `ns1.vercel-dns.com`, `ns2.vercel-dns.com`
-- **Worker already live:** <https://einar-os.einargudni.workers.dev>
+- **Worker already live:** <https://einargudni-com.einargudni.workers.dev>
 
 > [!CAUTION]
 > **Corrected 2026-09-14.** An earlier version of this file claimed the zone had
@@ -293,10 +293,10 @@ they are what rollback depends on.
 
 ## Reference
 
-|                |                                                          |
-| -------------- | -------------------------------------------------------- |
-| Branch         | `migrate/tanstack` (PR #39)                              |
-| Worker         | `einar-os` → <https://einar-os.einargudni.workers.dev>   |
-| Zone file      | [`infra/einargudni.com.zone`](./einargudni.com.zone)     |
-| Verify         | [`scripts/verify-dns.sh`](../scripts/verify-dns.sh)      |
-| Canonical host | apex `einargudni.com` — `SITE_URL` in `lib/discovery.ts` |
+|                |                                                                    |
+| -------------- | ------------------------------------------------------------------ |
+| Branch         | `migrate/tanstack` (PR #39)                                        |
+| Worker         | `einargudni-com` → <https://einargudni-com.einargudni.workers.dev> |
+| Zone file      | [`infra/einargudni.com.zone`](./einargudni.com.zone)               |
+| Verify         | [`scripts/verify-dns.sh`](../scripts/verify-dns.sh)                |
+| Canonical host | apex `einargudni.com` — `SITE_URL` in `lib/discovery.ts`           |

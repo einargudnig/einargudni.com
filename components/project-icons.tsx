@@ -106,7 +106,7 @@ function DotfilesIcon() {
   );
 }
 
-function EinarOsIcon() {
+function EinargudniIcon() {
   return (
     <svg viewBox="0 0 20 20" fill="none" className={cls}>
       <rect
@@ -355,7 +355,7 @@ export const projectIcons: Record<string, () => ReactNode> = {
   jstop: JstopIcon,
   "ts-mini": TsMiniIcon,
   dotfiles: DotfilesIcon,
-  "einargudni.com": EinarOsIcon,
+  "einargudni.com": EinargudniIcon,
   "todo-system": TodoSystemIcon,
   baby: BabyIcon,
   "sól og bjór": SolOgBjorIcon,

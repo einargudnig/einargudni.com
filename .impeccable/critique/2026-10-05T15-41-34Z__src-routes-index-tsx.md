@@ -1,5 +1,5 @@
 ---
-target: whole einar-os site
+target: whole einargudni.com site
 total_score: 24
 max_score: 32
 na_heuristics: 9,10
@@ -9,7 +9,7 @@ timestamp: 2026-10-05T15-41-34Z
 slug: src-routes-index-tsx
 ---
 
-# Critique: einar-os whole site (2026-10-05)
+# Critique: einargudni.com whole site (2026-10-05)
 
 Method: dual-agent (A: design review · B: detector + browser)
 
