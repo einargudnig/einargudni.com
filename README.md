@@ -1,4 +1,4 @@
-# einar-os
+# einargudni.com
 
 My personal site — [einargudni.com](https://einargudni.com).
 

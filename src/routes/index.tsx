@@ -74,7 +74,7 @@ const projects = [
     tags: ["Neovim", "Zsh", "macOS"],
   },
   {
-    title: "einar-os",
+    title: "einargudni.com",
     description:
       "This site. Built with TanStack Start, Velite for MDX content, and Tailwind v4. Deployed on Cloudflare Workers.",
     href: "https://github.com/einargudnig/einargudni.com",
