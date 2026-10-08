@@ -326,7 +326,7 @@
     transition-delay: 100ms;
   }
 
-  /* einar-os: window comes alive */
+  /* einargudni.com: window comes alive */
   .group:hover .pi-frame {
     stroke: var(--brand);
     opacity: 0.5;

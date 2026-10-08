@@ -355,7 +355,7 @@ export const projectIcons: Record<string, () => ReactNode> = {
   jstop: JstopIcon,
   "ts-mini": TsMiniIcon,
   dotfiles: DotfilesIcon,
-  "einar-os": EinarOsIcon,
+  "einargudni.com": EinarOsIcon,
   "todo-system": TodoSystemIcon,
   baby: BabyIcon,
   "sól og bjór": SolOgBjorIcon,
