@@ -86,8 +86,8 @@ The project uses **Velite** as a content processing pipeline that transforms Mar
   - `/notes` - Notes page
   - `/about`, `/now`, `/someday` - Static pages
   - `/uses/*` - Tech stack and setup pages
-  - `/api/*` and `/.well-known/*` - server routes (agent discovery, contact,
-    markdown source). The `[.]` in a filename escapes a literal dot, so
+  - `/api/*` and `/.well-known/*` - server routes (agent discovery, markdown
+    source). The `[.]` in a filename escapes a literal dot, so
     `src/routes/[.]well-known/api-catalog.ts` serves `/.well-known/api-catalog`.
 
 - **Layout Hierarchy**:
@@ -187,11 +187,9 @@ when `vite build` runs, not at request time):
 
 **Runtime** (Worker secrets — `wrangler secret put NAME`):
 
-| Variable                                 | Effect if missing                                                             |
-| ---------------------------------------- | ----------------------------------------------------------------------------- |
-| `RESEND_API_KEY`                         | Contact form returns 503 with a "email me directly" message                   |
-| `LIFEOS_API_URL`, `LIFEOS_WEB_TOKEN`     | Whoop numbers fall back to the committed snapshot in `data/whoop/latest.json` |
-| `CONTACT_TO_EMAIL`, `CONTACT_FROM_EMAIL` | Defaults in `src/routes/api/contact.ts` are used                              |
+| Variable                             | Effect if missing                                                             |
+| ------------------------------------ | ----------------------------------------------------------------------------- |
+| `LIFEOS_API_URL`, `LIFEOS_WEB_TOKEN` | Whoop numbers fall back to the committed snapshot in `data/whoop/latest.json` |
 
 Every one of these degrades gracefully; none will fail a build or a request.
 

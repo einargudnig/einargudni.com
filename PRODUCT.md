@@ -14,7 +14,7 @@ web
 
 ## Product Purpose
 
-Einar Gudni's personal site (einargudni.com): a place to share his thinking and to show, in detail, the solutions he has built for systems that already exist. AI agents are a growing share of that work, not the whole of it. Success is a qualified visitor reading a case study and using the contact form, and readers returning for writing.
+Einar Gudni's personal site (einargudni.com): a place to share his thinking and to show, in detail, the solutions he has built for systems that already exist. AI agents are a growing share of that work, not the whole of it. Success is a qualified visitor reading a case study and getting in touch through eggo.is, and readers returning for writing.
 
 ## Positioning
 
@@ -28,7 +28,7 @@ Software developer at Maul (food delivery, Reykjavík) since 2020 and independen
 
 - TanStack Start on Cloudflare Workers, fully prerendered; MDX content via Velite.
 - Content types: blog posts, deep dives, learnings/notes, links, quotes, use cases (/use-cases; content in content/work/), static pages (about, now, someday, uses, referrals, resolutions).
-- Contact form posts to /api/contact (Resend).
+- Enquiries go through eggo.is; the site has no contact form of its own.
 - Every page must also work as markdown for agents (Accept: text/markdown).
 
 ## Brand Commitments

@@ -91,14 +91,6 @@ when `vite build` runs):
 **Runtime** (Worker secrets — `wrangler secret put NAME`; locally, `.env` from
 `.env.example`, or `.dev.vars`, which wins when both exist):
 
-| Variable                             | If missing                                           |
-| ------------------------------------ | ---------------------------------------------------- |
-| `RESEND_API_KEY`                     | Contact form returns 503 pointing at the mailto link |
-| `LIFEOS_API_URL`, `LIFEOS_WEB_TOKEN` | Whoop numbers fall back to `data/whoop/latest.json`  |
-| `CONTACT_TO_EMAIL`                   | Defaults to `einargudnig@gmail.com`                  |
-| `CONTACT_FROM_EMAIL`                 | Defaults to `onboarding@resend.dev`                  |
-
-The contact form on the home page posts to `src/routes/api/contact.ts`, which
-relays over [Resend](https://resend.com). Resend's default sender only delivers
-to the address owning the account, which is enough to receive enquiries; verify
-a domain and point `CONTACT_FROM_EMAIL` at it for real deliverability.
+| Variable                             | If missing                                          |
+| ------------------------------------ | --------------------------------------------------- |
+| `LIFEOS_API_URL`, `LIFEOS_WEB_TOKEN` | Whoop numbers fall back to `data/whoop/latest.json` |
