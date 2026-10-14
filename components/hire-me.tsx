@@ -59,6 +59,17 @@ export function HireMe() {
             {EMAIL}
           </a>
         </p>
+        <p className="text-sm text-muted-foreground">
+          Or through{" "}
+          <a
+            href="https://www.eggo.is"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-foreground underline decoration-1 underline-offset-4 transition-colors hover:text-brand"
+          >
+            eggo.is
+          </a>
+        </p>
       </div>
 
       {status === "sent" ? (
