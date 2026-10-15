@@ -1,0 +1,168 @@
+---
+title: "personal software in the agent era: jstop"
+slug: personal-software-jstop
+date: "2026-10-15"
+draft: false
+---
+
+Robin Sloan once wrote that
+[an app can be a home-cooked meal](https://www.robinsloan.com/notes/home-cooked-app/):
+something you make for the people you love, not for a market. For a long time
+that was a nice idea that mostly stayed an idea. If I wanted a small tool for
+myself, I had to weigh it against an evening, a weekend, a new language, and
+the fact that I'd probably never finish it.
+
+<Spacer size="small" />
+
+That trade-off has changed. With coding agents, the cost of a tool that only
+I will ever use has collapsed to roughly the cost of describing it well. This
+is the first post in a series about that: **personal software in the agent
+era**. Small things I built for an audience of one, how they got built, and
+what was still left for me to do.
+
+<Spacer size="small" />
+
+First up: [jstop](https://jstop.einargudni.com).
+
+<Spacer size="small" />
+
+<VideoEmbed
+  src="/images/blog/jstop/jstop-showcase.mp4"
+  title="jstop showcase"
+  caption="jstop, like top but for JS runtimes."
+  aspectRatio="16:9"
+/>
+
+<Spacer size="small" />
+
+<Subheading>_the problem_</Subheading>
+
+I write JavaScript all day, which means my laptop is always full of JavaScript
+processes. A `bun dev` from this morning. A Vite server from a branch I closed
+two hours ago. Wrangler holding on to four ports. Something on `:3000` that I
+definitely didn't start, except I did.
+
+The usual fix is `lsof -i :3000`, squint, `kill`, repeat. Or Activity Monitor,
+which shows forty processes called `node` and no hint as to which is which.
+
+<Spacer size="small" />
+
+jstop is a macOS menu bar app that answers three questions: what JS runtimes
+are running, which ports do they own, and can I kill this one now. The menu bar
+shows a live count. Click it and you get a list split into **Dev Servers** and
+**Background**, each with its framework, uptime and port badges. Click a port
+to open `localhost` in the browser, click the X to send a SIGTERM.
+
+<Spacer size="small" />
+
+<Subheading>_built in swift, by someone who writes typescript_</Subheading>
+
+The interesting thing about jstop isn't the feature list. It's that it's a
+native SwiftUI app and I write TypeScript for a living.
+
+A year or two ago I would have reached for Electron or a Raycast extension,
+because that's the stack I know. Here I could choose the stack the problem
+wanted instead: a native menu bar app is small, starts instantly and uses no
+memory to speak of. The agent knew Swift. My job was knowing what I wanted.
+
+<Spacer size="small" />
+
+The process was more structured than "vibe it until it works". Before any code,
+the project started as a plan: a `PROJECT.md` with the core value (_see them,
+kill them, open them_), what was in scope, what was explicitly out (no logs,
+no auto-restart, no Electron), and a three-phase roadmap. Each phase was broken
+into small plans, and each plan was executed and summarised before the next.
+The first two phases went from empty folder to working app in an afternoon.
+
+All of it, about a thousand lines of Swift, landed over three days in March.
+
+<Spacer size="small" />
+
+One detail I like: the code is commented like a tutorial. `ProcessManager.swift` explains what `@MainActor` means, why
+`ObservableObject` re-renders views, what `withCheckedContinuation` bridges.
+The code is for me, so it teaches me the language it's written in.
+
+<Spacer size="small" />
+
+<Subheading>_what the agent got wrong_</Subheading>
+
+It wasn't a straight line, and the bugs are the best part.
+
+<StylishList>
+  <StylishListItem>
+    **Nothing compiled.** The generated `.xcodeproj` contained no Swift
+    sources at all. Fixed by regenerating the project with XcodeGen.
+  </StylishListItem>
+  <StylishListItem>
+    **Clicks did nothing.** `ps` ran on the main thread and blocked the UI.
+    Moved to a background queue.
+  </StylishListItem>
+  <StylishListItem>
+    **Half my node processes were missing.** macOS truncates `comm` to about
+    15 characters, so a node installed via fnm shows up as
+    `/Users/einargudj`, not `node`. The fix reads `argv[0]` from the full
+    args first.
+  </StylishListItem>
+  <StylishListItem>
+    **A classic pipe deadlock.** Calling `waitUntilExit()` before reading
+    stdout hangs as soon as `ps` writes more than the ~64 KB pipe buffer.
+    Read first, then wait.
+  </StylishListItem>
+</StylishList>
+
+<Spacer size="small" />
+
+None of these are exotic. They're exactly the bugs you'd hit learning a new
+platform yourself, just compressed from weeks into an afternoon. The agent
+writes the code; reality still does the testing.
+
+<Spacer size="small" />
+
+<Subheading>_ports belong to grandchildren_</Subheading>
+
+The one design problem I enjoyed was ports. When you run `bun dev` in a Next.js
+project, `bun` doesn't own port 3000. It spawns `node`, which spawns
+`next-server`, and _that_ owns the port. Naively, the process you care about
+shows up as "Background" with no ports at all.
+
+So jstop reads the parent PID for every process, builds a parent → children
+map, and propagates listening ports up to the nearest JS runtime ancestor.
+If a target spawns another target (`bun` → `node`), only the parent is shown,
+with the ports it inherited. One row per thing you actually started.
+
+<Spacer size="small" />
+
+<Subheading>_it broke, and that was fine_</Subheading>
+
+In June I opened jstop and the popover showed the process count and nothing
+else. No list, no kill buttons.
+
+The cause: a SwiftUI `ScrollView` inside a self-sizing `MenuBarExtra(.window)`
+gets proposed no height and collapses to zero, clipping every row. The fix
+measures the content height with a `PreferenceKey` and pins the scroll view
+to `min(height, 400)`. I also added a flow layout so Wrangler's pile of ports
+wraps instead of stacking, and an install script that rebuilds and replaces
+the app in `/Applications` so the installed copy never drifts from the source.
+
+<Spacer size="small" />
+
+This is the part of personal software that doesn't get talked about: you are
+also the maintainer. The difference now is that maintenance is a short
+conversation, not a reason to abandon the thing.
+
+<Spacer size="small" />
+
+<Subheading>_the stack, plainly_</Subheading>
+
+- **Swift + SwiftUI**, `MenuBarExtra`, macOS 13+
+- **`ps` and `lsof`** for discovery, polled every 2s while open, 10s idle
+- **XcodeGen** for the project file
+- **Remotion** for the showcase video above
+- Built with **Claude Code**
+
+<Spacer size="small" />
+
+jstop does one thing for one person, and it does it well enough that I
+never open Activity Monitor for a stray `node` anymore. If your laptop is also full of JavaScript, grab it at
+[jstop.einargudni.com](https://jstop.einargudni.com). The code is on
+[GitHub](https://github.com/einargudnig/jstop).
