@@ -64,8 +64,6 @@ The app is five Swift files and about 900 lines. `ProcessManager` is a `@MainAct
 - **Install script.** `install.sh` builds a Release, quits the running copy, replaces `/Applications/jstop.app` and relaunches it. I added it in June because the installed copy had drifted behind the source.
 - **A showcase video** made with Remotion, rendered to the GIF in the README.
 
-
-
 ## What I'd do differently
 
 - **Test the parsing, not just the helpers.** The tests cover small pure functions. The `ps` parsing, the descendant walk and the deduplication all live inline in one closure in `runPS`, so none of it is tested. That's the part most likely to break.
