@@ -1,4 +1,4 @@
-import type { WhoopSnapshot } from "@/lib/life-os";
+import { snapshotAgeDays, type WhoopSnapshot } from "@/lib/whoop";
 import { WhoopRing } from "./whoop-ring";
 
 const STRAIN_MAX = 21;
@@ -10,11 +10,17 @@ const sleepColor = (perf: number) =>
   perf >= 85 ? "text-emerald-400" : perf >= 70 ? "text-yellow-400" : "text-red-500";
 
 export function WhoopStats({ data }: { data: WhoopSnapshot }) {
-  const dateLabel = new Date(data.date).toLocaleDateString("en", {
+  // Parsed as UTC so the label cannot drift by a day depending on where the HTML was
+  // prerendered — the publisher writes UTC dates.
+  const dateLabel = new Date(`${data.date}T00:00:00Z`).toLocaleDateString("en", {
     weekday: "short",
     month: "short",
     day: "numeric",
+    timeZone: "UTC",
   });
+  // Only mentioned when it is true: a score that is a day old is the normal state of a
+  // once-a-day snapshot, and saying so every day would be noise.
+  const ageDays = snapshotAgeDays(data.date);
 
   return (
     <div className="space-y-4">
@@ -46,7 +52,10 @@ export function WhoopStats({ data }: { data: WhoopSnapshot }) {
           />
         )}
       </div>
-      <p className="text-xs text-muted-foreground">Stats from {dateLabel}</p>
+      <p className="text-xs text-muted-foreground">
+        Stats from {dateLabel}
+        {ageDays > 1 ? ` · ${ageDays} days old, sync is behind` : ""}
+      </p>
     </div>
   );
 }

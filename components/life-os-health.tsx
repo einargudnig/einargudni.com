@@ -1,5 +1,5 @@
 import { Link } from "@/components/ui/link";
-import type { WhoopSnapshot } from "@/lib/life-os";
+import type { WhoopSnapshot } from "@/lib/whoop";
 
 // Trends + the sleep→recovery insight, computed by my life-os from its store. Sits
 // under the Whoop rings to add context to today.

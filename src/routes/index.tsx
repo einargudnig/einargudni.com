@@ -9,11 +9,10 @@ import { WorkList } from "@/components/work/work-list";
 import { orderWork, publishedWork } from "@/lib/work";
 import { ArrowRight, ArrowUpRight } from "lucide-react";
 import { Link } from "@/components/ui/link";
-import { useSuspenseQuery } from "@tanstack/react-query";
 import { deepDives, posts } from "@/.velite";
 import { formatShortDate } from "@/lib/utils";
 import { contributionsQueryOptions } from "@/lib/github";
-import { whoopQueryOptions } from "@/lib/whoop";
+import { whoopSnapshot } from "@/lib/whoop";
 
 const projects = [
   {
@@ -130,15 +129,15 @@ const rowLink =
   "group grid gap-x-6 gap-y-0.5 border-t border-border py-3 first:border-t-0 sm:grid-cols-[7rem_1fr_auto]";
 const rowTitle = "underline-offset-4 decoration-1 group-hover:text-brand group-hover:underline";
 
-const Health = () => {
-  const { data } = useSuspenseQuery(whoopQueryOptions);
-  return (
-    <div className="space-y-6">
-      <WhoopStats data={data} />
-      <LifeOsHealth data={data} />
-    </div>
-  );
-};
+const Health = () => (
+  // Committed data, so there is nothing to await: this renders into the prerendered HTML
+  // and never re-renders. The old version suspended on a query and drew the rings in after
+  // hydration — a visible pop, for numbers that only change once a day.
+  <div className="space-y-6">
+    <WhoopStats data={whoopSnapshot} />
+    <LifeOsHealth data={whoopSnapshot} />
+  </div>
+);
 
 function RouteComponent() {
   const work = [
@@ -325,9 +324,7 @@ function RouteComponent() {
 
       <Ledger title="Health" aside="Whoop">
         <div className="pt-4">
-          <Island name="health numbers">
-            <Health />
-          </Island>
+          <Health />
         </div>
       </Ledger>
 
@@ -364,11 +361,9 @@ export const Route = createFileRoute("/")({
     ],
   }),
   // prefetchQuery never throws: a failed widget is the Island's problem, not
-  // a reason to fail the whole homepage.
+  // a reason to fail the whole homepage. The Whoop numbers are not fetched at all —
+  // they are committed data, rendered into the prerendered HTML.
   loader: ({ context }) =>
-    Promise.all([
-      context.queryClient.prefetchQuery(whoopQueryOptions),
-      context.queryClient.prefetchQuery(contributionsQueryOptions("einargudnig")),
-    ]),
+    context.queryClient.prefetchQuery(contributionsQueryOptions("einargudnig")),
   component: RouteComponent,
 });

@@ -89,8 +89,24 @@ when `vite build` runs):
 | `VITE_CF_IMAGES`  | Images served untransformed. Set to `1` only after enabling Image Transformations on the zone, or every `/cdn-cgi/image/` URL 404s |
 
 **Runtime** (Worker secrets — `wrangler secret put NAME`; locally, `.env` from
-`.env.example`, or `.dev.vars`, which wins when both exist):
+`.env.example`, or `.dev.vars`, which wins when both exist): none. The Worker holds no
+credentials and fetches nothing — the Whoop numbers are `data/whoop/latest.json`, rendered
+into the prerendered HTML.
 
-| Variable                             | If missing                                          |
-| ------------------------------------ | --------------------------------------------------- |
-| `LIFEOS_API_URL`, `LIFEOS_WEB_TOKEN` | Whoop numbers fall back to `data/whoop/latest.json` |
+**CI** (GitHub variables/secrets, used only by `.github/workflows/daily-snapshot.yml`):
+
+| Name                    | Kind     | If missing                          |
+| ----------------------- | -------- | ----------------------------------- |
+| `LIFEOS_API_URL`        | variable | the daily refresh job fails, loudly |
+| `LIFEOS_WEB_TOKEN`      | secret   | the daily refresh job fails, loudly |
+| `CLOUDFLARE_API_TOKEN`  | secret   | the refresh commits but never ships |
+| `CLOUDFLARE_ACCOUNT_ID` | variable | same                                |
+
+The two data files are refreshed once a day from the life-os edge API
+(`GET /v1/portfolio/whoop` and `/v1/portfolio/overview`) by `scripts/refresh-life-os.ts`. Run
+it by hand the same way the workflow does:
+
+```bash
+LIFEOS_API_URL=https://life-os-api-prod-….workers.dev LIFEOS_WEB_TOKEN=… \
+  bun scripts/refresh-life-os.ts && bun run deploy
+```

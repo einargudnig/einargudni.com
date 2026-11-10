@@ -139,6 +139,9 @@ To add new custom components for use in MDX:
 ## Deployment Notes
 
 - Deployed to Cloudflare Workers (`wrangler.jsonc`, `bun run deploy`)
+- `.github/workflows/daily-snapshot.yml` deploys once a day after refreshing the life-os
+  snapshot (08:30 UTC, after Whoop publishes the night's recovery). `bun run deploy` by hand
+  still works and is what you use for a content change.
 - All 35 pages are prerendered to `dist/client` and served by the assets binding
 - `assets.run_worker_first` covers `/`, `/blog/*` and `/deep-dive/*` so the
   markdown-negotiation middleware sees those requests. Anything matching runs
@@ -185,13 +188,42 @@ when `vite build` runs, not at request time):
 | `VITE_CONVEX_URL` | `/baby` renders without live vote data                                                                                                        |
 | `VITE_CF_IMAGES`  | Images served untransformed. Set to `1` **only after** enabling Image Transformations on the zone, otherwise every `/cdn-cgi/image/` URL 404s |
 
-**Runtime** (Worker secrets — `wrangler secret put NAME`):
+**Runtime** (Worker secrets — `wrangler secret put NAME`): none. The Worker holds no
+credentials and makes no outbound data calls; the Whoop numbers are a committed file.
 
-| Variable                             | Effect if missing                                                             |
-| ------------------------------------ | ----------------------------------------------------------------------------- |
-| `LIFEOS_API_URL`, `LIFEOS_WEB_TOKEN` | Whoop numbers fall back to the committed snapshot in `data/whoop/latest.json` |
+**CI only** (GitHub repository variables and secrets, read by
+`.github/workflows/daily-snapshot.yml` — never by the Worker):
+
+| Name                    | Kind     | What it is                                      |
+| ----------------------- | -------- | ----------------------------------------------- |
+| `LIFEOS_API_URL`        | variable | life-os edge Worker base URL, no trailing slash |
+| `LIFEOS_WEB_TOKEN`      | secret   | read key life-os issues for this site           |
+| `CLOUDFLARE_API_TOKEN`  | secret   | Workers edit permission, for the daily deploy   |
+| `CLOUDFLARE_ACCOUNT_ID` | variable | the `einargudni` account                        |
 
 Every one of these degrades gracefully; none will fail a build or a request.
+
+### Whoop data: once a day, baked in
+
+`data/whoop/latest.json` and `data/life-os-overview.json` are the site's only data files.
+They are rendered at build time, so `/` ships the numbers inside the prerendered HTML: no
+client fetch, no loading state, no runtime dependency. `scripts/refresh-life-os.ts` pulls
+both from the life-os edge API (`/v1/portfolio/{whoop,overview}`), and the daily workflow
+rebuilds, deploys, then commits them.
+
+The rules that make it safe to leave unattended:
+
+- The script refuses to write an older `date` than what is committed, and refuses a reading
+  more than three days old — a lagging replica fails the job instead of quietly replacing
+  good numbers with older ones.
+- `WhoopStats` prints "N days old, sync is behind" when the committed snapshot lags. The old
+  pipeline died in the `einar-os` → `einargudni.com` rename and the site showed a five-week-old
+  score that looked normal; the label is there so that cannot happen silently again.
+- Deploy runs before the commit: a failed deploy leaves the repo unchanged and the next run
+  retries, rather than recording a refresh the live site never received.
+
+The derivation itself lives in life-os (`src/data/portfolio.ts`) and is shared with the
+endpoint, so this repo contains no Whoop arithmetic — only the shape in `lib/whoop.ts`.
 
 ## Agent skills
 
