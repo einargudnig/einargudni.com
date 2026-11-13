@@ -17,7 +17,7 @@ const LEVEL_CLASSES = [
   "bg-foreground",
 ] as const;
 
-function groupByWeeks(contributions: ContributionDay[]) {
+function groupByWeeks(contributions: readonly ContributionDay[]) {
   const weeks: ContributionDay[][] = [];
   let currentWeek: ContributionDay[] = [];
 

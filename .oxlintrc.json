@@ -17,7 +17,7 @@
     "no-underscore-dangle": [
       "warn",
       {
-        "allow": ["_splat"]
+        "allow": ["_splat", "_tag"]
       }
     ]
   },

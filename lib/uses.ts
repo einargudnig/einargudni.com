@@ -41,11 +41,6 @@ export const usesFolders: UsesFolder[] = [
         href: "https://www.anthropic.com/claude-code",
         description: "Where most of my code gets written now",
       },
-      {
-        name: "Codex",
-        href: "https://github.com/openai/codex",
-        description: "OpenAI's coding agent, for a second opinion",
-      },
       { name: "OpenCode", href: "https://opencode.ai", description: "Open-source coding agent" },
       {
         name: "pi",
@@ -58,19 +53,9 @@ export const usesFolders: UsesFolder[] = [
         description: "Nous Research's agent, from the terminal",
       },
       {
-        name: "Conductor",
-        href: "https://conductor.build",
-        description: "Runs agents side by side in their own worktrees",
-      },
-      {
         name: "herdr",
         href: "https://herdr.dev",
         description: "Agent multiplexer that lives in the terminal",
-      },
-      {
-        name: "worktrunk",
-        href: "https://worktrunk.dev",
-        description: "Git worktrees for parallel agent work",
       },
       {
         name: "hunk",
