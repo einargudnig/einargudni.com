@@ -358,6 +358,10 @@ export const Route = createFileRoute("/")({
       { property: "og:image", content: "/og/home.png" },
       { name: "twitter:card", content: "summary_large_image" },
       { name: "twitter:image", content: "/og/home.png" },
+      // The snapshot's own date, in the markup. The daily workflow greps the live page for
+      // this after deploying: it is the difference between "the repo and the deploy both
+      // succeeded" and "a visitor is actually seeing today's numbers".
+      { name: "whoop-snapshot", content: whoopSnapshot.date },
     ],
   }),
   // prefetchQuery never throws: a failed widget is the Island's problem, not

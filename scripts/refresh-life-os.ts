@@ -179,7 +179,7 @@ const program = Effect.gen(function* () {
   );
   if (Option.isSome(output)) {
     yield* Effect.tryPromise({
-      try: () => appendFile(output.value, `changed=${changed}\n`),
+      try: () => appendFile(output.value, `changed=${changed}\ndate=${whoop.parsed.date}\n`),
       catch: (cause) => new FileFailed({ path: output.value, cause }),
     });
   }
