@@ -45,16 +45,7 @@ The members' area also has an assistant. A member can ask about their training, 
 
 ## Architecture
 
-<Architecture
-  nodes={[
-    { label: "sterkirpabbar.is", detail: "Astro landing page, zero JS" },
-    { label: "app.sterkirpabbar.is", detail: "React Router + Clerk" },
-    { label: "/api/assistant", detail: "AI SDK streamText, member-scoped tools" },
-    { label: "AI Gateway", detail: "BYOK to OpenAI" },
-    { label: "Neon + Sanity", detail: "Member rows, plans, FAQs" },
-  ]}
-  caption="The landing page links into the app; the assistant route reads only the signed-in member's data."
-/>
+::Architecture{nodes='[{"label":"sterkirpabbar.is","detail":"Astro landing page, zero JS"},{"label":"app.sterkirpabbar.is","detail":"React Router + Clerk"},{"label":"/api/assistant","detail":"AI SDK streamText, member-scoped tools"},{"label":"AI Gateway","detail":"BYOK to OpenAI"},{"label":"Neon + Sanity","detail":"Member rows, plans, FAQs"}]' caption="The landing page links into the app; the assistant route reads only the signed-in member's data."}
 
 The landing page is static Astro. One `site.ts` module feeds both the visible copy and the JSON-LD, so the structured data can't drift from the page. Sanity content is fetched at build time into a committed JSON file, so a Sanity outage can't break a deploy. Publishing in the Studio fires a Vercel deploy hook, with drafts excluded so autosave doesn't trigger builds.
 
@@ -78,4 +69,4 @@ The assistant runs inside that app. Its tools take injected readers (`assignedPl
 - **Give production its own database branch.** Dev and prod shared one Neon database, so local writes went to production data.
 - **Never trust a platform's green status.** Vercel reported the domain verified while serving no certificate at all. Certificate issuance had failed before the nameservers moved and was never retried. Now I check the TLS handshake myself and force issuance right after a cutover.
 - **Design a success signal into fallbacks.** A build that never fails also looked the same when it never reached Sanity.
-- **Drive the real UI earlier.** Using the app in a browser found four defects that typecheck, lint and 40 passing tests had missed. One was a radio button at 1.05:1 contrast that nobody could see.
+- **Drive the real UI earlier.** Using the app in a browser found four defects that typecheck, lint and 40 passing tests had missed. One was a radio button at 1.05\:1 contrast that nobody could see.

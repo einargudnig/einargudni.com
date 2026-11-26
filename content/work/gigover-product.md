@@ -15,8 +15,6 @@ featured: false
 draft: false
 ---
 
-
-
 ## Problem
 
 Gigover is a project-management product for construction: projects, tasks, tenders and bids, resources, files. I've freelanced on it since early 2023, mostly on the authenticated web app, plus its Firebase functions and the marketing site.
@@ -34,15 +32,7 @@ The biggest problem was invisible. The backend reports failure inside an HTTP 20
 
 ## Architecture
 
-<Architecture
-  nodes={[
-    { label: "Web app", detail: "React, Chakra, TanStack Query" },
-    { label: "postToApi", detail: "Zod-decoded envelope check" },
-    { label: "Java REST API", detail: "Spring MVC on App Engine" },
-    { label: "Cloud SQL", detail: "MySQL, strict mode" },
-  ]}
-  caption="Every write goes through one helper that knows a 200 can still be a failure."
-/>
+::Architecture{nodes='[{"label":"Web app","detail":"React, Chakra, TanStack Query"},{"label":"postToApi","detail":"Zod-decoded envelope check"},{"label":"Java REST API","detail":"Spring MVC on App Engine"},{"label":"Cloud SQL","detail":"MySQL, strict mode"}]' caption="Every write goes through one helper that knows a 200 can still be a failure."}
 
 The core of the API-layer work was a `src/api` module (`defineQuery`, `defineMutation`, a shared HTTP client and an invalidation registry), so a hook declares what it calls and what it invalidates instead of hand-rolling both.
 

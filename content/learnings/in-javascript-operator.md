@@ -5,8 +5,7 @@ topic: JavaScript
 tags: [javascript]
 ---
 
-<Subheading>`in` JavaScript operator</Subheading>
-<Spacer size="small" />
+### `in` JavaScript operator
 
 The `in` operator in JavaScript return `true` if the specified property is
 in the specified object or its prototype chain.

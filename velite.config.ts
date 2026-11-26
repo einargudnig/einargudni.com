@@ -1,5 +1,22 @@
 import { defineConfig, s } from "velite";
 
+// The first 260 characters of a post's prose, for its meta description. Built
+// from the raw source rather than with s.excerpt(): island directives
+// (`::CaptionedImage{...}`) are markup, not prose, and s.excerpt() printed them.
+const EXCERPT_LENGTH = 260;
+const excerptOf = (body: string) =>
+  body
+    .split(/\n{2,}/)
+    .filter((block) => !/^\s*(:{2,}|```|<)/.test(block))
+    .map((block) =>
+      block
+        .replace(/^#{1,6}\s+/gm, "")
+        .replace(/!?\[([^\]]*)\]\([^)]*\)/g, "$1")
+        .replace(/[*_`~]/g, ""),
+    )
+    .join("\n\n")
+    .slice(0, EXCERPT_LENGTH);
+
 // `s` is extended from Zod with some custom schemas,
 // you can also import re-exported `z` from `velite` if you don't need these extension schemas.
 
@@ -16,12 +33,15 @@ export default defineConfig({
           date: s.isodate(), // input Date-like string, output ISO Date string.
           // cover: s.image().optional(), // input image relative path, output image object with blurImage.
           metadata: s.metadata(), // extract markdown reading-time, word-count, etc.
-          excerpt: s.excerpt(), // excerpt of markdown content
           draft: s.boolean().optional().default(false),
           path: s.path(), // used to resolve the compiled MDX module
           body: s.raw(), // raw markdown body (served via Accept: text/markdown)
         })
-        .transform((data) => ({ ...data, permalink: `/blog/${data.slug}` })),
+        .transform((data) => ({
+          ...data,
+          excerpt: excerptOf(data.body),
+          permalink: `/blog/${data.slug}`,
+        })),
     },
     // collection for learnings
     learnings: {

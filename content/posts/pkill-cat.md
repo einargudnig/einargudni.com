@@ -10,21 +10,15 @@ It had split the job into four subagents, each building a different design
 direction as a standalone HTML page and screenshotting it with Playwright. A
 normal afternoon.
 
-<Spacer size="small" />
-
 Then everything closed. Spotify, Obsidian, Raycast, Discord, the browser. Not
 crashed, no "quit unexpectedly" dialogs. Just gone, as if I'd quit each of them
 by hand. Two things were left: my terminal, and a moment later my browser,
 which reopened by itself with a single tab showing the design board the agent
 had just published.
 
-<Spacer size="small" />
-
 It wasn't the end of the world. It was very interesting.
 
-<Spacer size="small" />
-
-<Subheading>_finding the culprit_</Subheading>
+### _finding the culprit_
 
 Claude Code keeps a transcript of every session as JSONL, subagents included,
 under `~/.claude/projects/`. So I asked a second session to go through the
@@ -32,21 +26,17 @@ first one and find anything that could kill apps.
 
 The main session was innocent: reads, screenshots, some image cropping. The
 answer was in one of the subagents, the one building a design inspired by
-Icelandic newspaper classifieds. At 15:50:33 it ran this:
+Icelandic newspaper classifieds. At 15\:50\:33 it ran this:
 
 ```bash
 pkill -f "cat" -n 2>/dev/null
 ```
 
-<Spacer size="small" />
-
 Then it checked when my apps had been started. Two apps that macOS relaunches
-automatically, Siri and Cold Turkey Blocker, had start times of **15:50:33**
-and **15:50:34**. Same second. Case closed.
+automatically, Siri and Cold Turkey Blocker, had start times of **15\:50\:33**
+and **15\:50\:34**. Same second. Case closed.
 
-<Spacer size="small" />
-
-<Subheading>_why it ran that_</Subheading>
+### _why it ran that_
 
 A couple of minutes earlier the subagent had run a long shell command with a
 stray line in the middle:
@@ -60,68 +50,46 @@ timeout and got moved to the background, and the agent, reasonably, wanted
 to clean up the hung `cat`. Its plan: kill the newest process with "cat" in
 it. That's what `-n` means.
 
-<Spacer size="small" />
-
-<Subheading>_what it actually did_</Subheading>
+### _what it actually did_
 
 Three small things stacked up.
 
-<StylishList>
-  <StylishListItem>
-    **`-n` wasn't a flag.** macOS ships the BSD `pkill`, which stops reading
-    options at the first argument that isn't one. `"cat"` is the first
-    non-option, so `-n` came after it and got read as a _second pattern_. The
-    "newest only" limit never happened.
-  </StylishListItem>
-  <StylishListItem>
-    **`-f` matches the full command line, not the process name.** And every
-    app on a Mac lives in `/Applications/`. Appli-**cat**-ions. Every app I had
-    open matched.
-  </StylishListItem>
-  <StylishListItem>
-    **`2>/dev/null` hid everything.** No output, no errors. The agent saw a
-    clean result, went on taking screenshots, and reported back with a lovely
-    design. It never knew.
-  </StylishListItem>
-</StylishList>
-
-<Spacer size="small" />
+:::StylishList
+- **`-n` wasn't a flag.** macOS ships the BSD `pkill`, which stops reading
+  options at the first argument that isn't one. `"cat"` is the first
+  non-option, so `-n` came after it and got read as a _second pattern_. The
+  "newest only" limit never happened.
+- **`-f` matches the full command line, not the process name.** And every
+  app on a Mac lives in `/Applications/`. Appli-**cat**-ions. Every app I had
+  open matched.
+- **`2>/dev/null` hid everything.** No output, no errors. The agent saw a
+  clean result, went on taking screenshots, and reported back with a lovely
+  design. It never knew.
+:::
 
 `pkill` sends SIGTERM by default, which is the polite "please quit" signal.
 That's why nothing looked like a crash. From the apps' point of view, I had
 quit them all at once.
 
-<Spacer size="small" />
-
-<Subheading>_the survivors_</Subheading>
+### _the survivors_
 
 What didn't die is a nice little lesson in how processes work.
 
-<StylishList>
-  <StylishListItem>
-    **The terminal.** `pkill` never signals itself or its ancestors. The
-    agent's shell was a child of my terminal, so Ghostty was off limits. The
-    one app it couldn't kill was the one running it.
-  </StylishListItem>
-  <StylishListItem>
-    **Karabiner.** It runs as root, and a user process can't kill root
-    processes. The "permission denied" went to `/dev/null` with everything
-    else.
-  </StylishListItem>
-  <StylishListItem>
-    **superwhisper.** Still running since boot. It most likely ignores
-    SIGTERM.
-  </StylishListItem>
-  <StylishListItem>
-    **The browser.** Not really a survivor. It died with the rest, and about
-    two and a half minutes later the main agent published the design board as
-    an artifact, which opened a fresh browser with just that one tab.
-  </StylishListItem>
-</StylishList>
+:::StylishList
+- **The terminal.** `pkill` never signals itself or its ancestors. The
+  agent's shell was a child of my terminal, so Ghostty was off limits. The
+  one app it couldn't kill was the one running it.
+- **Karabiner.** It runs as root, and a user process can't kill root
+  processes. The "permission denied" went to `/dev/null` with everything
+  else.
+- **superwhisper.** Still running since boot. It most likely ignores
+  SIGTERM.
+- **The browser.** Not really a survivor. It died with the rest, and about
+  two and a half minutes later the main agent published the design board as
+  an artifact, which opened a fresh browser with just that one tab.
+:::
 
-<Spacer size="small" />
-
-<Subheading>_and then it happened again_</Subheading>
+### _and then it happened again_
 
 The best part. While investigating, the second agent wanted to confirm its
 theory that `-n` gets treated as a pattern. So it ran:
@@ -135,14 +103,10 @@ had just explained to me, `-n` is a pattern, and plenty of processes have
 `-n` somewhere in their arguments. Exit code 0. Discord quit, and a handful
 of browser renderers went down with it.
 
-<Spacer size="small" />
-
 The agent owned it straight away and pointed out it should have used `pgrep`,
 which only lists matches. Which is exactly the advice it would have given me.
 
-<Spacer size="small" />
-
-<Subheading>_what i'm taking from it_</Subheading>
+### _what i'm taking from it_
 
 - **Flags go before patterns.** `pkill -n -f cat` would have done roughly what
   the agent meant. Better still, `pgrep -lf` first, look, then kill.
@@ -152,9 +116,7 @@ which only lists matches. Which is exactly the advice it would have given me.
   something that deletes or kills means you also silence the evidence.
 - **Agents make the same mistakes we do, just faster.** None of this is
   agent-specific. I've typed worse into a terminal. The difference is that the
-  agent ran it in a subagent I wasn't watching, at 15:50 on a Thursday.
-
-<Spacer size="small" />
+  agent ran it in a subagent I wasn't watching, at 15\:50 on a Thursday.
 
 I've since thought about blocking `pkill` and `killall` for agents entirely,
 so they have to ask first. I probably will. But I'm also a little charmed that

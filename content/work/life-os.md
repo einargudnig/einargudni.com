@@ -46,16 +46,7 @@ I wanted one place that holds all of it, in a shape I can query with SQL, and th
 
 ## Architecture
 
-<Architecture
-  nodes={[
-    { label: "Connectors", detail: "14 across 11 sources" },
-    { label: "Collector", detail: "Bun + launchd on the Mac" },
-    { label: "life.sqlite", detail: "system of record" },
-    { label: "Edge replica", detail: "Worker + D1, /v1" },
-    { label: "Readers", detail: "MCP, Lumen, CLI, this site" },
-  ]}
-  caption="The Mac collects and owns the data. Cloudflare holds an always-on copy that everything off the laptop reads."
-/>
+::Architecture{nodes='[{"label":"Connectors","detail":"14 across 11 sources"},{"label":"Collector","detail":"Bun + launchd on the Mac"},{"label":"life.sqlite","detail":"system of record"},{"label":"Edge replica","detail":"Worker + D1, /v1"},{"label":"Readers","detail":"MCP, Lumen, CLI, this site"}]' caption="The Mac collects and owns the data. Cloudflare holds an always-on copy that everything off the laptop reads."}
 
 Every connector maps its source into one of three shapes: a **sample** (a reading at a point in time, like a recovery score), an **interval** (a span, like a workout or an hour in an app) or an **entity** (something with a lifecycle, like a task or a calendar event). The raw payload is kept verbatim next to it, so I can re-run normalization later.
 
@@ -83,4 +74,4 @@ The test count is 262 `test` and `it` calls across 49 files, counted from the so
 - **Poll each source in exactly one place.** I planned to move all the HTTP connectors to Cloudflare cron. The data said only weather needed it. Everything else catches up from a cursor or a snapshot, and two Whoop pollers would break each other's refresh token.
 - **Mark where each row came from before replicating both ways.** A log line or weather reading pulled from the edge would be pushed straight back. An `origin` column on each row stops the loop.
 - **Test the refusals, not only the successes.** `/v1/sources` returned a 500 instead of a 401 and still passed the parity harness, because the harness only sent authenticated requests.
-- **Don't trust whatever is listening on a port.** The desktop app used to accept anything on :4321 as its dashboard. It now supervises its own sidecar, and the sidecar exits when Lumen does.
+- **Don't trust whatever is listening on a port.** The desktop app used to accept anything on \:4321 as its dashboard. It now supervises its own sidecar, and the sidecar exits when Lumen does.

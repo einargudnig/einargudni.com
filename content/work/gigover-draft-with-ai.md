@@ -15,8 +15,6 @@ featured: true
 draft: false
 ---
 
-
-
 ## Problem
 
 Gigover's create flows are long forms. A task alone has 16 templates: RFI, meetings, change order, daily site log, risk register and more, each with its own fields. People know what they want to say, but turning a paragraph into the right template with the right fields is slow.
@@ -32,16 +30,7 @@ This was also the first time the assistant could produce something that ends up 
 
 ## Architecture
 
-<Architecture
-  nodes={[
-    { label: "Create form", detail: "free text + offered templates" },
-    { label: "draftTask callable", detail: "allowlist, quota, date anchor" },
-    { label: "Gemini", detail: "JSON schema output" },
-    { label: "Normaliser", detail: "offered ids only, field caps" },
-    { label: "Pre-filled form", detail: "human reviews and submits" },
-  ]}
-  caption="One structured-extraction call per surface. No tool loop, no write from the model."
-/>
+::Architecture{nodes='[{"label":"Create form","detail":"free text + offered templates"},{"label":"draftTask callable","detail":"allowlist, quota, date anchor"},{"label":"Gemini","detail":"JSON schema output"},{"label":"Normaliser","detail":"offered ids only, field caps"},{"label":"Pre-filled form","detail":"human reviews and submits"}]' caption="One structured-extraction call per surface. No tool loop, no write from the model."}
 
 The trust boundary is the normaliser, not the prompt. The client sends the templates it offers. The normaliser only accepts a `typeId` from that list and falls back to the first one otherwise, so the model can't invent an identity. Strings are capped to the column widths.
 

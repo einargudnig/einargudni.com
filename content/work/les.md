@@ -36,16 +36,7 @@ The name is Icelandic: "les" means "I read".
 
 ## Architecture
 
-<Architecture
-  nodes={[
-    { label: "Refresh scheduler", detail: "every 30 min, backoff on errors" },
-    { label: "Fetch + parse", detail: "ETag, RSS/Atom, OPML" },
-    { label: "Readability extractor", detail: "saved URLs to title, author, text" },
-    { label: "SQLite via GRDB", detail: "feeds, bookmarks, items, FTS5" },
-    { label: "AppKit UI", detail: "sidebar, list, reader, vim keys" },
-  ]}
-  caption="Feeds and bookmarks take different paths in, but both land as rows in one items table."
-/>
+::Architecture{nodes='[{"label":"Refresh scheduler","detail":"every 30 min, backoff on errors"},{"label":"Fetch + parse","detail":"ETag, RSS/Atom, OPML"},{"label":"Readability extractor","detail":"saved URLs to title, author, text"},{"label":"SQLite via GRDB","detail":"feeds, bookmarks, items, FTS5"},{"label":"AppKit UI","detail":"sidebar, list, reader, vim keys"}]' caption="Feeds and bookmarks take different paths in, but both land as rows in one items table."}
 
 **One table for everything.** An item belongs to either a feed or a bookmark. Exactly one of `feedId` and `bookmarkId` is set. Keeping both kinds in one `items` table means Inbox, Starred and Today are plain `WHERE` clauses, with no `UNION`. Making `feedId` nullable needed a migration that rebuilds the table, because SQLite can't alter a column.
 

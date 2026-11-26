@@ -15,7 +15,7 @@ featured: true
 draft: false
 ---
 
-*This was a team effort at Maul. I was part of the team that built it, and this is my account of the work.*
+_This was a team effort at Maul. I was part of the team that built it, and this is my account of the work._
 
 ## Problem
 
@@ -34,15 +34,7 @@ Lauren Tan's "Verification is all you need" (part 1 of her pstack guide) put it 
 
 ## Architecture
 
-<Architecture
-  nodes={[
-    { label: "Agent", detail: "Claude Code / Codex" },
-    { label: "control.mjs", detail: "JSON CLI, one call per step" },
-    { label: "Headless Chromium", detail: "one persistent Playwright context" },
-    { label: "Admin app", detail: "real dev API" },
-  ]}
-  caption="Every CLI call is a short-lived process that connects over CDP to one long-lived browser."
-/>
+::Architecture{nodes='[{"label":"Agent","detail":"Claude Code / Codex"},{"label":"control.mjs","detail":"JSON CLI, one call per step"},{"label":"Headless Chromium","detail":"one persistent Playwright context"},{"label":"Admin app","detail":"real dev API"}]' caption="Every CLI call is a short-lived process that connects over CDP to one long-lived browser."}
 
 **The CLI.** `control.mjs` wraps Playwright: `goto`, `snapshot` (the accessibility tree), `click`, `type`, `screenshot`, `console`, `network --summary`, and `writes`, an audit trail of every non-GET. I used `launchPersistentContext` because `connectOverCDP` only sees the default context, which lets each command be a fresh process sharing one browser page. The agent finds controls by accessible name.
 

@@ -35,16 +35,7 @@ The usual fix is Activity Monitor, or `lsof -i :3000` and `kill` in a terminal. 
 
 ## Architecture
 
-<Architecture
-  nodes={[
-    { label: "Menu bar label", detail: "Icon + live process count" },
-    { label: "ProcessManager", detail: "Polls 2s open, 10s idle" },
-    { label: "ps + lsof", detail: "Process tree and TCP listeners" },
-    { label: "JSProcess", detail: "Framework, short path, uptime" },
-    { label: "Popover", detail: "Dev Servers / Background, kill, open" },
-  ]}
-  caption="One singleton shells out to ps and lsof on a background queue and publishes a list that the SwiftUI views render."
-/>
+::Architecture{nodes='[{"label":"Menu bar label","detail":"Icon + live process count"},{"label":"ProcessManager","detail":"Polls 2s open, 10s idle"},{"label":"ps + lsof","detail":"Process tree and TCP listeners"},{"label":"JSProcess","detail":"Framework, short path, uptime"},{"label":"Popover","detail":"Dev Servers / Background, kill, open"}]' caption="One singleton shells out to ps and lsof on a background queue and publishes a list that the SwiftUI views render."}
 
 The app is five Swift files and about 900 lines. `ProcessManager` is a `@MainActor` singleton. On a timer it runs `ps -axo pid=,ppid=,etime=,comm=,args=` on a background queue, then `lsof -iTCP -sTCP:LISTEN -nP -Fn` for every listening TCP socket on the machine. It publishes the result through `@Published`, and SwiftUI re-renders. Polling is every 2 seconds with the popover open and every 10 seconds when only the menu bar count needs updating.
 

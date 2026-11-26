@@ -15,7 +15,7 @@ featured: true
 draft: false
 ---
 
-*This was a team effort at Maul. I was part of the team that built it, and this is my account of the work.*
+_This was a team effort at Maul. I was part of the team that built it, and this is my account of the work._
 
 ## Problem
 
@@ -36,16 +36,7 @@ There is no global registry behind this. A marketplace is just a git URL someone
 
 `maul-core` is the shared plumbing. It owns what other Maul skills depend on, mainly safe Notion writes, so they point at it by name instead of restating the same API traps. Domain skills sit on top. Brand assets get their own plugin.
 
-<Architecture
-  nodes={[
-    { label: "Source of truth", detail: "app code, Notion databases" },
-    { label: "maul-core", detail: "shared plumbing: Notion writes, cached rules" },
-    { label: "Domain skills", detail: "time rules, roles, surveys, brand" },
-    { label: "Private marketplace", detail: "git repo, gated by org access" },
-    { label: "Claude Code / Cowork", detail: "developers and ops" },
-  ]}
-  caption="Knowledge flows from where it already lives, through a shared core, out through a repo-gated marketplace."
-/>
+::Architecture{nodes='[{"label":"Source of truth","detail":"app code, Notion databases"},{"label":"maul-core","detail":"shared plumbing: Notion writes, cached rules"},{"label":"Domain skills","detail":"time rules, roles, surveys, brand"},{"label":"Private marketplace","detail":"git repo, gated by org access"},{"label":"Claude Code / Cowork","detail":"developers and ops"}]' caption="Knowledge flows from where it already lives, through a shared core, out through a repo-gated marketplace."}
 
 For the time rules, the skill's reference tables are generated from the live rule arrays in the web app. A script writes the markdown, and a Vitest test compares the checked-in file with fresh generator output. CI already runs the tests, so editing a cutoff in code without regenerating the doc fails the build. I checked it by deliberately changing a cutoff and watching the test fail.
 

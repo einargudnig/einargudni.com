@@ -15,8 +15,6 @@ featured: true
 draft: false
 ---
 
-
-
 ## Problem
 
 Gigover wanted an AI assistant inside the web app. The spec I was handed assumed Perplexity sonar-pro, proxied through the Java backend, with per-user token metering, a "gas gauge" in the UI and a resale markup on top.
@@ -33,14 +31,7 @@ Most of that didn't fit. The assistant answers questions about a static domain: 
 
 ## Architecture
 
-<Architecture
-  nodes={[
-    { label: "Web app", detail: "httpsCallable().stream()" },
-    { label: "askAgent callable", detail: "auth + RTDB quota" },
-    { label: "Gemini Flash", detail: "grounding off" },
-  ]}
-  caption="The callable verifies the Firebase ID token, reserves quota, then streams tokens back with sendChunk."
-/>
+::Architecture{nodes='[{"label":"Web app","detail":"httpsCallable().stream()"},{"label":"askAgent callable","detail":"auth + RTDB quota"},{"label":"Gemini Flash","detail":"grounding off"}]' caption="The callable verifies the Firebase ID token, reserves quota, then streams tokens back with sendChunk."}
 
 I picked Gemini 2.5 Flash with grounding off. Output was roughly ten times cheaper than sonar-pro, it supports context caching (which Perplexity didn't), and with grounding off, the terms that only apply to grounded results don't apply. PMBoK belongs in the prompt anyway, so web grounding added nothing. Later, after an eval run, the agent moved to a newer Flash tier.
 

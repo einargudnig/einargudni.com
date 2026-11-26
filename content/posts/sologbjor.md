@@ -8,23 +8,17 @@ draft: false
 Reykjavík gets sun like other cities get snow days. Rarely, suddenly, and
 everyone drops what they're doing.
 
-<Spacer size="small" />
-
 When it happens, the whole city asks the same two questions: where is the sun
 actually hitting right now, and where is the beer not 1.800 krónur? Downtown
 Reykjavík is a maze of low buildings that throw long shadows even in June, so a
 terrace that was glorious at three is in the shade by five. You can be sitting
 twenty meters from sunshine and not know it.
 
-<Spacer size="small" />
-
 So I built [sologbjor.einargudni.com](https://sologbjor.einargudni.com) — a
 small app that ranks Reykjavík bars by exactly those two things: most sun and
 cheapest beer, right now.
 
-<Spacer size="small" />
-
-<Subheading>_the sun is a geometry problem_</Subheading>
+### _the sun is a geometry problem_
 
 The interesting part is figuring out whether the sun is actually hitting a
 specific terrace, not just whether it's up.
@@ -41,17 +35,13 @@ above the skyline in that direction? That's it. No 3D rendering, no ray
 casting, no shadow simulation. All the expensive work happens offline in a
 script; the app ships a static JSON file and does a lookup.
 
-<Spacer size="small" />
-
 Clouds get a say too. Open-Meteo provides hourly cloud cover for free, with no
 API key, and Reykjavík conveniently lives on UTC year-round so the timestamps
 just line up. But I don't apply cloud cover linearly — 50% cloud in Reykjavík
 still _feels_ sunny, so the attenuation curve is convex and floored at 0.3.
 A geometric model corrected by lived experience.
 
-<Spacer size="small" />
-
-<Subheading>_the beer is a data problem_</Subheading>
+### _the beer is a data problem_
 
 There's no API for happy hours. I scraped what I could from visitorsguide.is,
 which covered about half the bars, and hand-researched the rest — calling on
@@ -62,9 +52,7 @@ Happy hours drift, so a GitHub Actions workflow re-scrapes weekly and commits
 the refreshed data straight to main. The data maintains itself, mostly. There's
 also a "fix happy hour" button in the app for when it doesn't.
 
-<Spacer size="small" />
-
-<Subheading>_static core, thin edge_</Subheading>
+### _static core, thin edge_
 
 My favorite decision in the whole project is what the backend _doesn't_ do.
 
@@ -80,9 +68,7 @@ sun and prices, backed by Turso. I built it, then paused it before launch. Cut
 to static, ship, see if anyone cares. The code is still there, dormant, waiting
 for users to deserve it.
 
-<Spacer size="small" />
-
-<Subheading>_the map_</Subheading>
+### _the map_
 
 There's a shade map, because of course there is. MapLibre GL renders the
 downtown buildings as 3D extrusions, lit according to the actual sun position,
@@ -101,9 +87,7 @@ forever, so an error boundary around a lazy chunk must offer _reload_, not
 _retry_ — retry will re-throw the same cached rejection until the heat death of
 the universe.
 
-<Spacer size="small" />
-
-<Subheading>_the stack, plainly_</Subheading>
+### _the stack, plainly_
 
 - **Bun** monorepo, TypeScript everywhere
 - **Vite + React** SPA on Cloudflare Pages
@@ -115,8 +99,6 @@ the universe.
 
 Built in three days, mostly evenings. The trick wasn't the geometry — it was
 deleting the backend until only the necessary part remained.
-
-<Spacer size="small" />
 
 If you're ever in Reykjavík and the sun comes out, you now know where to sit:
 [sologbjor.einargudni.com](https://sologbjor.einargudni.com).

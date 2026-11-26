@@ -4,20 +4,11 @@ slug: karabiner
 date: 2026-02-10
 ---
 
-<Heading>Move at the speed of thought</Heading>
-
-<Spacer size="small" />
+## Move at the speed of thought
 
 It all started when I saw this video with Max Stoiber.
 
-<YouTubeEmbed
-  videoId="https://www.youtube.com/watch?v=m5MDv9qwhU8&t=343s"
-  title="Max Stoiber's Karabiner + Raycast setup"
-  caption="The video that started it all."
-  start={915}
-  aspectRatio="16:9"
-  loop
-/>
+::YouTubeEmbed{videoId="https://www.youtube.com/watch?v=m5MDv9qwhU8&#x26;t=343s" title="Max Stoiber's Karabiner + Raycast setup" caption="The video that started it all." start="915" aspectRatio="16:9" loop="true"}
 
 I was amazed at how fast he moved around his machine. No reaching for the mouse,
 no hunting through the dock, no fumbling for window controls. He just... went.
@@ -27,9 +18,7 @@ So I cloned his repo and made my own config.
 After using this for over a year now I think this is the second most important
 tool I use, right after Raycast. The two go hand in hand.
 
-<Subheading>Why?</Subheading>
-
-<Spacer size="small" />
+### Why?
 
 Because I want to be able to move at the speed of thought.
 
@@ -41,9 +30,7 @@ day, and it adds up to a constant low hum of friction.
 Karabiner lets me delete that friction. I think "Obsidian" and my fingers open
 Obsidian before I've finished the thought.
 
-<Subheading>The Hyper key</Subheading>
-
-<Spacer size="small" />
+### The Hyper key
 
 The whole thing is built on one idea: the **Hyper key**.
 
@@ -56,9 +43,7 @@ Control + Option + Shift + Command (⌃⌥⇧⌘). No app in existence binds any
 that combo, so it's a clean canvas. When you _tap_ Caps Lock on its own, it sends
 Escape, which is genuinely useful if you live in Vim.
 
-<KeyboardShortcut keys={["Caps Lock"]} description="Hold → Hyper (⌃⌥⇧⌘) · Tap → Escape" />
-
-<Spacer size="small" />
+::KeyboardShortcut{keys='["Caps Lock"]' description="Hold → Hyper (⌃⌥⇧⌘) · Tap → Escape"}
 
 In Karabiner terms, that's a single rule that flips a `hyper` variable on while
 the key is held, and falls back to Escape when tapped alone:
@@ -77,9 +62,7 @@ the key is held, and falls back to Escape when tapped alone:
 }
 ```
 
-<Subheading>Sublayers, or: a leader key for your whole Mac</Subheading>
-
-<Spacer size="small" />
+### Sublayers, or: a leader key for your whole Mac
 
 A single Hyper key gives you one extra layer of shortcuts. That's nice, but the
 real trick is **sublayers**.
@@ -103,14 +86,12 @@ So every shortcut is a tiny three-key sentence: Hyper, category, action. The
 beauty is you don't have to memorize arbitrary combos, you just remember the
 mnemonics. **O**pen, **W**indow, **S**ystem, **R**aycast.
 
-<Callout type="info" title="Why a DSL instead of the GUI?">
-  Karabiner is configured with JSON, and the JSON for this gets enormous, mine
-  compiles down to a 2000+ line file. Writing that by hand is misery. Max's repo
-  ships a small TypeScript layer that generates the JSON for you, so you describe
-  your shortcuts in a way that's actually readable and type-safe.
-</Callout>
-
-<Spacer size="small" />
+:::Callout{type="info" title="Why a DSL instead of the GUI?"}
+Karabiner is configured with JSON, and the JSON for this gets enormous, mine
+compiles down to a 2000+ line file. Writing that by hand is misery. Max's repo
+ships a small TypeScript layer that generates the JSON for you, so you describe
+your shortcuts in a way that's actually readable and type-safe.
+:::
 
 Here's the helper that builds a sublayer. Each command only fires when its
 sublayer variable is `1`, which is how Karabiner knows you're "inside" that room:
@@ -174,9 +155,7 @@ export function rectangle(name: string): LayerCommand {
 }
 ```
 
-<Subheading>My layers</Subheading>
-
-<Spacer size="small" />
+### My layers
 
 With those helpers in place, the whole config is basically one big object. Here's
 a trimmed version so you can see the shape of it:
@@ -243,31 +222,27 @@ createHyperSubLayers({
 
 A couple of the design choices in there took me a while to appreciate:
 
-<StylishList>
-  <StylishListItem>- **v for "moVe"** lives on the left hand on purpose, so that
+:::StylishList
+- \- **v for "moVe"** lives on the left hand on purpose, so that
   `hjkl` end up under the right hand exactly where they sit in Vim. Same reason
-  music controls are on **c** ("musiC") and not **m**.</StylishListItem>
-  <StylishListItem>- The **window** layer mirrors Vim too: `h` and `l` snap the
+  music controls are on **c** ("musiC") and not **m**.
+- \- The **window** layer mirrors Vim too: `h` and `l` snap the
   window left/right, `j` and `k` snap bottom/top. Once your fingers know hjkl,
-  you reuse that muscle memory everywhere.</StylishListItem>
-  <StylishListItem>- Most of the power doesn't come from Karabiner alone, it comes
+  you reuse that muscle memory everywhere.
+- \- Most of the power doesn't come from Karabiner alone, it comes
   from feeding **Raycast deeplinks** into it. Anything Raycast can do, a single
-  key can now trigger.</StylishListItem>
-</StylishList>
-
-<Spacer size="small" />
+  key can now trigger.
+:::
 
 That last point is the real unlock, and why I said Karabiner is second to
 Raycast and not the other way around. Karabiner is the trigger, Raycast is the
 engine.
 
-<Subheading>Clicking without a mouse</Subheading>
-
-<Spacer size="small" />
+### Clicking without a mouse
 
 Launching apps and snapping windows gets you most of the way to never touching
 the mouse. The last mile is clicking things, and for that I lean on
-<ExternalLink href="https://www.homerow.app">Homerow</ExternalLink>.
+[Homerow](https://www.homerow.app).
 
 Homerow puts a little label on every clickable element on screen, you type the
 label, it clicks. Karabiner is just the trigger that turns it on:
@@ -284,13 +259,11 @@ v: {
 },
 ```
 
-So <KeyboardShortcut keys={["Hyper", "F"]} /> labels everything I could click,
-and <KeyboardShortcut keys={["Hyper", "J"]} /> drops me into scroll mode. Between
+So `Hyper F` labels everything I could click,
+and `Hyper J` drops me into scroll mode. Between
 this and the window layer, the trackpad mostly gathers dust.
 
-<Subheading>The whole map</Subheading>
-
-<Spacer size="small" />
+### The whole map
 
 Step back and the whole thing is just one mnemonic tree. Hold Hyper, pick a
 room, do the thing:
@@ -311,9 +284,7 @@ Caps Lock (Hyper ⌃⌥⇧⌘)
 That's the entire mental model. Nine rooms, and once your fingers know which
 letter opens which, the rest is just muscle memory.
 
-<Subheading>Building it</Subheading>
-
-<Spacer size="small" />
+### Building it
 
 Because the config is TypeScript, there's a build step. It's not scary, the whole
 "build" just serializes that big object into the `karabiner.json` Karabiner
@@ -334,16 +305,14 @@ I keep `yarn watch` running whenever I'm adding a new shortcut. Change a line,
 save, and the binding is live a second later. That tight loop is what makes it
 fun to keep extending, instead of a thing you set up once and never touch.
 
-<Callout type="tip" title="Make it yours">
-  Don't copy my layers wholesale, they're shaped around the apps _I_ use. Max
-  gives the same advice: delete all the sublayers, then add your own based on
-  what you actually reach for during the day. The config is the easy part, the
-  hard part is being honest about your own habits.
-</Callout>
+:::Callout{type="tip" title="Make it yours"}
+Don't copy my layers wholesale, they're shaped around the apps _I_ use. Max
+gives the same advice: delete all the sublayers, then add your own based on
+what you actually reach for during the day. The config is the easy part, the
+hard part is being honest about your own habits.
+:::
 
-<Subheading>Was it worth it?</Subheading>
-
-<Spacer size="small" />
+### Was it worth it?
 
 Completely. The setup cost was an afternoon, and a week or two of my fingers
 fighting old habits. After that it just became how I use a computer. I genuinely
@@ -354,6 +323,4 @@ If you want to start, watch Max's video, clone his repo, and strip it down to a
 single layer you'll actually use. Open apps is a great first one. Add to it as
 you go.
 
-<Spacer size="small" />
-
-Kudos, as always, go to <ExternalLink href="https://github.com/mxstbr/karabiner">Max Stoiber</ExternalLink> for the config and the DSL. My own version lives in my <ExternalLink href="https://github.com/einargudnig/dotfiles/tree/master/karabiner">dotfiles</ExternalLink> if you want to poke around.
+Kudos, as always, go to [Max Stoiber](https://github.com/mxstbr/karabiner) for the config and the DSL. My own version lives in my [dotfiles](https://github.com/einargudnig/dotfiles/tree/master/karabiner) if you want to poke around.

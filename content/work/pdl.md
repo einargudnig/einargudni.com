@@ -41,15 +41,7 @@ Nobody keeps that in their head. I wanted something I could open on my phone at 
 
 ## Architecture
 
-<Architecture
-  nodes={[
-    { label: "React PWA", detail: "Vite, StyleX, Base UI" },
-    { label: "Typed RPC client", detail: "hc<AppType> from Hono" },
-    { label: "Hono Worker", detail: "/api/*, Zod validation, basic auth" },
-    { label: "D1", detail: "players and matches tables" },
-  ]}
-  caption="One Worker serves the SPA and the API on the same origin. Infrastructure is declared in alchemy.run.ts."
-/>
+::Architecture{nodes='[{"label":"React PWA","detail":"Vite, StyleX, Base UI"},{"label":"Typed RPC client","detail":"hc<AppType> from Hono"},{"label":"Hono Worker","detail":"/api/*, Zod validation, basic auth"},{"label":"D1","detail":"players and matches tables"}]' caption="One Worker serves the SPA and the API on the same origin. Infrastructure is declared in alchemy.run.ts."}
 
 One Cloudflare Worker serves both the React app and the `/api/*` routes. Static files are served first. Anything that matches no file falls through to the Worker, which answers API calls and hands every other path back to the assets binding so deep links load the app.
 

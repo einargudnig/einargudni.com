@@ -7,19 +7,13 @@ tags: [react, react-router, middleware]
 draft: false
 ---
 
-<Subheading>Middleware in general</Subheading>
-
-<Spacer size="small" />
+### Middleware in general
 
 Middleware is a pattern that acts a layer between different parts of an
 application, processing requests and responses as they flow through the system.
 
-<Spacer size="small" />
-
-Middleware typically has access to the <strong>request</strong>
-and <strong>response</strong> objects as long as the <strong>next</strong> function.
-
-<Spacer size="small" />
+Middleware typically has access to the **request**
+and **response** objects as long as the **next** function.
 
 Each middleware can execute code, modify request/response objects, end the
 request-response cycle or call the next middleware.
@@ -27,16 +21,10 @@ request-response cycle or call the next middleware.
 Common use cases for middleware: Authentication, logging, error handling,
 CORS, validation and more.
 
-<Spacer size="small" />
+**Key advantage is you can use middleware, remove, or reorder them without
+modifying the core logic.**
 
-<strong>
-  Key advantage is you can use middleware, remove, or reorder them without
-  modifying the core logic.
-</strong>
-
-<Spacer size="small" />
-
-<Subheading>React router middleware</Subheading>
+### React router middleware
 
 Middleware runs in a nested chain, executing from parent to child routes on the
 way "down" to your route handlers, then from your child routes back to parent
@@ -55,20 +43,12 @@ routes on the way "up" after a response is generated.
 It's very important to understand when your middleware will run to make sure
 your application is behaving as you intended.
 
-<Spacer size="small" />
-
 The steps needed to create a middleware in Framework mode:
 
-<Spacer size="small" />
-
-<strong>1. Create a Context</strong>
-
-<Spacer size="small" />
+**1. Create a Context**
 
 Middleware uses a `context` provider instance to provide data down the middleware
 chain. You can create type-safe context objects using `createContext`
-
-<Spacer size="small" />
 
 ```tsx
 import { createContext } from "react-router";
@@ -77,10 +57,7 @@ import type { User } from "~/types";
 export const userContext = createContext<User | null>(null);
 ```
 
-<Spacer size="small" />
-
-<strong>2. Export middleware from your routes</strong>
-<Spacer size="small" />
+**2. Export middleware from your routes**
 
 ```tsx
 import { redirect } from "react-router";
@@ -96,17 +73,13 @@ async function authMiddleware({ request, context }) {
 }
 ```
 
-<Spacer size="small" />
-
-<strong>3. Update `getLoadContext` function </strong>
-<Spacer size="small" />
+**3. Update `getLoadContext` function&#x20;**
 
 If you're using a custom server and a `getLoadContext` function, you will need
 to update your implementation to return an instance of `RouterContextProvider`,
 instead of a JavaScript object.
 
-<Subheading>Server side middleware</Subheading>
-<Spacer size="small" />
+### Server side middleware
 
 Server middleware runs in the server in framework mode for HTML Document requests
 and `.data` requests for subsequent navigations and fetcher calls.
@@ -126,8 +99,7 @@ export const middleware: Route.MiddlewareFunction[] = [serverMiddleware];
 In a hydrated Framework Mode app, server middleware is designed in such that it
 prioritizes SPA behaviour and does not create a new network activity by default.
 
-<Subheading>Client side middleware</Subheading>
-<Spacer size="small" />
+### Client side middleware
 
 Client middleware runs in the browser in framework mode and data mode for
 client-side navigations and fetcher calls. Client middleware differs from server
@@ -159,8 +131,7 @@ Client middleware is simpler because since we are already on the client and are
 always making a "request" to the router when navigating. Client middleware will
 run on every client navigation, regardless of whether there are `loader`s to run.
 
-<Subheading>Error handling in middleware</Subheading>
-<Spacer size="small" />
+### Error handling in middleware
 
 Middleware error handling follows the same principles as regular route
 loaders and actions. When an error occurs in middleware, it bubbles
@@ -182,10 +153,7 @@ Errors in middleware follow the normal React Router error flow
 they'll be caught by the nearest ErrorBoundary component,
 allowing you to display user-friendly error messages.
 
-<Spacer size="small" />
-
-<Subheading>Middleware ordering and dependencies</Subheading>
-<Spacer size="small" />
+### Middleware ordering and dependencies
 
 The order of middleware in your export array matters because they execute
 sequentially. First middleware runs first, and each can modify the context or
@@ -203,20 +171,13 @@ Dependencies between middleware should be handled carefully.
 If one middleware depends on context set by another, ensure they're
 ordered correctly and handle missing context gracefully.
 
-<Spacer size="small" />
-
-<Subheading>Performance considerations</Subheading>
-<Spacer size="small" />
+### Performance considerations
 
 Middleware adds execution overhead to every request, so keep it lightweight.
 Avoid expensive operations like heavy database queries
 or complex computations in middleware.
 
-<Spacer size="small" />
-
 Good practices for performance:
-
-<Spacer size="small" />
 
 Use caching for repeated operations, minimize I/O operations in middleware chains.
 Consider conditional middleware execution based on routes, profile middleware performance in production
@@ -238,10 +199,7 @@ async function optimizedMiddleware({ request }, next) {
 }
 ```
 
-<Spacer size="small" />
-
-<Subheading>Testing middleware</Subheading>
-<Spacer size="small" />
+### Testing middleware
 
 Middleware functions can be unit tested like any other async function.
 Mock the request, context, and next function to verify behavior.
@@ -272,10 +230,7 @@ describe("authMiddleware", () => {
 Integration testing can verify the entire middleware chain works together
 with actual route loaders and components.
 
-<Spacer size="small" />
-
-<Subheading>Conclusion</Subheading>
-<Spacer size="small" />
+### Conclusion
 
 React Router middleware provides a powerful, composable way to handle cross-cutting
 concerns in your applications. By understanding the execution model,

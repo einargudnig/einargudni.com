@@ -15,7 +15,7 @@ featured: false
 draft: false
 ---
 
-*This was a team effort at Maul. I was part of the team that built it, and this is my account of the work.*
+_This was a team effort at Maul. I was part of the team that built it, and this is my account of the work._
 
 ## Problem
 
@@ -32,15 +32,7 @@ My first attempt used Anthropic's managed agents beta. It runs the whole agent s
 
 ## Architecture
 
-<Architecture
-  nodes={[
-    { label: "CLI", detail: "interactive prompt" },
-    { label: "Agent loop", detail: "Anthropic API" },
-    { label: "MCP client", detail: "write tools filtered out" },
-    { label: "Maul MCP server", detail: "32 tools" },
-  ]}
-  caption="The harness is only the left three boxes. The MCP server already existed and runs on Lambda behind API Gateway."
-/>
+::Architecture{nodes='[{"label":"CLI","detail":"interactive prompt"},{"label":"Agent loop","detail":"Anthropic API"},{"label":"MCP client","detail":"write tools filtered out"},{"label":"Maul MCP server","detail":"32 tools"}]' caption="The harness is only the left three boxes. The MCP server already existed and runs on Lambda behind API Gateway."}
 
 The pattern is the standard agentic loop. Send the conversation to the model. If it replies with tool calls, execute them and append the results. Repeat until it answers in plain text. I call the whole thing a harness: the thin layer of system prompt, tools and loop that makes a model useful in one specific context.
 
@@ -61,8 +53,6 @@ When I started, I found Maul's MCP server was already production grade: 32 tools
 `agent.ts` was a complete rewrite. The managed-agents client became a self-hosted harness with an MCP client, the agentic loop and an interactive CLI. It came with a `TODO.md` covering setup and next steps.
 
 Setup was two environment variables: an Anthropic key and the MCP API key. Then `npx tsx agent.ts`, and you can ask for a list of active companies.
-
-
 
 A few days later I connected a Discord bot to the same MCP server. That bot ran on the managed agents API, not this harness. To make that work, I patched the MCP server to accept `Authorization: Bearer` alongside `x-api-key`. The change was additive: existing callers still send `x-api-key`, and the server checks it first.
 

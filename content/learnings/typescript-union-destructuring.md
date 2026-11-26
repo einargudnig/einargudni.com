@@ -5,8 +5,7 @@ topic: typescript
 tags: [typescript, union]
 ---
 
-<Subheading>Destructuring Union in TypeScript</Subheading>
-<Spacer size="small" />
+### Destructuring Union in TypeScript
 
 It can be hard to work with union in TypeScript.
 Especially when destructuring types to do type narrowing.
