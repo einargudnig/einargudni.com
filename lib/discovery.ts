@@ -11,7 +11,7 @@ export const SITE_URL = "https://einargudni.com";
 
 export const CACHE_HEADERS = { "Cache-Control": "public, max-age=3600" };
 
-type IndexLine = { title: string; permalink: string; note?: string };
+type IndexLine = { title: string; permalink: string; note?: string | undefined };
 
 // Links point at the .md form so an agent can follow them without knowing
 // about Accept negotiation; that is the convention llms.txt readers expect.

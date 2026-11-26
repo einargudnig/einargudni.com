@@ -63,3 +63,19 @@ export const highlight = async (
     theme: THEME,
   });
 };
+
+export interface Token {
+  readonly text: string;
+  readonly color: string | undefined;
+}
+
+/** Lines of coloured tokens, for views that build their own elements. */
+export const tokenize = async (
+  code: string,
+  lang: string | undefined,
+): Promise<ReadonlyArray<ReadonlyArray<Token>>> => {
+  const shiki = await getHighlighter();
+  return shiki
+    .codeToTokensBase(code, { lang: resolveLang(lang), theme: THEME })
+    .map((line) => line.map(({ content, color }) => ({ text: content, color })));
+};

@@ -1,7 +1,7 @@
 // Solar position for Reykjavík, after SunCalc (Vladimir Agafonkin, BSD-2).
 // The site prints a day or night edition depending on whether the sun is up
 // over Reykjavík right now, so this runs in the browser and, serialised, in
-// the pre-paint script in __root.tsx. Keep `sunAltitude` self-contained: no
+// the pre-paint script in lib/edition.ts. Keep `sunAltitude` self-contained: no
 // imports, no closure over module scope, or the serialised copy breaks.
 
 export const REYKJAVIK = { lat: 64.1466, lng: -21.9426 };

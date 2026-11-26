@@ -2,7 +2,7 @@ import { Context, Data, Effect } from "effect";
 import { deepDives, posts, work } from "@/.velite";
 import { CACHE_HEADERS, SITE_URL, llmsBody } from "@/lib/discovery";
 
-// Markdown content negotiation for `src/start.ts`. Replaces the Next
+// Markdown content negotiation for `src/worker.ts`. Replaces the Next
 // middleware.ts. Rather than rewriting to /api/md*, this answers directly — on
 // Workers a rewrite would be a second trip through the router for a body we
 // already have in hand.
@@ -67,8 +67,8 @@ export class Assets extends Context.Service<
   { readonly fetch: (request: Request) => Effect.Effect<Response> }
 >()("Assets") {}
 
-// What the middleware decided. `Next` hands the request to Start, which only
-// the TanStack adapter below can do.
+// What negotiation decided. `Next` hands the request back to the Worker,
+// which serves the asset or the 404 page.
 export type Outcome = Data.TaggedEnum<{
   Respond: { readonly response: Response };
   Next: {};
@@ -84,10 +84,9 @@ const fetchAsset = (request: Request) =>
 export const negotiate = (request: Request): Effect.Effect<Outcome, never, Assets> =>
   Effect.gen(function* () {
     const { pathname } = new URL(request.url);
-    // Anything else reaches Start on its own terms — touching the request here
-    // would consume the body before a server route could read it.
-    // HEAD too: left to next(), a HEAD for markdown reached Start's SSR handler,
-    // which 500s on a non-HTML Accept. The runtime drops the body for HEAD.
+    // Anything else goes back to the Worker untouched. HEAD is handled here
+    // too, so a HEAD for markdown gets the same answer a GET would; the
+    // runtime drops the body.
     const readOnly = request.method === "GET" || request.method === "HEAD";
     if (!readOnly || !runsWorkerFirst(pathname)) return Next();
 
@@ -110,10 +109,8 @@ export const negotiate = (request: Request): Effect.Effect<Outcome, never, Asset
     const body = markdownSource(pathname);
     if (body) return Respond({ response: markdown(body) });
 
-    // No MDX source: hand back the prerendered HTML, lenient by design, so an
-    // agent that asked for markdown still gets something useful. Never fall
-    // through to next(): Start's SSR handler rejects a non-HTML Accept with a
-    // 500, which turned every missing or draft slug into a server error.
+    // No markdown source: hand back the prerendered HTML, lenient by design,
+    // so an agent that asked for markdown still gets something useful.
     const asset = yield* fetchAsset(request);
     return Respond({
       response: asset.status === 404 ? notFound() : withHtmlHeaders(asset, pathname),
