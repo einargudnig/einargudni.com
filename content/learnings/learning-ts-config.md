@@ -11,7 +11,7 @@ TypeScript `strict` mode enables a set of stricter type checking options.
 However there are additional flags that can help improve code quality, here are
 few of them.
 
-:::StylishList{type="bullet" gap="loose"}
+:::StylishList{type="disc" gap="loose"}
 - `noImplicitReturns`: Ensures all code paths in a function
   explicitly return a value
 - `noUnusedLocals`: Flags unused local variables
