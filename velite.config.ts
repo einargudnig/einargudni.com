@@ -24,7 +24,7 @@ export default defineConfig({
   collections: {
     posts: {
       name: "Post", // collection type name
-      pattern: "posts/**/*.{md,mdx}", // content files glob pattern (support both md and mdx)
+      pattern: "posts/**/*.md",
       schema: s
         .object({
           title: s.string().max(99), // Zod primitive type
@@ -46,7 +46,7 @@ export default defineConfig({
     // collection for learnings
     learnings: {
       name: "Learning",
-      pattern: "learnings/**/*.{md,mdx}",
+      pattern: "learnings/**/*.md",
       schema: s
         .object({
           title: s.string().max(99),
@@ -64,7 +64,7 @@ export default defineConfig({
     // collection for deep dives
     deepDives: {
       name: "DeepDive",
-      pattern: "deep-dives/**/*.{md,mdx}",
+      pattern: "deep-dives/**/*.md",
       schema: s
         .object({
           title: s.string().max(120),
@@ -86,7 +86,7 @@ export default defineConfig({
     // collection for use cases: freelance, in-house and personal work, served at /use-cases
     work: {
       name: "Work",
-      pattern: "work/**/*.{md,mdx}",
+      pattern: "work/**/*.md",
       schema: s
         .object({
           title: s.string().max(120),
@@ -115,7 +115,7 @@ export default defineConfig({
     // collection for shared links / bookmarks
     links: {
       name: "Link",
-      pattern: "links/**/*.{md,mdx}",
+      pattern: "links/**/*.md",
       schema: s
         .object({
           title: s.string().max(120),
@@ -130,7 +130,7 @@ export default defineConfig({
     // collection for quotes
     quotes: {
       name: "Quote",
-      pattern: "quotes/**/*.{md,mdx}",
+      pattern: "quotes/**/*.md",
       schema: s.object({
         text: s.string().max(500),
         author: s.string().max(100),

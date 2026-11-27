@@ -44,7 +44,6 @@ worker-configuration.d.ts
 .velite
 
 # generated route tree
-src/routeTree.gen.ts
 
 # whoop
 .whoop-tokens.json
