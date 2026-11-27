@@ -1,8 +1,6 @@
 import { Component, Head, Router, UiSchema } from "@effect/ui";
 import { Html, HtmlHead } from "@effect/ui/html";
 import { Schema } from "effect";
-import { deepDives, posts } from "virtual:content";
-import { findWork } from "@/lib/work";
 import { BirthdayConfetti } from "./components/BirthdayConfetti.ts";
 import { KeyboardNav } from "./components/KeyboardNav.ts";
 import { Masthead } from "./components/Masthead.ts";
@@ -116,8 +114,7 @@ export const App = Html.component({
       ),
 });
 
-// Each page is keyed by its path, so a new path mounts a fresh page. A slug
-// nothing matches renders the 404 page, which is what the Worker served for it.
+// Each page is keyed by its path, so a new path mounts a fresh page.
 const page = <M>(h: Html.H<M>, route: AppRoute) => {
   const key = AppRoute.printPath(route);
   return AppRoute.match(route, {
@@ -125,14 +122,8 @@ const page = <M>(h: Html.H<M>, route: AppRoute) => {
     About: () => AboutPage(h, { key }),
     Baby: () => BabyPage(h, { key, fallback: pageFallback(h) }),
     Blog: () => BlogPage(h, { key }),
-    Post: ({ params }) =>
-      posts.some((post) => post.slug === params.slug)
-        ? PostPage(h, { key, props: { slug: params.slug } })
-        : NotFoundPage(h, { key }),
-    DeepDive: ({ params }) =>
-      deepDives.some((dive) => dive.slug === params.slug)
-        ? DeepDivePage(h, { key, props: { slug: params.slug } })
-        : NotFoundPage(h, { key }),
+    Post: ({ params }) => PostPage(h, { key, props: { slug: params.slug } }),
+    DeepDive: ({ params }) => DeepDivePage(h, { key, props: { slug: params.slug } }),
     Learnings: () => LearningsPage(h, { key }),
     Notes: () => NotesPage(h, { key }),
     Now: () => NowPage(h, { key }),
@@ -146,10 +137,7 @@ const page = <M>(h: Html.H<M>, route: AppRoute) => {
     ChroncalPrivacy: () => ChroncalPrivacyPage(h, { key }),
     ChroncalTerms: () => ChroncalTermsPage(h, { key }),
     UseCases: () => UseCasesPage(h, { key }),
-    UseCase: ({ params }) =>
-      findWork(params.slug)
-        ? UseCasePage(h, { key, props: { slug: params.slug } })
-        : NotFoundPage(h, { key }),
+    UseCase: ({ params }) => UseCasePage(h, { key, props: { slug: params.slug } }),
     Uses: () => UsesPage(h, { key, props: { folder: null } }),
     UsesFolder: ({ params }) => UsesPage(h, { key, props: { folder: params.folder } }),
     NotFound: () => NotFoundPage(h, { key }),

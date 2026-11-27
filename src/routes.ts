@@ -1,5 +1,7 @@
 import { Route } from "@effect/ui";
 import { Schema } from "effect";
+import { deepDives, posts } from "virtual:content";
+import { publishedWork } from "@/lib/work";
 
 // Every page of the site. Build links with `AppRoute.print`, never by hand.
 // The server endpoints (sitemap, /api/*, /.well-known/*) aren't pages and
@@ -15,15 +17,19 @@ export const UsesFolderSlug = Schema.Literals([
 ]);
 export type UsesFolderSlug = typeof UsesFolderSlug.Type;
 
-const slug = { params: { slug: Schema.String } };
+// Entry routes only parse slugs that exist, so an unknown one is the
+// catch-all NotFound route, the same route the prerendered 404 page holds.
+const slugOf = (entries: ReadonlyArray<{ readonly slug: string }>) => ({
+  params: { slug: Schema.Literals(entries.map((entry) => entry.slug)) },
+});
 
 export const AppRoute = Route.union({
   Home: Route.make("/"),
   About: Route.make("/about"),
   Baby: Route.make("/baby"),
   Blog: Route.make("/blog"),
-  Post: Route.make("/blog/:slug", slug),
-  DeepDive: Route.make("/deep-dive/:slug", slug),
+  Post: Route.make("/blog/:slug", slugOf(posts)),
+  DeepDive: Route.make("/deep-dive/:slug", slugOf(deepDives)),
   Learnings: Route.make("/learnings"),
   Notes: Route.make("/notes"),
   Now: Route.make("/now"),
@@ -37,7 +43,7 @@ export const AppRoute = Route.union({
   ChroncalPrivacy: Route.make("/chroncal/privacy"),
   ChroncalTerms: Route.make("/chroncal/terms"),
   UseCases: Route.make("/use-cases"),
-  UseCase: Route.make("/use-cases/:slug", slug),
+  UseCase: Route.make("/use-cases/:slug", slugOf(publishedWork)),
   Uses: Route.make("/uses"),
   UsesFolder: Route.make("/uses/:folder", { params: { folder: UsesFolderSlug } }),
   NotFound: Route.make("/*"),
