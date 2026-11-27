@@ -42,17 +42,19 @@ export const FileTree = Html.component({
       const currentPath = path ? `${path}/${entry.name}` : entry.name;
       const children = entry.children;
       const isExpanded = children !== undefined && expanded[currentPath] === true;
-      const row = h.div.class(
-        children
-          ? "flex items-center py-1 cursor-pointer hover:bg-muted/50 rounded"
-          : "flex items-center py-1",
-      );
       return h.div
         .key(currentPath)
         .style({ paddingLeft: `${level * 16}px` })
         .children(
+          // A folder is a real button, so the keyboard reaches it and a screen
+          // reader hears whether it's open.
           children
-            ? row
+            ? h.button
+                .attr("type", "button")
+                .attr("aria-expanded", isExpanded ? "true" : "false")
+                .class(
+                  "flex w-full items-center py-1 text-left cursor-pointer hover:bg-muted/50 rounded focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-foreground",
+                )
                 .on("click", FileTreeMessage.ClickedFolder({ path: currentPath }))
                 .children(
                   Icon(
@@ -63,11 +65,13 @@ export const FileTree = Html.component({
                   Icon(h, Folder, "h-4 w-4 mr-2 text-brand"),
                   h.span.class("text-sm").children(entry.name),
                 )
-            : row.children(
-                h.span.class("w-4 mr-1"),
-                Icon(h, File, "h-4 w-4 mr-2 text-muted-foreground"),
-                h.span.class("text-sm").children(entry.name),
-              ),
+            : h.div
+                .class("flex items-center py-1")
+                .children(
+                  h.span.class("w-4 mr-1"),
+                  Icon(h, File, "h-4 w-4 mr-2 text-muted-foreground"),
+                  h.span.class("text-sm").children(entry.name),
+                ),
           isExpanded &&
             h.div.children(children.map((child) => item(child, level + 1, currentPath))),
         );
