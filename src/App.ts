@@ -1,10 +1,52 @@
-import { Head, Router, UiSchema } from "@effect/ui";
+import { Component, Head, Router, UiSchema } from "@effect/ui";
 import { Html, HtmlHead } from "@effect/ui/html";
 import { Schema } from "effect";
+import { BirthdayConfetti } from "./components/BirthdayConfetti.ts";
+import { KeyboardNav } from "./components/KeyboardNav.ts";
 import { Masthead } from "./components/Masthead.ts";
+import { WebMCP } from "./components/WebMCP.ts";
+import { AboutPage } from "./pages/about/AboutPage.ts";
+import { BlogPage } from "./pages/blog/BlogPage.ts";
 import { PostPage } from "./pages/blog/PostPage.ts";
+import { ChroncalPrivacyPage } from "./pages/chroncal/privacy/ChroncalPrivacyPage.ts";
+import { ChroncalTermsPage } from "./pages/chroncal/terms/ChroncalTermsPage.ts";
+import { DeepDivePage } from "./pages/deep-dive/DeepDivePage.ts";
+import { HomePage } from "./pages/HomePage.ts";
+import { LearningsPage } from "./pages/learnings/LearningsPage.ts";
+import { NotesPage } from "./pages/notes/NotesPage.ts";
 import { NotFoundPage } from "./pages/NotFoundPage.ts";
+import { NowPage } from "./pages/now/NowPage.ts";
+import { QuotesPage } from "./pages/quotes/QuotesPage.ts";
+import { ReferralsPage } from "./pages/referrals/ReferralsPage.ts";
+import { ResolutionsPage } from "./pages/resolutions/ResolutionsPage.ts";
+import { SomedayPage } from "./pages/someday/SomedayPage.ts";
+import { TldrEnPage } from "./pages/tldr/en/TldrEnPage.ts";
+import { TldrIsPage } from "./pages/tldr/is/TldrIsPage.ts";
+import { UseCasePage } from "./pages/use-cases/UseCasePage.ts";
+import { UseCasesPage } from "./pages/use-cases/UseCasesPage.ts";
+import { UsesPage } from "./pages/uses/UsesPage.ts";
 import { AppRoute } from "./routes.ts";
+
+// Rarely visited and heavy (Convex; the compiler visualizer), so they load in
+// their own chunks. A lazy page shows its fallback until the chunk arrives,
+// even over prerendered HTML, so the rest of the site stays eager.
+const BabyPage = Component.lazy("BabyPage", () =>
+  import("./pages/baby/BabyPage.ts").then((module) => module.BabyPage),
+);
+const TsMiniPage = Component.lazy("TsMiniPage", () =>
+  import("./pages/ts-mini/TsMiniPage.ts").then((module) => module.TsMiniPage),
+);
+
+const pageFallback =
+  <M>(h: Html.H<M>) =>
+  (result: { readonly _tag: string }) =>
+    h.p
+      .class("text-muted-foreground")
+      .children(
+        result._tag === "Failure"
+          ? "This page didn't load. Reloading usually fixes it."
+          : "Loading…",
+      );
 
 const AppMessage = UiSchema.TaggedEnum({
   ChangedRoute: { route: AppRoute },
@@ -33,6 +75,8 @@ export const App = Html.component({
     h.main
       .class("relative mx-auto flex min-h-dvh max-w-4xl flex-col px-5 pt-6 md:px-8 md:pt-10")
       .children(
+        WebMCP(h, {}),
+        BirthdayConfetti(h, {}),
         Masthead(h, AppRoute.printPath(route)),
         h.div.class("flex-1").children(page(h, route)),
         h.footer
@@ -41,18 +85,21 @@ export const App = Html.component({
           )
           .children(
             h.span.children("Don't half ass it."),
-            h.span.class("flex items-center gap-4 tabular-nums").children(
-              h.a
-                .attr("href", "https://github.com/einargudnig")
-                .class("hover:text-foreground transition-colors")
-                .children("GitHub"),
-              h.a
-                .attr("href", "https://x.com/einargudni")
-                .class("hover:text-foreground transition-colors")
-                .children("X"),
-              h.span.children(String(YEAR)),
-            ),
+            h.span
+              .class("flex items-center gap-4 tabular-nums")
+              .children(
+                h.a
+                  .attr("href", "https://github.com/einargudnig")
+                  .class("hover:text-foreground transition-colors")
+                  .children("GitHub"),
+                h.a
+                  .attr("href", "https://x.com/einargudni")
+                  .class("hover:text-foreground transition-colors")
+                  .children("X"),
+                h.span.children(String(YEAR)),
+              ),
           ),
+        KeyboardNav(h, {}),
       ),
 });
 
@@ -60,28 +107,28 @@ export const App = Html.component({
 const page = <M>(h: Html.H<M>, route: AppRoute) => {
   const key = AppRoute.printPath(route);
   return AppRoute.match(route, {
+    Home: () => HomePage(h, { key }),
+    About: () => AboutPage(h, { key }),
+    Baby: () => BabyPage(h, { key, fallback: pageFallback(h) }),
+    Blog: () => BlogPage(h, { key }),
     Post: ({ params }) => PostPage(h, { key, props: { slug: params.slug } }),
+    DeepDive: ({ params }) => DeepDivePage(h, { key, props: { slug: params.slug } }),
+    Learnings: () => LearningsPage(h, { key }),
+    Notes: () => NotesPage(h, { key }),
+    Now: () => NowPage(h, { key }),
+    Quotes: () => QuotesPage(h, { key }),
+    Referrals: () => ReferralsPage(h, { key }),
+    Resolutions: () => ResolutionsPage(h, { key }),
+    Someday: () => SomedayPage(h, { key }),
+    TldrEn: () => TldrEnPage(h, { key }),
+    TldrIs: () => TldrIsPage(h, { key }),
+    TsMini: () => TsMiniPage(h, { key, fallback: pageFallback(h) }),
+    ChroncalPrivacy: () => ChroncalPrivacyPage(h, { key }),
+    ChroncalTerms: () => ChroncalTermsPage(h, { key }),
+    UseCases: () => UseCasesPage(h, { key }),
+    UseCase: ({ params }) => UseCasePage(h, { key, props: { slug: params.slug } }),
+    Uses: () => UsesPage(h, { key, props: { folder: null } }),
+    UsesFolder: ({ params }) => UsesPage(h, { key, props: { folder: params.folder } }),
     NotFound: () => NotFoundPage(h, { key }),
-    Home: () => NotFoundPage(h, { key }),
-    About: () => NotFoundPage(h, { key }),
-    Baby: () => NotFoundPage(h, { key }),
-    Blog: () => NotFoundPage(h, { key }),
-    DeepDive: () => NotFoundPage(h, { key }),
-    Learnings: () => NotFoundPage(h, { key }),
-    Notes: () => NotFoundPage(h, { key }),
-    Now: () => NotFoundPage(h, { key }),
-    Quotes: () => NotFoundPage(h, { key }),
-    Referrals: () => NotFoundPage(h, { key }),
-    Resolutions: () => NotFoundPage(h, { key }),
-    Someday: () => NotFoundPage(h, { key }),
-    TldrEn: () => NotFoundPage(h, { key }),
-    TldrIs: () => NotFoundPage(h, { key }),
-    TsMini: () => NotFoundPage(h, { key }),
-    ChroncalPrivacy: () => NotFoundPage(h, { key }),
-    ChroncalTerms: () => NotFoundPage(h, { key }),
-    UseCases: () => NotFoundPage(h, { key }),
-    UseCase: () => NotFoundPage(h, { key }),
-    Uses: () => NotFoundPage(h, { key }),
-    UsesFolder: () => NotFoundPage(h, { key }),
   });
 };

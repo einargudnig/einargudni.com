@@ -5,7 +5,12 @@ import { Html } from "@effect/ui/html";
 // how many entries follow or where the rest of them are.
 export const LedgerHead = <M>(
   h: Html.H<M>,
-  options: { readonly title: string; readonly id?: string; readonly aside?: string; readonly href?: string },
+  options: {
+    readonly title: string;
+    readonly id?: string;
+    readonly aside?: string;
+    readonly href?: string;
+  },
 ) =>
   h.div
     .class("flex items-baseline justify-between gap-4 border-t border-foreground pt-2.5 pb-1")
@@ -14,7 +19,9 @@ export const LedgerHead = <M>(
       options.href
         ? h.a
             .attr("href", options.href)
-            .class("text-sm text-muted-foreground underline-offset-4 transition-colors hover:text-brand hover:underline")
+            .class(
+              "text-sm text-muted-foreground underline-offset-4 transition-colors hover:text-brand hover:underline",
+            )
             .children(options.aside ?? "")
         : options.aside
           ? h.span.class("text-sm text-muted-foreground tabular-nums").children(options.aside)
@@ -22,7 +29,7 @@ export const LedgerHead = <M>(
     );
 
 // A table section. `scroll-mt` keeps an anchored heading clear of the top.
-export const Ledger = <M, C extends View.Children<M>>(
+export const Ledger = <M, C extends View.Children<M, never>>(
   h: Html.H<M>,
   options: {
     readonly title: string;
