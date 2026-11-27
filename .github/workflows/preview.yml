@@ -37,7 +37,7 @@ jobs:
             --preview-alias "pr-${{ github.event.number }}" \
             --message "PR #${{ github.event.number }} at ${{ github.event.pull_request.head.sha }}" \
             | tee upload.log
-          url=$(grep -oE "https://pr-${{ github.event.number }}-[^ ]+\.workers\.dev" upload.log | head -1)
+          url=$(grep -oE "https://pr-${{ github.event.number }}-[^ ]+\.workers\.dev" upload.log | head -1 || true)
           echo "url=$url" >> "$GITHUB_OUTPUT"
 
       - if: steps.upload.outputs.url == ''
