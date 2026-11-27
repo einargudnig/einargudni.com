@@ -12,6 +12,7 @@
     "dev": "velite --watch & vite dev",
     "build": "velite && bun run og && vite build",
     "preview": "wrangler dev",
+    "bump-effect-ui": "bun scripts/bump-effect-ui.ts",
     "deploy": "bun run build && wrangler deploy",
     "og": "bun scripts/generate-og.mjs",
     "snapshot": "bun scripts/refresh-life-os.ts",

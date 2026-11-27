@@ -12,6 +12,7 @@
     "docs",
     ".agents",
     "convex/_generated",
-    ".impeccable"
+    ".impeccable",
+    ".claude/worktrees"
   ]
 }
