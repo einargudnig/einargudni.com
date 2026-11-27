@@ -21,6 +21,11 @@
     { "pattern": "einargudni.com", "custom_domain": true },
     { "pattern": "www.einargudni.com", "custom_domain": true },
   ],
+  // Each pull request uploads a version under a pr-<n> preview alias, which
+  // .github/workflows/preview.yml compares with the live site. The Worker's
+  // own workers.dev URL stays off.
+  "workers_dev": false,
+  "preview_urls": true,
   "observability": {
     "enabled": true,
   },

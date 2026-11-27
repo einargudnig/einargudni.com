@@ -86,7 +86,14 @@ const overlap = (wanted: Array<string>, candidate: Array<string>) => {
   return shared / wanted.length;
 };
 
-const sitemap = await (await fetch(`${reference}/sitemap.xml`)).text();
+// The live zone challenges some datacenter IPs. Comparing against a challenge
+// page would report every page as changed, so stop instead.
+const sitemapResponse = await fetch(`${reference}/sitemap.xml`);
+if (!sitemapResponse.ok) {
+  console.error(`reference unreachable: ${reference}/sitemap.xml → ${sitemapResponse.status}`);
+  process.exit(2);
+}
+const sitemap = await sitemapResponse.text();
 const paths = [...sitemap.matchAll(/<loc>([^<]+)<\/loc>/g)].map(
   (match) => new URL(match[1] ?? "").pathname,
 );

@@ -1,0 +1,65 @@
+name: preview
+
+# Uploads each pull request as a Worker version under a stable pr-<n> preview
+# alias, without sending it any traffic, then runs scripts/parity.ts against
+# it with the live site as the reference. The report lands in the job summary.
+#
+# Parity is informational: a content change is meant to differ from the live
+# site, so a diff is something to read, not a failure.
+on:
+  pull_request:
+
+concurrency:
+  group: preview-${{ github.event.number }}
+  cancel-in-progress: true
+
+jobs:
+  parity:
+    # Pull requests from forks get no secrets, so there is nothing to upload with.
+    if: github.event.pull_request.head.repo.full_name == github.repository
+    runs-on: ubuntu-latest
+    env:
+      CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+      CLOUDFLARE_ACCOUNT_ID: ${{ vars.CLOUDFLARE_ACCOUNT_ID }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: 1.4.2
+      - run: bun install --frozen-lockfile
+      - run: bun run build
+
+      - name: Upload a preview version
+        id: upload
+        shell: bash
+        run: |
+          bunx wrangler versions upload \
+            --preview-alias "pr-${{ github.event.number }}" \
+            --message "PR #${{ github.event.number }} at ${{ github.event.pull_request.head.sha }}" \
+            | tee upload.log
+          url=$(grep -oE "https://pr-${{ github.event.number }}-[^ ]+\.workers\.dev" upload.log | head -1)
+          echo "url=$url" >> "$GITHUB_OUTPUT"
+
+      - if: steps.upload.outputs.url == ''
+        run: echo "::warning::No preview alias URL in the upload output; are preview URLs enabled on the Worker?"
+
+      - name: Compare with the live site
+        if: steps.upload.outputs.url != ''
+        continue-on-error: true
+        shell: bash
+        env:
+          URL: ${{ steps.upload.outputs.url }}
+        run: |
+          echo "Preview: $URL" >> "$GITHUB_STEP_SUMMARY"
+          set +e
+          bun scripts/parity.ts "$URL" > parity.log 2>&1
+          status=$?
+          set -e
+          cat parity.log
+          {
+            echo
+            echo '```'
+            cat parity.log
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"
+          exit $status
