@@ -39,6 +39,17 @@ const TsMiniPage = Component.lazy("TsMiniPage", () =>
   import("./pages/ts-mini/TsMiniPage.ts").then((module) => module.TsMiniPage),
 );
 
+// Hydration adopts a lazy page's prerendered HTML only when its module has
+// already loaded; otherwise the fallback replaces it until the chunk arrives.
+// The client entry awaits this before hydrating, so a visitor landing on one
+// of these pages never sees "Loading…" over a page that was already there.
+const LAZY_PAGES: Record<string, { readonly preload: () => Promise<void> }> = {
+  [AppRoute.print(AppRoute.Baby())]: BabyPage,
+  [AppRoute.print(AppRoute.TsMini())]: TsMiniPage,
+};
+export const preloadPage = (pathname: string): Promise<void> =>
+  LAZY_PAGES[pathname]?.preload() ?? Promise.resolve();
+
 const pageFallback =
   <M>(h: Html.H<M>) =>
   (result: { readonly _tag: string }) =>
