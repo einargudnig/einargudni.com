@@ -6,6 +6,8 @@ import { defineConfig, s } from "velite";
 const EXCERPT_LENGTH = 260;
 const excerptOf = (body: string) =>
   body
+    .replace(/^```[\s\S]*?^```[^\n]*$/gm, "")
+    .replace(/^(:{3,})[^\n]*\n[\s\S]*?^\1\s*$/gm, "")
     .split(/\n{2,}/)
     .filter((block) => !/^\s*(:{2,}|```|<)/.test(block))
     .map((block) =>

@@ -6,7 +6,7 @@ declare module "virtual:content" {
   export const posts: ReadonlyArray<Omit<Post, "body">>;
   export const deepDives: ReadonlyArray<Omit<DeepDive, "body">>;
   export const work: ReadonlyArray<Omit<Work, "body">>;
-  export const learnings: ReadonlyArray<Learning>;
-  export const links: ReadonlyArray<Link>;
-  export const quotes: ReadonlyArray<Quote>;
+  export const learnings: ReadonlyArray<Omit<Learning, "body">>;
+  export const links: ReadonlyArray<Omit<Link, "body">>;
+  export const quotes: ReadonlyArray<Omit<Quote, "body">>;
 }

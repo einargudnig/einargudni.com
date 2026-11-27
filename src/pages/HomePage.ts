@@ -84,9 +84,9 @@ const projects: ReadonlyArray<{
   {
     title: "einargudni.com",
     description:
-      "This site. Built with TanStack Start, Velite for MDX content, and Tailwind v4. Deployed on Cloudflare Workers.",
+      "This site. Built with Effect UI, Velite for Markdown content, and Tailwind v4. Deployed on Cloudflare Workers.",
     href: "https://github.com/einargudnig/einargudni.com",
-    tags: ["TanStack", "MDX", "Tailwind"],
+    tags: ["Effect UI", "Markdown", "Tailwind"],
   },
   {
     title: "todo-system",

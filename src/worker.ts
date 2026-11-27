@@ -25,6 +25,9 @@ export default {
     const asset = await env.ASSETS.fetch(request);
     if (asset.status !== 404) return asset;
     const page = await env.ASSETS.fetch(new URL("/404", request.url));
-    return new Response(page.body, { status: 404, headers: page.headers });
+    return new Response(page.body, {
+      status: 404,
+      headers: { "content-type": page.headers.get("content-type") ?? "text/html; charset=utf-8" },
+    });
   },
 } satisfies ExportedHandler<Env>;

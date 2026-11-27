@@ -65,12 +65,25 @@ const codeBlocks = (blocks: ReadonlyArray<Markdown.Block>): ReadonlyArray<Markdo
     }
   });
 
+const FRONTMATTER = /^---\r?\n([\s\S]*?)\r?\n---\r?\n/;
+
+// A draft case study isn't published (lib/work.ts), but GetContent's glob
+// still bundles every content file. In a build its module is an empty document,
+// so neither its prose nor its CHECK notes reach dist/client.
+const isDraftWork = (id: string, frontmatter: string) =>
+  id.includes("/content/work/") && /^draft:\s*true\s*$/m.test(frontmatter);
+
+let building = false;
 const content: Plugin = {
   name: "content",
   enforce: "pre",
+  configResolved(config) {
+    building = config.command === "build";
+  },
   async transform(source, id) {
     if (!id.endsWith(".md") || !id.includes("/content/")) return;
-    const body = source.replace(/^---\n[\s\S]*?\n---\n/, "");
+    const frontmatter = FRONTMATTER.exec(source)?.[1] ?? "";
+    const body = building && isDraftWork(id, frontmatter) ? "" : source.replace(FRONTMATTER, "");
     const document = MarkdownParser.parseMarkdown(body, { islands: ContentIslands });
     const code = await Promise.all(
       codeBlocks(document.blocks).map(({ value, language }) =>
