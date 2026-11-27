@@ -14,6 +14,7 @@
     "preview": "wrangler dev",
     "deploy": "bun run build && wrangler deploy",
     "og": "bun scripts/generate-og.mjs",
+    "snapshot": "bun scripts/refresh-life-os.ts",
     "lint": "oxlint --deny-warnings",
     "typecheck": "tsc --noEmit",
     "check": "bun run lint && bun run format:check && bun run typecheck",

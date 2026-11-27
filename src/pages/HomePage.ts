@@ -347,6 +347,10 @@ export const HomePage = Html.component({
     HtmlHead.meta({ property: "og:image", content: "/og/home.png" }),
     HtmlHead.meta({ name: "twitter:card", content: "summary_large_image" }),
     HtmlHead.meta({ name: "twitter:image", content: "/og/home.png" }),
+    // The snapshot's own date, in the markup. The daily workflow greps the live page for
+    // this after deploying: it is the difference between "the repo and the deploy both
+    // succeeded" and "a visitor is actually seeing today's numbers".
+    HtmlHead.meta({ name: "whoop-snapshot", content: whoopSnapshot.date }),
   ],
   view: (h) =>
     h.div.class("space-y-20 md:space-y-24").children(
