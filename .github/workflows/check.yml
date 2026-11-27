@@ -21,3 +21,5 @@ jobs:
       - run: bun run cf-typegen
       # oxlint + oxfmt --check + velite + tsc
       - run: bun run check
+      # Story tests, plus a server render and hydration of every prerendered page.
+      - run: bun run test

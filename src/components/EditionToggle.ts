@@ -26,7 +26,7 @@ const prefersReducedMotion = () => matchMedia("(prefers-reduced-motion: reduce)"
 // The new edition spreads out from the click as a widening circle. The
 // browser snapshots the old page, applies the new edition underneath, then
 // the new snapshot's clip grows from the click to the far corner.
-const SwitchEdition = Command.make(
+export const SwitchEdition = Command.make(
   "SwitchEdition",
   { args: { pref: PrefSchema, x: Schema.Number, y: Schema.Number } },
   ({ pref, x, y }) =>
@@ -58,9 +58,9 @@ const SwitchEdition = Command.make(
     }),
 );
 
-const FollowSun = Command.make("FollowSun", {}, () => Effect.sync(() => apply("auto")));
+export const FollowSun = Command.make("FollowSun", {}, () => Effect.sync(() => apply("auto")));
 
-const EditionToggleMessage = UiSchema.TaggedEnum({
+export const EditionToggleMessage = UiSchema.TaggedEnum({
   ReadPref: { pref: PrefSchema },
   Ticked: {},
   ClickedToggle: { x: Schema.Number, y: Schema.Number },

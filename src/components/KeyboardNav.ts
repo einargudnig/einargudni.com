@@ -18,7 +18,7 @@ const routes: Record<string, { readonly route: AppRoute; readonly label: string 
 const Scroll = Schema.Literals(["line-down", "line-up", "half-down", "half-up", "bottom", "top"]);
 type Scroll = typeof Scroll.Type;
 
-const ScrollPage = Command.make("ScrollPage", { args: { scroll: Scroll } }, ({ scroll }) =>
+export const ScrollPage = Command.make("ScrollPage", { args: { scroll: Scroll } }, ({ scroll }) =>
   Effect.sync(() => {
     const scrollAmount = 80;
     const halfPage = window.innerHeight / 2;
@@ -39,14 +39,14 @@ const ScrollPage = Command.make("ScrollPage", { args: { scroll: Scroll } }, ({ s
   }),
 );
 
-const KeyboardNavMessage = UiSchema.TaggedEnum({
+export const KeyboardNavMessage = UiSchema.TaggedEnum({
   PressedKey: { key: Schema.String },
   CompletedWait: { seq: Schema.Number },
 });
 
 // Each wait carries the sequence number of the display it should clear, so a
 // wait that a later key outlived clears nothing.
-const Wait = Command.make(
+export const Wait = Command.make(
   "Wait",
   { args: { seq: Schema.Number, millis: Schema.Number } },
   ({ seq, millis }) =>

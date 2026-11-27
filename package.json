@@ -16,6 +16,7 @@
     "og": "bun scripts/generate-og.mjs",
     "snapshot": "bun scripts/refresh-life-os.ts",
     "lint": "oxlint --deny-warnings",
+    "test": "velite && vitest run",
     "typecheck": "tsc --noEmit",
     "check": "bun run lint && bun run format:check && bun run typecheck",
     "format": "oxfmt --write .",
@@ -41,11 +42,13 @@
   "devDependencies": {
     "@effect/platform-node": "4.1.4",
     "@effect/ui-devtools": "file:./vendor/effect-ui-devtools-859a30f.tgz",
+    "@effect/vitest": "4.1.4",
     "@resvg/resvg-js": "^2.6.2",
     "@tailwindcss/typography": "^0.5.20",
     "@tailwindcss/vite": "^4.3.3",
     "@types/bun": "^1.3.6",
     "@types/node": "^24",
+    "happy-dom": "21.0.4",
     "oxfmt": "^0.20.0",
     "oxlint": "^1.53.0",
     "satori": "^0.29.0",
@@ -55,6 +58,7 @@
     "typescript": "^7.0.2",
     "velite": "^0.3.0",
     "vite": "^8.2.2",
+    "vitest": "5.1.2",
     "wrangler": "^4.130.0"
   },
   "overrides": {

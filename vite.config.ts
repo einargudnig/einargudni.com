@@ -1,3 +1,4 @@
+/// <reference types="vitest/config" />
 import { DevToolsVite } from "@effect/ui-devtools/node";
 import { plugin as htmlServer } from "@effect/ui/html/HtmlServerVite";
 import { Markdown, MarkdownParser } from "@effect/ui/html";
@@ -131,6 +132,7 @@ export default defineConfig({
     },
   },
   build: { outDir: "dist/client" },
+  test: { include: ["src/**/*.test.ts"] },
   plugins: [
     tailwindcss(),
     inlineEditionScript,
