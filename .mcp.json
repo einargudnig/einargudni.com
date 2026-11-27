@@ -1,0 +1,5 @@
+{
+  "mcpServers": {
+    "effect-ui": { "type": "http", "url": "http://127.0.0.1:4774/mcp" }
+  }
+}

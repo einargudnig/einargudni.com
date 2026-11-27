@@ -1,3 +1,4 @@
+import { DevToolsVite } from "@effect/ui-devtools/node";
 import { plugin as htmlServer } from "@effect/ui/html/HtmlServerVite";
 import { Markdown, MarkdownParser } from "@effect/ui/html";
 import tailwindcss from "@tailwindcss/vite";
@@ -123,5 +124,8 @@ export default defineConfig({
     contentIndex,
     content,
     htmlServer({ entry: "/src/entry.server.ts", origin: "https://einargudni.com" }),
+    // `vite dev` only: the inspector overlay, and an MCP server agents connect to
+    // at http://127.0.0.1:4774/mcp. `dispatch` lets them send messages to the app.
+    DevToolsVite.plugin({ dispatch: true }),
   ],
 });

@@ -38,6 +38,8 @@
     "tailwind-merge": "^3.3.1"
   },
   "devDependencies": {
+    "@effect/platform-node": "4.1.4",
+    "@effect/ui-devtools": "file:./vendor/effect-ui-devtools-859a30f.tgz",
     "@resvg/resvg-js": "^2.6.2",
     "@tailwindcss/typography": "^0.5.20",
     "@tailwindcss/vite": "^4.3.3",
@@ -55,6 +57,7 @@
     "wrangler": "^4.130.0"
   },
   "overrides": {
-    "@effect/ui": "file:./vendor/effect-ui-859a30f.tgz"
+    "@effect/ui": "file:./vendor/effect-ui-859a30f.tgz",
+    "@effect/ui-kit": "file:./vendor/effect-ui-kit-859a30f.tgz"
   }
 }
