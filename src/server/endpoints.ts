@@ -43,20 +43,27 @@ const robots = [
 // No changefreq or priority either: Google has ignored both since 2023.
 const sitemap = () => {
   const entries = [
-    ...posts.filter((p) => !p.draft).map((p) => ({ url: `${SITE_URL}/blog/${p.slug}`, lastModified: p.date })),
+    ...posts
+      .filter((p) => !p.draft)
+      .map((p) => ({ url: `${SITE_URL}/blog/${p.slug}`, lastModified: p.date })),
     ...deepDives
       .filter((d) => !d.draft)
       .map((d) => ({ url: `${SITE_URL}/deep-dive/${d.slug}`, lastModified: d.date })),
-    ...work.filter((w) => !w.draft).map((w) => ({ url: `${SITE_URL}${w.permalink}`, lastModified: undefined })),
+    ...work
+      .filter((w) => !w.draft)
+      .map((w) => ({ url: `${SITE_URL}${w.permalink}`, lastModified: undefined })),
     ...LISTED_PATHS.map((path) => ({ url: `${SITE_URL}${path}`, lastModified: undefined })),
   ];
   return [
     '<?xml version="1.0" encoding="UTF-8"?>',
     '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">',
     ...entries.map(({ url, lastModified }) =>
-      ["  <url>", `    <loc>${url}</loc>`, ...(lastModified ? [`    <lastmod>${lastModified}</lastmod>`] : []), "  </url>"].join(
-        "\n",
-      ),
+      [
+        "  <url>",
+        `    <loc>${url}</loc>`,
+        ...(lastModified ? [`    <lastmod>${lastModified}</lastmod>`] : []),
+        "  </url>",
+      ].join("\n"),
     ),
     "</urlset>",
     "",

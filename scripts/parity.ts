@@ -7,7 +7,8 @@
 // Exits non-zero when a page's status, title, description, og:image, h1 or
 // set of outbound links differs, or its visible text falls below 90% overlap.
 
-const [base = "http://localhost:8799", reference = "https://einargudni.com"] = process.argv.slice(2);
+const [base = "http://localhost:8799", reference = "https://einargudni.com"] =
+  process.argv.slice(2);
 
 interface Page {
   status: number;
@@ -31,7 +32,9 @@ const decode = (text: string) =>
 // Whitespace is collapsed: a meta description that differs only in line
 // breaks reads the same everywhere it is shown.
 const first = (html: string, pattern: RegExp) =>
-  decode(pattern.exec(html)?.[1] ?? "").replace(/\s+/g, " ").trim();
+  decode(pattern.exec(html)?.[1] ?? "")
+    .replace(/\s+/g, " ")
+    .trim();
 
 const meta = (html: string, key: string) =>
   first(html, new RegExp(`<meta[^>]+(?:name|property)="${key}"[^>]+content="([^"]*)"`, "i"));
@@ -68,30 +71,32 @@ const read = async (origin: string, path: string): Promise<Page> => {
 };
 
 // Share of the reference's words (as a multiset) the candidate also has.
-const overlap = (reference: Array<string>, candidate: Array<string>) => {
-  if (reference.length === 0) return 1;
+const overlap = (wanted: Array<string>, candidate: Array<string>) => {
+  if (wanted.length === 0) return 1;
   const counts = new Map<string, number>();
   for (const word of candidate) counts.set(word, (counts.get(word) ?? 0) + 1);
   let shared = 0;
-  for (const word of reference) {
+  for (const word of wanted) {
     const left = counts.get(word) ?? 0;
     if (left > 0) {
       shared++;
       counts.set(word, left - 1);
     }
   }
-  return shared / reference.length;
+  return shared / wanted.length;
 };
 
 const sitemap = await (await fetch(`${reference}/sitemap.xml`)).text();
-const paths = [...sitemap.matchAll(/<loc>([^<]+)<\/loc>/g)].map((match) => new URL(match[1] ?? "").pathname);
+const paths = [...sitemap.matchAll(/<loc>([^<]+)<\/loc>/g)].map(
+  (match) => new URL(match[1] ?? "").pathname,
+);
 
-let failures = 0;
-for (const path of paths) {
+const compare = async (path: string) => {
   const [want, got] = await Promise.all([read(reference, path), read(base, path)]);
   const problems: Array<string> = [];
   for (const key of ["status", "title", "description", "ogImage", "h1"] as const) {
-    if (want[key] !== got[key]) problems.push(`${key}: ${JSON.stringify(want[key])} → ${JSON.stringify(got[key])}`);
+    if (want[key] !== got[key])
+      problems.push(`${key}: ${JSON.stringify(want[key])} → ${JSON.stringify(got[key])}`);
   }
   const missing = [...want.links].filter((link) => !got.links.has(link));
   const added = [...got.links].filter((link) => !want.links.has(link));
@@ -99,13 +104,17 @@ for (const path of paths) {
   if (added.length > 0) problems.push(`links added: ${added.join(" ")}`);
   const score = overlap(want.words, got.words);
   if (score < 0.9) problems.push(`text overlap ${(score * 100).toFixed(0)}%`);
+  return { path, problems, score };
+};
 
-  if (problems.length === 0) {
-    console.log(`ok    ${path}  (text ${(score * 100).toFixed(0)}%)`);
-  } else {
-    failures++;
-    console.log(`DIFF  ${path}\n      ${problems.join("\n      ")}`);
-  }
+const results = await Promise.all(paths.map(compare));
+const failures = results.filter(({ problems }) => problems.length > 0).length;
+for (const { path, problems, score } of results) {
+  console.log(
+    problems.length === 0
+      ? `ok    ${path}  (text ${(score * 100).toFixed(0)}%)`
+      : `DIFF  ${path}\n      ${problems.join("\n      ")}`,
+  );
 }
 
 console.log(`\n${paths.length - failures}/${paths.length} pages match`);

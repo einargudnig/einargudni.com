@@ -8,7 +8,8 @@ export type Pref = "auto" | "day" | "night";
 export const EDITION_KEY = "edition";
 export const PREFS: ReadonlyArray<Pref> = ["auto", "day", "night"];
 
-export const resolveEdition = (pref: Pref) => (pref === "auto" ? (isNight() ? "night" : "day") : pref);
+export const resolveEdition = (pref: Pref) =>
+  pref === "auto" ? (isNight() ? "night" : "day") : pref;
 
 // Runs in <head> before first paint so a prerendered page never flashes the
 // wrong edition. sunAltitude is serialised in; it has no outside references.

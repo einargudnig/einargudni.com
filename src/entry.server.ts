@@ -15,6 +15,8 @@ export const prerender = [
   ...STATIC_PATHS,
   ...posts.map(({ slug }) => AppRoute.print(AppRoute.Post({ params: { slug } }))),
   ...deepDives.map(({ slug }) => AppRoute.print(AppRoute.DeepDive({ params: { slug } }))),
-  ...work.filter(({ draft }) => !draft).map(({ slug }) => AppRoute.print(AppRoute.UseCase({ params: { slug } }))),
+  ...work
+    .filter(({ draft }) => !draft)
+    .map(({ slug }) => AppRoute.print(AppRoute.UseCase({ params: { slug } }))),
   "/404",
 ];

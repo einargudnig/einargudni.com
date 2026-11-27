@@ -3,6 +3,11 @@
   "version": "0.1.0",
   "private": true,
   "type": "module",
+  "imports": {
+    "#components/*": "./src/components/*.ts",
+    "#content/*": "./src/content/*.ts",
+    "#pages/*": "./src/pages/*.ts"
+  },
   "scripts": {
     "dev": "velite --watch & vite dev",
     "build": "velite && bun run og && vite build",
@@ -75,10 +80,5 @@
   },
   "overrides": {
     "@effect/ui": "file:./vendor/effect-ui-859a30f.tgz"
-  },
-  "imports": {
-    "#components/*": "./src/components/*.ts",
-    "#content/*": "./src/content/*.ts",
-    "#pages/*": "./src/pages/*.ts"
   }
 }

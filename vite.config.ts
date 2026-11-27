@@ -102,9 +102,9 @@ const contentIndex: Plugin = {
     return COLLECTIONS.map((name) => {
       const file = fileURLToPath(new URL(`./.velite/${name}.json`, import.meta.url));
       this.addWatchFile(file);
-      const entries = (JSON.parse(readFileSync(file, "utf8")) as Array<Record<string, unknown>>).map(
-        ({ body: _body, ...entry }) => entry,
-      );
+      const entries = (
+        JSON.parse(readFileSync(file, "utf8")) as Array<Record<string, unknown>>
+      ).map(({ body: _body, ...entry }) => entry);
       return `export const ${name} = ${JSON.stringify(entries)};`;
     }).join("\n");
   },
