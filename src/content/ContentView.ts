@@ -102,7 +102,6 @@ const outline = (document: Markdown.Document): Outline => {
   return result;
 };
 
-
 // Shiki's catppuccin-mocha, which the highlighter in lib/highlighter.ts uses.
 const SHIKI_PRE_STYLE = "background-color:#1e1e2e;color:#cdd6f4;counter-reset:line";
 
@@ -117,69 +116,90 @@ export const ContentTableOfContents = <M>(h: Html.H<M>, content: Content, key = 
 // highlighted at build time, and the islands in ./islands.ts. A page that
 // shows several entries gives each its own `key`, which keeps their islands'
 // component keys apart.
-export const ContentView = <M>(h: Html.H<M>, content: Content, options: { readonly key?: string } = {}) => {
+export const ContentView = <M>(
+  h: Html.H<M>,
+  content: Content,
+  options: { readonly key?: string } = {},
+) => {
   const key = options.key ?? "";
   const { headings, listStyles, tight } = outline(content.document);
   return h.div.class("mdx-content").children(
-    Markdown.view(h, content.document, {
+    Markdown.view<M, never>(h, content.document, {
       views: {
-        Heading: (h, heading, inner) => {
+        Heading: (_h, heading, inner) => {
           const tag = (["h1", "h2", "h3", "h4", "h5", "h6"] as const)[heading.level - 1] ?? "h6";
           return h[tag]
             .attr("id", slugify(plainText(heading.content)))
             .class(HEADING_CLASS[heading.level] ?? "")
             .children(inner);
         },
-        Paragraph: (h, paragraph, inner) => {
+        Paragraph: (_h, paragraph, inner) => {
           const [figure] = inner;
-          if (paragraph.content.length === 1 && paragraph.content[0]?._tag === "Image" && typeof figure === "object") {
+          if (
+            paragraph.content.length === 1 &&
+            paragraph.content[0]?._tag === "Image" &&
+            typeof figure === "object"
+          ) {
             return figure;
           }
           return tight.has(paragraph) ? h.span.children(inner) : h.p.children(inner);
         },
-        Link: (h, link, inner) =>
-          isExternal(link.url) ? ExternalLink(h, link.url).children(inner) : h.a.attr("href", link.url).children(inner),
-        Image: (h, image) => CaptionedImage(h, { src: image.url, alt: image.alt }),
-        InlineCode: (h, { value }) => h.code.class("bg-muted px-1.5 py-0.5 rounded text-sm").children(value),
-        Blockquote: (h, _, blocks) => Blockquote(h, { children: blocks }),
-        List: (h, list, items) =>
+        Link: (_h, link, inner) =>
+          isExternal(link.url)
+            ? ExternalLink(h, link.url).children(inner)
+            : h.a.attr("href", link.url).children(inner),
+        Image: (_h, image) => CaptionedImage(h, { src: image.url, alt: image.alt }),
+        InlineCode: (_h, { value }) =>
+          h.code.class("bg-muted px-1.5 py-0.5 rounded text-sm").children(value),
+        Blockquote: (_h, _, blocks) => Blockquote(h, { children: blocks }),
+        List: (_h, list, items) =>
           StylishList(h, {
-            ...(listStyles.get(list) ?? { type: list.isOrdered ? "number" : "disc", gap: "normal" }),
+            ...(listStyles.get(list) ?? {
+              type: list.isOrdered ? "number" : "disc",
+              gap: "normal",
+            }),
             items,
           }),
-        ListItem: (h, _, blocks) => h.div.class("flex-1").children(blocks),
-        CodeBlock: (h, block, index) => {
+        ListItem: (_h, _, blocks) => h.div.class("flex-1").children(blocks),
+        CodeBlock: (_h, block, index) => {
           const language =
-            block.language._tag === "Some" ? (/^\w+/.exec(block.language.value)?.[0] ?? "text") : "text";
+            block.language._tag === "Some"
+              ? (/^\w+/.exec(block.language.value)?.[0] ?? "text")
+              : "text";
           const lines = content.code[index] ?? block.value.split("\n").map((text) => [{ text }]);
           return h.div
             .class("relative my-6 overflow-hidden rounded-lg border border-border bg-muted/30")
             .children(
               h.div.class("relative").children(
-                h.div.class("overflow-x-auto text-sm [&_pre]:p-4 [&_pre]:m-0 code-with-lines").children(
-                  h.pre
-                    .class("shiki catppuccin-mocha")
-                    .attr("style", SHIKI_PRE_STYLE)
-                    .attr("tabindex", "0")
-                    .children(
-                      h.code.children(
-                        lines.flatMap((tokens, line) => [
-                          line > 0 ? "\n" : null,
-                          h.span
-                            .key(String(line))
-                            .class("line")
-                            .attr("data-line", String(line + 1))
-                            .children(
-                              tokens.map((token, i) =>
-                                token.color
-                                  ? h.span.key(String(i)).style({ color: token.color }).children(token.text)
-                                  : token.text,
+                h.div
+                  .class("overflow-x-auto text-sm [&_pre]:p-4 [&_pre]:m-0 code-with-lines")
+                  .children(
+                    h.pre
+                      .class("shiki catppuccin-mocha")
+                      .attr("style", SHIKI_PRE_STYLE)
+                      .attr("tabindex", "0")
+                      .children(
+                        h.code.children(
+                          lines.flatMap((tokens, line) => [
+                            line > 0 ? "\n" : null,
+                            h.span
+                              .key(String(line))
+                              .class("line")
+                              .attr("data-line", String(line + 1))
+                              .children(
+                                tokens.map((token, i) =>
+                                  token.color
+                                    ? h.span
+                                        .key(String(i))
+                                        .style({ color: token.color })
+                                        .children(token.text)
+                                    : token.text,
+                                ),
                               ),
-                            ),
-                        ]),
+                          ]),
+                        ),
                       ),
-                    ),
-                ),
+                  ),
                 h.div
                   .class("absolute right-2 top-2 text-xs font-medium text-muted-foreground/60")
                   .children(language.toUpperCase()),

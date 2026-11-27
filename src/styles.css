@@ -597,3 +597,21 @@
 .prose :where(ul.my-6 > li):not(:where(.not-prose, .not-prose *)) {
   margin-block: 0;
 }
+
+/* Line numbers for prose code blocks (ContentView's CodeBlock). */
+.code-with-lines .line {
+  display: inline-block;
+  width: 100%;
+}
+.code-with-lines .line::before {
+  counter-increment: line;
+  content: counter(line);
+  display: inline-block;
+  width: 2.5rem;
+  margin-right: 1.5rem;
+  text-align: right;
+  color: rgba(127, 132, 156, 0.6);
+  user-select: none;
+  border-right: 1px solid rgba(127, 132, 156, 0.3);
+  padding-right: 0.75rem;
+}
