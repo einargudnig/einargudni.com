@@ -95,11 +95,12 @@ export const TableOfContents = Html.component({
       : [],
   view: (h, { activeId }) => {
     const { headings, variant } = h.props;
+    const top = Math.min(...headings.map((heading) => heading.level));
     const list = h.ol.class(variant === "inline" ? "[&>li:last-child>a]:border-b-0" : "").children(
       headings.map((heading, index) =>
         h.li
           .key(String(index))
-          .class(heading.level > 2 ? "pl-3" : "")
+          .class(heading.level > top ? "pl-3" : "")
           .children(
             h.a
               .attr("href", `#${heading.id}`)

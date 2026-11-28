@@ -1,6 +1,6 @@
-import { Component, Head, Router, UiSchema } from "@effect/ui";
+import { Command, Component, Head, Router, UiSchema } from "@effect/ui";
 import { Html, HtmlHead } from "@effect/ui/html";
-import { Schema } from "effect";
+import { Effect, Schema } from "effect";
 import { BirthdayConfetti } from "./components/BirthdayConfetti.ts";
 import { KeyboardNav } from "./components/KeyboardNav.ts";
 import { Masthead } from "./components/Masthead.ts";
@@ -61,7 +61,14 @@ const pageFallback =
 
 const AppMessage = UiSchema.TaggedEnum({
   ChangedRoute: { route: AppRoute },
+  ClickedSkipLink: {},
 });
+
+// The router scrolls to an in-page hash but leaves focus where it was, so
+// the skip link moves it itself: the next Tab starts inside the page.
+const FocusContent = Command.make("FocusContent", {}, () =>
+  Effect.sync(() => document.getElementById("content")?.focus()),
+);
 
 const YEAR = new Date().getFullYear();
 
@@ -77,6 +84,7 @@ export const App = Html.component({
   update: ($, message) =>
     AppMessage.match(message, {
       ChangedRoute: ({ route }) => $.set({ route }).viewTransition(["page"]),
+      ClickedSkipLink: () => $.set($.model).run(FocusContent.make({}).pipe(Command.asNoop)),
     }),
   subscriptions: ({ model }) => [
     Router.subscription(AppRoute, model.route, (route) => AppMessage.ChangedRoute({ route })),
@@ -91,10 +99,21 @@ export const App = Html.component({
     h.main
       .class("relative mx-auto flex min-h-dvh max-w-4xl flex-col px-5 pt-6 md:px-8 md:pt-10")
       .children(
+        h.a
+          .attr("href", "#content")
+          .class(
+            "sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-5 focus:z-50 focus:bg-background focus:px-2 focus:py-1 focus:text-sm",
+          )
+          .on("click", AppMessage.ClickedSkipLink())
+          .children("Skip to content"),
         WebMCP(h, {}),
         BirthdayConfetti(h, {}),
         Masthead(h, AppRoute.printPath(route)),
-        h.div.class("flex-1").children(page(h, route)),
+        h.div
+          .attr("id", "content")
+          .attr("tabindex", "-1")
+          .class("flex-1 outline-none")
+          .children(page(h, route)),
         h.footer
           .class(
             "mt-24 mb-8 grid grid-cols-[1fr_auto] gap-4 border-t border-foreground pt-3 text-sm text-muted-foreground",
