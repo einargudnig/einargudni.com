@@ -1,23 +1,27 @@
 import { defineConfig, s } from "velite";
 
-// The first 260 characters of a post's prose, for its meta description. Built
-// from the raw source rather than with s.excerpt(): island directives
-// (`::CaptionedImage{...}`) are markup, not prose, and s.excerpt() printed them.
+// About the first 260 characters of an entry's prose, cut at a word, for its
+// meta description and its line on /blog. Built from the raw source rather
+// than with s.excerpt(): island directives (`::CaptionedImage{...}`) are
+// markup, not prose, and s.excerpt() printed them. Headings are left out, so
+// an entry that opens with one starts at its first sentence.
 const EXCERPT_LENGTH = 260;
+const clip = (text: string) =>
+  text.length <= EXCERPT_LENGTH
+    ? text
+    : `${text.slice(0, text.lastIndexOf(" ", EXCERPT_LENGTH)).replace(/[\s,;:.]+$/, "")}…`;
 const excerptOf = (body: string) =>
-  body
-    .replace(/^```[\s\S]*?^```[^\n]*$/gm, "")
-    .replace(/^(:{3,})[^\n]*\n[\s\S]*?^\1\s*$/gm, "")
-    .split(/\n{2,}/)
-    .filter((block) => !/^\s*(:{2,}|```|<)/.test(block))
-    .map((block) =>
-      block
-        .replace(/^#{1,6}\s+/gm, "")
-        .replace(/!?\[([^\]]*)\]\([^)]*\)/g, "$1")
-        .replace(/[*_`~]/g, ""),
-    )
-    .join("\n\n")
-    .slice(0, EXCERPT_LENGTH);
+  clip(
+    body
+      .replace(/^```[\s\S]*?^```[^\n]*$/gm, "")
+      .replace(/^(:{3,})[^\n]*\n[\s\S]*?^\1\s*$/gm, "")
+      .split(/\n{2,}/)
+      .filter((block) => !/^\s*(:{2,}|```|<|#{1,6}\s)/.test(block))
+      .map((block) => block.replace(/!?\[([^\]]*)\]\([^)]*\)/g, "$1").replace(/[*_`~]/g, ""))
+      .join(" ")
+      .replace(/\s+/g, " ")
+      .trim(),
+  );
 
 // `s` is extended from Zod with some custom schemas,
 // you can also import re-exported `z` from `velite` if you don't need these extension schemas.

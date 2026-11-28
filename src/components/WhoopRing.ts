@@ -22,7 +22,7 @@ export const WhoopRing = <M>(
     readonly displayValue: string;
     // 0..1 — how much of the ring is filled.
     readonly fill: number;
-    // Tailwind text-color class, e.g. "text-emerald-500".
+    // Tailwind text-color class for the ring, e.g. "text-foreground".
     readonly colorClass: string;
     readonly subtitle?: string;
   },

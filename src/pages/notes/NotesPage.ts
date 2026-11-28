@@ -3,7 +3,7 @@ import { Html } from "@effect/ui/html";
 import { Tabs as KitTabs } from "@effect/ui-kit";
 import { Schema } from "effect";
 import { learnings, links } from "virtual:content";
-import { formatBlogDate } from "@/lib/utils";
+import { formatShortDate } from "@/lib/utils";
 import { pageHead } from "../../components/head.ts";
 import { ContentEntry } from "../../content/ContentEntry.ts";
 import { GetContent } from "../../queries/GetContent.ts";
@@ -92,7 +92,7 @@ export const NotesPageNoDeps = Html.component({
                               h.time
                                 .class("tabular-nums")
                                 .attr("datetime", item.date)
-                                .children(formatBlogDate(item.date)),
+                                .children(formatShortDate(item.date)),
                               item.deepDiveSlug && h.span.children("·"),
                               item.deepDiveSlug &&
                                 h.a
@@ -167,7 +167,7 @@ export const NotesPageNoDeps = Html.component({
                                       h.time
                                         .class("tabular-nums")
                                         .attr("datetime", item.date)
-                                        .children(formatBlogDate(item.date)),
+                                        .children(formatShortDate(item.date)),
                                       item.tags && item.tags.length > 0 && h.span.children("·"),
                                       ...(item.tags ?? []).map((tag) =>
                                         h.span
