@@ -1,5 +1,28 @@
 import { defineConfig, s } from "velite";
 
+// About the first 260 characters of an entry's prose, cut at a word, for its
+// meta description and its line on /blog. Built from the raw source rather
+// than with s.excerpt(): island directives (`::CaptionedImage{...}`) are
+// markup, not prose, and s.excerpt() printed them. Headings are left out, so
+// an entry that opens with one starts at its first sentence.
+const EXCERPT_LENGTH = 260;
+const clip = (text: string) =>
+  text.length <= EXCERPT_LENGTH
+    ? text
+    : `${text.slice(0, text.lastIndexOf(" ", EXCERPT_LENGTH)).replace(/[\s,;:.]+$/, "")}…`;
+const excerptOf = (body: string) =>
+  clip(
+    body
+      .replace(/^```[\s\S]*?^```[^\n]*$/gm, "")
+      .replace(/^(:{3,})[^\n]*\n[\s\S]*?^\1\s*$/gm, "")
+      .split(/\n{2,}/)
+      .filter((block) => !/^\s*(:{2,}|```|<|#{1,6}\s)/.test(block))
+      .map((block) => block.replace(/!?\[([^\]]*)\]\([^)]*\)/g, "$1").replace(/[*_`~]/g, ""))
+      .join(" ")
+      .replace(/\s+/g, " ")
+      .trim(),
+  );
+
 // `s` is extended from Zod with some custom schemas,
 // you can also import re-exported `z` from `velite` if you don't need these extension schemas.
 
@@ -7,26 +30,31 @@ export default defineConfig({
   collections: {
     posts: {
       name: "Post", // collection type name
-      pattern: "posts/**/*.{md,mdx}", // content files glob pattern (support both md and mdx)
+      pattern: "posts/**/*.md",
       schema: s
         .object({
           title: s.string().max(99), // Zod primitive type
           slug: s.slug("posts"), // validate format, unique in posts collection
+          // A one-sentence dek under the title, and the meta description.
+          description: s.string().max(300).optional(),
           image: s.image().optional(),
           date: s.isodate(), // input Date-like string, output ISO Date string.
           // cover: s.image().optional(), // input image relative path, output image object with blurImage.
           metadata: s.metadata(), // extract markdown reading-time, word-count, etc.
-          excerpt: s.excerpt(), // excerpt of markdown content
           draft: s.boolean().optional().default(false),
           path: s.path(), // used to resolve the compiled MDX module
           body: s.raw(), // raw markdown body (served via Accept: text/markdown)
         })
-        .transform((data) => ({ ...data, permalink: `/blog/${data.slug}` })),
+        .transform((data) => ({
+          ...data,
+          excerpt: excerptOf(data.body),
+          permalink: `/blog/${data.slug}`,
+        })),
     },
     // collection for learnings
     learnings: {
       name: "Learning",
-      pattern: "learnings/**/*.{md,mdx}",
+      pattern: "learnings/**/*.md",
       schema: s
         .object({
           title: s.string().max(99),
@@ -44,11 +72,12 @@ export default defineConfig({
     // collection for deep dives
     deepDives: {
       name: "DeepDive",
-      pattern: "deep-dives/**/*.{md,mdx}",
+      pattern: "deep-dives/**/*.md",
       schema: s
         .object({
           title: s.string().max(120),
           slug: s.slug("deep-dives"),
+          description: s.string().max(300).optional(),
           date: s.isodate(),
           topic: s.string().max(50).optional(),
           tags: s.array(s.string()).optional(),
@@ -59,6 +88,7 @@ export default defineConfig({
         })
         .transform((data) => ({
           ...data,
+          excerpt: excerptOf(data.body),
           permalink: `/deep-dive/${data.slug}`,
         })),
     },
@@ -66,7 +96,7 @@ export default defineConfig({
     // collection for use cases: freelance, in-house and personal work, served at /use-cases
     work: {
       name: "Work",
-      pattern: "work/**/*.{md,mdx}",
+      pattern: "work/**/*.md",
       schema: s
         .object({
           title: s.string().max(120),
@@ -95,7 +125,7 @@ export default defineConfig({
     // collection for shared links / bookmarks
     links: {
       name: "Link",
-      pattern: "links/**/*.{md,mdx}",
+      pattern: "links/**/*.md",
       schema: s
         .object({
           title: s.string().max(120),
@@ -110,7 +140,7 @@ export default defineConfig({
     // collection for quotes
     quotes: {
       name: "Quote",
-      pattern: "quotes/**/*.{md,mdx}",
+      pattern: "quotes/**/*.md",
       schema: s.object({
         text: s.string().max(500),
         author: s.string().max(100),

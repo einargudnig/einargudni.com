@@ -1,5 +1,5 @@
 import type { HighlighterCore } from "shiki/core";
-import { createHighlighterCore } from "shiki/core";
+import { createCssVariablesTheme, createHighlighterCore } from "shiki/core";
 import { createOnigurumaEngine } from "shiki/engine/oniguruma";
 
 /**
@@ -9,6 +9,10 @@ import { createOnigurumaEngine } from "shiki/engine/oniguruma";
  * rather than throwing.
  */
 export const THEME = "catppuccin-mocha";
+
+// Prose code is coloured by CSS variables, so one highlight at build time
+// serves both editions: styles.css sets each --shiki-token-* per edition.
+const PROSE_THEME = createCssVariablesTheme({ name: "almanak", variablePrefix: "--shiki-" });
 
 // Keys are what a fence or a `language=` prop can say; values are the grammar.
 const ALIASES: Record<string, string> = {
@@ -30,7 +34,7 @@ let highlighter: Promise<HighlighterCore> | undefined;
 
 const getHighlighter = () => {
   highlighter ??= createHighlighterCore({
-    themes: [import("@shikijs/themes/catppuccin-mocha")],
+    themes: [import("@shikijs/themes/catppuccin-mocha"), PROSE_THEME],
     langs: [
       import("@shikijs/langs/typescript"),
       import("@shikijs/langs/tsx"),
@@ -62,4 +66,27 @@ export const highlight = async (
     lang: resolveLang(lang),
     theme: THEME,
   });
+};
+
+export interface Token {
+  readonly text: string;
+  readonly color: string | undefined;
+}
+
+/**
+ * Lines of coloured tokens, for views that build their own elements. The
+ * "prose" theme's colours are CSS variables that follow the edition.
+ */
+export const tokenize = async (
+  code: string,
+  lang: string | undefined,
+  theme: "prose" | typeof THEME = THEME,
+): Promise<ReadonlyArray<ReadonlyArray<Token>>> => {
+  const shiki = await getHighlighter();
+  return shiki
+    .codeToTokensBase(code, {
+      lang: resolveLang(lang),
+      theme: theme === "prose" ? PROSE_THEME.name! : THEME,
+    })
+    .map((line) => line.map(({ content, color }) => ({ text: content, color })));
 };

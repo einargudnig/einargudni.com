@@ -1,6 +1,6 @@
 {
   "$schema": "https://oxc.rs/schema/.oxlintrc.json",
-  "plugins": ["react", "typescript", "import"],
+  "plugins": ["typescript", "import"],
   "categories": {
     "correctness": "warn",
     "suspicious": "warn",
@@ -13,7 +13,6 @@
         "allow": ["**/*.css"]
       }
     ],
-    "react/react-in-jsx-scope": "off",
     "no-underscore-dangle": [
       "warn",
       {

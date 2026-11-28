@@ -4,7 +4,14 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-This is a personal website built with TanStack Start (Vite 8, React 19, TanStack Router + Query) on Bun 1.4. Velite processes frontmatter and metadata; MDX compiles to real modules via `@mdx-js/rollup`. It is deployed to Cloudflare Workers.
+This is a personal website built with Effect UI (`@effect/ui`, pinned snapshot
+vendored in `vendor/`) and Effect 4 on Bun, built with Vite 8. Velite processes
+frontmatter and metadata; a Vite plugin compiles each content file to a parsed
+Markdown document. Every page is prerendered and served by a Cloudflare Worker.
+
+Effect UI ships its own docs in `node_modules/@effect/ui/CLAUDE.md` and
+`ai-docs/`. Read them before guessing at an API: it is a public preview and
+nothing about it is in training data.
 
 ## Development Commands
 
@@ -12,129 +19,124 @@ This is a personal website built with TanStack Start (Vite 8, React 19, TanStack
 # Dev server (velite --watch alongside vite)
 bun run dev
 
-# Build: velite -> OG images -> vite build (includes prerendering)
+# Build: velite -> OG images -> vite build (client, server, prerender)
 bun run build
 
-# Preview the built worker locally
+# Serve the built site through the real Worker (wrangler dev)
 bun run preview
 
 # Deploy to Cloudflare Workers
 bun run deploy
 
-# Lint (oxlint, warnings fail) + format check (oxfmt) + typecheck (tsc, TypeScript 7)
+# Lint (oxlint, warnings fail) + format check (oxfmt) + typecheck (tsc)
 bun run check
 
 # Format with oxfmt
 bun run format
+
+# Compare every sitemap page of a local build against the live site
+bun scripts/parity.ts [base] [reference]
 ```
 
 ## Architecture
 
-### Content Management System
+### Effect UI in one paragraph
 
-The project uses **Velite** as a content processing pipeline that transforms Markdown/MDX files into type-safe data:
+Components are `Html.component({ name, props, model, message, queries }).make({
+init, update, view, head, subscriptions })`. Views are pure functions over the
+`h` builder (`h.div.class("…").children(…)`), not JSX. Side effects are
+Commands and Subscriptions; data comes from `Query.Service` queries. A page
+that needs domain Layers provides them in its own file with
+`Component.provide` and also exports the unprovided `…NoDeps` version.
+`tsconfig.json` must keep `exactOptionalPropertyTypes`: without it component
+types infer too widely and mounting fails to typecheck.
 
-1. **Content Collections** (defined in `velite.config.ts`):
-   - `posts` - Blog posts in `content/posts/` directory
-   - `learnings` - Short-form learning notes in `content/learnings/`
-   - `deepDives` - In-depth technical articles in `content/deep-dives/`
+### Content
 
-2. **Velite Build Process**:
-   - Run explicitly by the `dev` and `build` scripts
-   - Validates frontmatter and generates typed output in `.velite/`
-   - Creates `@/.velite` module with typed exports for content collections
-   - Emits `path` (via `s.path()`) so a route can find the file's compiled module
+1. **Collections** (`velite.config.ts`): `posts`, `learnings`, `deepDives`,
+   `work`, `links`, `quotes`. Only `.md` files are read.
+2. **Metadata**: Velite writes typed output to `.velite/`. The client never
+   imports it directly: `virtual:content` (a plugin in `vite.config.ts`)
+   serves the same collections without `body`, so raw bodies stay out of the
+   bundle. Server-only code (`src/entry.server.ts`, `src/server/`) may import
+   `@/.velite`.
+3. **Bodies**: the `content` plugin in `vite.config.ts` turns each
+   `content/**/*.md` into a module exporting `{ document, code }`: the parsed
+   Markdown document and Shiki tokens for each code block, highlighted at
+   build time so Shiki never reaches the browser.
+   `src/queries/GetContent.ts` loads that module through `import.meta.glob`,
+   one chunk per entry.
+4. **Rendering**: `src/content/ContentView.ts` renders a document with the
+   site's element styles. Islands (components inside prose) are declared with
+   their attribute Schemas in `src/content/islands.ts` and rendered by
+   `src/content/island-views.ts`; the stateful ones live in
+   `src/content/islands/`.
 
-3. **MDX Content Rendering**:
-   - `@mdx-js/rollup` compiles each `.md`/`.mdx` file into a real ES module
-   - `components/mdx-content.tsx` resolves it from an `import.meta.glob` map
-     keyed by velite's `path`, wrapped in `React.lazy` so Rollup code-splits
-     per post and the SSR stream still awaits it
-   - Custom components are injected via the `sharedComponents` object
-   - Velite's `s.mdx()` is deliberately **not** used: it emits a JS string that
-     has to be `eval`'d, and workerd forbids code generation from strings
+### Writing content
 
-### Styling and UI
+Content is Markdown with directives, not MDX. The parser rejects raw HTML,
+inline directives, reference links, footnotes and task lists, and frontmatter
+must be flat strings.
 
-- **Tailwind CSS v4** via `@tailwindcss/vite`
-- **Radix UI** primitives for accessible components
-- **next-themes** for dark mode support (default: dark theme) — despite the
-  name it has no Next dependency and works fine here
-- Custom blog components in `components/blog/` for rich content (callouts, code blocks, video embeds, etc.)
-- UI components in `components/ui/` follow shadcn/ui patterns
+- Leaf island: `::YouTubeEmbed{videoId="…" title="…"}`
+- Container island: `:::Callout{type="info"}` … `:::`. Nest with more colons
+  on the outer one (`::::Accordion` around `:::AccordionItem`).
+- Attributes are strings. Structured ones are JSON in single quotes:
+  `::Tabs{items='[{"label":"A","content":"…"}]'}`.
 
-### Code Quality
+Required frontmatter:
+
+- Posts: `title`, `slug`, `date`, `description` (optional, the dek under the title), `draft` (optional)
+- Learnings: `title`, `date`, `topic`, `link` (optional), `tags` (optional)
+- Deep Dives: `title`, `slug`, `date`, `description` (optional), `topic` (optional), `tags` (optional), `draft` (optional)
+
+### Adding an island
+
+1. Add its attribute Schema to `ContentIslands` in `src/content/islands.ts`.
+2. Add its view to `islandViews` in `src/content/island-views.ts`
+   (`islandsFor` refuses a missing one). A stateful island is a component in
+   `src/content/islands/`.
+3. Keep view helpers free of service requirements: constrain children with
+   `View.Children<M, never>`. `IslandRequirements` reads an `any` or a bare
+   `Text` member as `unknown`, which surfaces as a type error in
+   `src/entry.client.ts`, far from the cause.
+
+### Application structure
+
+- `src/routes.ts`: every route as a typed `AppRoute` union.
+- `src/App.ts`: the root component. It holds the route in its Model, maps each
+  route to a page, and renders the masthead, footer and site-wide widgets.
+  `/baby` and `/ts-mini` are `Component.lazy` chunks; everything else is
+  eager, because a lazy page replaces its prerendered HTML with the fallback
+  until its chunk loads.
+- `src/pages/`: one file per route, folders mirroring the URL.
+- `src/components/`: shared components and view functions.
+- `src/entry.client.ts`: hydrates the prerendered HTML with `BrowserRouter`.
+- `src/entry.server.ts`: the render entry and the list of paths to prerender.
+- `src/worker.ts`: the Worker. Agent-discovery endpoints
+  (`src/server/endpoints.ts`), then markdown negotiation (`lib/negotiation.ts`),
+  then the assets binding; unknown paths get the prerendered 404 page.
+- `src/static-paths.ts`: the static paths, listed and unlisted, shared by the
+  prerender and the sitemap.
+
+### Styling
+
+- Tailwind CSS v4 via `@tailwindcss/vite`; `src/styles.css`.
+- Day and night editions follow the Reykjavík sun (`lib/edition.ts`,
+  `lib/sun.ts`). An inline script in `index.html` sets the edition before
+  first paint.
+- Icons are lucide's vanilla `IconNode`s drawn by `src/components/Icon.ts`.
+
+### Code quality
 
 - **oxlint** for linting and **oxfmt** for formatting (from the oxc project)
 - `bun run check` fails on lint warnings and unformatted files; CI
   (`.github/workflows/check.yml`) runs `build` then `check` on every push and PR
-- Generated files (`convex/_generated`, `.velite`, `src/routeTree.gen.ts`) are
-  excluded from formatting; don't hand-format them
-- **TypeScript** with strict mode enabled
-- Path alias `@/*` maps to project root
-
-### Application Structure
-
-- **File-based routing** under `src/routes/`, route tree generated into
-  `src/routeTree.gen.ts` (gitignored)
-- **Route Structure**:
-  - `/` - Homepage with work experience and latest post
-  - `/blog` - List of all blog posts
-  - `/blog/$slug` - Individual blog posts (prerendered)
-  - `/deep-dive/$slug` - In-depth articles (prerendered)
-  - `/learnings` - Learning notes collection
-  - `/notes` - Notes page
-  - `/about`, `/now`, `/someday` - Static pages
-  - `/uses/*` - Tech stack and setup pages
-  - `/api/*` and `/.well-known/*` - server routes (agent discovery, markdown
-    source). The `[.]` in a filename escapes a literal dot, so
-    `src/routes/[.]well-known/api-catalog.ts` serves `/.well-known/api-catalog`.
-
-- **Layout Hierarchy**:
-  - `src/routes/__root.tsx` provides the document shell, navbar and theme provider
-  - `src/routes/uses/route.tsx` is a layout route wrapping the `/uses` section
-  - `src/start.ts` holds global request middleware (`Accept: text/markdown`
-    content negotiation)
-
-### Dynamic Pages
-
-Blog posts and deep dives use:
-
-- An explicit `pages` list in `vite.config.ts`, built from the velite output.
-  This replaces `generateStaticParams()`. Link-crawling is deliberately off:
-  it misses unlinked entries and fails the build on dead links inside content.
-- Content fetched from Velite-processed collections
-- MDX rendered via `<MDXContent path={post.path} />` component
-
-## Important Implementation Details
-
-### Adding New Blog Posts
-
-1. Create `.mdx` file in appropriate directory:
-   - `content/posts/` for blog posts
-   - `content/learnings/` for learning notes
-   - `content/deep-dives/` for technical deep dives
-
-2. Include required frontmatter:
-   - Posts: `title`, `slug`, `date`, `draft` (optional)
-   - Learnings: `title`, `date`, `topic`, `link` (optional), `tags` (optional)
-   - Deep Dives: `title`, `slug`, `date`, `topic` (optional), `tags` (optional), `draft` (optional)
-
-3. Velite automatically processes on next dev/build
-
-### Custom MDX Components
-
-To add new custom components for use in MDX:
-
-1. Create component in `components/blog/`
-2. Import and add to `sharedComponents` object in `components/mdx-content.tsx`
-3. Component will be available in all MDX files
-
-### Type Safety with Velite
-
-- Velite generates TypeScript types in `.velite/index.d.ts`
-- Import collections: `import { posts, learnings, deepDives } from '@/.velite'`
-- All content is fully typed with metadata, slugs, dates, etc.
+- Generated files (`convex/_generated`, `.velite`) are excluded from
+  formatting; don't hand-format them
+- **TypeScript** strict, with `exactOptionalPropertyTypes`
+- Path alias `@/*` maps to project root; `#components/*`, `#content/*` and
+  `#pages/*` are subpath imports in `package.json`
 
 ## Deployment Notes
 
@@ -142,13 +144,15 @@ To add new custom components for use in MDX:
 - `.github/workflows/daily-snapshot.yml` deploys once a day after refreshing the life-os
   snapshot (08:30 UTC, after Whoop publishes the night's recovery). `bun run deploy` by hand
   still works and is what you use for a content change.
-- All 35 pages are prerendered to `dist/client` and served by the assets binding
-- `assets.run_worker_first` covers `/`, `/blog/*` and `/deep-dive/*` so the
-  markdown-negotiation middleware sees those requests. Anything matching runs
-  the Worker first, and `src/start.ts` hands non-markdown requests straight
-  back to `env.ASSETS` — keep that list and the middleware's matcher in sync.
-- `autoSubfolderIndex: false` keeps canonical URLs slash-free (`/blog/tmux`,
-  not `/blog/tmux/`), matching the sitemap and existing inbound links
+- Every page is prerendered to `dist/client/<path>.html` and served by the
+  assets binding
+- `assets.run_worker_first` covers `/`, `/blog/*`, `/deep-dive/*` and
+  `/use-cases/*` so markdown negotiation sees those requests. `src/worker.ts`
+  hands non-markdown requests straight back to `env.ASSETS` — keep that list
+  and `lib/negotiation.ts` in sync.
+- `html_handling: "auto-trailing-slash"` serves `/blog/tmux` from
+  `blog/tmux.html`, keeping canonical URLs slash-free, matching the sitemap
+  and existing inbound links
 - OG images are generated at build time by `scripts/generate-og.mjs`
   (satori + resvg) into `public/og/`. They cannot be generated at request time
   because `@resvg/resvg-js` is a native addon that will not load in workerd.
@@ -185,7 +189,7 @@ when `vite build` runs, not at request time):
 
 | Variable          | Effect if missing                                                                                                                             |
 | ----------------- | --------------------------------------------------------------------------------------------------------------------------------------------- |
-| `VITE_CONVEX_URL` | `/baby` renders without live vote data                                                                                                        |
+| `VITE_CONVEX_URL` | `/baby` shows its countdown, but the vote totals spin and voting fails                                                                        |
 | `VITE_CF_IMAGES`  | Images served untransformed. Set to `1` **only after** enabling Image Transformations on the zone, otherwise every `/cdn-cgi/image/` URL 404s |
 
 **Runtime** (Worker secrets — `wrangler secret put NAME`): none. The Worker holds no

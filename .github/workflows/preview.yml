@@ -1,0 +1,77 @@
+name: preview
+
+# Uploads each pull request and its base commit as Worker versions under
+# stable preview aliases (pr-<n>, pr-<n>-base), without sending either any
+# traffic, then runs scripts/parity.ts between them. The report lands in the
+# job summary.
+#
+# Parity is informational: a content change is meant to differ from its base,
+# so a diff is something to read, not a failure.
+on:
+  pull_request:
+
+concurrency:
+  group: preview-${{ github.event.number }}
+  cancel-in-progress: true
+
+jobs:
+  parity:
+    # Pull requests from forks get no secrets, so there is nothing to upload with.
+    if: github.event.pull_request.head.repo.full_name == github.repository
+    runs-on: ubuntu-latest
+    env:
+      CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+      CLOUDFLARE_ACCOUNT_ID: ${{ vars.CLOUDFLARE_ACCOUNT_ID }}
+      ALIAS: pr-${{ github.event.number }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.base.sha }}
+          path: .base
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: 1.4.2
+
+      - run: bun install --frozen-lockfile && bun run build
+      - run: bun install --frozen-lockfile && bun run build
+        working-directory: .base
+
+      # Neither version receives traffic. Each gets a stable alias URL, so a
+      # new push to the pull request replaces the previous preview.
+      - name: Upload the pull request and its base as preview versions
+        id: upload
+        shell: bash
+        run: |
+          upload() {
+            (cd "$1" && bunx wrangler versions upload --preview-alias "$2" --message "$3") | tee "$RUNNER_TEMP/$2.log"
+            echo "$4=$(grep -oE "https://$2-[^ ]+\.workers\.dev" "$RUNNER_TEMP/$2.log" | head -1 || true)" >> "$GITHUB_OUTPUT"
+          }
+          upload . "$ALIAS" "PR #${{ github.event.number }} at ${{ github.event.pull_request.head.sha }}" url
+          upload .base "$ALIAS-base" "Base of PR #${{ github.event.number }} at ${{ github.event.pull_request.base.sha }}" base
+
+      - if: steps.upload.outputs.url == '' || steps.upload.outputs.base == ''
+        run: echo "::warning::No preview alias URL in the upload output; are preview URLs enabled on the Worker?"
+
+      # The live site can't be the reference: the zone challenges runner IPs.
+      - name: Compare with the base
+        if: steps.upload.outputs.url != '' && steps.upload.outputs.base != ''
+        continue-on-error: true
+        shell: bash
+        env:
+          URL: ${{ steps.upload.outputs.url }}
+          BASE: ${{ steps.upload.outputs.base }}
+        run: |
+          echo "Preview: $URL (base: $BASE)" >> "$GITHUB_STEP_SUMMARY"
+          set +e
+          bun scripts/parity.ts "$URL" "$BASE" > parity.log 2>&1
+          status=$?
+          set -e
+          cat parity.log
+          {
+            echo
+            echo '```'
+            cat parity.log
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"
+          exit $status

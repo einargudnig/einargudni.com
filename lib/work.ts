@@ -1,4 +1,4 @@
-import { deepDives, posts, work } from "@/.velite";
+import { deepDives, posts, work } from "virtual:content";
 
 export type WorkEntry = (typeof work)[number];
 
@@ -28,5 +28,5 @@ export const formatMonth = ({ start }: Pick<WorkEntry, "start">) =>
   new Date(start).toLocaleDateString("en-US", { month: "short", year: "numeric", timeZone: "UTC" });
 
 // Newest first. `start` is an ISO date, so string order is date order.
-export const orderWork = (entries: WorkEntry[]): WorkEntry[] =>
+export const orderWork = (entries: ReadonlyArray<WorkEntry>): WorkEntry[] =>
   entries.toSorted((a, b) => b.start.localeCompare(a.start));

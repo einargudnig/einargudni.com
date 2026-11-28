@@ -1,13 +1,13 @@
 import { Data, Effect, Schedule, Schema } from "effect";
 
-const ContributionDay = Schema.Struct({
+export const ContributionDay = Schema.Struct({
   date: Schema.String,
   count: Schema.Number,
   level: Schema.Number,
 });
 export type ContributionDay = typeof ContributionDay.Type;
 
-const ContributionData = Schema.Struct({
+export const ContributionData = Schema.Struct({
   total: Schema.Struct({ lastYear: Schema.Number }),
   contributions: Schema.Array(ContributionDay),
 });

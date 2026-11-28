@@ -2,7 +2,7 @@
   "compilerOptions": {
     "target": "ES2022",
     "lib": ["dom", "dom.iterable", "esnext"],
-    "types": ["vite/client"],
+    "types": ["vite/client", "@effect/ui/html/HtmlServerViteDocument", "bun"],
     "skipLibCheck": true,
     "strict": true,
     "noEmit": true,
@@ -11,22 +11,16 @@
     "moduleResolution": "bundler",
     "resolveJsonModule": true,
     "isolatedModules": true,
-    "jsx": "react-jsx",
     "verbatimModuleSyntax": true,
     "moduleDetection": "force",
     "paths": {
       "@/*": ["./*"]
     },
-    "allowJs": true
+    "allowJs": true,
+    "exactOptionalPropertyTypes": true,
+    "allowImportingTsExtensions": true,
+    "rewriteRelativeImportExtensions": true
   },
-  "include": [
-    "src/**/*.ts",
-    "src/**/*.tsx",
-    "components/**/*",
-    "lib/**/*",
-    "scripts/**/*",
-    "convex/**/*",
-    "*.ts"
-  ],
+  "include": ["src/**/*.ts", "lib/**/*", "scripts/**/*", "convex/**/*", "*.ts"],
   "exclude": ["node_modules", "tools", "dist", ".velite"]
 }
