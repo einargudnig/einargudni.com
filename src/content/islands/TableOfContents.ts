@@ -1,4 +1,4 @@
-import { Command, Subscription, UiSchema } from "@effect/ui";
+import { Subscription, UiSchema } from "@effect/ui";
 import { Html } from "@effect/ui/html";
 import { ChevronDown } from "lucide";
 import { Effect, Queue, Schema, Stream } from "effect";
@@ -15,10 +15,6 @@ const TableOfContentsMessage = UiSchema.TaggedEnum({
   ClickedHeading: { id: Schema.String },
   ScrolledPastHeading: { id: Schema.String },
 });
-
-const ScrollToHeading = Command.make("ScrollToHeading", { args: { id: Schema.String } }, ({ id }) =>
-  Effect.sync(() => document.getElementById(id)?.scrollIntoView({ behavior: "smooth" })),
-);
 
 // The section being read: the last heading whose top has passed the fold
 // line near the top of the viewport. Read on scroll, at most once a frame,
@@ -76,8 +72,7 @@ export const TableOfContents = Html.component({
   init: () => ({ activeId: "" }),
   update: ($, message) =>
     TableOfContentsMessage.match(message, {
-      ClickedHeading: ({ id }) =>
-        $.set({ activeId: id }).run(ScrollToHeading.make({ id }).pipe(Command.asNoop)),
+      ClickedHeading: ({ id }) => ({ activeId: id }),
       ScrolledPastHeading: ({ id }) => ({ activeId: id }),
     }),
   subscriptions: ({ props }) =>
@@ -113,9 +108,7 @@ export const TableOfContents = Html.component({
                 variant === "margin" && activeId !== heading.id ? "before:scale-y-0" : "",
                 activeId === heading.id ? "text-foreground" : "text-muted-foreground",
               )
-              .on("click", TableOfContentsMessage.ClickedHeading({ id: heading.id }), {
-                preventDefault: true,
-              })
+              .on("click", TableOfContentsMessage.ClickedHeading({ id: heading.id }))
               .children(heading.title),
           ),
       ),
