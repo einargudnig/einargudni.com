@@ -11,7 +11,7 @@ import { Image } from "../components/Image.ts";
 import type { ContentIslands } from "./islands.ts";
 import { AccordionItem } from "./islands/AccordionItem.ts";
 import { FileTree } from "./islands/FileTree.ts";
-import { TableOfContents, type TocHeading } from "./islands/TableOfContents.ts";
+import type { TocHeading } from "./islands/TableOfContents.ts";
 import { Tabs } from "./islands/Tabs.ts";
 
 type Attrs<K extends keyof typeof ContentIslands> = (typeof ContentIslands)[K]["Type"];
@@ -365,13 +365,9 @@ export const islandViews = <M>(context: {
   },
   Tabs: (h: Html.H<M>, { items }: Attrs<"Tabs">, _: Inner<M>, index: number) =>
     Tabs(h, { key: `${context.key}${index}`, props: { items } }),
-  TableOfContents: (h: Html.H<M>, _: Attrs<"TableOfContents">, __: Inner<M>, index: number) =>
-    context.headings.length < 2
-      ? h.div.class("hidden")
-      : TableOfContents(h, {
-          key: `${context.key}${index}`,
-          props: { headings: context.headings },
-        }),
+  // The entry page draws the contents beside or above the article, so a
+  // TableOfContents directive in the prose would print it twice.
+  TableOfContents: (h: Html.H<M>) => h.div.class("hidden"),
   CardLink: (h: Html.H<M>, { href, title, description, external }: Attrs<"CardLink">) =>
     h.a
       .attr("href", href)

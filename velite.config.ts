@@ -31,6 +31,8 @@ export default defineConfig({
         .object({
           title: s.string().max(99), // Zod primitive type
           slug: s.slug("posts"), // validate format, unique in posts collection
+          // A one-sentence dek under the title, and the meta description.
+          description: s.string().max(300).optional(),
           image: s.image().optional(),
           date: s.isodate(), // input Date-like string, output ISO Date string.
           // cover: s.image().optional(), // input image relative path, output image object with blurImage.
@@ -71,6 +73,7 @@ export default defineConfig({
         .object({
           title: s.string().max(120),
           slug: s.slug("deep-dives"),
+          description: s.string().max(300).optional(),
           date: s.isodate(),
           topic: s.string().max(50).optional(),
           tags: s.array(s.string()).optional(),
@@ -81,6 +84,7 @@ export default defineConfig({
         })
         .transform((data) => ({
           ...data,
+          excerpt: excerptOf(data.body),
           permalink: `/deep-dive/${data.slug}`,
         })),
     },

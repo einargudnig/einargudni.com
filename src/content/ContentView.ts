@@ -12,7 +12,7 @@ import {
   type ListType,
   StylishList,
 } from "./island-views.ts";
-import { TableOfContents, type TocHeading } from "./islands/TableOfContents.ts";
+import type { TocHeading } from "./islands/TableOfContents.ts";
 
 const isExternal = (url: string) => url.startsWith("http") || url.startsWith("mailto:");
 
@@ -121,11 +121,13 @@ const LANGUAGE_NAME: Record<string, string> = {
   text: "Text",
 };
 
-// The table of contents the old MDX renderer put above every post and deep
-// dive. It shows only when the entry has two or more headings.
-export const ContentTableOfContents = <M>(h: Html.H<M>, content: Content, key = "page") => {
-  const { headings } = outline(content.document);
-  return headings.length < 2 ? null : TableOfContents(h, { key, props: { headings } });
+// An entry's h2 and h3 sections, for its contents. A short piece reads
+// better without one, so it takes four sections to earn it.
+export const contentsOf = (content: Content): ReadonlyArray<TocHeading> => {
+  const sections = outline(content.document).headings.filter(
+    (heading) => heading.level === 2 || heading.level === 3,
+  );
+  return sections.length < 4 ? [] : sections;
 };
 
 // Renders one content entry: the prose with the site's element styles, code
