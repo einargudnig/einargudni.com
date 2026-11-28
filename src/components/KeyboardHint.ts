@@ -110,7 +110,7 @@ export const KeyboardHint = Html.component({
             .children(
               h.button
                 .class(
-                  "whitespace-nowrap rounded-md border border-border bg-card px-3 py-1.5 text-xs font-mono text-muted-foreground shadow-lg hover:text-foreground transition-colors",
+                  "whitespace-nowrap border-t border-foreground bg-background px-0 pt-1.5 text-xs text-muted-foreground hover:text-foreground transition-colors",
                 )
                 .on("click", KeyboardHintMessage.ClickedFirstVisitHint())
                 .children("Keyboard shortcuts available"),
@@ -121,14 +121,14 @@ export const KeyboardHint = Html.component({
             h.div.class("fixed inset-0 z-40").on("click", KeyboardHintMessage.ClickedBackdrop()),
             h.div
               .class(
-                "absolute right-0 top-full mt-3 z-50 w-64 rounded-lg border border-border bg-card p-4 shadow-lg animate-fade-in-up",
+                "absolute right-0 top-full mt-3 z-50 w-64 border-t border-foreground border-b border-b-border bg-background py-3 animate-fade-in-up",
               )
               .children(
                 h.div
                   .class("flex items-center justify-between mb-3")
                   .children(
                     h.p.class("text-sm font-semibold").children("Keyboard shortcuts"),
-                    h.kbd.class("text-xs text-muted-foreground font-mono").children("?"),
+                    h.kbd.class("font-mono text-xs text-muted-foreground").children("?"),
                   ),
                 h.div
                   .class("space-y-1")

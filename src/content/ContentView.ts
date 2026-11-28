@@ -1,7 +1,8 @@
 import { Html, Markdown } from "@effect/ui/html";
 import type { Content } from "../queries/GetContent.ts";
 import { CopyButton } from "../components/CopyButton.ts";
-import { ExternalLink } from "../components/ExternalLink.ts";
+import { ArrowUpRight } from "lucide";
+import { Icon } from "../components/Icon.ts";
 import { ContentIslands } from "./islands.ts";
 import {
   Blockquote,
@@ -146,11 +147,20 @@ export const ContentView = <M>(
         },
         Link: (_h, link, inner) =>
           isExternal(link.url)
-            ? ExternalLink(h, link.url).children(inner)
+            ? h.a
+                .attr("href", link.url)
+                .attr("target", "_blank")
+                .attr("rel", "noopener noreferrer")
+                .children(
+                  inner,
+                  Icon(h, ArrowUpRight, "ml-0.5 inline h-3.5 w-3.5 align-[-0.1em] opacity-60")
+                    .attr("aria-hidden", "true")
+                    .attr("stroke-width", "1.75"),
+                )
             : h.a.attr("href", link.url).children(inner),
         Image: (_h, image) => CaptionedImage(h, { src: image.url, alt: image.alt }),
         InlineCode: (_h, { value }) =>
-          h.code.class("bg-muted px-1.5 py-0.5 rounded text-sm").children(value),
+          h.code.class("inline-code").children(value),
         Blockquote: (_h, _, blocks) => Blockquote(h, { children: blocks }),
         List: (_h, list, items) =>
           StylishList(h, {

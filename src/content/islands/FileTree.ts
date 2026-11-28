@@ -53,7 +53,7 @@ export const FileTree = Html.component({
                 .attr("type", "button")
                 .attr("aria-expanded", isExpanded ? "true" : "false")
                 .class(
-                  "flex w-full items-center py-1 text-left cursor-pointer hover:bg-muted/50 rounded focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-foreground",
+                  "flex w-full items-center py-1 text-left cursor-pointer underline-offset-4 hover:underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-foreground",
                 )
                 .on("click", FileTreeMessage.ClickedFolder({ path: currentPath }))
                 .children(
@@ -77,7 +77,7 @@ export const FileTree = Html.component({
         );
     };
     return h.div
-      .class("my-4 p-3 bg-muted/30 rounded-md border border-border")
+      .class("my-8 border-t border-foreground border-b border-b-border py-2")
       .children(h.props.data.map((entry) => item(entry, 0, "")));
   },
 });

@@ -577,7 +577,7 @@
   text-decoration-color: var(--brand);
 }
 
-/* The inline `code` component draws its own chip; drop the plugin's backticks */
+/* Inline code is set in mono with no chip; drop the plugin's backticks */
 .prose :where(code):not(:where(.not-prose, .not-prose *))::before,
 .prose :where(code):not(:where(.not-prose, .not-prose *))::after,
 .prose :where(blockquote p):not(:where(.not-prose, .not-prose *))::before,
@@ -588,6 +588,26 @@
 .prose :where(code):not(:where(.not-prose, .not-prose *)) {
   font-weight: 450;
   font-size: 0.85em;
+}
+
+/* Blockquote draws its own 1px ink rule; drop the plugin's bar and italics. */
+.prose :where(figure > blockquote):not(:where(.not-prose, .not-prose *)) {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-style: normal;
+  font-weight: 400;
+}
+
+.prose :where(kbd):not(:where(.not-prose, .not-prose *)) {
+  box-shadow: none;
+}
+
+.prose :where(.callout-body > :first-child):not(:where(.not-prose, .not-prose *)) {
+  margin-top: 0;
+}
+.prose :where(.callout-body > :last-child):not(:where(.not-prose, .not-prose *)) {
+  margin-bottom: 0;
 }
 
 /* StylishList draws its own markers and spacing */
