@@ -8,7 +8,7 @@ date: 2024-10-11
 
 tmux is a [terminal multiplexer.](https://en.wikipedia.org/wiki/Terminal_multiplexer)
 
-It allows multiple termnial sessions to be accessed simultaneously with a single
+It allows multiple terminal sessions to be accessed simultaneously with a single
 window.
 
 Conceptually it's pretty simple. You can have all your terminal work done in a
@@ -19,10 +19,10 @@ all of your work tasks, another session for your personal projects, etc.
 Or you can use tmux any other way you think it will help you.
 
 You can detach from a session and it will still live on your machine until you
-kill-it. So you can detach from a sesison with your development server running
-and it's still running when you re-attac hto the same session.
+kill-it. So you can detach from a session with your development server running
+and it's still running when you re-attach to the same session.
 
-There ary many people more knowledgable and better to tell you about tmux than
+There are many people more knowledgeable and better to tell you about tmux than
 me, here is some of the content that I used to get more familiar with it:
 
 [tmux wiki](https://github.com/tmux/tmux/wiki)
@@ -41,17 +41,17 @@ projects. Who doesn't.
 For my full time work I have couple of terminal tabs open
 
 :::StylishList
-- \- website for foodies to order
-- \- website for kitchens to recieve orders
-- \- backend to connect the stuff
-- \- ad hoc stuff
+- website for foodies to order
+- website for kitchens to receive orders
+- backend to connect the stuff
+- ad hoc stuff
 :::
 
 I have couple of tabs open for my Contract work
 
 :::StylishList
-- \- landing page
-- \- web app
+- landing page
+- web app
 :::
 
 And I also have couple of tabs open for my personal projects
@@ -64,7 +64,7 @@ I find this is nice so I can quickly jump between tabs and I know that I'm in
 the scope that I need.
 
 Each tab is usually split into two parts, one where I have the server running,
-if needed, and the other one to do various termnial things, open vs code in
+if needed, and the other one to do various terminal things, open vs code in
 said project, pull/push git, etc.
 
 This became cumbersom when I had multiple tabs open in my Warp terminal, I
