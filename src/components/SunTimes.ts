@@ -43,7 +43,7 @@ export const SunTimes = Html.component({
   ],
   view: (h, { rise, set }) =>
     h.p
-      .class("text-sm text-muted-foreground tabular-nums")
+      .class("text-sm whitespace-nowrap text-muted-foreground tabular-nums")
       .children(
         h.a
           .attr("href", "https://www.google.com/maps/place/Reykjavík")
@@ -52,8 +52,10 @@ export const SunTimes = Html.component({
           .class("hover:text-foreground transition-colors")
           .children("Reykjavík"),
         h.span.attr("aria-hidden", "true").children(" · "),
-        `sunrise ${time(rise)}`,
+        h.span.class("max-sm:hidden").children("sun"),
+        `rise ${time(rise)}`,
         h.span.attr("aria-hidden", "true").children(" · "),
-        `sunset ${time(set)}`,
+        h.span.class("max-sm:hidden").children("sun"),
+        `set ${time(set)}`,
       ),
 });

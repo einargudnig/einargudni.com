@@ -1,7 +1,8 @@
 import { Html, Markdown } from "@effect/ui/html";
 import type { Content } from "../queries/GetContent.ts";
 import { CopyButton } from "../components/CopyButton.ts";
-import { ExternalLink } from "../components/ExternalLink.ts";
+import { ArrowUpRight } from "lucide";
+import { Icon } from "../components/Icon.ts";
 import { ContentIslands } from "./islands.ts";
 import {
   Blockquote,
@@ -11,7 +12,7 @@ import {
   type ListType,
   StylishList,
 } from "./island-views.ts";
-import { TableOfContents, type TocHeading } from "./islands/TableOfContents.ts";
+import type { TocHeading } from "./islands/TableOfContents.ts";
 
 const isExternal = (url: string) => url.startsWith("http") || url.startsWith("mailto:");
 
@@ -102,14 +103,31 @@ const outline = (document: Markdown.Document): Outline => {
   return result;
 };
 
-// Shiki's catppuccin-mocha, which the highlighter in lib/highlighter.ts uses.
-const SHIKI_PRE_STYLE = "background-color:#1e1e2e;color:#cdd6f4;counter-reset:line";
+// Shown in the code block's head row; anything else prints as the fence says.
+const LANGUAGE_NAME: Record<string, string> = {
+  ts: "TypeScript",
+  typescript: "TypeScript",
+  tsx: "TSX",
+  js: "JavaScript",
+  javascript: "JavaScript",
+  jsx: "JSX",
+  css: "CSS",
+  bash: "Shell",
+  sh: "Shell",
+  shell: "Shell",
+  zsh: "Shell",
+  json: "JSON",
+  md: "Markdown",
+  text: "Text",
+};
 
-// The table of contents the old MDX renderer put above every post and deep
-// dive. It shows only when the entry has two or more headings.
-export const ContentTableOfContents = <M>(h: Html.H<M>, content: Content, key = "page") => {
-  const { headings } = outline(content.document);
-  return headings.length < 2 ? null : TableOfContents(h, { key, props: { headings } });
+// An entry's h2 and h3 sections, for its contents. A short piece reads
+// better without one, so it takes four sections to earn it.
+export const contentsOf = (content: Content): ReadonlyArray<TocHeading> => {
+  const sections = outline(content.document).headings.filter(
+    (heading) => heading.level === 2 || heading.level === 3,
+  );
+  return sections.length < 4 ? [] : sections;
 };
 
 // Renders one content entry: the prose with the site's element styles, code
@@ -128,10 +146,21 @@ export const ContentView = <M>(
       views: {
         Heading: (_h, heading, inner) => {
           const tag = (["h1", "h2", "h3", "h4", "h5", "h6"] as const)[heading.level - 1] ?? "h6";
+          const id = slugify(plainText(heading.content));
+          const anchored = heading.level === 2 || heading.level === 3;
           return h[tag]
-            .attr("id", slugify(plainText(heading.content)))
-            .class(HEADING_CLASS[heading.level] ?? "")
-            .children(inner);
+            .attr("id", id)
+            .class(`${HEADING_CLASS[heading.level] ?? ""}${anchored ? " relative" : ""}`)
+            .children(
+              anchored
+                ? h.a
+                    .attr("href", `#${id}`)
+                    .attr("aria-label", `Link to ${plainText(heading.content)}`)
+                    .class("heading-anchor")
+                    .children("§")
+                : null,
+              inner,
+            );
         },
         Paragraph: (_h, paragraph, inner) => {
           const [figure] = inner;
@@ -146,11 +175,20 @@ export const ContentView = <M>(
         },
         Link: (_h, link, inner) =>
           isExternal(link.url)
-            ? ExternalLink(h, link.url).children(inner)
+            ? h.a
+                .attr("href", link.url)
+                .attr("target", "_blank")
+                .attr("rel", "noopener noreferrer")
+                .children(
+                  inner,
+                  Icon(h, ArrowUpRight, "ml-0.5 inline h-3.5 w-3.5 align-[-0.1em] opacity-60")
+                    .attr("aria-hidden", "true")
+                    .attr("stroke-width", "1.75"),
+                )
             : h.a.attr("href", link.url).children(inner),
         Image: (_h, image) => CaptionedImage(h, { src: image.url, alt: image.alt }),
         InlineCode: (_h, { value }) =>
-          h.code.class("bg-muted px-1.5 py-0.5 rounded text-sm").children(value),
+          h.code.class("inline-code").children(value),
         Blockquote: (_h, _, blocks) => Blockquote(h, { children: blocks }),
         List: (_h, list, items) =>
           StylishList(h, {
@@ -167,44 +205,40 @@ export const ContentView = <M>(
               ? (/^\w+/.exec(block.language.value)?.[0] ?? "text")
               : "text";
           const lines = content.code[index] ?? block.value.split("\n").map((text) => [{ text }]);
-          return h.div
-            .class("relative my-6 overflow-hidden rounded-lg border border-border bg-muted/30")
+          return h.figure
+            .class("code-block not-prose my-8 border-t border-foreground border-b border-b-border")
             .children(
-              h.div.class("relative").children(
-                h.div
-                  .class("overflow-x-auto text-sm [&_pre]:p-4 [&_pre]:m-0 code-with-lines")
-                  .children(
-                    h.pre
-                      .class("shiki catppuccin-mocha")
-                      .attr("style", SHIKI_PRE_STYLE)
-                      .attr("tabindex", "0")
-                      .children(
-                        h.code.children(
-                          lines.flatMap((tokens, line) => [
-                            line > 0 ? "\n" : null,
-                            h.span
-                              .key(String(line))
-                              .class("line")
-                              .attr("data-line", String(line + 1))
-                              .children(
-                                tokens.map((token, i) =>
-                                  token.color
-                                    ? h.span
-                                        .key(String(i))
-                                        .style({ color: token.color })
-                                        .children(token.text)
-                                    : token.text,
-                                ),
-                              ),
-                          ]),
+              h.figcaption
+                .class(
+                  "flex items-center justify-between border-b border-border py-2 text-xs text-muted-foreground",
+                )
+                .children(
+                  h.span.children(LANGUAGE_NAME[language.toLowerCase()] ?? language),
+                  CopyButton(h, { key: `${key}code-${index}`, props: { text: block.value } }),
+                ),
+              h.pre
+                .class("overflow-x-auto py-4")
+                .attr("tabindex", "0")
+                .children(
+                  h.code.children(
+                    lines.flatMap((tokens, line) => [
+                      line > 0 ? "\n" : null,
+                      h.span
+                        .key(String(line))
+                        .class("line")
+                        .children(
+                          tokens.map((token, i) =>
+                            token.color
+                              ? h.span
+                                  .key(String(i))
+                                  .style({ color: token.color })
+                                  .children(token.text)
+                              : token.text,
+                          ),
                         ),
-                      ),
+                    ]),
                   ),
-                h.div
-                  .class("absolute right-2 top-2 text-xs font-medium text-muted-foreground/60")
-                  .children(language.toUpperCase()),
-                CopyButton(h, { key: `${key}code-${index}`, props: { text: block.value } }),
-              ),
+                ),
             );
         },
       },

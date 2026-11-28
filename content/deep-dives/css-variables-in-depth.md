@@ -4,9 +4,8 @@ slug: css-variables-in-depth
 date: 2025-09-25
 topic: CSS
 tags: [css, theming]
+draft: true
 ---
-
-# CSS Variables In-Depth
 
 Covers scoping, fallbacks, cascading behavior, performance, and dynamic themes.
 

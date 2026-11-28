@@ -4,21 +4,14 @@ import {
   ArrowDown,
   ArrowRight,
   Check,
-  Circle,
-  CircleAlert,
   ExternalLink as ExternalLinkIcon,
-  Info,
-  Lightbulb,
-  Quote,
-  TriangleAlert,
-  type IconNode,
 } from "lucide";
 import { Icon } from "../components/Icon.ts";
 import { Image } from "../components/Image.ts";
 import type { ContentIslands } from "./islands.ts";
 import { AccordionItem } from "./islands/AccordionItem.ts";
 import { FileTree } from "./islands/FileTree.ts";
-import { TableOfContents, type TocHeading } from "./islands/TableOfContents.ts";
+import type { TocHeading } from "./islands/TableOfContents.ts";
 import { Tabs } from "./islands/Tabs.ts";
 
 type Attrs<K extends keyof typeof ContentIslands> = (typeof ContentIslands)[K]["Type"];
@@ -48,24 +41,24 @@ const LIST_ICON: Record<ListType, ListIcon> = {
   none: "none",
 };
 
+// Markers are set in ink, no chips: a numeral, a check or a short dash in a
+// column one line tall, so the marker sits on the item's first line.
+const MARKER = "flex h-[1.7em] w-7 shrink-0 items-center text-muted-foreground";
+
 const ListItemIcon = <M>(h: Html.H<M>, icon: ListIcon, index: number) => {
   switch (icon) {
     case "check":
       return h.span
-        .class(
-          "mr-2 flex h-5 w-5 items-center justify-center rounded-full bg-primary/10 text-primary",
-        )
-        .children(Icon(h, Check, "h-3.5 w-3.5"));
+        .attr("aria-hidden", "true")
+        .class(MARKER)
+        .children(Icon(h, Check, "h-4 w-4 text-foreground").attr("stroke-width", "1.75"));
     case "circle":
       return h.span
-        .class("mr-2 flex h-5 w-5 items-center justify-center")
-        .children(Icon(h, Circle, "h-1.5 w-1.5 fill-current"));
+        .attr("aria-hidden", "true")
+        .class(MARKER)
+        .children(h.span.class("h-px w-2.5 bg-current"));
     case "number":
-      return h.span
-        .class(
-          "mr-2 flex h-5 w-5 items-center justify-center rounded-full bg-primary/10 text-xs font-medium text-primary",
-        )
-        .children(String(index));
+      return h.span.class(`${MARKER} tabular-nums`).children(`${index}.`);
     case "none":
       return null;
   }
@@ -97,17 +90,14 @@ export const Blockquote = <M, C extends View.Children<M, never>>(
   options: { readonly author?: string; readonly citation?: string; readonly children: C },
 ) =>
   h.figure
-    .class("my-8 relative")
+    .class("my-10 border-l border-foreground pl-6")
     .children(
-      h.div
-        .class("absolute -left-6 top-0 text-muted-foreground")
-        .children(Icon(h, Quote, "h-6 w-6")),
       h.blockquote
-        .class("border-l-4 pl-6 italic")
-        .children(h.div.class("text-lg").children(options.children)),
+        .class("text-[1.125rem] leading-relaxed text-foreground")
+        .children(options.children),
       (options.author || options.citation) &&
         h.figcaption
-          .class("mt-2 text-right text-sm text-muted-foreground")
+          .class("mt-3 text-sm text-muted-foreground")
           .children(
             options.author && h.span.class("font-medium").children(`— ${options.author}`),
             options.author && options.citation && h.span.children(", "),
@@ -126,7 +116,7 @@ export const CaptionedImage = <M>(
   },
 ) =>
   h.figure.class("my-8").children(
-    h.div.class("overflow-hidden rounded-md").children(
+    h.div.class("overflow-hidden bg-muted").children(
       Image(h, {
         src: options.src,
         alt: options.alt,
@@ -137,24 +127,17 @@ export const CaptionedImage = <M>(
     ),
     options.caption &&
       h.figcaption
-        .class("mt-2 text-center text-sm text-muted-foreground")
+        .class("mt-3 text-sm text-muted-foreground")
         .children(options.caption),
   );
 
-const CALLOUT_ICON: Record<NonNullable<Attrs<"Callout">["type"]>, IconNode> = {
-  info: Info,
-  warning: TriangleAlert,
-  error: CircleAlert,
-  tip: Lightbulb,
-};
-
-const CALLOUT_STYLE: Record<NonNullable<Attrs<"Callout">["type"]>, string> = {
-  info: "bg-blue-50 dark:bg-blue-950 border-blue-200 dark:border-blue-800 text-blue-800 dark:text-blue-300",
-  warning:
-    "bg-yellow-50 dark:bg-yellow-950 border-yellow-200 dark:border-yellow-800 text-yellow-800 dark:text-yellow-300",
-  error:
-    "bg-red-50 dark:bg-red-950 border-red-200 dark:border-red-800 text-red-800 dark:text-red-300",
-  tip: "bg-green-50 dark:bg-green-950 border-green-200 dark:border-green-800 text-green-800 dark:text-green-300",
+// A callout is ruled like a ledger, not boxed: the kind is its label, and
+// only an error takes a colour, as the Ink Rule allows.
+const CALLOUT_LABEL: Record<NonNullable<Attrs<"Callout">["type"]>, string> = {
+  info: "Note",
+  warning: "Warning",
+  error: "Caution",
+  tip: "Tip",
 };
 
 const YOUTUBE_ID = [
@@ -198,7 +181,7 @@ const YOUTUBE_ASPECT: Record<NonNullable<Attrs<"YouTubeEmbed">["aspectRatio"]>, 
 };
 
 const Caption = <M>(h: Html.H<M>, caption: string | undefined) =>
-  caption && h.figcaption.class("mt-2 text-center text-sm text-muted-foreground").children(caption);
+  caption && h.figcaption.class("mt-3 text-sm text-muted-foreground").children(caption);
 
 // One view per island in ./islands.ts. `islandsFor` refuses a missing one.
 // `key` tells one entry's islands from another's when a page shows several;
@@ -254,16 +237,19 @@ export const islandViews = <M>(context: {
           .children(caption),
     ),
   Callout: (h: Html.H<M>, { type = "info", title }: Attrs<"Callout">, inner: Inner<M>) =>
-    h.div
-      .class(`my-6 rounded-lg border p-4 ${CALLOUT_STYLE[type]}`)
+    h.aside
+      .attr("role", type === "error" || type === "warning" ? "alert" : "note")
+      .class("my-8 border-t border-foreground border-b border-b-border py-4")
       .children(
-        h.div
-          .class("flex items-center gap-3")
+        h.p
+          .class("not-prose flex items-baseline gap-3 text-sm")
           .children(
-            Icon(h, CALLOUT_ICON[type], "h-5 w-5"),
-            title && h.p.class("font-medium").children(title),
+            h.span
+              .class(type === "error" ? "text-destructive" : "text-muted-foreground")
+              .children(CALLOUT_LABEL[type]),
+            title && h.span.class("font-medium text-foreground").children(title),
           ),
-        h.div.class("mt-2 prose-sm").children(inner),
+        h.div.class("callout-body mt-2").children(inner),
       ),
   Blockquote: (h: Html.H<M>, { author, citation }: Attrs<"Blockquote">, inner: Inner<M>) =>
     Blockquote(h, {
@@ -272,7 +258,7 @@ export const islandViews = <M>(context: {
       children: inner,
     }),
   Accordion: (h: Html.H<M>, _: Attrs<"Accordion">, inner: Inner<M>) =>
-    h.div.class("my-6 divide-y rounded-lg border").children(inner),
+    h.div.class("my-8 border-t border-foreground").children(inner),
   AccordionItem: (
     h: Html.H<M>,
     { title }: Attrs<"AccordionItem">,
@@ -302,7 +288,7 @@ export const islandViews = <M>(context: {
               h.kbd
                 .key(`key-${index}`)
                 .class(
-                  "px-2 py-1 font-mono text-xs font-semibold text-foreground bg-muted border border-border rounded shadow-sm",
+                  "rounded-sm border border-border px-1.5 py-0.5 font-mono text-xs font-medium text-foreground",
                 )
                 .children(key),
               index < keys.length - 1 && h.span.key(`plus-${index}`).class("mx-1").children("+"),
@@ -313,7 +299,7 @@ export const islandViews = <M>(context: {
   VideoEmbed: (h: Html.H<M>, { src, title, caption, aspectRatio = "16:9" }: Attrs<"VideoEmbed">) =>
     h.figure.class("my-8").children(
       h.div
-        .class(`overflow-hidden rounded-lg bg-muted ${VIDEO_ASPECT[aspectRatio]}`.trim())
+        .class(`overflow-hidden bg-muted ${VIDEO_ASPECT[aspectRatio]}`.trim())
         .children(
           isYouTube(src)
             ? h.iframe
@@ -359,7 +345,7 @@ export const islandViews = <M>(context: {
       .children(
         h.div
           .class(
-            `relative w-full overflow-hidden rounded-lg bg-muted ${YOUTUBE_ASPECT[aspectRatio]}`,
+            `relative w-full overflow-hidden bg-muted ${YOUTUBE_ASPECT[aspectRatio]}`,
           )
           .children(
             h.iframe
@@ -379,13 +365,9 @@ export const islandViews = <M>(context: {
   },
   Tabs: (h: Html.H<M>, { items }: Attrs<"Tabs">, _: Inner<M>, index: number) =>
     Tabs(h, { key: `${context.key}${index}`, props: { items } }),
-  TableOfContents: (h: Html.H<M>, _: Attrs<"TableOfContents">, __: Inner<M>, index: number) =>
-    context.headings.length < 2
-      ? h.div.class("hidden")
-      : TableOfContents(h, {
-          key: `${context.key}${index}`,
-          props: { headings: context.headings },
-        }),
+  // The entry page draws the contents beside or above the article, so a
+  // TableOfContents directive in the prose would print it twice.
+  TableOfContents: (h: Html.H<M>) => h.div.class("hidden"),
   CardLink: (h: Html.H<M>, { href, title, description, external }: Attrs<"CardLink">) =>
     h.a
       .attr("href", href)
@@ -394,14 +376,16 @@ export const islandViews = <M>(context: {
       .children(
         h.div
           .class(
-            "group flex items-start gap-3 rounded-lg border p-4 hover:bg-muted transition-colors",
+            "group my-4 flex items-start gap-3 border-y border-border py-3",
           )
           .children(
             h.div
               .class("space-y-1")
               .children(
                 h.div
-                  .class("font-medium group-hover:underline flex items-center gap-1.5")
+                  .class(
+                    "flex items-center gap-1.5 font-medium text-foreground underline-offset-4 group-hover:underline",
+                  )
                   .children(
                     title,
                     external === "true" && Icon(h, ExternalLinkIcon, "h-3.5 w-3.5 opacity-70"),
@@ -420,7 +404,7 @@ export const islandViews = <M>(context: {
           .class("flex flex-col items-center")
           .children(
             h.div
-              .class("rounded-md shadow-md border border-border h-12 w-12")
+              .class("h-12 w-12 rounded-sm border border-border")
               .style({ backgroundColor: color.color })
               .attr("title", color.value || color.color),
             (color.label || color.value) &&
@@ -443,17 +427,13 @@ export const islandViews = <M>(context: {
             h.div
               .class("flex flex-col items-center")
               .children(
-                h.div
-                  .class(
-                    "flex items-center justify-center rounded-full bg-muted w-8 h-8 shrink-0 z-10",
-                  )
-                  .children(h.div.class("w-3 h-3 rounded-full bg-brand")),
-                index < items.length - 1 && h.div.class("w-px h-full bg-border mt-2"),
+                h.div.class("mt-[0.45rem] h-2 w-2 shrink-0 rounded-full bg-foreground"),
+                index < items.length - 1 && h.div.class("mt-2 h-full w-px bg-border"),
               ),
             h.div
               .class("pb-8")
               .children(
-                h.p.class("text-sm font-medium text-muted-foreground mb-1").children(item.date),
+                h.p.class("mb-1 text-sm tabular-nums text-muted-foreground").children(item.date),
                 h.h3.class("text-base font-semibold mb-2").children(item.title),
                 item.description &&
                   h.p.class("text-muted-foreground text-sm").children(item.description),

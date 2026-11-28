@@ -2,7 +2,7 @@ import { Component } from "@effect/ui";
 import { Html } from "@effect/ui/html";
 import { Schema } from "effect";
 import { quotes } from "virtual:content";
-import { formatBlogDate } from "@/lib/utils";
+import { formatShortDate } from "@/lib/utils";
 import { ContentEntry } from "../../content/ContentEntry.ts";
 import { GetContent } from "../../queries/GetContent.ts";
 
@@ -49,7 +49,7 @@ export const QuotesPageNoDeps = Html.component({
                     h.time
                       .class("font-mono tabular-nums")
                       .attr("datetime", quote.date)
-                      .children(formatBlogDate(quote.date)),
+                      .children(formatShortDate(quote.date)),
                   ),
                 quote.path
                   ? h.div

@@ -6,11 +6,9 @@ import { WhoopRing } from "./WhoopRing.ts";
 
 const STRAIN_MAX = 21;
 
-const recoveryColor = (score: number) =>
-  score >= 67 ? "text-emerald-400" : score >= 34 ? "text-yellow-400" : "text-red-500";
-
-const sleepColor = (perf: number) =>
-  perf >= 85 ? "text-emerald-400" : perf >= 70 ? "text-yellow-400" : "text-red-500";
+// Every ring is drawn in ink, as the Ink Rule asks: the fill and the figure
+// say how good the night was, and a traffic-light hue failed contrast on paper.
+const RING_INK = "text-foreground";
 
 const recoverySubtitle = (r: NonNullable<WhoopSnapshot["recovery"]>) => {
   const parts: string[] = [];
@@ -70,7 +68,7 @@ const sleepRing = <M>(h: Html.H<M>, sleep: NonNullable<WhoopSnapshot["sleep"]>) 
     label: "Sleep",
     displayValue: `${Math.round(sleep.performance)}%`,
     fill: sleep.performance / 100,
-    colorClass: sleepColor(sleep.performance),
+    colorClass: RING_INK,
     ...(sleep.hours ? { subtitle: `${sleep.hours.toFixed(1)} hrs` } : {}),
   });
 
@@ -80,7 +78,7 @@ const recoveryRing = <M>(h: Html.H<M>, recovery: NonNullable<WhoopSnapshot["reco
     label: "Recovery",
     displayValue: `${recovery.score}%`,
     fill: recovery.score / 100,
-    colorClass: recoveryColor(recovery.score),
+    colorClass: RING_INK,
     ...(subtitle ? { subtitle } : {}),
   });
 };
@@ -95,7 +93,7 @@ export const WhoopStats = <M>(h: Html.H<M>, data: WhoopSnapshot) =>
             label: "Strain",
             displayValue: data.strain.toFixed(1),
             fill: data.strain / STRAIN_MAX,
-            colorClass: "text-sky-400",
+            colorClass: RING_INK,
           })
         : null,
     ),

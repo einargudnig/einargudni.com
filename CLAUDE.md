@@ -86,9 +86,9 @@ must be flat strings.
 
 Required frontmatter:
 
-- Posts: `title`, `slug`, `date`, `draft` (optional)
+- Posts: `title`, `slug`, `date`, `description` (optional, the dek under the title), `draft` (optional)
 - Learnings: `title`, `date`, `topic`, `link` (optional), `tags` (optional)
-- Deep Dives: `title`, `slug`, `date`, `topic` (optional), `tags` (optional), `draft` (optional)
+- Deep Dives: `title`, `slug`, `date`, `description` (optional), `topic` (optional), `tags` (optional), `draft` (optional)
 
 ### Adding an island
 
