@@ -130,7 +130,7 @@ Two inks on two grounds, and nothing else. Action is shown by form, never by hue
 
 **The Ink Rule.** There is no accent colour. What you can act on is marked by form: a solid ink button, an underline, a focus ring. Never introduce a hue for actions, data, status or decoration. Error text is the one exception and stays red.
 
-**The Two Editions Rule.** Every colour exists twice, as a day and a night value of the same role. Never write a colour for one edition only; define the role on `:root` and `.dark`. Edition switches cross-fade the ground and ink over 600ms.
+**The Two Editions Rule.** Every colour exists twice, as a day and a night value of the same role. Never write a colour for one edition only; define the role on `:root` and `.dark`. Edition switches wipe the new edition in over 700ms.
 
 ## Typography
 
@@ -205,6 +205,34 @@ The case-study header: a definition list opened by a full-weight ink rule, each 
 ### Navigation (masthead)
 
 A full-weight ink rule under the name and sections: "Einar Gudni" as Title on the left, lower-case section links in faded Label type on the right, the current one in ink with a 1px underline at 6px offset, and "work with me" in full ink, set apart from the faded section links. Beneath the rule: today's Reykjavík sunrise and sunset (tabular, filled in after mount into reserved width) on the left, the edition toggle on the right. The footer mirrors it: a full-weight rule, the motto, links and the year.
+
+### Entry (posts and deep dives)
+
+- **Header:** the title as Headline, an optional dek in faded ink (52ch), then a meta line: short date · "N min read", ending in a hairline that runs to the column edge.
+- **Contents:** with four or more sections, a ledger of them sits sticky in the right margin from xl, the current section marked by a 1px ink bar; below xl it collapses into a ruled `details` row above the prose.
+- **End-matter:** a full-weight rule, Older and Newer entries side by side, then a hairline over "All writing" and "Work with me". An empty neighbour slot prints nothing.
+
+### Prose components
+
+- **Callout:** an `aside` between an ink rule and a hairline, a faded label (Note, Tip, Warning; Caution in the destructive role). No tinted panel, no icon box.
+- **Blockquote:** a 1px ink rule on the left, upright 1.125rem text.
+- **Lists:** markers in faded ink: a dash, a numeral, or a check.
+- **Inline code:** Geist Mono at 0.85em, no pill.
+- **External links:** an ArrowUpRight after the text.
+
+### Code block
+
+A `figure` between an ink rule and a hairline. The head row carries the language in faded Label type and a text "Copy" button that reads "Copied". Tokens are two-tone through `--shiki-*` variables defined for both editions: ink, faded ink, and one warm muted tone for strings. Keywords at 600, comments italic.
+
+## Motion
+
+Motion explains a change of place; it never decorates. Everything below is skipped under `prefers-reduced-motion`, and the first render never animates.
+
+- **Page change:** a view transition of type `page`. The old page fades out in 120ms, the new one fades in over 240ms with a 4px rise; the masthead holds still.
+- **Edition change:** the new edition wipes in over 700ms.
+- **Reading progress:** a 1px ink rule across the top of the viewport on an entry, driven by the scroll timeline where supported, absent elsewhere.
+- **Heading anchors:** a `§` in the left margin, shown on hover or focus.
+- **Durations:** 120–300ms for state, 700ms only for the edition. Ease with `--ease-out`.
 
 ## Do's and Don'ts
 
