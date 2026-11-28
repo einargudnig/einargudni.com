@@ -618,20 +618,68 @@
   margin-block: 0;
 }
 
-/* Line numbers for prose code blocks (ContentView's CodeBlock). */
-.code-with-lines .line {
+/* Prose code blocks (ContentView's CodeBlock): ruled, not boxed, and coloured
+   by Shiki's CSS-variables theme. Ink carries keywords by weight; strings and
+   constants take one warm faded tone; comments are faded and italic. Every
+   token role is defined for both editions. */
+:root {
+  --shiki-foreground: color-mix(in oklch, var(--foreground) 88%, var(--background));
+  --shiki-background: transparent;
+  --shiki-token-keyword: var(--foreground);
+  --shiki-token-function: var(--foreground);
+  --shiki-token-parameter: color-mix(in oklch, var(--foreground) 88%, var(--background));
+  --shiki-token-punctuation: var(--muted-foreground);
+  --shiki-token-comment: var(--muted-foreground);
+  --shiki-token-string: oklch(0.45 0.05 60);
+  --shiki-token-string-expression: oklch(0.45 0.05 60);
+  --shiki-token-constant: oklch(0.45 0.05 60);
+  --shiki-token-link: oklch(0.45 0.05 60);
+}
+
+.dark {
+  --shiki-token-string: oklch(0.8 0.045 75);
+  --shiki-token-string-expression: oklch(0.8 0.045 75);
+  --shiki-token-constant: oklch(0.8 0.045 75);
+  --shiki-token-link: oklch(0.8 0.045 75);
+}
+
+.code-block pre {
+  margin: 0;
+  background: transparent;
+  color: var(--shiki-foreground);
+  font-family: var(--font-mono);
+  font-size: 0.84375rem;
+  line-height: 1.7;
+  counter-reset: line;
+  tab-size: 2;
+}
+
+.code-block [style*="token-keyword"] {
+  font-weight: 600;
+}
+
+.code-block [style*="token-comment"] {
+  font-style: italic;
+}
+
+.code-block .line {
   display: inline-block;
   width: 100%;
 }
-.code-with-lines .line::before {
+
+.code-block .line::before {
   counter-increment: line;
   content: counter(line);
   display: inline-block;
-  width: 2.5rem;
-  margin-right: 1.5rem;
+  width: 1.75rem;
+  margin-right: 1rem;
   text-align: right;
-  color: rgba(127, 132, 156, 0.6);
+  color: var(--muted-foreground);
+  opacity: 0.7;
   user-select: none;
-  border-right: 1px solid rgba(127, 132, 156, 0.3);
-  padding-right: 0.75rem;
+}
+
+.code-block pre:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 2px;
 }

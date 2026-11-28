@@ -88,7 +88,7 @@ const content: Plugin = {
     const document = MarkdownParser.parseMarkdown(body, { islands: ContentIslands });
     const code = await Promise.all(
       codeBlocks(document.blocks).map(({ value, language }) =>
-        tokenize(value, language._tag === "Some" ? language.value : undefined),
+        tokenize(value, language._tag === "Some" ? language.value : undefined, "prose"),
       ),
     );
     const encoded = { document: Markdown.encodeDocument(document), code };

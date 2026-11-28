@@ -103,8 +103,23 @@ const outline = (document: Markdown.Document): Outline => {
   return result;
 };
 
-// Shiki's catppuccin-mocha, which the highlighter in lib/highlighter.ts uses.
-const SHIKI_PRE_STYLE = "background-color:#1e1e2e;color:#cdd6f4;counter-reset:line";
+// Shown in the code block's head row; anything else prints as the fence says.
+const LANGUAGE_NAME: Record<string, string> = {
+  ts: "TypeScript",
+  typescript: "TypeScript",
+  tsx: "TSX",
+  js: "JavaScript",
+  javascript: "JavaScript",
+  jsx: "JSX",
+  css: "CSS",
+  bash: "Shell",
+  sh: "Shell",
+  shell: "Shell",
+  zsh: "Shell",
+  json: "JSON",
+  md: "Markdown",
+  text: "Text",
+};
 
 // The table of contents the old MDX renderer put above every post and deep
 // dive. It shows only when the entry has two or more headings.
@@ -177,44 +192,40 @@ export const ContentView = <M>(
               ? (/^\w+/.exec(block.language.value)?.[0] ?? "text")
               : "text";
           const lines = content.code[index] ?? block.value.split("\n").map((text) => [{ text }]);
-          return h.div
-            .class("relative my-6 overflow-hidden rounded-lg border border-border bg-muted/30")
+          return h.figure
+            .class("code-block not-prose my-8 border-t border-foreground border-b border-b-border")
             .children(
-              h.div.class("relative").children(
-                h.div
-                  .class("overflow-x-auto text-sm [&_pre]:p-4 [&_pre]:m-0 code-with-lines")
-                  .children(
-                    h.pre
-                      .class("shiki catppuccin-mocha")
-                      .attr("style", SHIKI_PRE_STYLE)
-                      .attr("tabindex", "0")
-                      .children(
-                        h.code.children(
-                          lines.flatMap((tokens, line) => [
-                            line > 0 ? "\n" : null,
-                            h.span
-                              .key(String(line))
-                              .class("line")
-                              .attr("data-line", String(line + 1))
-                              .children(
-                                tokens.map((token, i) =>
-                                  token.color
-                                    ? h.span
-                                        .key(String(i))
-                                        .style({ color: token.color })
-                                        .children(token.text)
-                                    : token.text,
-                                ),
-                              ),
-                          ]),
+              h.figcaption
+                .class(
+                  "flex items-center justify-between border-b border-border py-2 text-xs text-muted-foreground",
+                )
+                .children(
+                  h.span.children(LANGUAGE_NAME[language.toLowerCase()] ?? language),
+                  CopyButton(h, { key: `${key}code-${index}`, props: { text: block.value } }),
+                ),
+              h.pre
+                .class("overflow-x-auto py-4")
+                .attr("tabindex", "0")
+                .children(
+                  h.code.children(
+                    lines.flatMap((tokens, line) => [
+                      line > 0 ? "\n" : null,
+                      h.span
+                        .key(String(line))
+                        .class("line")
+                        .children(
+                          tokens.map((token, i) =>
+                            token.color
+                              ? h.span
+                                  .key(String(i))
+                                  .style({ color: token.color })
+                                  .children(token.text)
+                              : token.text,
+                          ),
                         ),
-                      ),
+                    ]),
                   ),
-                h.div
-                  .class("absolute right-2 top-2 text-xs font-medium text-muted-foreground/60")
-                  .children(language.toUpperCase()),
-                CopyButton(h, { key: `${key}code-${index}`, props: { text: block.value } }),
-              ),
+                ),
             );
         },
       },

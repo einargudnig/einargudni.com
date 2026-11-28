@@ -38,10 +38,14 @@ export const CopyButton = Html.component({
   view: (h, { copied }) =>
     h.button
       .attr("type", "button")
-      .attr("aria-label", "Copy code to clipboard")
       .class(
-        "absolute bottom-2 right-2 rounded bg-muted p-1.5 text-muted-foreground hover:bg-muted/80 hover:text-foreground transition-colors active:scale-[0.95]",
+        "inline-flex items-center gap-1.5 text-muted-foreground transition-colors hover:text-foreground active:scale-[0.97]",
       )
       .on("click", CopyButtonMessage.ClickedCopy())
-      .children(copied ? Icon(h, Check, "h-4 w-4 text-brand") : Icon(h, Clipboard)),
+      .children(
+        copied
+          ? Icon(h, Check, "h-3.5 w-3.5 text-foreground").attr("stroke-width", "1.75")
+          : Icon(h, Clipboard, "h-3.5 w-3.5").attr("stroke-width", "1.75"),
+        h.span.attr("aria-live", "polite").children(copied ? "Copied" : "Copy"),
+      ),
 });
