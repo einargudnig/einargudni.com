@@ -59,6 +59,7 @@ const Neighbour = <M>(h: Html.H<M>, label: string, link: EntryLink | undefined, 
 export const Entry = <M>(h: Html.H<M>, options: EntryOptions) => {
   const contents = AsyncResult.isSuccess(options.content) ? contentsOf(options.content.value) : [];
   return h.section.class("w-full max-w-2xl").children(
+    h.div.attr("aria-hidden", "true").class("reading-progress"),
     h.header.children(
       h.h1
         .class(

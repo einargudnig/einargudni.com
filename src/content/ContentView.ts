@@ -146,10 +146,21 @@ export const ContentView = <M>(
       views: {
         Heading: (_h, heading, inner) => {
           const tag = (["h1", "h2", "h3", "h4", "h5", "h6"] as const)[heading.level - 1] ?? "h6";
+          const id = slugify(plainText(heading.content));
+          const anchored = heading.level === 2 || heading.level === 3;
           return h[tag]
-            .attr("id", slugify(plainText(heading.content)))
-            .class(HEADING_CLASS[heading.level] ?? "")
-            .children(inner);
+            .attr("id", id)
+            .class(`${HEADING_CLASS[heading.level] ?? ""}${anchored ? " relative" : ""}`)
+            .children(
+              anchored
+                ? h.a
+                    .attr("href", `#${id}`)
+                    .attr("aria-label", `Link to ${plainText(heading.content)}`)
+                    .class("heading-anchor")
+                    .children("§")
+                : null,
+              inner,
+            );
         },
         Paragraph: (_h, paragraph, inner) => {
           const [figure] = inner;

@@ -72,7 +72,12 @@ export const App = Html.component({
   message: AppMessage,
 }).make({
   init: ($) => ({ route: $.props.route }),
-  update: (_, message) => AppMessage.match(message, { ChangedRoute: ({ route }) => ({ route }) }),
+  // A navigation cross-fades the page under a still masthead (styles.css,
+  // "page" type). The first render and reduced motion commit at once.
+  update: ($, message) =>
+    AppMessage.match(message, {
+      ChangedRoute: ({ route }) => $.set({ route }).viewTransition(["page"]),
+    }),
   subscriptions: ({ model }) => [
     Router.subscription(AppRoute, model.route, (route) => AppMessage.ChangedRoute({ route })),
   ],

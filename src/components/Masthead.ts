@@ -13,7 +13,7 @@ const NAV = [
 // The masthead: name and sections on a full-weight rule, today's Reykjavík
 // sun and the edition beneath it.
 export const Masthead = <M>(h: Html.H<M>, pathname: string) =>
-  h.header.class("mb-14 md:mb-20 print:mb-8").children(
+  h.header.class("masthead mb-14 md:mb-20 print:mb-8").children(
     h.div
       .class("flex items-baseline justify-between gap-4 border-b border-foreground pb-2.5")
       .children(

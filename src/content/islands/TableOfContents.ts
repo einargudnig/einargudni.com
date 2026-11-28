@@ -105,7 +105,11 @@ export const TableOfContents = Html.component({
               .attr("href", `#${heading.id}`)
               .attr("aria-current", activeId === heading.id ? "location" : undefined)
               .class(
-                "block border-b border-border py-1.5 leading-snug transition-colors duration-200 hover:text-foreground",
+                "relative block border-b border-border py-1.5 leading-snug transition-colors duration-200 hover:text-foreground",
+                variant === "margin"
+                  ? "pl-3 before:absolute before:top-2 before:bottom-2 before:left-0 before:w-px before:origin-top before:bg-foreground before:transition-transform before:duration-300 before:ease-[var(--ease-out)]"
+                  : "",
+                variant === "margin" && activeId !== heading.id ? "before:scale-y-0" : "",
                 activeId === heading.id ? "text-foreground" : "text-muted-foreground",
               )
               .on("click", TableOfContentsMessage.ClickedHeading({ id: heading.id }), {
